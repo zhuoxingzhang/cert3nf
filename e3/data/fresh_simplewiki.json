@@ -1,0 +1,750 @@
+{
+ "dataset": "fresh_simplewiki",
+ "family": "fresh2",
+ "truth_kind": "documented (confirmatory, batch 2)",
+ "source": "twelve relations of the second confirmatory batch, specified from publisher documentation (e3/truth/docs/fresh2/) by three subagents that never saw data, mined FDs or model answers; parts A (benchmarks), B (ChEMBL, MusicBrainz, PLUTO, FHRS), C (GeoNames, EIA-860, STATS19, GHCN)",
+ "rule": "part A: Sigma* is the set of FDs that the publisher documentation implies among the attributes of each relation, projected and closed over the dropped columns, each with a verbatim quote; sure when the quoted text states it (declared key, unique constraint, foreign key to a declared key, an explicit one-to-one statement), unsure when it needs an inference the text does not spell out. Dependencies the documentation hints at but does not state are listed under undocumented_regularities and are not part of Sigma*. For the three BenchBase benchmarks the DDL at the pinned commit is the specification of the generated data (scale factor 1); a dependency that the H-Store project page states and the DDL neither declares nor contradicts is ambiguous and is recorded with sure: false, quoting both. Written from the documentation alone, before any data file was opened. | part B: Sigma* is the set of FDs that the publisher documentation implies among the attributes of each relation, projected and closed over the dropped columns, each with a verbatim quote; sure when the quoted text states it (declared key, unique constraint on a NOT NULL column, foreign key to a declared key, an explicit one-to-one or containment statement), unsure when it needs an inference the text does not spell out, when two documents conflict, or when a unique index covers a nullable column. Dependencies the documentation hints at but does not state, and documented non-dependencies, are listed under undocumented_regularities and are not part of Sigma*. Written from the documentation alone, before any data file was opened. | part C: Sigma* is the set of FDs that the publisher documentation implies among the attributes of each relation, projected and closed over the dropped columns, each with a verbatim quote; sure when the quoted text states it (declared key, foreign key to a declared key, an explicit one-to-one or nesting statement), unsure when it needs an inference the text does not spell out. Dependencies the documentation hints at but does not state are listed under undocumented_regularities and are not part of Sigma*. Written from the documentation alone, before any data file was opened.",
+ "instance": {
+  "generator": "public data fixed before download for the second confirmatory evaluation, converted by unpack_fresh2.py and joined by fresh.py",
+  "rows": 999656,
+  "construction": "Wikimedia SQL table dumps of simplewiki, run 20261001 (dumps.wikimedia.org/simplewiki/20261001/, status 'Dump complete'): simplewiki-20261001-categorylinks.sql.gz (27.2 MB, sha1 99c462640edea0d1b853dbae5a120417ab57280a), simplewiki-20261001-page.sql.gz (31.2 MB, sha1 765d7db75eeb964da5017d970258785b9cfec5d9) and simplewiki-20261001-linktarget.sql.gz (36.1 MB, sha1 1f3017c5224875d1edf23dc35f38bbd9317d65bd), each converted to mediawiki/<table>.csv with the column names of the dump's CREATE TABLE, which for the MediaWiki 1.47.0-wmf.24 that simple.wikipedia.org runs (Special:Version, 2026-10-28) is the 1.45+ layout of tables-generated.sql at the pinned commit (categorylinks with cl_target_id and without cl_to): categorylinks (root; sampled to 1,000,000 records if larger) left-joined to page on cl_from = page_id and to linktarget on cl_target_id = lt_id; no column dropped except page_id and lt_id, which equal the join columns; page_title, lt_title, cl_sortkey and cl_sortkey_prefix are binary columns and are written as the dump's byte strings decoded as UTF-8 where valid.",
+  "cleaning": {
+   "records": 2258768,
+   "records_after_deduplication": 2258768,
+   "sampled_from": 2258768,
+   "kept": 999656,
+   "repaired_for": "the sure FDs of Sigma*",
+   "removed_per_fd": {
+    "page_namespace,page_title->cl_from": 339,
+    "lt_namespace,lt_title->cl_target_id": 5
+   },
+   "missing_values": "empty and missing references become '?', kept as a value (null = null)"
+  }
+ },
+ "attributes": [
+  "cl_from",
+  "cl_target_id",
+  "cl_sortkey",
+  "cl_sortkey_prefix",
+  "cl_timestamp",
+  "cl_type",
+  "page_namespace",
+  "page_title",
+  "page_is_redirect",
+  "page_is_new",
+  "page_random",
+  "page_touched",
+  "page_links_updated",
+  "page_latest",
+  "page_len",
+  "page_content_model",
+  "lt_title"
+ ],
+ "dropped_constant_columns": [
+  "cl_collation_id",
+  "page_lang",
+  "lt_namespace"
+ ],
+ "distinct_values": {
+  "cl_from": 383799,
+  "cl_target_id": 87308,
+  "cl_sortkey": 425544,
+  "cl_sortkey_prefix": 135900,
+  "cl_timestamp": 113314,
+  "cl_type": 3,
+  "page_namespace": 18,
+  "page_title": 363045,
+  "page_is_redirect": 2,
+  "page_is_new": 2,
+  "page_random": 383799,
+  "page_touched": 104586,
+  "page_links_updated": 146012,
+  "page_latest": 383799,
+  "page_len": 22145,
+  "page_content_model": 5,
+  "lt_title": 87308
+ },
+ "truth": [
+  {
+   "lhs": [
+    "cl_from",
+    "cl_target_id"
+   ],
+   "rhs": [
+    "cl_sortkey",
+    "cl_sortkey_prefix",
+    "cl_timestamp",
+    "cl_type"
+   ],
+   "sure": true,
+   "clause": "mediawiki_tables-generated.sql, CREATE TABLE /*_*/categorylinks: \"PRIMARY KEY(cl_from, cl_target_id)\"; mediawiki_Manual_Categorylinks_table.wiki, Schema summary (MW 1.45 and after): \"| cl_from           | int(10) unsigned             | NO   | PRI | 0\" and \"| cl_target_id      | bigint(20) unsigned          | NO   | PRI | NULL\"",
+   "justification": "(cl_from, cl_target_id) is the declared primary key of categorylinks in the 1.45+ layout, and the right-hand side are its other columns.",
+   "audit": {
+    "verdicts": {
+     "cl_sortkey": "TRUE",
+     "cl_sortkey_prefix": "TRUE",
+     "cl_timestamp": "TRUE",
+     "cl_type": "TRUE",
+     "cl_collation_id": "TRUE"
+    },
+    "quote": "PRIMARY KEY(cl_from, cl_target_id) ‖ \"pk\": [ \"cl_from\", \"cl_target_id\" ] ‖ | cl_from | int(10) unsigned | NO | PRI | 0 | ‖ | cl_target_id | bigint(20) unsigned | NO | PRI | NULL | ‖ <meta name=\"generator\" content=\"MediaWiki 1.47.0-wmf.24\">",
+    "source": "mediawiki_tables-generated.sql, CREATE TABLE /*_*/categorylinks ‖ mediawiki_tables.json, table categorylinks, pk ‖ mediawiki_Manual_Categorylinks_table.wiki, Schema summary (MW 1.45 and after) ‖ mediawiki_Manual_Categorylinks_table.wiki, Schema summary (MW 1.45 and after) ‖ simplewiki_Special_Version.html, head"
+   }
+  },
+  {
+   "lhs": [
+    "cl_from"
+   ],
+   "rhs": [
+    "page_namespace",
+    "page_title",
+    "page_is_redirect",
+    "page_is_new",
+    "page_random",
+    "page_touched",
+    "page_links_updated",
+    "page_latest",
+    "page_len",
+    "page_content_model"
+   ],
+   "sure": true,
+   "clause": "mediawiki_tables.json, categorylinks.cl_from comment: \"Key to page_id of the page defined as a category member.\"; mediawiki_tables-generated.sql, CREATE TABLE /*_*/page: \"PRIMARY KEY(page_id)\"; mediawiki_Manual_Page_table.wiki, page_id: \"Uniquely identifying [[w:primary key|primary key]].\"; mediawiki_Manual_Categorylinks_table.wiki, cl_from: \"of the article where the link was placed.\"",
+   "justification": "cl_from holds the page_id of the member page, the declared primary key of page, so it identifies one page row and its columns.",
+   "audit": {
+    "verdicts": {
+     "page_namespace": "TRUE",
+     "page_title": "TRUE",
+     "page_is_redirect": "TRUE",
+     "page_is_new": "TRUE",
+     "page_random": "TRUE",
+     "page_touched": "TRUE",
+     "page_links_updated": "TRUE",
+     "page_latest": "TRUE",
+     "page_len": "TRUE",
+     "page_content_model": "TRUE",
+     "page_lang": "TRUE"
+    },
+    "quote": "Key to page_id of the page defined as a category member. ‖ of the article where the link was placed. ‖ PRIMARY KEY(page_id) ‖ Uniquely identifying [[w:primary key|primary key]].",
+    "source": "mediawiki_tables.json, table categorylinks, column cl_from, comment ‖ mediawiki_Manual_Categorylinks_table.wiki, Fields, cl_from ‖ mediawiki_tables-generated.sql, CREATE TABLE /*_*/page ‖ mediawiki_Manual_Page_table.wiki, Fields, page_id"
+   }
+  },
+  {
+   "lhs": [
+    "page_namespace",
+    "page_title"
+   ],
+   "rhs": [
+    "cl_from",
+    "page_is_redirect",
+    "page_is_new",
+    "page_random",
+    "page_touched",
+    "page_links_updated",
+    "page_latest",
+    "page_len",
+    "page_content_model"
+   ],
+   "sure": true,
+   "clause": "mediawiki_tables-generated.sql, CREATE TABLE /*_*/page: \"UNIQUE INDEX page_name_title (page_namespace, page_title)\"; mediawiki_Manual_Page_table.wiki, Indexes (MW 1.28 and after), SHOW INDEX: \"| page  |          0 | page_name_title             |            1 | page_namespace\" and \"| page  |          0 | page_name_title             |            2 | page_title\"; mediawiki_Manual_Page_table.wiki, introduction: \"MediaWiki first searches for the row in the <tvar name=1><code>page</code></tvar> table based on <tvar name=3>[[#page_namespace|page_namespace]]</tvar> and <tvar name=2>[[#page_title|page_title]]</tvar> matching the page name supplied in the URL.\"",
+   "justification": "(page_namespace, page_title) is a declared unique index of page (Non_unique 0), so it identifies one page row, hence its page_id, which is cl_from; a category member whose page row is missing from the dump (the tables are written at different instants) keeps empty page columns and is removed by the repair.",
+   "audit": {
+    "verdicts": {
+     "cl_from": "TRUE",
+     "page_is_redirect": "TRUE",
+     "page_is_new": "TRUE",
+     "page_random": "TRUE",
+     "page_touched": "TRUE",
+     "page_links_updated": "TRUE",
+     "page_latest": "TRUE",
+     "page_len": "TRUE",
+     "page_content_model": "TRUE",
+     "page_lang": "TRUE"
+    },
+    "quote": "UNIQUE INDEX page_name_title (page_namespace, page_title) ‖ \"name\": \"page_name_title\", \"columns\": [ \"page_namespace\", \"page_title\" ], \"comment\": \"The title index. Care must be taken to always specify a namespace when by title, so that the index is used. Even listing all known namespaces with IN() is better than omitting page_namespace from the WHERE clause.\", \"unique\": true ‖ | page | 0 | page_name_title | 1 | page_namespace | ‖ | page | 0 | page_name_title | 2 | page_title | ‖ MediaWiki first searches for the row in the <tvar name=1><code>page</code></tvar> table based on <tvar name=3>[[#page_namespace|page_namespace]]</tvar> and <tvar name=2>[[#page_title|page_title]]</tvar> matching the page name supplied in the URL.",
+    "source": "mediawiki_tables-generated.sql, CREATE TABLE /*_*/page ‖ mediawiki_tables.json, table page, indexes ‖ mediawiki_Manual_Page_table.wiki, Indexes (MW 1.28 and after), SHOW INDEX ‖ mediawiki_Manual_Page_table.wiki, Indexes (MW 1.28 and after), SHOW INDEX ‖ mediawiki_Manual_Page_table.wiki, introduction"
+   }
+  },
+  {
+   "lhs": [
+    "cl_target_id"
+   ],
+   "rhs": [
+    "lt_title"
+   ],
+   "sure": true,
+   "clause": "mediawiki_tables.json, categorylinks.cl_target_id comment: \"Foreign key to linktarget.lt_id\"; mediawiki_tables-generated.sql, CREATE TABLE /*_*/linktarget: \"PRIMARY KEY(lt_id)\"; mediawiki_Manual_Categorylinks_table.wiki, cl_target_id: \"giving the target of the category link.\"; mediawiki_Manual_Linktarget_table.wiki, lt_id: \"Primary key.\"",
+   "justification": "cl_target_id references the declared primary key lt_id of linktarget, so it identifies one linktarget row and its namespace and title.",
+   "audit": {
+    "verdicts": {
+     "lt_namespace": "TRUE",
+     "lt_title": "TRUE"
+    },
+    "quote": "Foreign key to linktarget.lt_id ‖ Foreign key to <tvar name=1>{{db table|linktarget|lt_id}}</tvar> giving the target of the category link. ‖ PRIMARY KEY(lt_id) ‖ Primary key.",
+    "source": "mediawiki_tables.json, table categorylinks, column cl_target_id, comment ‖ mediawiki_Manual_Categorylinks_table.wiki, Fields, cl_target_id ‖ mediawiki_tables-generated.sql, CREATE TABLE /*_*/linktarget ‖ mediawiki_Manual_Linktarget_table.wiki, Fields, lt_id"
+   }
+  },
+  {
+   "lhs": [
+    "lt_title"
+   ],
+   "rhs": [
+    "cl_target_id"
+   ],
+   "sure": true,
+   "clause": "mediawiki_tables-generated.sql, CREATE TABLE /*_*/linktarget: \"UNIQUE INDEX lt_namespace_title (lt_namespace, lt_title)\"; mediawiki_Manual_Linktarget_table.wiki, introduction: \"This table stores a page namespace-title tuples, each one with a unique integer ID.\"; mediawiki_Manual_Linktarget_table.wiki, Indexes, SHOW INDEX: \"| linktarget |          0 | lt_namespace_title |            1 | lt_namespace\" and \"| linktarget |          0 | lt_namespace_title |            2 | lt_title\"",
+   "justification": "(lt_namespace, lt_title) is a declared unique index of linktarget, so it identifies one linktarget row, hence its lt_id, which is cl_target_id.",
+   "audit": {
+    "verdicts": {
+     "cl_target_id": "TRUE"
+    },
+    "quote": "UNIQUE INDEX lt_namespace_title (lt_namespace, lt_title) ‖ This table stores a page namespace-title tuples, each one with a unique integer ID. ‖ | linktarget | 0 | lt_namespace_title | 1 | lt_namespace | ‖ | linktarget | 0 | lt_namespace_title | 2 | lt_title |",
+    "source": "mediawiki_tables-generated.sql, CREATE TABLE /*_*/linktarget ‖ mediawiki_Manual_Linktarget_table.wiki, introduction ‖ mediawiki_Manual_Linktarget_table.wiki, Indexes, SHOW INDEX ‖ mediawiki_Manual_Linktarget_table.wiki, Indexes, SHOW INDEX"
+   }
+  },
+  {
+   "lhs": [
+    "page_namespace"
+   ],
+   "rhs": [
+    "cl_type"
+   ],
+   "sure": false,
+   "clause": "mediawiki_tables.json, categorylinks.cl_type comment: \"Stores whether cl_from is a category, file, or other page, so we can paginate the three categories separately.  This only has to be updated when moving pages into or out of the category namespace, since file pages cannot be moved to other namespaces, nor can non-files be moved into the file namespace.\"; mediawiki_Manual_Categorylinks_table.wiki, cl_type: \"What type of page is this (<tvar name=file><code>file</code></tvar>, <tvar name=subcat><code>subcat</code></tvar> (subcategory) or <tvar name=page><code>page</code></tvar> (normal page)).\"",
+   "justification": "Unsure: cl_type classifies the member page as a category page, a file page or another page, which is decided by the page's namespace, and the comment ties its maintenance to namespace moves; but no text says cl_type is a function of page_namespace, and a row is refreshed only when the page is re-parsed after a move, so rows may lag.",
+   "audit": {
+    "verdicts": {
+     "cl_type": "UNDETERMINED"
+    },
+    "quote": "Stores whether cl_from is a category, file, or other page, so we can paginate the three categories separately. This only has to be updated when moving pages into or out of the category namespace, since file pages cannot be moved to other namespaces, nor can non-files be moved into the file namespace. ‖ What type of page is this (<tvar name=file><code>file</code></tvar>, <tvar name=subcat><code>subcat</code></tvar> (subcategory) or <tvar name=page><code>page</code></tvar> (normal page)). ‖ Stores the time at which that link was last updated in the table. ‖ <span class='updates'>2026-10-01 21:33:50</span> <span class='status'>done</span> <span class='title'>Wiki category membership link records.</span> ‖ <span class='updates'>2026-10-01 21:35:02</span> <span class='status'>done</span> <span class='title'>Base per-page data (id, title, old restrictions, etc).</span>",
+    "source": "mediawiki_tables.json, table categorylinks, column cl_type, comment ‖ mediawiki_Manual_Categorylinks_table.wiki, Fields, cl_type ‖ mediawiki_Manual_Categorylinks_table.wiki, Fields, cl_timestamp ‖ simplewiki_20261001_index.html, file list ‖ simplewiki_20261001_index.html, file list"
+   }
+  },
+  {
+   "lhs": [
+    "cl_sortkey_prefix",
+    "page_title"
+   ],
+   "rhs": [
+    "cl_sortkey"
+   ],
+   "sure": false,
+   "clause": "mediawiki_tables.json, categorylinks.cl_sortkey comment: \"A binary string obtained by applying a sortkey generation algorithm (Collation::getSortKey()) to page_title, or cl_sortkey_prefix . \"\\n\" page_title if cl_sortkey_prefix is nonempty.\"; mediawiki_tables.json, categorylinks.cl_collation_id comment: \"FK to collation_id\"; mediawiki_Manual_Categorylinks_table.wiki, cl_sortkey: \"This is the binary sortkey, that depending on <tvar name=collation>{{ll|manual:$wgCategoryCollation|$wgCategoryCollation}}</tvar> may or may not be readable by a human\"; mediawiki_Manual_Categorylinks_table.wiki, cl_sortkey_prefix: \"Otherwise it is the human readable version of the first part of <tvar name=1><code>cl_sortkey</code></tvar>.\"",
+   "justification": "Unsure: the sortkey is computed from the prefix and the member page's title under the collation that cl_collation_id records, so the three determine it for a current row; the text describes a computation rather than stating a constraint, the sortkey is truncated to 230 bytes, and a row whose page was renamed keeps its old sortkey until the page is re-parsed.",
+   "audit": {
+    "verdicts": {
+     "cl_sortkey": "UNDETERMINED"
+    },
+    "quote": "A binary string obtained by applying a sortkey generation algorithm (Collation::getSortKey()) to page_title, or cl_sortkey_prefix . \\\"\\\\n\\\" page_title if cl_sortkey_prefix is nonempty. ‖ If nonempty, it's concatenated with a line break followed by the page title before the sortkey conversion algorithm is run. We store this so that we can update collations without reparsing all pages. ‖ Used so that if the [[<tvar name=1>Special:MyLanguage/Manual:$wgCategoryCollation</tvar>|collation changes]], the <tvar name=2>{{ll|Manual:updateCollation.php|updateCollation.php}}</tvar> script knows what rows need to be fixed in db. ‖ Needed mostly so that <tvar name=1><code>cl_sortkey</code></tvar> can be easily updated in certain situations without re-parsing the entire page. ‖ Stores the time at which that link was last updated in the table.",
+    "source": "mediawiki_tables.json, table categorylinks, column cl_sortkey, comment ‖ mediawiki_tables.json, table categorylinks, column cl_sortkey_prefix, comment ‖ mediawiki_Manual_Categorylinks_table.wiki, Fields, cl_collation_id ‖ mediawiki_Manual_Categorylinks_table.wiki, Fields, cl_sortkey_prefix ‖ mediawiki_Manual_Categorylinks_table.wiki, Fields, cl_timestamp"
+   }
+  }
+ ],
+ "truth_counts": {
+  "fds": 7,
+  "single_rhs": 27,
+  "sure_single_rhs": 25
+ },
+ "random_columns": null,
+ "truth_fds_violated_by_data": [
+  {
+   "fd": "cl_sortkey_prefix,page_title -> cl_sortkey",
+   "sure": false,
+   "g3": 0.005561
+  }
+ ],
+ "gold_design": null,
+ "gold_design_note": "No normalized design is published; the 3NF designs of Sigma* are synthesized.",
+ "truth_design": {
+  "keys": [
+   [
+    "lt_title",
+    "page_namespace",
+    "page_title"
+   ],
+   [
+    "cl_from",
+    "lt_title"
+   ],
+   [
+    "cl_target_id",
+    "page_namespace",
+    "page_title"
+   ],
+   [
+    "cl_from",
+    "cl_target_id"
+   ]
+  ],
+  "atomic_closure": 37,
+  "synthesis": [
+   [
+    "cl_from",
+    "page_namespace",
+    "page_title"
+   ],
+   [
+    "cl_sortkey",
+    "cl_sortkey_prefix",
+    "page_title"
+   ],
+   [
+    "cl_sortkey_prefix",
+    "lt_title",
+    "page_namespace",
+    "page_title"
+   ],
+   [
+    "cl_target_id",
+    "lt_title"
+   ],
+   [
+    "cl_timestamp",
+    "lt_title",
+    "page_namespace",
+    "page_title"
+   ],
+   [
+    "cl_type",
+    "page_namespace"
+   ],
+   [
+    "page_content_model",
+    "page_namespace",
+    "page_title"
+   ],
+   [
+    "page_is_new",
+    "page_namespace",
+    "page_title"
+   ],
+   [
+    "page_is_redirect",
+    "page_namespace",
+    "page_title"
+   ],
+   [
+    "page_latest",
+    "page_namespace",
+    "page_title"
+   ],
+   [
+    "page_len",
+    "page_namespace",
+    "page_title"
+   ],
+   [
+    "page_links_updated",
+    "page_namespace",
+    "page_title"
+   ],
+   [
+    "page_namespace",
+    "page_random",
+    "page_title"
+   ],
+   [
+    "page_namespace",
+    "page_title",
+    "page_touched"
+   ]
+  ],
+  "iconf": [
+   [
+    "cl_from",
+    "page_namespace",
+    "page_title"
+   ],
+   [
+    "cl_sortkey",
+    "cl_sortkey_prefix",
+    "page_title"
+   ],
+   [
+    "cl_sortkey_prefix",
+    "lt_title",
+    "page_namespace",
+    "page_title"
+   ],
+   [
+    "cl_target_id",
+    "lt_title"
+   ],
+   [
+    "cl_timestamp",
+    "lt_title",
+    "page_namespace",
+    "page_title"
+   ],
+   [
+    "cl_type",
+    "page_namespace"
+   ],
+   [
+    "page_content_model",
+    "page_namespace",
+    "page_title"
+   ],
+   [
+    "page_is_new",
+    "page_namespace",
+    "page_title"
+   ],
+   [
+    "page_is_redirect",
+    "page_namespace",
+    "page_title"
+   ],
+   [
+    "page_latest",
+    "page_namespace",
+    "page_title"
+   ],
+   [
+    "page_len",
+    "page_namespace",
+    "page_title"
+   ],
+   [
+    "page_links_updated",
+    "page_namespace",
+    "page_title"
+   ],
+   [
+    "page_namespace",
+    "page_random",
+    "page_title"
+   ],
+   [
+    "page_namespace",
+    "page_title",
+    "page_touched"
+   ]
+  ]
+ },
+ "mined": {
+  "algorithm": "fdmine.py: exact discovery of all minimal FDs in the style of HyFD (no HyFD binary was available); the complete set of minimal FDs is unique, so it equals HyFD's output",
+  "file": "mined/fresh_simplewiki-fds.txt",
+  "seconds": 18.3,
+  "count": 142,
+  "implied_by_truth": 39,
+  "accidental": 103,
+  "implied_by_sure_truth": 33
+ },
+ "truth_design_sure_only": {
+  "keys": [
+   [
+    "lt_title",
+    "page_namespace",
+    "page_title"
+   ],
+   [
+    "cl_from",
+    "lt_title"
+   ],
+   [
+    "cl_target_id",
+    "page_namespace",
+    "page_title"
+   ],
+   [
+    "cl_from",
+    "cl_target_id"
+   ]
+  ],
+  "atomic_closure": 37,
+  "synthesis": [
+   [
+    "cl_from",
+    "page_namespace",
+    "page_title"
+   ],
+   [
+    "cl_sortkey",
+    "lt_title",
+    "page_namespace",
+    "page_title"
+   ],
+   [
+    "cl_sortkey_prefix",
+    "lt_title",
+    "page_namespace",
+    "page_title"
+   ],
+   [
+    "cl_target_id",
+    "lt_title"
+   ],
+   [
+    "cl_timestamp",
+    "lt_title",
+    "page_namespace",
+    "page_title"
+   ],
+   [
+    "cl_type",
+    "lt_title",
+    "page_namespace",
+    "page_title"
+   ],
+   [
+    "page_content_model",
+    "page_namespace",
+    "page_title"
+   ],
+   [
+    "page_is_new",
+    "page_namespace",
+    "page_title"
+   ],
+   [
+    "page_is_redirect",
+    "page_namespace",
+    "page_title"
+   ],
+   [
+    "page_latest",
+    "page_namespace",
+    "page_title"
+   ],
+   [
+    "page_len",
+    "page_namespace",
+    "page_title"
+   ],
+   [
+    "page_links_updated",
+    "page_namespace",
+    "page_title"
+   ],
+   [
+    "page_namespace",
+    "page_random",
+    "page_title"
+   ],
+   [
+    "page_namespace",
+    "page_title",
+    "page_touched"
+   ]
+  ],
+  "iconf": [
+   [
+    "cl_from",
+    "page_namespace",
+    "page_title"
+   ],
+   [
+    "cl_sortkey",
+    "lt_title",
+    "page_namespace",
+    "page_title"
+   ],
+   [
+    "cl_sortkey_prefix",
+    "lt_title",
+    "page_namespace",
+    "page_title"
+   ],
+   [
+    "cl_target_id",
+    "lt_title"
+   ],
+   [
+    "cl_timestamp",
+    "lt_title",
+    "page_namespace",
+    "page_title"
+   ],
+   [
+    "cl_type",
+    "lt_title",
+    "page_namespace",
+    "page_title"
+   ],
+   [
+    "page_content_model",
+    "page_namespace",
+    "page_title"
+   ],
+   [
+    "page_is_new",
+    "page_namespace",
+    "page_title"
+   ],
+   [
+    "page_is_redirect",
+    "page_namespace",
+    "page_title"
+   ],
+   [
+    "page_latest",
+    "page_namespace",
+    "page_title"
+   ],
+   [
+    "page_len",
+    "page_namespace",
+    "page_title"
+   ],
+   [
+    "page_links_updated",
+    "page_namespace",
+    "page_title"
+   ],
+   [
+    "page_namespace",
+    "page_random",
+    "page_title"
+   ],
+   [
+    "page_namespace",
+    "page_title",
+    "page_touched"
+   ]
+  ]
+ },
+ "fds": [
+  {"lhs": ["page_random"], "rhs": "cl_from", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 383799, "distinct_rhs": 383799, "lhs_distinct_ratio": 0.383931, "rhs_distinct_ratio": 0.383931, "redundancy": 615857, "redundancy_wl": 859111, "lhs_unique": false, "lhs_tokens": [["page", "random"]], "rhs_tokens": ["cl", "from"]},
+  {"lhs": ["page_latest"], "rhs": "cl_from", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 383799, "distinct_rhs": 383799, "lhs_distinct_ratio": 0.383931, "rhs_distinct_ratio": 0.383931, "redundancy": 615857, "redundancy_wl": 859111, "lhs_unique": false, "lhs_tokens": [["page", "latest"]], "rhs_tokens": ["cl", "from"]},
+  {"lhs": ["lt_title"], "rhs": "cl_target_id", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 87308, "distinct_rhs": 87308, "lhs_distinct_ratio": 0.087338, "rhs_distinct_ratio": 0.087338, "redundancy": 912348, "redundancy_wl": 978966, "lhs_unique": false, "lhs_tokens": [["lt", "title"]], "rhs_tokens": ["cl", "target", "id"]},
+  {"lhs": ["cl_from"], "rhs": "cl_type", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 383799, "distinct_rhs": 3, "lhs_distinct_ratio": 0.383931, "rhs_distinct_ratio": 3e-06, "redundancy": 615857, "redundancy_wl": 859111, "lhs_unique": false, "lhs_tokens": [["cl", "from"]], "rhs_tokens": ["cl", "type"]},
+  {"lhs": ["page_namespace"], "rhs": "cl_type", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 18, "distinct_rhs": 3, "lhs_distinct_ratio": 1.8e-05, "rhs_distinct_ratio": 3e-06, "redundancy": 999638, "redundancy_wl": 999655, "lhs_unique": false, "lhs_tokens": [["page", "namespace"]], "rhs_tokens": ["cl", "type"]},
+  {"lhs": ["page_random"], "rhs": "cl_type", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 383799, "distinct_rhs": 3, "lhs_distinct_ratio": 0.383931, "rhs_distinct_ratio": 3e-06, "redundancy": 615857, "redundancy_wl": 859111, "lhs_unique": false, "lhs_tokens": [["page", "random"]], "rhs_tokens": ["cl", "type"]},
+  {"lhs": ["page_latest"], "rhs": "cl_type", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 383799, "distinct_rhs": 3, "lhs_distinct_ratio": 0.383931, "rhs_distinct_ratio": 3e-06, "redundancy": 615857, "redundancy_wl": 859111, "lhs_unique": false, "lhs_tokens": [["page", "latest"]], "rhs_tokens": ["cl", "type"]},
+  {"lhs": ["cl_from"], "rhs": "page_namespace", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 383799, "distinct_rhs": 18, "lhs_distinct_ratio": 0.383931, "rhs_distinct_ratio": 1.8e-05, "redundancy": 615857, "redundancy_wl": 859111, "lhs_unique": false, "lhs_tokens": [["cl", "from"]], "rhs_tokens": ["page", "namespace"]},
+  {"lhs": ["page_random"], "rhs": "page_namespace", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 383799, "distinct_rhs": 18, "lhs_distinct_ratio": 0.383931, "rhs_distinct_ratio": 1.8e-05, "redundancy": 615857, "redundancy_wl": 859111, "lhs_unique": false, "lhs_tokens": [["page", "random"]], "rhs_tokens": ["page", "namespace"]},
+  {"lhs": ["page_latest"], "rhs": "page_namespace", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 383799, "distinct_rhs": 18, "lhs_distinct_ratio": 0.383931, "rhs_distinct_ratio": 1.8e-05, "redundancy": 615857, "redundancy_wl": 859111, "lhs_unique": false, "lhs_tokens": [["page", "latest"]], "rhs_tokens": ["page", "namespace"]},
+  {"lhs": ["cl_from"], "rhs": "page_title", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 383799, "distinct_rhs": 363045, "lhs_distinct_ratio": 0.383931, "rhs_distinct_ratio": 0.36317, "redundancy": 615857, "redundancy_wl": 859111, "lhs_unique": false, "lhs_tokens": [["cl", "from"]], "rhs_tokens": ["page", "title"]},
+  {"lhs": ["page_random"], "rhs": "page_title", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 383799, "distinct_rhs": 363045, "lhs_distinct_ratio": 0.383931, "rhs_distinct_ratio": 0.36317, "redundancy": 615857, "redundancy_wl": 859111, "lhs_unique": false, "lhs_tokens": [["page", "random"]], "rhs_tokens": ["page", "title"]},
+  {"lhs": ["page_latest"], "rhs": "page_title", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 383799, "distinct_rhs": 363045, "lhs_distinct_ratio": 0.383931, "rhs_distinct_ratio": 0.36317, "redundancy": 615857, "redundancy_wl": 859111, "lhs_unique": false, "lhs_tokens": [["page", "latest"]], "rhs_tokens": ["page", "title"]},
+  {"lhs": ["cl_from"], "rhs": "page_is_redirect", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 383799, "distinct_rhs": 2, "lhs_distinct_ratio": 0.383931, "rhs_distinct_ratio": 2e-06, "redundancy": 615857, "redundancy_wl": 859111, "lhs_unique": false, "lhs_tokens": [["cl", "from"]], "rhs_tokens": ["page", "is", "redirect"]},
+  {"lhs": ["page_random"], "rhs": "page_is_redirect", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 383799, "distinct_rhs": 2, "lhs_distinct_ratio": 0.383931, "rhs_distinct_ratio": 2e-06, "redundancy": 615857, "redundancy_wl": 859111, "lhs_unique": false, "lhs_tokens": [["page", "random"]], "rhs_tokens": ["page", "is", "redirect"]},
+  {"lhs": ["page_latest"], "rhs": "page_is_redirect", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 383799, "distinct_rhs": 2, "lhs_distinct_ratio": 0.383931, "rhs_distinct_ratio": 2e-06, "redundancy": 615857, "redundancy_wl": 859111, "lhs_unique": false, "lhs_tokens": [["page", "latest"]], "rhs_tokens": ["page", "is", "redirect"]},
+  {"lhs": ["cl_from"], "rhs": "page_is_new", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 383799, "distinct_rhs": 2, "lhs_distinct_ratio": 0.383931, "rhs_distinct_ratio": 2e-06, "redundancy": 615857, "redundancy_wl": 859111, "lhs_unique": false, "lhs_tokens": [["cl", "from"]], "rhs_tokens": ["page", "is", "new"]},
+  {"lhs": ["page_random"], "rhs": "page_is_new", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 383799, "distinct_rhs": 2, "lhs_distinct_ratio": 0.383931, "rhs_distinct_ratio": 2e-06, "redundancy": 615857, "redundancy_wl": 859111, "lhs_unique": false, "lhs_tokens": [["page", "random"]], "rhs_tokens": ["page", "is", "new"]},
+  {"lhs": ["page_latest"], "rhs": "page_is_new", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 383799, "distinct_rhs": 2, "lhs_distinct_ratio": 0.383931, "rhs_distinct_ratio": 2e-06, "redundancy": 615857, "redundancy_wl": 859111, "lhs_unique": false, "lhs_tokens": [["page", "latest"]], "rhs_tokens": ["page", "is", "new"]},
+  {"lhs": ["cl_from"], "rhs": "page_random", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 383799, "distinct_rhs": 383799, "lhs_distinct_ratio": 0.383931, "rhs_distinct_ratio": 0.383931, "redundancy": 615857, "redundancy_wl": 859111, "lhs_unique": false, "lhs_tokens": [["cl", "from"]], "rhs_tokens": ["page", "random"]},
+  {"lhs": ["page_latest"], "rhs": "page_random", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 383799, "distinct_rhs": 383799, "lhs_distinct_ratio": 0.383931, "rhs_distinct_ratio": 0.383931, "redundancy": 615857, "redundancy_wl": 859111, "lhs_unique": false, "lhs_tokens": [["page", "latest"]], "rhs_tokens": ["page", "random"]},
+  {"lhs": ["cl_from"], "rhs": "page_touched", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 383799, "distinct_rhs": 104586, "lhs_distinct_ratio": 0.383931, "rhs_distinct_ratio": 0.104622, "redundancy": 615857, "redundancy_wl": 859111, "lhs_unique": false, "lhs_tokens": [["cl", "from"]], "rhs_tokens": ["page", "touched"]},
+  {"lhs": ["page_random"], "rhs": "page_touched", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 383799, "distinct_rhs": 104586, "lhs_distinct_ratio": 0.383931, "rhs_distinct_ratio": 0.104622, "redundancy": 615857, "redundancy_wl": 859111, "lhs_unique": false, "lhs_tokens": [["page", "random"]], "rhs_tokens": ["page", "touched"]},
+  {"lhs": ["page_latest"], "rhs": "page_touched", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 383799, "distinct_rhs": 104586, "lhs_distinct_ratio": 0.383931, "rhs_distinct_ratio": 0.104622, "redundancy": 615857, "redundancy_wl": 859111, "lhs_unique": false, "lhs_tokens": [["page", "latest"]], "rhs_tokens": ["page", "touched"]},
+  {"lhs": ["cl_from"], "rhs": "page_links_updated", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 383799, "distinct_rhs": 146012, "lhs_distinct_ratio": 0.383931, "rhs_distinct_ratio": 0.146062, "redundancy": 615857, "redundancy_wl": 859111, "lhs_unique": false, "lhs_tokens": [["cl", "from"]], "rhs_tokens": ["page", "links", "updated"]},
+  {"lhs": ["page_random"], "rhs": "page_links_updated", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 383799, "distinct_rhs": 146012, "lhs_distinct_ratio": 0.383931, "rhs_distinct_ratio": 0.146062, "redundancy": 615857, "redundancy_wl": 859111, "lhs_unique": false, "lhs_tokens": [["page", "random"]], "rhs_tokens": ["page", "links", "updated"]},
+  {"lhs": ["page_latest"], "rhs": "page_links_updated", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 383799, "distinct_rhs": 146012, "lhs_distinct_ratio": 0.383931, "rhs_distinct_ratio": 0.146062, "redundancy": 615857, "redundancy_wl": 859111, "lhs_unique": false, "lhs_tokens": [["page", "latest"]], "rhs_tokens": ["page", "links", "updated"]},
+  {"lhs": ["cl_from"], "rhs": "page_latest", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 383799, "distinct_rhs": 383799, "lhs_distinct_ratio": 0.383931, "rhs_distinct_ratio": 0.383931, "redundancy": 615857, "redundancy_wl": 859111, "lhs_unique": false, "lhs_tokens": [["cl", "from"]], "rhs_tokens": ["page", "latest"]},
+  {"lhs": ["page_random"], "rhs": "page_latest", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 383799, "distinct_rhs": 383799, "lhs_distinct_ratio": 0.383931, "rhs_distinct_ratio": 0.383931, "redundancy": 615857, "redundancy_wl": 859111, "lhs_unique": false, "lhs_tokens": [["page", "random"]], "rhs_tokens": ["page", "latest"]},
+  {"lhs": ["cl_from"], "rhs": "page_len", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 383799, "distinct_rhs": 22145, "lhs_distinct_ratio": 0.383931, "rhs_distinct_ratio": 0.022153, "redundancy": 615857, "redundancy_wl": 859111, "lhs_unique": false, "lhs_tokens": [["cl", "from"]], "rhs_tokens": ["page", "len"]},
+  {"lhs": ["page_random"], "rhs": "page_len", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 383799, "distinct_rhs": 22145, "lhs_distinct_ratio": 0.383931, "rhs_distinct_ratio": 0.022153, "redundancy": 615857, "redundancy_wl": 859111, "lhs_unique": false, "lhs_tokens": [["page", "random"]], "rhs_tokens": ["page", "len"]},
+  {"lhs": ["page_latest"], "rhs": "page_len", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 383799, "distinct_rhs": 22145, "lhs_distinct_ratio": 0.383931, "rhs_distinct_ratio": 0.022153, "redundancy": 615857, "redundancy_wl": 859111, "lhs_unique": false, "lhs_tokens": [["page", "latest"]], "rhs_tokens": ["page", "len"]},
+  {"lhs": ["cl_from"], "rhs": "page_content_model", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 383799, "distinct_rhs": 5, "lhs_distinct_ratio": 0.383931, "rhs_distinct_ratio": 5e-06, "redundancy": 615857, "redundancy_wl": 859111, "lhs_unique": false, "lhs_tokens": [["cl", "from"]], "rhs_tokens": ["page", "content", "model"]},
+  {"lhs": ["page_random"], "rhs": "page_content_model", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 383799, "distinct_rhs": 5, "lhs_distinct_ratio": 0.383931, "rhs_distinct_ratio": 5e-06, "redundancy": 615857, "redundancy_wl": 859111, "lhs_unique": false, "lhs_tokens": [["page", "random"]], "rhs_tokens": ["page", "content", "model"]},
+  {"lhs": ["page_latest"], "rhs": "page_content_model", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 383799, "distinct_rhs": 5, "lhs_distinct_ratio": 0.383931, "rhs_distinct_ratio": 5e-06, "redundancy": 615857, "redundancy_wl": 859111, "lhs_unique": false, "lhs_tokens": [["page", "latest"]], "rhs_tokens": ["page", "content", "model"]},
+  {"lhs": ["cl_target_id"], "rhs": "lt_title", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 87308, "distinct_rhs": 87308, "lhs_distinct_ratio": 0.087338, "rhs_distinct_ratio": 0.087338, "redundancy": 912348, "redundancy_wl": 978966, "lhs_unique": false, "lhs_tokens": [["cl", "target", "id"]], "rhs_tokens": ["lt", "title"]},
+  {"lhs": ["page_namespace", "page_title"], "rhs": "cl_from", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 2, "distinct_lhs": 383799, "distinct_rhs": 383799, "lhs_distinct_ratio": 0.383931, "rhs_distinct_ratio": 0.383931, "redundancy": 615857, "redundancy_wl": 859111, "lhs_unique": false, "lhs_tokens": [["page", "namespace"], ["page", "title"]], "rhs_tokens": ["cl", "from"]},
+  {"lhs": ["cl_from", "cl_target_id"], "rhs": "cl_sortkey", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 2, "distinct_lhs": 999656, "distinct_rhs": 425544, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.42569, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["cl", "from"], ["cl", "target", "id"]], "rhs_tokens": ["cl", "sortkey"]},
+  {"lhs": ["cl_target_id", "page_random"], "rhs": "cl_sortkey", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 999656, "distinct_rhs": 425544, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.42569, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["cl", "target", "id"], ["page", "random"]], "rhs_tokens": ["cl", "sortkey"]},
+  {"lhs": ["cl_target_id", "page_latest"], "rhs": "cl_sortkey", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 999656, "distinct_rhs": 425544, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.42569, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["cl", "target", "id"], ["page", "latest"]], "rhs_tokens": ["cl", "sortkey"]},
+  {"lhs": ["cl_from", "lt_title"], "rhs": "cl_sortkey", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 2, "distinct_lhs": 999656, "distinct_rhs": 425544, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.42569, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["cl", "from"], ["lt", "title"]], "rhs_tokens": ["cl", "sortkey"]},
+  {"lhs": ["page_random", "lt_title"], "rhs": "cl_sortkey", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 999656, "distinct_rhs": 425544, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.42569, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["page", "random"], ["lt", "title"]], "rhs_tokens": ["cl", "sortkey"]},
+  {"lhs": ["page_latest", "lt_title"], "rhs": "cl_sortkey", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 999656, "distinct_rhs": 425544, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.42569, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["page", "latest"], ["lt", "title"]], "rhs_tokens": ["cl", "sortkey"]},
+  {"lhs": ["cl_from", "cl_target_id"], "rhs": "cl_sortkey_prefix", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 2, "distinct_lhs": 999656, "distinct_rhs": 135900, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.135947, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["cl", "from"], ["cl", "target", "id"]], "rhs_tokens": ["cl", "sortkey", "prefix"]},
+  {"lhs": ["cl_target_id", "page_random"], "rhs": "cl_sortkey_prefix", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 999656, "distinct_rhs": 135900, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.135947, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["cl", "target", "id"], ["page", "random"]], "rhs_tokens": ["cl", "sortkey", "prefix"]},
+  {"lhs": ["cl_target_id", "page_latest"], "rhs": "cl_sortkey_prefix", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 999656, "distinct_rhs": 135900, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.135947, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["cl", "target", "id"], ["page", "latest"]], "rhs_tokens": ["cl", "sortkey", "prefix"]},
+  {"lhs": ["cl_from", "lt_title"], "rhs": "cl_sortkey_prefix", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 2, "distinct_lhs": 999656, "distinct_rhs": 135900, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.135947, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["cl", "from"], ["lt", "title"]], "rhs_tokens": ["cl", "sortkey", "prefix"]},
+  {"lhs": ["page_random", "lt_title"], "rhs": "cl_sortkey_prefix", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 999656, "distinct_rhs": 135900, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.135947, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["page", "random"], ["lt", "title"]], "rhs_tokens": ["cl", "sortkey", "prefix"]},
+  {"lhs": ["page_latest", "lt_title"], "rhs": "cl_sortkey_prefix", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 999656, "distinct_rhs": 135900, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.135947, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["page", "latest"], ["lt", "title"]], "rhs_tokens": ["cl", "sortkey", "prefix"]},
+  {"lhs": ["cl_from", "cl_target_id"], "rhs": "cl_timestamp", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 2, "distinct_lhs": 999656, "distinct_rhs": 113314, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.113353, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["cl", "from"], ["cl", "target", "id"]], "rhs_tokens": ["cl", "timestamp"]},
+  {"lhs": ["cl_target_id", "page_random"], "rhs": "cl_timestamp", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 999656, "distinct_rhs": 113314, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.113353, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["cl", "target", "id"], ["page", "random"]], "rhs_tokens": ["cl", "timestamp"]},
+  {"lhs": ["cl_target_id", "page_latest"], "rhs": "cl_timestamp", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 999656, "distinct_rhs": 113314, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.113353, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["cl", "target", "id"], ["page", "latest"]], "rhs_tokens": ["cl", "timestamp"]},
+  {"lhs": ["cl_from", "lt_title"], "rhs": "cl_timestamp", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 2, "distinct_lhs": 999656, "distinct_rhs": 113314, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.113353, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["cl", "from"], ["lt", "title"]], "rhs_tokens": ["cl", "timestamp"]},
+  {"lhs": ["page_random", "lt_title"], "rhs": "cl_timestamp", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 999656, "distinct_rhs": 113314, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.113353, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["page", "random"], ["lt", "title"]], "rhs_tokens": ["cl", "timestamp"]},
+  {"lhs": ["page_latest", "lt_title"], "rhs": "cl_timestamp", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 999656, "distinct_rhs": 113314, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.113353, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["page", "latest"], ["lt", "title"]], "rhs_tokens": ["cl", "timestamp"]},
+  {"lhs": ["cl_sortkey", "page_len"], "rhs": "cl_type", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 439110, "distinct_rhs": 3, "lhs_distinct_ratio": 0.439261, "rhs_distinct_ratio": 3e-06, "redundancy": 560546, "redundancy_wl": 780105, "lhs_unique": false, "lhs_tokens": [["cl", "sortkey"], ["page", "len"]], "rhs_tokens": ["cl", "type"]},
+  {"lhs": ["page_title", "page_len"], "rhs": "cl_type", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 383787, "distinct_rhs": 3, "lhs_distinct_ratio": 0.383919, "rhs_distinct_ratio": 3e-06, "redundancy": 615869, "redundancy_wl": 859130, "lhs_unique": false, "lhs_tokens": [["page", "title"], ["page", "len"]], "rhs_tokens": ["cl", "type"]},
+  {"lhs": ["page_namespace", "page_title"], "rhs": "page_is_redirect", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 2, "distinct_lhs": 383799, "distinct_rhs": 2, "lhs_distinct_ratio": 0.383931, "rhs_distinct_ratio": 2e-06, "redundancy": 615857, "redundancy_wl": 859111, "lhs_unique": false, "lhs_tokens": [["page", "namespace"], ["page", "title"]], "rhs_tokens": ["page", "is", "redirect"]},
+  {"lhs": ["cl_sortkey", "page_touched"], "rhs": "page_is_redirect", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 439421, "distinct_rhs": 2, "lhs_distinct_ratio": 0.439572, "rhs_distinct_ratio": 2e-06, "redundancy": 560235, "redundancy_wl": 779741, "lhs_unique": false, "lhs_tokens": [["cl", "sortkey"], ["page", "touched"]], "rhs_tokens": ["page", "is", "redirect"]},
+  {"lhs": ["cl_sortkey", "page_links_updated"], "rhs": "page_is_redirect", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 439824, "distinct_rhs": 2, "lhs_distinct_ratio": 0.439975, "rhs_distinct_ratio": 2e-06, "redundancy": 559832, "redundancy_wl": 779292, "lhs_unique": false, "lhs_tokens": [["cl", "sortkey"], ["page", "links", "updated"]], "rhs_tokens": ["page", "is", "redirect"]},
+  {"lhs": ["page_title", "page_links_updated"], "rhs": "page_is_redirect", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 383597, "distinct_rhs": 2, "lhs_distinct_ratio": 0.383729, "rhs_distinct_ratio": 2e-06, "redundancy": 616059, "redundancy_wl": 859303, "lhs_unique": false, "lhs_tokens": [["page", "title"], ["page", "links", "updated"]], "rhs_tokens": ["page", "is", "redirect"]},
+  {"lhs": ["cl_sortkey", "page_len"], "rhs": "page_is_redirect", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 439110, "distinct_rhs": 2, "lhs_distinct_ratio": 0.439261, "rhs_distinct_ratio": 2e-06, "redundancy": 560546, "redundancy_wl": 780105, "lhs_unique": false, "lhs_tokens": [["cl", "sortkey"], ["page", "len"]], "rhs_tokens": ["page", "is", "redirect"]},
+  {"lhs": ["page_title", "page_len"], "rhs": "page_is_redirect", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 383787, "distinct_rhs": 2, "lhs_distinct_ratio": 0.383919, "rhs_distinct_ratio": 2e-06, "redundancy": 615869, "redundancy_wl": 859130, "lhs_unique": false, "lhs_tokens": [["page", "title"], ["page", "len"]], "rhs_tokens": ["page", "is", "redirect"]},
+  {"lhs": ["page_namespace", "page_title"], "rhs": "page_is_new", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 2, "distinct_lhs": 383799, "distinct_rhs": 2, "lhs_distinct_ratio": 0.383931, "rhs_distinct_ratio": 2e-06, "redundancy": 615857, "redundancy_wl": 859111, "lhs_unique": false, "lhs_tokens": [["page", "namespace"], ["page", "title"]], "rhs_tokens": ["page", "is", "new"]},
+  {"lhs": ["page_namespace", "page_title"], "rhs": "page_random", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 2, "distinct_lhs": 383799, "distinct_rhs": 383799, "lhs_distinct_ratio": 0.383931, "rhs_distinct_ratio": 0.383931, "redundancy": 615857, "redundancy_wl": 859111, "lhs_unique": false, "lhs_tokens": [["page", "namespace"], ["page", "title"]], "rhs_tokens": ["page", "random"]},
+  {"lhs": ["page_namespace", "page_title"], "rhs": "page_touched", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 2, "distinct_lhs": 383799, "distinct_rhs": 104586, "lhs_distinct_ratio": 0.383931, "rhs_distinct_ratio": 0.104622, "redundancy": 615857, "redundancy_wl": 859111, "lhs_unique": false, "lhs_tokens": [["page", "namespace"], ["page", "title"]], "rhs_tokens": ["page", "touched"]},
+  {"lhs": ["page_namespace", "page_title"], "rhs": "page_links_updated", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 2, "distinct_lhs": 383799, "distinct_rhs": 146012, "lhs_distinct_ratio": 0.383931, "rhs_distinct_ratio": 0.146062, "redundancy": 615857, "redundancy_wl": 859111, "lhs_unique": false, "lhs_tokens": [["page", "namespace"], ["page", "title"]], "rhs_tokens": ["page", "links", "updated"]},
+  {"lhs": ["page_namespace", "page_title"], "rhs": "page_latest", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 2, "distinct_lhs": 383799, "distinct_rhs": 383799, "lhs_distinct_ratio": 0.383931, "rhs_distinct_ratio": 0.383931, "redundancy": 615857, "redundancy_wl": 859111, "lhs_unique": false, "lhs_tokens": [["page", "namespace"], ["page", "title"]], "rhs_tokens": ["page", "latest"]},
+  {"lhs": ["page_namespace", "page_title"], "rhs": "page_len", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 2, "distinct_lhs": 383799, "distinct_rhs": 22145, "lhs_distinct_ratio": 0.383931, "rhs_distinct_ratio": 0.022153, "redundancy": 615857, "redundancy_wl": 859111, "lhs_unique": false, "lhs_tokens": [["page", "namespace"], ["page", "title"]], "rhs_tokens": ["page", "len"]},
+  {"lhs": ["cl_sortkey", "page_namespace"], "rhs": "page_content_model", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 438099, "distinct_rhs": 5, "lhs_distinct_ratio": 0.43825, "rhs_distinct_ratio": 5e-06, "redundancy": 561557, "redundancy_wl": 781180, "lhs_unique": false, "lhs_tokens": [["cl", "sortkey"], ["page", "namespace"]], "rhs_tokens": ["page", "content", "model"]},
+  {"lhs": ["page_namespace", "page_title"], "rhs": "page_content_model", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 2, "distinct_lhs": 383799, "distinct_rhs": 5, "lhs_distinct_ratio": 0.383931, "rhs_distinct_ratio": 5e-06, "redundancy": 615857, "redundancy_wl": 859111, "lhs_unique": false, "lhs_tokens": [["page", "namespace"], ["page", "title"]], "rhs_tokens": ["page", "content", "model"]},
+  {"lhs": ["cl_sortkey", "page_len"], "rhs": "page_content_model", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 439110, "distinct_rhs": 5, "lhs_distinct_ratio": 0.439261, "rhs_distinct_ratio": 5e-06, "redundancy": 560546, "redundancy_wl": 780105, "lhs_unique": false, "lhs_tokens": [["cl", "sortkey"], ["page", "len"]], "rhs_tokens": ["page", "content", "model"]},
+  {"lhs": ["page_title", "page_len"], "rhs": "page_content_model", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 383787, "distinct_rhs": 5, "lhs_distinct_ratio": 0.383919, "rhs_distinct_ratio": 5e-06, "redundancy": 615869, "redundancy_wl": 859130, "lhs_unique": false, "lhs_tokens": [["page", "title"], ["page", "len"]], "rhs_tokens": ["page", "content", "model"]},
+  {"lhs": ["cl_target_id", "page_namespace", "page_title"], "rhs": "cl_sortkey", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 3, "distinct_lhs": 999656, "distinct_rhs": 425544, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.42569, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["cl", "target", "id"], ["page", "namespace"], ["page", "title"]], "rhs_tokens": ["cl", "sortkey"]},
+  {"lhs": ["cl_target_id", "page_title", "page_len"], "rhs": "cl_sortkey", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 999644, "distinct_rhs": 425544, "lhs_distinct_ratio": 0.999988, "rhs_distinct_ratio": 0.42569, "redundancy": 12, "redundancy_wl": 24, "lhs_unique": false, "lhs_tokens": [["cl", "target", "id"], ["page", "title"], ["page", "len"]], "rhs_tokens": ["cl", "sortkey"]},
+  {"lhs": ["page_namespace", "page_title", "lt_title"], "rhs": "cl_sortkey", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 3, "distinct_lhs": 999656, "distinct_rhs": 425544, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.42569, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["page", "namespace"], ["page", "title"], ["lt", "title"]], "rhs_tokens": ["cl", "sortkey"]},
+  {"lhs": ["page_title", "page_len", "lt_title"], "rhs": "cl_sortkey", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 999644, "distinct_rhs": 425544, "lhs_distinct_ratio": 0.999988, "rhs_distinct_ratio": 0.42569, "redundancy": 12, "redundancy_wl": 24, "lhs_unique": false, "lhs_tokens": [["page", "title"], ["page", "len"], ["lt", "title"]], "rhs_tokens": ["cl", "sortkey"]},
+  {"lhs": ["cl_target_id", "cl_sortkey", "page_title"], "rhs": "cl_sortkey_prefix", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 998896, "distinct_rhs": 135900, "lhs_distinct_ratio": 0.99924, "rhs_distinct_ratio": 0.135947, "redundancy": 760, "redundancy_wl": 1520, "lhs_unique": false, "lhs_tokens": [["cl", "target", "id"], ["cl", "sortkey"], ["page", "title"]], "rhs_tokens": ["cl", "sortkey", "prefix"]},
+  {"lhs": ["cl_target_id", "page_namespace", "page_title"], "rhs": "cl_sortkey_prefix", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 3, "distinct_lhs": 999656, "distinct_rhs": 135900, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.135947, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["cl", "target", "id"], ["page", "namespace"], ["page", "title"]], "rhs_tokens": ["cl", "sortkey", "prefix"]},
+  {"lhs": ["cl_target_id", "page_title", "page_len"], "rhs": "cl_sortkey_prefix", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 999644, "distinct_rhs": 135900, "lhs_distinct_ratio": 0.999988, "rhs_distinct_ratio": 0.135947, "redundancy": 12, "redundancy_wl": 24, "lhs_unique": false, "lhs_tokens": [["cl", "target", "id"], ["page", "title"], ["page", "len"]], "rhs_tokens": ["cl", "sortkey", "prefix"]},
+  {"lhs": ["cl_sortkey", "page_title", "lt_title"], "rhs": "cl_sortkey_prefix", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 998896, "distinct_rhs": 135900, "lhs_distinct_ratio": 0.99924, "rhs_distinct_ratio": 0.135947, "redundancy": 760, "redundancy_wl": 1520, "lhs_unique": false, "lhs_tokens": [["cl", "sortkey"], ["page", "title"], ["lt", "title"]], "rhs_tokens": ["cl", "sortkey", "prefix"]},
+  {"lhs": ["page_namespace", "page_title", "lt_title"], "rhs": "cl_sortkey_prefix", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 3, "distinct_lhs": 999656, "distinct_rhs": 135900, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.135947, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["page", "namespace"], ["page", "title"], ["lt", "title"]], "rhs_tokens": ["cl", "sortkey", "prefix"]},
+  {"lhs": ["page_title", "page_len", "lt_title"], "rhs": "cl_sortkey_prefix", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 999644, "distinct_rhs": 135900, "lhs_distinct_ratio": 0.999988, "rhs_distinct_ratio": 0.135947, "redundancy": 12, "redundancy_wl": 24, "lhs_unique": false, "lhs_tokens": [["page", "title"], ["page", "len"], ["lt", "title"]], "rhs_tokens": ["cl", "sortkey", "prefix"]},
+  {"lhs": ["cl_target_id", "page_namespace", "page_title"], "rhs": "cl_timestamp", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 3, "distinct_lhs": 999656, "distinct_rhs": 113314, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.113353, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["cl", "target", "id"], ["page", "namespace"], ["page", "title"]], "rhs_tokens": ["cl", "timestamp"]},
+  {"lhs": ["page_namespace", "page_title", "lt_title"], "rhs": "cl_timestamp", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 3, "distinct_lhs": 999656, "distinct_rhs": 113314, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.113353, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["page", "namespace"], ["page", "title"], ["lt", "title"]], "rhs_tokens": ["cl", "timestamp"]},
+  {"lhs": ["cl_target_id", "cl_sortkey", "cl_timestamp"], "rhs": "page_is_redirect", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 999151, "distinct_rhs": 2, "lhs_distinct_ratio": 0.999495, "rhs_distinct_ratio": 2e-06, "redundancy": 505, "redundancy_wl": 898, "lhs_unique": false, "lhs_tokens": [["cl", "target", "id"], ["cl", "sortkey"], ["cl", "timestamp"]], "rhs_tokens": ["page", "is", "redirect"]},
+  {"lhs": ["cl_target_id", "cl_sortkey", "page_namespace"], "rhs": "page_is_redirect", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 998011, "distinct_rhs": 2, "lhs_distinct_ratio": 0.998354, "rhs_distinct_ratio": 2e-06, "redundancy": 1645, "redundancy_wl": 2867, "lhs_unique": false, "lhs_tokens": [["cl", "target", "id"], ["cl", "sortkey"], ["page", "namespace"]], "rhs_tokens": ["page", "is", "redirect"]},
+  {"lhs": ["cl_sortkey", "cl_timestamp", "page_namespace"], "rhs": "page_is_redirect", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 514163, "distinct_rhs": 2, "lhs_distinct_ratio": 0.51434, "rhs_distinct_ratio": 2e-06, "redundancy": 485493, "redundancy_wl": 698293, "lhs_unique": false, "lhs_tokens": [["cl", "sortkey"], ["cl", "timestamp"], ["page", "namespace"]], "rhs_tokens": ["page", "is", "redirect"]},
+  {"lhs": ["cl_target_id", "cl_timestamp", "page_title"], "rhs": "page_is_redirect", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 999526, "distinct_rhs": 2, "lhs_distinct_ratio": 0.99987, "rhs_distinct_ratio": 2e-06, "redundancy": 130, "redundancy_wl": 259, "lhs_unique": false, "lhs_tokens": [["cl", "target", "id"], ["cl", "timestamp"], ["page", "title"]], "rhs_tokens": ["page", "is", "redirect"]},
+  {"lhs": ["cl_target_id", "page_title", "page_touched"], "rhs": "page_is_redirect", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 999586, "distinct_rhs": 2, "lhs_distinct_ratio": 0.99993, "rhs_distinct_ratio": 2e-06, "redundancy": 70, "redundancy_wl": 140, "lhs_unique": false, "lhs_tokens": [["cl", "target", "id"], ["page", "title"], ["page", "touched"]], "rhs_tokens": ["page", "is", "redirect"]},
+  {"lhs": ["cl_timestamp", "page_title", "page_touched"], "rhs": "page_is_redirect", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 467217, "distinct_rhs": 2, "lhs_distinct_ratio": 0.467378, "rhs_distinct_ratio": 2e-06, "redundancy": 532439, "redundancy_wl": 768931, "lhs_unique": false, "lhs_tokens": [["cl", "timestamp"], ["page", "title"], ["page", "touched"]], "rhs_tokens": ["page", "is", "redirect"]},
+  {"lhs": ["cl_target_id", "cl_timestamp", "page_len"], "rhs": "page_is_redirect", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 961298, "distinct_rhs": 2, "lhs_distinct_ratio": 0.961629, "rhs_distinct_ratio": 2e-06, "redundancy": 38358, "redundancy_wl": 56186, "lhs_unique": false, "lhs_tokens": [["cl", "target", "id"], ["cl", "timestamp"], ["page", "len"]], "rhs_tokens": ["page", "is", "redirect"]},
+  {"lhs": ["cl_sortkey", "cl_timestamp", "lt_title"], "rhs": "page_is_redirect", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 999151, "distinct_rhs": 2, "lhs_distinct_ratio": 0.999495, "rhs_distinct_ratio": 2e-06, "redundancy": 505, "redundancy_wl": 898, "lhs_unique": false, "lhs_tokens": [["cl", "sortkey"], ["cl", "timestamp"], ["lt", "title"]], "rhs_tokens": ["page", "is", "redirect"]},
+  {"lhs": ["cl_sortkey", "page_namespace", "lt_title"], "rhs": "page_is_redirect", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 998011, "distinct_rhs": 2, "lhs_distinct_ratio": 0.998354, "rhs_distinct_ratio": 2e-06, "redundancy": 1645, "redundancy_wl": 2867, "lhs_unique": false, "lhs_tokens": [["cl", "sortkey"], ["page", "namespace"], ["lt", "title"]], "rhs_tokens": ["page", "is", "redirect"]},
+  {"lhs": ["cl_timestamp", "page_title", "lt_title"], "rhs": "page_is_redirect", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 999526, "distinct_rhs": 2, "lhs_distinct_ratio": 0.99987, "rhs_distinct_ratio": 2e-06, "redundancy": 130, "redundancy_wl": 259, "lhs_unique": false, "lhs_tokens": [["cl", "timestamp"], ["page", "title"], ["lt", "title"]], "rhs_tokens": ["page", "is", "redirect"]},
+  {"lhs": ["page_title", "page_touched", "lt_title"], "rhs": "page_is_redirect", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 999586, "distinct_rhs": 2, "lhs_distinct_ratio": 0.99993, "rhs_distinct_ratio": 2e-06, "redundancy": 70, "redundancy_wl": 140, "lhs_unique": false, "lhs_tokens": [["page", "title"], ["page", "touched"], ["lt", "title"]], "rhs_tokens": ["page", "is", "redirect"]},
+  {"lhs": ["cl_timestamp", "page_len", "lt_title"], "rhs": "page_is_redirect", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 961298, "distinct_rhs": 2, "lhs_distinct_ratio": 0.961629, "rhs_distinct_ratio": 2e-06, "redundancy": 38358, "redundancy_wl": 56186, "lhs_unique": false, "lhs_tokens": [["cl", "timestamp"], ["page", "len"], ["lt", "title"]], "rhs_tokens": ["page", "is", "redirect"]},
+  {"lhs": ["cl_timestamp", "page_title", "page_len"], "rhs": "page_is_new", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 467288, "distinct_rhs": 2, "lhs_distinct_ratio": 0.467449, "rhs_distinct_ratio": 2e-06, "redundancy": 532368, "redundancy_wl": 768839, "lhs_unique": false, "lhs_tokens": [["cl", "timestamp"], ["page", "title"], ["page", "len"]], "rhs_tokens": ["page", "is", "new"]},
+  {"lhs": ["page_title", "page_touched", "page_len"], "rhs": "page_is_new", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 383790, "distinct_rhs": 2, "lhs_distinct_ratio": 0.383922, "rhs_distinct_ratio": 2e-06, "redundancy": 615866, "redundancy_wl": 859126, "lhs_unique": false, "lhs_tokens": [["page", "title"], ["page", "touched"], ["page", "len"]], "rhs_tokens": ["page", "is", "new"]},
+  {"lhs": ["page_title", "page_links_updated", "page_len"], "rhs": "page_is_new", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 383792, "distinct_rhs": 2, "lhs_distinct_ratio": 0.383924, "rhs_distinct_ratio": 2e-06, "redundancy": 615864, "redundancy_wl": 859122, "lhs_unique": false, "lhs_tokens": [["page", "title"], ["page", "links", "updated"], ["page", "len"]], "rhs_tokens": ["page", "is", "new"]},
+  {"lhs": ["page_title", "page_links_updated", "page_len"], "rhs": "page_touched", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 383792, "distinct_rhs": 104586, "lhs_distinct_ratio": 0.383924, "rhs_distinct_ratio": 0.104622, "redundancy": 615864, "redundancy_wl": 859122, "lhs_unique": false, "lhs_tokens": [["page", "title"], ["page", "links", "updated"], ["page", "len"]], "rhs_tokens": ["page", "touched"]},
+  {"lhs": ["cl_sortkey", "cl_timestamp", "page_touched"], "rhs": "page_content_model", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 514283, "distinct_rhs": 5, "lhs_distinct_ratio": 0.51446, "rhs_distinct_ratio": 5e-06, "redundancy": 485373, "redundancy_wl": 698158, "lhs_unique": false, "lhs_tokens": [["cl", "sortkey"], ["cl", "timestamp"], ["page", "touched"]], "rhs_tokens": ["page", "content", "model"]},
+  {"lhs": ["cl_timestamp", "page_title", "page_touched"], "rhs": "page_content_model", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 467217, "distinct_rhs": 5, "lhs_distinct_ratio": 0.467378, "rhs_distinct_ratio": 5e-06, "redundancy": 532439, "redundancy_wl": 768931, "lhs_unique": false, "lhs_tokens": [["cl", "timestamp"], ["page", "title"], ["page", "touched"]], "rhs_tokens": ["page", "content", "model"]},
+  {"lhs": ["cl_sortkey", "cl_timestamp", "page_links_updated"], "rhs": "page_content_model", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 514391, "distinct_rhs": 5, "lhs_distinct_ratio": 0.514568, "rhs_distinct_ratio": 5e-06, "redundancy": 485265, "redundancy_wl": 698038, "lhs_unique": false, "lhs_tokens": [["cl", "sortkey"], ["cl", "timestamp"], ["page", "links", "updated"]], "rhs_tokens": ["page", "content", "model"]},
+  {"lhs": ["cl_target_id", "cl_sortkey_prefix", "page_title", "page_touched"], "rhs": "cl_sortkey", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 999592, "distinct_rhs": 425544, "lhs_distinct_ratio": 0.999936, "rhs_distinct_ratio": 0.42569, "redundancy": 64, "redundancy_wl": 128, "lhs_unique": false, "lhs_tokens": [["cl", "target", "id"], ["cl", "sortkey", "prefix"], ["page", "title"], ["page", "touched"]], "rhs_tokens": ["cl", "sortkey"]},
+  {"lhs": ["cl_target_id", "cl_sortkey_prefix", "page_title", "page_links_updated"], "rhs": "cl_sortkey", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 999604, "distinct_rhs": 425544, "lhs_distinct_ratio": 0.999948, "rhs_distinct_ratio": 0.42569, "redundancy": 52, "redundancy_wl": 104, "lhs_unique": false, "lhs_tokens": [["cl", "target", "id"], ["cl", "sortkey", "prefix"], ["page", "title"], ["page", "links", "updated"]], "rhs_tokens": ["cl", "sortkey"]},
+  {"lhs": ["cl_sortkey_prefix", "page_title", "page_touched", "lt_title"], "rhs": "cl_sortkey", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 999592, "distinct_rhs": 425544, "lhs_distinct_ratio": 0.999936, "rhs_distinct_ratio": 0.42569, "redundancy": 64, "redundancy_wl": 128, "lhs_unique": false, "lhs_tokens": [["cl", "sortkey", "prefix"], ["page", "title"], ["page", "touched"], ["lt", "title"]], "rhs_tokens": ["cl", "sortkey"]},
+  {"lhs": ["cl_sortkey_prefix", "page_title", "page_links_updated", "lt_title"], "rhs": "cl_sortkey", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 999604, "distinct_rhs": 425544, "lhs_distinct_ratio": 0.999948, "rhs_distinct_ratio": 0.42569, "redundancy": 52, "redundancy_wl": 104, "lhs_unique": false, "lhs_tokens": [["cl", "sortkey", "prefix"], ["page", "title"], ["page", "links", "updated"], ["lt", "title"]], "rhs_tokens": ["cl", "sortkey"]},
+  {"lhs": ["cl_target_id", "cl_timestamp", "page_touched", "page_len"], "rhs": "cl_type", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 977333, "distinct_rhs": 3, "lhs_distinct_ratio": 0.977669, "rhs_distinct_ratio": 3e-06, "redundancy": 22323, "redundancy_wl": 33018, "lhs_unique": false, "lhs_tokens": [["cl", "target", "id"], ["cl", "timestamp"], ["page", "touched"], ["page", "len"]], "rhs_tokens": ["cl", "type"]},
+  {"lhs": ["cl_target_id", "cl_timestamp", "page_links_updated", "page_len"], "rhs": "cl_type", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 985195, "distinct_rhs": 3, "lhs_distinct_ratio": 0.985534, "rhs_distinct_ratio": 3e-06, "redundancy": 14461, "redundancy_wl": 21638, "lhs_unique": false, "lhs_tokens": [["cl", "target", "id"], ["cl", "timestamp"], ["page", "links", "updated"], ["page", "len"]], "rhs_tokens": ["cl", "type"]},
+  {"lhs": ["cl_target_id", "page_is_redirect", "page_links_updated", "page_len"], "rhs": "cl_type", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 975749, "distinct_rhs": 3, "lhs_distinct_ratio": 0.976085, "rhs_distinct_ratio": 3e-06, "redundancy": 23907, "redundancy_wl": 35088, "lhs_unique": false, "lhs_tokens": [["cl", "target", "id"], ["page", "is", "redirect"], ["page", "links", "updated"], ["page", "len"]], "rhs_tokens": ["cl", "type"]},
+  {"lhs": ["cl_target_id", "page_is_new", "page_links_updated", "page_len"], "rhs": "cl_type", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 976613, "distinct_rhs": 3, "lhs_distinct_ratio": 0.976949, "rhs_distinct_ratio": 3e-06, "redundancy": 23043, "redundancy_wl": 33903, "lhs_unique": false, "lhs_tokens": [["cl", "target", "id"], ["page", "is", "new"], ["page", "links", "updated"], ["page", "len"]], "rhs_tokens": ["cl", "type"]},
+  {"lhs": ["cl_timestamp", "page_is_new", "page_links_updated", "page_len"], "rhs": "cl_type", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 452931, "distinct_rhs": 3, "lhs_distinct_ratio": 0.453087, "rhs_distinct_ratio": 3e-06, "redundancy": 546725, "redundancy_wl": 779849, "lhs_unique": false, "lhs_tokens": [["cl", "timestamp"], ["page", "is", "new"], ["page", "links", "updated"], ["page", "len"]], "rhs_tokens": ["cl", "type"]},
+  {"lhs": ["cl_timestamp", "page_touched", "page_len", "lt_title"], "rhs": "cl_type", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 977333, "distinct_rhs": 3, "lhs_distinct_ratio": 0.977669, "rhs_distinct_ratio": 3e-06, "redundancy": 22323, "redundancy_wl": 33018, "lhs_unique": false, "lhs_tokens": [["cl", "timestamp"], ["page", "touched"], ["page", "len"], ["lt", "title"]], "rhs_tokens": ["cl", "type"]},
+  {"lhs": ["cl_timestamp", "page_links_updated", "page_len", "lt_title"], "rhs": "cl_type", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 985195, "distinct_rhs": 3, "lhs_distinct_ratio": 0.985534, "rhs_distinct_ratio": 3e-06, "redundancy": 14461, "redundancy_wl": 21638, "lhs_unique": false, "lhs_tokens": [["cl", "timestamp"], ["page", "links", "updated"], ["page", "len"], ["lt", "title"]], "rhs_tokens": ["cl", "type"]},
+  {"lhs": ["page_is_redirect", "page_links_updated", "page_len", "lt_title"], "rhs": "cl_type", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 975749, "distinct_rhs": 3, "lhs_distinct_ratio": 0.976085, "rhs_distinct_ratio": 3e-06, "redundancy": 23907, "redundancy_wl": 35088, "lhs_unique": false, "lhs_tokens": [["page", "is", "redirect"], ["page", "links", "updated"], ["page", "len"], ["lt", "title"]], "rhs_tokens": ["cl", "type"]},
+  {"lhs": ["page_is_new", "page_links_updated", "page_len", "lt_title"], "rhs": "cl_type", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 976613, "distinct_rhs": 3, "lhs_distinct_ratio": 0.976949, "rhs_distinct_ratio": 3e-06, "redundancy": 23043, "redundancy_wl": 33903, "lhs_unique": false, "lhs_tokens": [["page", "is", "new"], ["page", "links", "updated"], ["page", "len"], ["lt", "title"]], "rhs_tokens": ["cl", "type"]},
+  {"lhs": ["cl_target_id", "cl_sortkey", "cl_type", "page_is_new"], "rhs": "page_is_redirect", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 998095, "distinct_rhs": 2, "lhs_distinct_ratio": 0.998438, "rhs_distinct_ratio": 2e-06, "redundancy": 1561, "redundancy_wl": 2720, "lhs_unique": false, "lhs_tokens": [["cl", "target", "id"], ["cl", "sortkey"], ["cl", "type"], ["page", "is", "new"]], "rhs_tokens": ["page", "is", "redirect"]},
+  {"lhs": ["cl_target_id", "cl_type", "page_title", "page_is_new"], "rhs": "page_is_redirect", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 999378, "distinct_rhs": 2, "lhs_distinct_ratio": 0.999722, "rhs_distinct_ratio": 2e-06, "redundancy": 278, "redundancy_wl": 556, "lhs_unique": false, "lhs_tokens": [["cl", "target", "id"], ["cl", "type"], ["page", "title"], ["page", "is", "new"]], "rhs_tokens": ["page", "is", "redirect"]},
+  {"lhs": ["cl_target_id", "cl_type", "page_touched", "page_len"], "rhs": "page_is_redirect", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 949898, "distinct_rhs": 2, "lhs_distinct_ratio": 0.950225, "rhs_distinct_ratio": 2e-06, "redundancy": 49758, "redundancy_wl": 70243, "lhs_unique": false, "lhs_tokens": [["cl", "target", "id"], ["cl", "type"], ["page", "touched"], ["page", "len"]], "rhs_tokens": ["page", "is", "redirect"]},
+  {"lhs": ["cl_target_id", "page_namespace", "page_touched", "page_len"], "rhs": "page_is_redirect", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 949984, "distinct_rhs": 2, "lhs_distinct_ratio": 0.950311, "rhs_distinct_ratio": 2e-06, "redundancy": 49672, "redundancy_wl": 70151, "lhs_unique": false, "lhs_tokens": [["cl", "target", "id"], ["page", "namespace"], ["page", "touched"], ["page", "len"]], "rhs_tokens": ["page", "is", "redirect"]},
+  {"lhs": ["cl_target_id", "cl_type", "page_links_updated", "page_len"], "rhs": "page_is_redirect", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 975749, "distinct_rhs": 2, "lhs_distinct_ratio": 0.976085, "rhs_distinct_ratio": 2e-06, "redundancy": 23907, "redundancy_wl": 35088, "lhs_unique": false, "lhs_tokens": [["cl", "target", "id"], ["cl", "type"], ["page", "links", "updated"], ["page", "len"]], "rhs_tokens": ["page", "is", "redirect"]},
+  {"lhs": ["cl_target_id", "page_namespace", "page_links_updated", "page_len"], "rhs": "page_is_redirect", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 975804, "distinct_rhs": 2, "lhs_distinct_ratio": 0.97614, "rhs_distinct_ratio": 2e-06, "redundancy": 23852, "redundancy_wl": 35000, "lhs_unique": false, "lhs_tokens": [["cl", "target", "id"], ["page", "namespace"], ["page", "links", "updated"], ["page", "len"]], "rhs_tokens": ["page", "is", "redirect"]},
+  {"lhs": ["cl_target_id", "page_is_new", "page_links_updated", "page_len"], "rhs": "page_is_redirect", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 976613, "distinct_rhs": 2, "lhs_distinct_ratio": 0.976949, "rhs_distinct_ratio": 2e-06, "redundancy": 23043, "redundancy_wl": 33903, "lhs_unique": false, "lhs_tokens": [["cl", "target", "id"], ["page", "is", "new"], ["page", "links", "updated"], ["page", "len"]], "rhs_tokens": ["page", "is", "redirect"]},
+  {"lhs": ["cl_sortkey", "cl_type", "page_is_new", "lt_title"], "rhs": "page_is_redirect", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 998095, "distinct_rhs": 2, "lhs_distinct_ratio": 0.998438, "rhs_distinct_ratio": 2e-06, "redundancy": 1561, "redundancy_wl": 2720, "lhs_unique": false, "lhs_tokens": [["cl", "sortkey"], ["cl", "type"], ["page", "is", "new"], ["lt", "title"]], "rhs_tokens": ["page", "is", "redirect"]},
+  {"lhs": ["cl_type", "page_title", "page_is_new", "lt_title"], "rhs": "page_is_redirect", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 999378, "distinct_rhs": 2, "lhs_distinct_ratio": 0.999722, "rhs_distinct_ratio": 2e-06, "redundancy": 278, "redundancy_wl": 556, "lhs_unique": false, "lhs_tokens": [["cl", "type"], ["page", "title"], ["page", "is", "new"], ["lt", "title"]], "rhs_tokens": ["page", "is", "redirect"]},
+  {"lhs": ["cl_type", "page_touched", "page_len", "lt_title"], "rhs": "page_is_redirect", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 949898, "distinct_rhs": 2, "lhs_distinct_ratio": 0.950225, "rhs_distinct_ratio": 2e-06, "redundancy": 49758, "redundancy_wl": 70243, "lhs_unique": false, "lhs_tokens": [["cl", "type"], ["page", "touched"], ["page", "len"], ["lt", "title"]], "rhs_tokens": ["page", "is", "redirect"]},
+  {"lhs": ["page_namespace", "page_touched", "page_len", "lt_title"], "rhs": "page_is_redirect", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 949984, "distinct_rhs": 2, "lhs_distinct_ratio": 0.950311, "rhs_distinct_ratio": 2e-06, "redundancy": 49672, "redundancy_wl": 70151, "lhs_unique": false, "lhs_tokens": [["page", "namespace"], ["page", "touched"], ["page", "len"], ["lt", "title"]], "rhs_tokens": ["page", "is", "redirect"]},
+  {"lhs": ["cl_type", "page_links_updated", "page_len", "lt_title"], "rhs": "page_is_redirect", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 975749, "distinct_rhs": 2, "lhs_distinct_ratio": 0.976085, "rhs_distinct_ratio": 2e-06, "redundancy": 23907, "redundancy_wl": 35088, "lhs_unique": false, "lhs_tokens": [["cl", "type"], ["page", "links", "updated"], ["page", "len"], ["lt", "title"]], "rhs_tokens": ["page", "is", "redirect"]},
+  {"lhs": ["page_namespace", "page_links_updated", "page_len", "lt_title"], "rhs": "page_is_redirect", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 975804, "distinct_rhs": 2, "lhs_distinct_ratio": 0.97614, "rhs_distinct_ratio": 2e-06, "redundancy": 23852, "redundancy_wl": 35000, "lhs_unique": false, "lhs_tokens": [["page", "namespace"], ["page", "links", "updated"], ["page", "len"], ["lt", "title"]], "rhs_tokens": ["page", "is", "redirect"]},
+  {"lhs": ["page_is_new", "page_links_updated", "page_len", "lt_title"], "rhs": "page_is_redirect", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 976613, "distinct_rhs": 2, "lhs_distinct_ratio": 0.976949, "rhs_distinct_ratio": 2e-06, "redundancy": 23043, "redundancy_wl": 33903, "lhs_unique": false, "lhs_tokens": [["page", "is", "new"], ["page", "links", "updated"], ["page", "len"], ["lt", "title"]], "rhs_tokens": ["page", "is", "redirect"]},
+  {"lhs": ["cl_target_id", "cl_timestamp", "page_title", "page_links_updated"], "rhs": "page_content_model", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 999619, "distinct_rhs": 5, "lhs_distinct_ratio": 0.999963, "rhs_distinct_ratio": 5e-06, "redundancy": 37, "redundancy_wl": 74, "lhs_unique": false, "lhs_tokens": [["cl", "target", "id"], ["cl", "timestamp"], ["page", "title"], ["page", "links", "updated"]], "rhs_tokens": ["page", "content", "model"]},
+  {"lhs": ["cl_sortkey_prefix", "cl_timestamp", "page_title", "page_links_updated"], "rhs": "page_content_model", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 511044, "distinct_rhs": 5, "lhs_distinct_ratio": 0.51122, "rhs_distinct_ratio": 5e-06, "redundancy": 488612, "redundancy_wl": 703189, "lhs_unique": false, "lhs_tokens": [["cl", "sortkey", "prefix"], ["cl", "timestamp"], ["page", "title"], ["page", "links", "updated"]], "rhs_tokens": ["page", "content", "model"]},
+  {"lhs": ["cl_timestamp", "page_title", "page_links_updated", "lt_title"], "rhs": "page_content_model", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 999619, "distinct_rhs": 5, "lhs_distinct_ratio": 0.999963, "rhs_distinct_ratio": 5e-06, "redundancy": 37, "redundancy_wl": 74, "lhs_unique": false, "lhs_tokens": [["cl", "timestamp"], ["page", "title"], ["page", "links", "updated"], ["lt", "title"]], "rhs_tokens": ["page", "content", "model"]},
+  {"lhs": ["cl_target_id", "cl_sortkey", "cl_type", "page_title", "page_links_updated"], "rhs": "page_touched", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 999618, "distinct_rhs": 104586, "lhs_distinct_ratio": 0.999962, "rhs_distinct_ratio": 0.104622, "redundancy": 38, "redundancy_wl": 76, "lhs_unique": false, "lhs_tokens": [["cl", "target", "id"], ["cl", "sortkey"], ["cl", "type"], ["page", "title"], ["page", "links", "updated"]], "rhs_tokens": ["page", "touched"]},
+  {"lhs": ["cl_target_id", "cl_sortkey_prefix", "cl_type", "page_title", "page_links_updated"], "rhs": "page_touched", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 999618, "distinct_rhs": 104586, "lhs_distinct_ratio": 0.999962, "rhs_distinct_ratio": 0.104622, "redundancy": 38, "redundancy_wl": 76, "lhs_unique": false, "lhs_tokens": [["cl", "target", "id"], ["cl", "sortkey", "prefix"], ["cl", "type"], ["page", "title"], ["page", "links", "updated"]], "rhs_tokens": ["page", "touched"]},
+  {"lhs": ["cl_sortkey", "cl_type", "page_title", "page_links_updated", "lt_title"], "rhs": "page_touched", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 999618, "distinct_rhs": 104586, "lhs_distinct_ratio": 0.999962, "rhs_distinct_ratio": 0.104622, "redundancy": 38, "redundancy_wl": 76, "lhs_unique": false, "lhs_tokens": [["cl", "sortkey"], ["cl", "type"], ["page", "title"], ["page", "links", "updated"], ["lt", "title"]], "rhs_tokens": ["page", "touched"]},
+  {"lhs": ["cl_sortkey_prefix", "cl_type", "page_title", "page_links_updated", "lt_title"], "rhs": "page_touched", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 999618, "distinct_rhs": 104586, "lhs_distinct_ratio": 0.999962, "rhs_distinct_ratio": 0.104622, "redundancy": 38, "redundancy_wl": 76, "lhs_unique": false, "lhs_tokens": [["cl", "sortkey", "prefix"], ["cl", "type"], ["page", "title"], ["page", "links", "updated"], ["lt", "title"]], "rhs_tokens": ["page", "touched"]},
+  {"lhs": ["cl_target_id", "cl_sortkey_prefix", "cl_timestamp", "cl_type", "page_is_new", "page_touched", "page_links_updated"], "rhs": "page_is_redirect", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 7, "distinct_lhs": 924078, "distinct_rhs": 2, "lhs_distinct_ratio": 0.924396, "rhs_distinct_ratio": 2e-06, "redundancy": 75578, "redundancy_wl": 106935, "lhs_unique": false, "lhs_tokens": [["cl", "target", "id"], ["cl", "sortkey", "prefix"], ["cl", "timestamp"], ["cl", "type"], ["page", "is", "new"], ["page", "touched"], ["page", "links", "updated"]], "rhs_tokens": ["page", "is", "redirect"]},
+  {"lhs": ["cl_target_id", "cl_sortkey_prefix", "cl_timestamp", "page_namespace", "page_is_new", "page_touched", "page_links_updated"], "rhs": "page_is_redirect", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 7, "distinct_lhs": 924193, "distinct_rhs": 2, "lhs_distinct_ratio": 0.924511, "rhs_distinct_ratio": 2e-06, "redundancy": 75463, "redundancy_wl": 106781, "lhs_unique": false, "lhs_tokens": [["cl", "target", "id"], ["cl", "sortkey", "prefix"], ["cl", "timestamp"], ["page", "namespace"], ["page", "is", "new"], ["page", "touched"], ["page", "links", "updated"]], "rhs_tokens": ["page", "is", "redirect"]},
+  {"lhs": ["cl_sortkey_prefix", "cl_timestamp", "cl_type", "page_is_new", "page_touched", "page_links_updated", "lt_title"], "rhs": "page_is_redirect", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 7, "distinct_lhs": 924078, "distinct_rhs": 2, "lhs_distinct_ratio": 0.924396, "rhs_distinct_ratio": 2e-06, "redundancy": 75578, "redundancy_wl": 106935, "lhs_unique": false, "lhs_tokens": [["cl", "sortkey", "prefix"], ["cl", "timestamp"], ["cl", "type"], ["page", "is", "new"], ["page", "touched"], ["page", "links", "updated"], ["lt", "title"]], "rhs_tokens": ["page", "is", "redirect"]},
+  {"lhs": ["cl_sortkey_prefix", "cl_timestamp", "page_namespace", "page_is_new", "page_touched", "page_links_updated", "lt_title"], "rhs": "page_is_redirect", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 7, "distinct_lhs": 924193, "distinct_rhs": 2, "lhs_distinct_ratio": 0.924511, "rhs_distinct_ratio": 2e-06, "redundancy": 75463, "redundancy_wl": 106781, "lhs_unique": false, "lhs_tokens": [["cl", "sortkey", "prefix"], ["cl", "timestamp"], ["page", "namespace"], ["page", "is", "new"], ["page", "touched"], ["page", "links", "updated"], ["lt", "title"]], "rhs_tokens": ["page", "is", "redirect"]}
+ ]
+}

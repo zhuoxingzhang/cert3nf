@@ -1,0 +1,1012 @@
+{
+ "dataset": "fresh_chicago_crimes",
+ "family": "fresh",
+ "truth_kind": "documented (confirmatory)",
+ "source": "Publisher documentation saved under e3/truth/docs/fresh/ (sha256 in SHA256SUMS): TPC-DS v3.2.0; LDBC SNB specification (v2.2.5-SNAPSHOT, Appendix D for the Interactive v1 legacy data sets); GTFS Schedule Reference; FAA ardata.pdf (5/8/2025); ABS ASGS Edition 3 web pages; SEC Financial Statement Data Sets; College Scorecard Field of Study documentation (October 2026) and data dictionary; EPA AirData FileFormats (v3.0.0); 2024 ACS PUMS data dictionary and Census regions and divisions; City of Chicago portal metadata (ijzp-q8t2, c7ck-438e); USDA FoodData Central download field descriptions (October 2020)",
+ "rule": "Sigma* is the set of FDs that the publisher documentation implies among the attributes of each relation, projected and closed over the dropped columns, each with a verbatim quote; sure when the quoted text states it (declared key, foreign key to a declared key, an explicit one-to-one or nesting statement), unsure when it needs an inference the text does not spell out. Dependencies the documentation hints at but does not state are listed under undocumented_regularities and are not part of Sigma*. Written from the documentation alone, before any data file was opened.",
+ "instance": {
+  "generator": "public data fixed before download for the confirmatory evaluation, joined by fresh.py",
+  "rows": 259629,
+  "construction": "City of Chicago 'Crimes - 2001 to Present' (ijzp-q8t2) exported through the Socrata API for year 2024 (filter year = 2024), left-joined to the IUCR code list (c7ck-438e) on iucr; dropped year (constant), location (the latitude/longitude pair in another format), the portal's computed region columns, and the code list's primary_description and secondary_description (repeat primary_type and description).",
+  "cleaning": {
+   "records": 259670,
+   "records_after_deduplication": 259670,
+   "sampled_from": null,
+   "kept": 259629,
+   "repaired_for": "the sure FDs of Sigma*",
+   "removed_per_fd": {
+    "case_number->date": 21,
+    "beat->district": 20
+   },
+   "missing_values": "empty and missing references become '?', kept as a value (null = null)"
+  }
+ },
+ "attributes": [
+  "id",
+  "case_number",
+  "date",
+  "block",
+  "iucr",
+  "primary_type",
+  "description",
+  "location_description",
+  "arrest",
+  "domestic",
+  "beat",
+  "district",
+  "ward",
+  "community_area",
+  "fbi_code",
+  "x_coordinate",
+  "y_coordinate",
+  "latitude",
+  "longitude",
+  "updated_on",
+  "index_code",
+  "active"
+ ],
+ "dropped_constant_columns": [],
+ "distinct_values": {
+  "id": 259629,
+  "case_number": 259621,
+  "date": 128880,
+  "block": 27241,
+  "iucr": 341,
+  "primary_type": 31,
+  "description": 319,
+  "location_description": 130,
+  "arrest": 2,
+  "domestic": 2,
+  "beat": 276,
+  "district": 23,
+  "ward": 51,
+  "community_area": 79,
+  "fbi_code": 26,
+  "x_coordinate": 50472,
+  "y_coordinate": 70684,
+  "latitude": 122840,
+  "longitude": 122833,
+  "updated_on": 1258,
+  "index_code": 2,
+  "active": 2
+ },
+ "truth": [
+  {
+   "lhs": [
+    "id"
+   ],
+   "rhs": [
+    "case_number",
+    "date",
+    "block",
+    "iucr",
+    "primary_type",
+    "description",
+    "location_description",
+    "arrest",
+    "domestic",
+    "beat",
+    "district",
+    "ward",
+    "community_area",
+    "fbi_code",
+    "x_coordinate",
+    "y_coordinate",
+    "latitude",
+    "longitude",
+    "updated_on",
+    "index_code",
+    "active"
+   ],
+   "sure": true,
+   "clause": "chicago_crimes_ijzp-q8t2_metadata.json (Socrata metadata of data.cityofchicago.org dataset ijzp-q8t2), column id: \"Unique identifier for the record.\"",
+   "justification": "id is the unique identifier of the crime record; the IUCR columns follow through iucr.",
+   "audit": {
+    "verdicts": {
+     "case_number": "TRUE",
+     "date": "TRUE",
+     "block": "TRUE",
+     "iucr": "TRUE",
+     "primary_type": "TRUE",
+     "description": "TRUE",
+     "location_description": "TRUE",
+     "arrest": "TRUE",
+     "domestic": "TRUE",
+     "beat": "TRUE",
+     "district": "TRUE",
+     "ward": "TRUE",
+     "community_area": "TRUE",
+     "fbi_code": "TRUE",
+     "x_coordinate": "TRUE",
+     "y_coordinate": "TRUE",
+     "latitude": "TRUE",
+     "longitude": "TRUE",
+     "updated_on": "TRUE",
+     "index_code": "TRUE",
+     "active": "TRUE"
+    },
+    "quote": "column id: \"Unique identifier for the record.\"; metadata \"rowIdentifier\": \"580897883\", the column id of id; crimes column iucr: \"The Illinois Uniform Crime Reporting code. This is directly linked to the Primary Type and Description.\"; primary_type: \"The primary description of the IUCR code.\"; description: \"The secondary description of the IUCR code, a subcategory of the primary description.\"; IUCR code list description: \"The Chicago Police Department currently uses more than 400 IUCR codes to classify criminal offenses, divided into ‘Index’ and ‘Non-Index’ offenses.\"; IUCR column active: \"Whether the code is active. Retired codes (No) are present in this dataset for historical reference.\"",
+    "source": "chicago_crimes_ijzp-q8t2_metadata.json (Socrata metadata of data.cityofchicago.org dataset ijzp-q8t2, \"Crimes - 2001 to Present\"), columns[id]; metadata.rowIdentifier; chicago_crimes_ijzp-q8t2_metadata.json (Socrata metadata of data.cityofchicago.org dataset ijzp-q8t2, \"Crimes - 2001 to Present\"), columns[iucr, primary_type, description]; chicago_iucr_c7ck-438e_metadata.json (Socrata metadata of dataset c7ck-438e, \"Chicago Police Department - Illinois Uniform Crime Reporting (IUCR) Codes\"), description; columns[active]"
+   }
+  },
+  {
+   "lhs": [
+    "case_number"
+   ],
+   "rhs": [
+    "date",
+    "block",
+    "location_description",
+    "domestic",
+    "beat",
+    "district",
+    "ward",
+    "community_area"
+   ],
+   "sure": true,
+   "clause": "chicago_crimes_ijzp-q8t2_metadata.json (Socrata metadata of data.cityofchicago.org dataset ijzp-q8t2), column case_number: \"The Chicago Police Department RD Number (Records Division Number), which is unique to the incident.\"; dataset description: \"This dataset reflects reported incidents of crime (with the exception of murders where data exists for each victim) that occurred in the City of Chicago from 2001 to present, minus the most recent seven days.\"; columns date: \"Date when the incident occurred.\", beat: \"Indicates the beat where the incident occurred.\", location_description: \"Description of the location where the incident occurred.\"",
+   "justification": "The RD number identifies the incident, and these columns describe the incident (when, where, whether domestic); records repeat an incident only for murders with several victims, so case_number does not determine id, iucr or arrest.",
+   "audit": {
+    "verdicts": {
+     "date": "TRUE",
+     "block": "TRUE",
+     "location_description": "TRUE",
+     "domestic": "TRUE",
+     "beat": "TRUE",
+     "district": "TRUE",
+     "ward": "TRUE",
+     "community_area": "TRUE"
+    },
+    "quote": "column case_number: \"The Chicago Police Department RD Number (Records Division Number), which is unique to the incident.\"; dataset description: \"This dataset reflects reported incidents of crime (with the exception of murders where data exists for each victim) that occurred in the City of Chicago from 2001 to present, minus the most recent seven days.\"; columns date \"Date when the incident occurred.\", block \"The partially redacted address where the incident occurred, placing it on the same block as the actual address.\", location_description \"Description of the location where the incident occurred.\", domestic \"Indicates whether the incident was domestic-related as defined by the Illinois Domestic Violence Act.\", beat \"Indicates the beat where the incident occurred.\", district \"Indicates the police district where the incident occurred.\", ward \"The ward (City Council district) where the incident occurred.\", community_area \"Indicates the community area where the incident occurred.\"",
+    "source": "chicago_crimes_ijzp-q8t2_metadata.json (Socrata metadata of data.cityofchicago.org dataset ijzp-q8t2, \"Crimes - 2001 to Present\"), description; columns[case_number, date, block, location_description, domestic, beat, district, ward, community_area]"
+   }
+  },
+  {
+   "lhs": [
+    "case_number"
+   ],
+   "rhs": [
+    "x_coordinate",
+    "y_coordinate",
+    "latitude",
+    "longitude"
+   ],
+   "sure": false,
+   "clause": "chicago_crimes_ijzp-q8t2_metadata.json (Socrata metadata of data.cityofchicago.org dataset ijzp-q8t2), column case_number: \"The Chicago Police Department RD Number (Records Division Number), which is unique to the incident.\"; dataset description: \"This dataset reflects reported incidents of crime (with the exception of murders where data exists for each victim) that occurred in the City of Chicago from 2001 to present, minus the most recent seven days.\"; column x_coordinate: \"The x coordinate of the location where the incident occurred in State Plane Illinois East NAD 1983 projection.  This location is shifted from the actual location for partial redaction but falls on the same block.\"",
+   "justification": "The coordinates locate the incident, but they are shifted for redaction and the documentation does not say that two victim records of one murder are shifted alike; unsure.",
+   "audit": {
+    "verdicts": {
+     "x_coordinate": "UNDETERMINED",
+     "y_coordinate": "UNDETERMINED",
+     "latitude": "UNDETERMINED",
+     "longitude": "UNDETERMINED"
+    },
+    "quote": "columns x_coordinate/y_coordinate: \"The x coordinate of the location where the incident occurred in State Plane Illinois East NAD 1983 projection.  This location is shifted from the actual location for partial redaction but falls on the same block.\"; latitude/longitude: \"The latitude of the location where the incident occurred. This location is shifted from the actual location for partial redaction but falls on the same block.\"",
+    "source": "chicago_crimes_ijzp-q8t2_metadata.json (Socrata metadata of data.cityofchicago.org dataset ijzp-q8t2, \"Crimes - 2001 to Present\"), columns[x_coordinate, y_coordinate, latitude, longitude]"
+   }
+  },
+  {
+   "lhs": [
+    "iucr"
+   ],
+   "rhs": [
+    "primary_type",
+    "description",
+    "index_code",
+    "active"
+   ],
+   "sure": true,
+   "clause": "chicago_crimes_ijzp-q8t2_metadata.json (Socrata metadata of data.cityofchicago.org dataset ijzp-q8t2), column iucr: \"The Illinois Uniform Crime Reporting code. This is directly linked to the Primary Type and Description.\"; primary_type: \"The primary description of the IUCR code.\"; description: \"The secondary description of the IUCR code, a subcategory of the primary description.\"; chicago_iucr_c7ck-438e_metadata.json (Socrata metadata of data.cityofchicago.org dataset c7ck-438e): \"Illinois Uniform Crime Reporting (IUCR) codes are four digit codes that law enforcement agencies use to classify criminal incidents when taking individual reports.\" and column active: \"Whether the code is active.\"",
+   "justification": "Primary type and description are the descriptions of the IUCR code, and index_code and active are attributes of the code in the IUCR code list, joined on the code.",
+   "audit": {
+    "verdicts": {
+     "primary_type": "TRUE",
+     "description": "TRUE",
+     "index_code": "TRUE",
+     "active": "TRUE"
+    },
+    "quote": "crimes column iucr: \"The Illinois Uniform Crime Reporting code. This is directly linked to the Primary Type and Description.\"; primary_type: \"The primary description of the IUCR code.\"; description: \"The secondary description of the IUCR code, a subcategory of the primary description.\"; IUCR code list description: \"The Chicago Police Department currently uses more than 400 IUCR codes to classify criminal offenses, divided into ‘Index’ and ‘Non-Index’ offenses.\"; IUCR column active: \"Whether the code is active. Retired codes (No) are present in this dataset for historical reference.\"",
+    "source": "chicago_crimes_ijzp-q8t2_metadata.json (Socrata metadata of data.cityofchicago.org dataset ijzp-q8t2, \"Crimes - 2001 to Present\"), columns[iucr, primary_type, description]; chicago_iucr_c7ck-438e_metadata.json (Socrata metadata of dataset c7ck-438e, \"Chicago Police Department - Illinois Uniform Crime Reporting (IUCR) Codes\"), description; columns[active]"
+   }
+  },
+  {
+   "lhs": [
+    "beat"
+   ],
+   "rhs": [
+    "district"
+   ],
+   "sure": true,
+   "clause": "chicago_crimes_ijzp-q8t2_metadata.json (Socrata metadata of data.cityofchicago.org dataset ijzp-q8t2), column beat: \"A beat is the smallest police geographic area – each beat has a dedicated police beat car.  Three to five beats make up a police sector, and three sectors make up a police district.\"",
+   "justification": "Beats nest in sectors and sectors in districts, so a beat lies in one district; the relation covers 2024 only, so one boundary set applies.",
+   "audit": {
+    "verdicts": {
+     "district": "TRUE"
+    },
+    "quote": "column beat: \"A beat is the smallest police geographic area\" and \"Three to five beats make up a police sector, and three sectors make up a police district.\"; column district: \"Indicates the police district where the incident occurred.\"",
+    "source": "chicago_crimes_ijzp-q8t2_metadata.json (Socrata metadata of data.cityofchicago.org dataset ijzp-q8t2, \"Crimes - 2001 to Present\"), columns[beat, district]"
+   }
+  },
+  {
+   "lhs": [
+    "x_coordinate",
+    "y_coordinate"
+   ],
+   "rhs": [
+    "latitude",
+    "longitude"
+   ],
+   "sure": false,
+   "clause": "chicago_crimes_ijzp-q8t2_metadata.json (Socrata metadata of data.cityofchicago.org dataset ijzp-q8t2), columns x_coordinate/y_coordinate: \"State Plane Illinois East NAD 1983 projection\" and latitude: \"The latitude of the location where the incident occurred. This location is shifted from the actual location for partial redaction but falls on the same block.\"",
+   "justification": "Both pairs locate the incident in two coordinate systems, but the documentation does not say they come from the same shifted point; unsure.",
+   "audit": {
+    "verdicts": {
+     "latitude": "UNDETERMINED",
+     "longitude": "UNDETERMINED"
+    },
+    "quote": "columns x_coordinate/y_coordinate: \"The x coordinate of the location where the incident occurred in State Plane Illinois East NAD 1983 projection.  This location is shifted from the actual location for partial redaction but falls on the same block.\"; latitude/longitude: \"The latitude of the location where the incident occurred. This location is shifted from the actual location for partial redaction but falls on the same block.\"",
+    "source": "chicago_crimes_ijzp-q8t2_metadata.json (Socrata metadata of data.cityofchicago.org dataset ijzp-q8t2, \"Crimes - 2001 to Present\"), columns[x_coordinate, y_coordinate, latitude, longitude]"
+   }
+  },
+  {
+   "lhs": [
+    "latitude",
+    "longitude"
+   ],
+   "rhs": [
+    "x_coordinate",
+    "y_coordinate"
+   ],
+   "sure": false,
+   "clause": "chicago_crimes_ijzp-q8t2_metadata.json (Socrata metadata of data.cityofchicago.org dataset ijzp-q8t2), columns latitude/longitude and x_coordinate/y_coordinate: \"This location is shifted from the actual location for partial redaction but falls on the same block.\"",
+   "justification": "Same inference in the other direction; unsure.",
+   "audit": {
+    "verdicts": {
+     "x_coordinate": "UNDETERMINED",
+     "y_coordinate": "UNDETERMINED"
+    },
+    "quote": "columns x_coordinate/y_coordinate: \"The x coordinate of the location where the incident occurred in State Plane Illinois East NAD 1983 projection.  This location is shifted from the actual location for partial redaction but falls on the same block.\"; latitude/longitude: \"The latitude of the location where the incident occurred. This location is shifted from the actual location for partial redaction but falls on the same block.\"",
+    "source": "chicago_crimes_ijzp-q8t2_metadata.json (Socrata metadata of data.cityofchicago.org dataset ijzp-q8t2, \"Crimes - 2001 to Present\"), columns[x_coordinate, y_coordinate, latitude, longitude]"
+   }
+  }
+ ],
+ "truth_counts": {
+  "fds": 7,
+  "single_rhs": 42,
+  "sure_single_rhs": 34
+ },
+ "random_columns": null,
+ "truth_fds_violated_by_data": [],
+ "gold_design": null,
+ "gold_design_note": "No normalized design is published; the 3NF designs of Sigma* are synthesized.",
+ "truth_design": {
+  "keys": [
+   [
+    "id"
+   ]
+  ],
+  "atomic_closure": 42,
+  "synthesis": [
+   [
+    "active",
+    "iucr"
+   ],
+   [
+    "arrest",
+    "id"
+   ],
+   [
+    "beat",
+    "case_number"
+   ],
+   [
+    "beat",
+    "district"
+   ],
+   [
+    "block",
+    "case_number"
+   ],
+   [
+    "case_number",
+    "community_area"
+   ],
+   [
+    "case_number",
+    "date"
+   ],
+   [
+    "case_number",
+    "domestic"
+   ],
+   [
+    "case_number",
+    "id"
+   ],
+   [
+    "case_number",
+    "latitude"
+   ],
+   [
+    "case_number",
+    "location_description"
+   ],
+   [
+    "case_number",
+    "longitude"
+   ],
+   [
+    "case_number",
+    "ward"
+   ],
+   [
+    "description",
+    "iucr"
+   ],
+   [
+    "fbi_code",
+    "id"
+   ],
+   [
+    "id",
+    "iucr"
+   ],
+   [
+    "id",
+    "updated_on"
+   ],
+   [
+    "index_code",
+    "iucr"
+   ],
+   [
+    "iucr",
+    "primary_type"
+   ],
+   [
+    "latitude",
+    "longitude",
+    "x_coordinate"
+   ],
+   [
+    "latitude",
+    "longitude",
+    "y_coordinate"
+   ],
+   [
+    "latitude",
+    "x_coordinate",
+    "y_coordinate"
+   ],
+   [
+    "longitude",
+    "x_coordinate",
+    "y_coordinate"
+   ]
+  ],
+  "iconf": [
+   [
+    "active",
+    "iucr"
+   ],
+   [
+    "arrest",
+    "id"
+   ],
+   [
+    "beat",
+    "case_number"
+   ],
+   [
+    "beat",
+    "district"
+   ],
+   [
+    "block",
+    "case_number"
+   ],
+   [
+    "case_number",
+    "community_area"
+   ],
+   [
+    "case_number",
+    "date"
+   ],
+   [
+    "case_number",
+    "domestic"
+   ],
+   [
+    "case_number",
+    "id"
+   ],
+   [
+    "case_number",
+    "latitude"
+   ],
+   [
+    "case_number",
+    "location_description"
+   ],
+   [
+    "case_number",
+    "longitude"
+   ],
+   [
+    "case_number",
+    "ward"
+   ],
+   [
+    "description",
+    "iucr"
+   ],
+   [
+    "fbi_code",
+    "id"
+   ],
+   [
+    "id",
+    "iucr"
+   ],
+   [
+    "id",
+    "updated_on"
+   ],
+   [
+    "index_code",
+    "iucr"
+   ],
+   [
+    "iucr",
+    "primary_type"
+   ],
+   [
+    "latitude",
+    "longitude",
+    "x_coordinate"
+   ],
+   [
+    "latitude",
+    "longitude",
+    "y_coordinate"
+   ],
+   [
+    "latitude",
+    "x_coordinate",
+    "y_coordinate"
+   ],
+   [
+    "longitude",
+    "x_coordinate",
+    "y_coordinate"
+   ]
+  ]
+ },
+ "mined": {
+  "algorithm": "fdmine.py: exact discovery of all minimal FDs in the style of HyFD (no HyFD binary was available); the complete set of minimal FDs is unique, so it equals HyFD's output",
+  "file": "mined/fresh_chicago_crimes-fds.txt",
+  "seconds": 9.9,
+  "count": 335,
+  "implied_by_truth": 42,
+  "accidental": 293,
+  "implied_by_sure_truth": 34
+ },
+ "truth_design_sure_only": {
+  "keys": [
+   [
+    "id"
+   ]
+  ],
+  "atomic_closure": 34,
+  "synthesis": [
+   [
+    "active",
+    "iucr"
+   ],
+   [
+    "arrest",
+    "id"
+   ],
+   [
+    "beat",
+    "case_number"
+   ],
+   [
+    "beat",
+    "district"
+   ],
+   [
+    "block",
+    "case_number"
+   ],
+   [
+    "case_number",
+    "community_area"
+   ],
+   [
+    "case_number",
+    "date"
+   ],
+   [
+    "case_number",
+    "domestic"
+   ],
+   [
+    "case_number",
+    "id"
+   ],
+   [
+    "case_number",
+    "location_description"
+   ],
+   [
+    "case_number",
+    "ward"
+   ],
+   [
+    "description",
+    "iucr"
+   ],
+   [
+    "fbi_code",
+    "id"
+   ],
+   [
+    "id",
+    "iucr"
+   ],
+   [
+    "id",
+    "latitude"
+   ],
+   [
+    "id",
+    "longitude"
+   ],
+   [
+    "id",
+    "updated_on"
+   ],
+   [
+    "id",
+    "x_coordinate"
+   ],
+   [
+    "id",
+    "y_coordinate"
+   ],
+   [
+    "index_code",
+    "iucr"
+   ],
+   [
+    "iucr",
+    "primary_type"
+   ]
+  ],
+  "iconf": [
+   [
+    "active",
+    "iucr"
+   ],
+   [
+    "arrest",
+    "id"
+   ],
+   [
+    "beat",
+    "case_number"
+   ],
+   [
+    "beat",
+    "district"
+   ],
+   [
+    "block",
+    "case_number"
+   ],
+   [
+    "case_number",
+    "community_area"
+   ],
+   [
+    "case_number",
+    "date"
+   ],
+   [
+    "case_number",
+    "domestic"
+   ],
+   [
+    "case_number",
+    "id"
+   ],
+   [
+    "case_number",
+    "location_description"
+   ],
+   [
+    "case_number",
+    "ward"
+   ],
+   [
+    "description",
+    "iucr"
+   ],
+   [
+    "fbi_code",
+    "id"
+   ],
+   [
+    "id",
+    "iucr"
+   ],
+   [
+    "id",
+    "latitude"
+   ],
+   [
+    "id",
+    "longitude"
+   ],
+   [
+    "id",
+    "updated_on"
+   ],
+   [
+    "id",
+    "x_coordinate"
+   ],
+   [
+    "id",
+    "y_coordinate"
+   ],
+   [
+    "index_code",
+    "iucr"
+   ],
+   [
+    "iucr",
+    "primary_type"
+   ]
+  ]
+ },
+ "fds": [
+  {"lhs": ["id"], "rhs": "case_number", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 259629, "distinct_rhs": 259621, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.999969, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["id"]], "rhs_tokens": ["case", "number"]},
+  {"lhs": ["id"], "rhs": "date", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 259629, "distinct_rhs": 128880, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.496401, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["id"]], "rhs_tokens": ["date"]},
+  {"lhs": ["case_number"], "rhs": "date", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 259621, "distinct_rhs": 128880, "lhs_distinct_ratio": 0.999969, "rhs_distinct_ratio": 0.496401, "redundancy": 8, "redundancy_wl": 16, "lhs_unique": false, "lhs_tokens": [["case", "number"]], "rhs_tokens": ["date"]},
+  {"lhs": ["id"], "rhs": "block", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 259629, "distinct_rhs": 27241, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.104923, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["id"]], "rhs_tokens": ["block"]},
+  {"lhs": ["case_number"], "rhs": "block", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 259621, "distinct_rhs": 27241, "lhs_distinct_ratio": 0.999969, "rhs_distinct_ratio": 0.104923, "redundancy": 8, "redundancy_wl": 16, "lhs_unique": false, "lhs_tokens": [["case", "number"]], "rhs_tokens": ["block"]},
+  {"lhs": ["id"], "rhs": "iucr", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 259629, "distinct_rhs": 341, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.001313, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["id"]], "rhs_tokens": ["iucr"]},
+  {"lhs": ["case_number"], "rhs": "iucr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 259621, "distinct_rhs": 341, "lhs_distinct_ratio": 0.999969, "rhs_distinct_ratio": 0.001313, "redundancy": 8, "redundancy_wl": 16, "lhs_unique": false, "lhs_tokens": [["case", "number"]], "rhs_tokens": ["iucr"]},
+  {"lhs": ["id"], "rhs": "primary_type", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 259629, "distinct_rhs": 31, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.000119, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["id"]], "rhs_tokens": ["primary", "type"]},
+  {"lhs": ["case_number"], "rhs": "primary_type", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 259621, "distinct_rhs": 31, "lhs_distinct_ratio": 0.999969, "rhs_distinct_ratio": 0.000119, "redundancy": 8, "redundancy_wl": 16, "lhs_unique": false, "lhs_tokens": [["case", "number"]], "rhs_tokens": ["primary", "type"]},
+  {"lhs": ["iucr"], "rhs": "primary_type", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 341, "distinct_rhs": 31, "lhs_distinct_ratio": 0.001313, "rhs_distinct_ratio": 0.000119, "redundancy": 259288, "redundancy_wl": 259595, "lhs_unique": false, "lhs_tokens": [["iucr"]], "rhs_tokens": ["primary", "type"]},
+  {"lhs": ["id"], "rhs": "description", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 259629, "distinct_rhs": 319, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.001229, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["id"]], "rhs_tokens": ["description"]},
+  {"lhs": ["case_number"], "rhs": "description", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 259621, "distinct_rhs": 319, "lhs_distinct_ratio": 0.999969, "rhs_distinct_ratio": 0.001229, "redundancy": 8, "redundancy_wl": 16, "lhs_unique": false, "lhs_tokens": [["case", "number"]], "rhs_tokens": ["description"]},
+  {"lhs": ["iucr"], "rhs": "description", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 341, "distinct_rhs": 319, "lhs_distinct_ratio": 0.001313, "rhs_distinct_ratio": 0.001229, "redundancy": 259288, "redundancy_wl": 259595, "lhs_unique": false, "lhs_tokens": [["iucr"]], "rhs_tokens": ["description"]},
+  {"lhs": ["id"], "rhs": "location_description", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 259629, "distinct_rhs": 130, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.000501, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["id"]], "rhs_tokens": ["location", "description"]},
+  {"lhs": ["case_number"], "rhs": "location_description", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 259621, "distinct_rhs": 130, "lhs_distinct_ratio": 0.999969, "rhs_distinct_ratio": 0.000501, "redundancy": 8, "redundancy_wl": 16, "lhs_unique": false, "lhs_tokens": [["case", "number"]], "rhs_tokens": ["location", "description"]},
+  {"lhs": ["id"], "rhs": "arrest", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 259629, "distinct_rhs": 2, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 8e-06, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["id"]], "rhs_tokens": ["arrest"]},
+  {"lhs": ["case_number"], "rhs": "arrest", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 259621, "distinct_rhs": 2, "lhs_distinct_ratio": 0.999969, "rhs_distinct_ratio": 8e-06, "redundancy": 8, "redundancy_wl": 16, "lhs_unique": false, "lhs_tokens": [["case", "number"]], "rhs_tokens": ["arrest"]},
+  {"lhs": ["id"], "rhs": "domestic", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 259629, "distinct_rhs": 2, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 8e-06, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["id"]], "rhs_tokens": ["domestic"]},
+  {"lhs": ["case_number"], "rhs": "domestic", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 259621, "distinct_rhs": 2, "lhs_distinct_ratio": 0.999969, "rhs_distinct_ratio": 8e-06, "redundancy": 8, "redundancy_wl": 16, "lhs_unique": false, "lhs_tokens": [["case", "number"]], "rhs_tokens": ["domestic"]},
+  {"lhs": ["id"], "rhs": "beat", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 259629, "distinct_rhs": 276, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.001063, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["id"]], "rhs_tokens": ["beat"]},
+  {"lhs": ["case_number"], "rhs": "beat", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 259621, "distinct_rhs": 276, "lhs_distinct_ratio": 0.999969, "rhs_distinct_ratio": 0.001063, "redundancy": 8, "redundancy_wl": 16, "lhs_unique": false, "lhs_tokens": [["case", "number"]], "rhs_tokens": ["beat"]},
+  {"lhs": ["id"], "rhs": "district", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 259629, "distinct_rhs": 23, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 8.9e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["id"]], "rhs_tokens": ["district"]},
+  {"lhs": ["case_number"], "rhs": "district", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 259621, "distinct_rhs": 23, "lhs_distinct_ratio": 0.999969, "rhs_distinct_ratio": 8.9e-05, "redundancy": 8, "redundancy_wl": 16, "lhs_unique": false, "lhs_tokens": [["case", "number"]], "rhs_tokens": ["district"]},
+  {"lhs": ["beat"], "rhs": "district", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 276, "distinct_rhs": 23, "lhs_distinct_ratio": 0.001063, "rhs_distinct_ratio": 8.9e-05, "redundancy": 259353, "redundancy_wl": 259629, "lhs_unique": false, "lhs_tokens": [["beat"]], "rhs_tokens": ["district"]},
+  {"lhs": ["id"], "rhs": "ward", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 259629, "distinct_rhs": 51, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.000196, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["id"]], "rhs_tokens": ["ward"]},
+  {"lhs": ["case_number"], "rhs": "ward", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 259621, "distinct_rhs": 51, "lhs_distinct_ratio": 0.999969, "rhs_distinct_ratio": 0.000196, "redundancy": 8, "redundancy_wl": 16, "lhs_unique": false, "lhs_tokens": [["case", "number"]], "rhs_tokens": ["ward"]},
+  {"lhs": ["id"], "rhs": "community_area", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 259629, "distinct_rhs": 79, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.000304, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["id"]], "rhs_tokens": ["community", "area"]},
+  {"lhs": ["case_number"], "rhs": "community_area", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 259621, "distinct_rhs": 79, "lhs_distinct_ratio": 0.999969, "rhs_distinct_ratio": 0.000304, "redundancy": 8, "redundancy_wl": 16, "lhs_unique": false, "lhs_tokens": [["case", "number"]], "rhs_tokens": ["community", "area"]},
+  {"lhs": ["id"], "rhs": "fbi_code", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 259629, "distinct_rhs": 26, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.0001, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["id"]], "rhs_tokens": ["fbi", "code"]},
+  {"lhs": ["case_number"], "rhs": "fbi_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 259621, "distinct_rhs": 26, "lhs_distinct_ratio": 0.999969, "rhs_distinct_ratio": 0.0001, "redundancy": 8, "redundancy_wl": 16, "lhs_unique": false, "lhs_tokens": [["case", "number"]], "rhs_tokens": ["fbi", "code"]},
+  {"lhs": ["iucr"], "rhs": "fbi_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 341, "distinct_rhs": 26, "lhs_distinct_ratio": 0.001313, "rhs_distinct_ratio": 0.0001, "redundancy": 259288, "redundancy_wl": 259595, "lhs_unique": false, "lhs_tokens": [["iucr"]], "rhs_tokens": ["fbi", "code"]},
+  {"lhs": ["id"], "rhs": "x_coordinate", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 259629, "distinct_rhs": 50472, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.1944, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["id"]], "rhs_tokens": ["x", "coordinate"]},
+  {"lhs": ["case_number"], "rhs": "x_coordinate", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 259621, "distinct_rhs": 50472, "lhs_distinct_ratio": 0.999969, "rhs_distinct_ratio": 0.1944, "redundancy": 8, "redundancy_wl": 16, "lhs_unique": false, "lhs_tokens": [["case", "number"]], "rhs_tokens": ["x", "coordinate"]},
+  {"lhs": ["id"], "rhs": "y_coordinate", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 259629, "distinct_rhs": 70684, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.27225, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["id"]], "rhs_tokens": ["y", "coordinate"]},
+  {"lhs": ["case_number"], "rhs": "y_coordinate", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 259621, "distinct_rhs": 70684, "lhs_distinct_ratio": 0.999969, "rhs_distinct_ratio": 0.27225, "redundancy": 8, "redundancy_wl": 16, "lhs_unique": false, "lhs_tokens": [["case", "number"]], "rhs_tokens": ["y", "coordinate"]},
+  {"lhs": ["id"], "rhs": "latitude", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 259629, "distinct_rhs": 122840, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.473137, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["id"]], "rhs_tokens": ["latitude"]},
+  {"lhs": ["case_number"], "rhs": "latitude", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 259621, "distinct_rhs": 122840, "lhs_distinct_ratio": 0.999969, "rhs_distinct_ratio": 0.473137, "redundancy": 8, "redundancy_wl": 16, "lhs_unique": false, "lhs_tokens": [["case", "number"]], "rhs_tokens": ["latitude"]},
+  {"lhs": ["id"], "rhs": "longitude", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 259629, "distinct_rhs": 122833, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.47311, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["id"]], "rhs_tokens": ["longitude"]},
+  {"lhs": ["case_number"], "rhs": "longitude", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 259621, "distinct_rhs": 122833, "lhs_distinct_ratio": 0.999969, "rhs_distinct_ratio": 0.47311, "redundancy": 8, "redundancy_wl": 16, "lhs_unique": false, "lhs_tokens": [["case", "number"]], "rhs_tokens": ["longitude"]},
+  {"lhs": ["id"], "rhs": "updated_on", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 259629, "distinct_rhs": 1258, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.004845, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["id"]], "rhs_tokens": ["updated", "on"]},
+  {"lhs": ["case_number"], "rhs": "updated_on", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 259621, "distinct_rhs": 1258, "lhs_distinct_ratio": 0.999969, "rhs_distinct_ratio": 0.004845, "redundancy": 8, "redundancy_wl": 16, "lhs_unique": false, "lhs_tokens": [["case", "number"]], "rhs_tokens": ["updated", "on"]},
+  {"lhs": ["id"], "rhs": "index_code", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 259629, "distinct_rhs": 2, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 8e-06, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["id"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["case_number"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 259621, "distinct_rhs": 2, "lhs_distinct_ratio": 0.999969, "rhs_distinct_ratio": 8e-06, "redundancy": 8, "redundancy_wl": 16, "lhs_unique": false, "lhs_tokens": [["case", "number"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["iucr"], "rhs": "index_code", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 341, "distinct_rhs": 2, "lhs_distinct_ratio": 0.001313, "rhs_distinct_ratio": 8e-06, "redundancy": 259288, "redundancy_wl": 259595, "lhs_unique": false, "lhs_tokens": [["iucr"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["id"], "rhs": "active", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 259629, "distinct_rhs": 2, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 8e-06, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["id"]], "rhs_tokens": ["active"]},
+  {"lhs": ["case_number"], "rhs": "active", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 259621, "distinct_rhs": 2, "lhs_distinct_ratio": 0.999969, "rhs_distinct_ratio": 8e-06, "redundancy": 8, "redundancy_wl": 16, "lhs_unique": false, "lhs_tokens": [["case", "number"]], "rhs_tokens": ["active"]},
+  {"lhs": ["iucr"], "rhs": "active", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 341, "distinct_rhs": 2, "lhs_distinct_ratio": 0.001313, "rhs_distinct_ratio": 8e-06, "redundancy": 259288, "redundancy_wl": 259595, "lhs_unique": false, "lhs_tokens": [["iucr"]], "rhs_tokens": ["active"]},
+  {"lhs": ["description"], "rhs": "active", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 319, "distinct_rhs": 2, "lhs_distinct_ratio": 0.001229, "rhs_distinct_ratio": 8e-06, "redundancy": 259310, "redundancy_wl": 259595, "lhs_unique": false, "lhs_tokens": [["description"]], "rhs_tokens": ["active"]},
+  {"lhs": ["primary_type", "description"], "rhs": "iucr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 341, "distinct_rhs": 341, "lhs_distinct_ratio": 0.001313, "rhs_distinct_ratio": 0.001313, "redundancy": 259288, "redundancy_wl": 259595, "lhs_unique": false, "lhs_tokens": [["primary", "type"], ["description"]], "rhs_tokens": ["iucr"]},
+  {"lhs": ["primary_type", "description"], "rhs": "fbi_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 341, "distinct_rhs": 26, "lhs_distinct_ratio": 0.001313, "rhs_distinct_ratio": 0.0001, "redundancy": 259288, "redundancy_wl": 259595, "lhs_unique": false, "lhs_tokens": [["primary", "type"], ["description"]], "rhs_tokens": ["fbi", "code"]},
+  {"lhs": ["date", "latitude"], "rhs": "x_coordinate", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 257317, "distinct_rhs": 50472, "lhs_distinct_ratio": 0.991095, "rhs_distinct_ratio": 0.1944, "redundancy": 2312, "redundancy_wl": 4065, "lhs_unique": false, "lhs_tokens": [["date"], ["latitude"]], "rhs_tokens": ["x", "coordinate"]},
+  {"lhs": ["block", "latitude"], "rhs": "x_coordinate", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 124557, "distinct_rhs": 50472, "lhs_distinct_ratio": 0.47975, "rhs_distinct_ratio": 0.1944, "redundancy": 135072, "redundancy_wl": 175522, "lhs_unique": false, "lhs_tokens": [["block"], ["latitude"]], "rhs_tokens": ["x", "coordinate"]},
+  {"lhs": ["y_coordinate", "latitude"], "rhs": "x_coordinate", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 122865, "distinct_rhs": 50472, "lhs_distinct_ratio": 0.473233, "rhs_distinct_ratio": 0.1944, "redundancy": 136764, "redundancy_wl": 177074, "lhs_unique": false, "lhs_tokens": [["y", "coordinate"], ["latitude"]], "rhs_tokens": ["x", "coordinate"]},
+  {"lhs": ["date", "longitude"], "rhs": "x_coordinate", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 257317, "distinct_rhs": 50472, "lhs_distinct_ratio": 0.991095, "rhs_distinct_ratio": 0.1944, "redundancy": 2312, "redundancy_wl": 4065, "lhs_unique": false, "lhs_tokens": [["date"], ["longitude"]], "rhs_tokens": ["x", "coordinate"]},
+  {"lhs": ["y_coordinate", "longitude"], "rhs": "x_coordinate", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 122865, "distinct_rhs": 50472, "lhs_distinct_ratio": 0.473233, "rhs_distinct_ratio": 0.1944, "redundancy": 136764, "redundancy_wl": 177074, "lhs_unique": false, "lhs_tokens": [["y", "coordinate"], ["longitude"]], "rhs_tokens": ["x", "coordinate"]},
+  {"lhs": ["latitude", "longitude"], "rhs": "x_coordinate", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 122865, "distinct_rhs": 50472, "lhs_distinct_ratio": 0.473233, "rhs_distinct_ratio": 0.1944, "redundancy": 136764, "redundancy_wl": 177074, "lhs_unique": false, "lhs_tokens": [["latitude"], ["longitude"]], "rhs_tokens": ["x", "coordinate"]},
+  {"lhs": ["date", "latitude"], "rhs": "y_coordinate", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 257317, "distinct_rhs": 70684, "lhs_distinct_ratio": 0.991095, "rhs_distinct_ratio": 0.27225, "redundancy": 2312, "redundancy_wl": 4065, "lhs_unique": false, "lhs_tokens": [["date"], ["latitude"]], "rhs_tokens": ["y", "coordinate"]},
+  {"lhs": ["block", "latitude"], "rhs": "y_coordinate", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 124557, "distinct_rhs": 70684, "lhs_distinct_ratio": 0.47975, "rhs_distinct_ratio": 0.27225, "redundancy": 135072, "redundancy_wl": 175522, "lhs_unique": false, "lhs_tokens": [["block"], ["latitude"]], "rhs_tokens": ["y", "coordinate"]},
+  {"lhs": ["x_coordinate", "latitude"], "rhs": "y_coordinate", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 122865, "distinct_rhs": 70684, "lhs_distinct_ratio": 0.473233, "rhs_distinct_ratio": 0.27225, "redundancy": 136764, "redundancy_wl": 177074, "lhs_unique": false, "lhs_tokens": [["x", "coordinate"], ["latitude"]], "rhs_tokens": ["y", "coordinate"]},
+  {"lhs": ["date", "longitude"], "rhs": "y_coordinate", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 257317, "distinct_rhs": 70684, "lhs_distinct_ratio": 0.991095, "rhs_distinct_ratio": 0.27225, "redundancy": 2312, "redundancy_wl": 4065, "lhs_unique": false, "lhs_tokens": [["date"], ["longitude"]], "rhs_tokens": ["y", "coordinate"]},
+  {"lhs": ["x_coordinate", "longitude"], "rhs": "y_coordinate", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 122865, "distinct_rhs": 70684, "lhs_distinct_ratio": 0.473233, "rhs_distinct_ratio": 0.27225, "redundancy": 136764, "redundancy_wl": 177074, "lhs_unique": false, "lhs_tokens": [["x", "coordinate"], ["longitude"]], "rhs_tokens": ["y", "coordinate"]},
+  {"lhs": ["latitude", "longitude"], "rhs": "y_coordinate", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 122865, "distinct_rhs": 70684, "lhs_distinct_ratio": 0.473233, "rhs_distinct_ratio": 0.27225, "redundancy": 136764, "redundancy_wl": 177074, "lhs_unique": false, "lhs_tokens": [["latitude"], ["longitude"]], "rhs_tokens": ["y", "coordinate"]},
+  {"lhs": ["x_coordinate", "y_coordinate"], "rhs": "latitude", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 122865, "distinct_rhs": 122840, "lhs_distinct_ratio": 0.473233, "rhs_distinct_ratio": 0.473137, "redundancy": 136764, "redundancy_wl": 177074, "lhs_unique": false, "lhs_tokens": [["x", "coordinate"], ["y", "coordinate"]], "rhs_tokens": ["latitude"]},
+  {"lhs": ["date", "longitude"], "rhs": "latitude", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 257317, "distinct_rhs": 122840, "lhs_distinct_ratio": 0.991095, "rhs_distinct_ratio": 0.473137, "redundancy": 2312, "redundancy_wl": 4065, "lhs_unique": false, "lhs_tokens": [["date"], ["longitude"]], "rhs_tokens": ["latitude"]},
+  {"lhs": ["x_coordinate", "longitude"], "rhs": "latitude", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 122865, "distinct_rhs": 122840, "lhs_distinct_ratio": 0.473233, "rhs_distinct_ratio": 0.473137, "redundancy": 136764, "redundancy_wl": 177074, "lhs_unique": false, "lhs_tokens": [["x", "coordinate"], ["longitude"]], "rhs_tokens": ["latitude"]},
+  {"lhs": ["y_coordinate", "longitude"], "rhs": "latitude", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 122865, "distinct_rhs": 122840, "lhs_distinct_ratio": 0.473233, "rhs_distinct_ratio": 0.473137, "redundancy": 136764, "redundancy_wl": 177074, "lhs_unique": false, "lhs_tokens": [["y", "coordinate"], ["longitude"]], "rhs_tokens": ["latitude"]},
+  {"lhs": ["x_coordinate", "y_coordinate"], "rhs": "longitude", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 122865, "distinct_rhs": 122833, "lhs_distinct_ratio": 0.473233, "rhs_distinct_ratio": 0.47311, "redundancy": 136764, "redundancy_wl": 177074, "lhs_unique": false, "lhs_tokens": [["x", "coordinate"], ["y", "coordinate"]], "rhs_tokens": ["longitude"]},
+  {"lhs": ["date", "latitude"], "rhs": "longitude", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 257317, "distinct_rhs": 122833, "lhs_distinct_ratio": 0.991095, "rhs_distinct_ratio": 0.47311, "redundancy": 2312, "redundancy_wl": 4065, "lhs_unique": false, "lhs_tokens": [["date"], ["latitude"]], "rhs_tokens": ["longitude"]},
+  {"lhs": ["block", "latitude"], "rhs": "longitude", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 124557, "distinct_rhs": 122833, "lhs_distinct_ratio": 0.47975, "rhs_distinct_ratio": 0.47311, "redundancy": 135072, "redundancy_wl": 175522, "lhs_unique": false, "lhs_tokens": [["block"], ["latitude"]], "rhs_tokens": ["longitude"]},
+  {"lhs": ["x_coordinate", "latitude"], "rhs": "longitude", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 122865, "distinct_rhs": 122833, "lhs_distinct_ratio": 0.473233, "rhs_distinct_ratio": 0.47311, "redundancy": 136764, "redundancy_wl": 177074, "lhs_unique": false, "lhs_tokens": [["x", "coordinate"], ["latitude"]], "rhs_tokens": ["longitude"]},
+  {"lhs": ["y_coordinate", "latitude"], "rhs": "longitude", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 122865, "distinct_rhs": 122833, "lhs_distinct_ratio": 0.473233, "rhs_distinct_ratio": 0.47311, "redundancy": 136764, "redundancy_wl": 177074, "lhs_unique": false, "lhs_tokens": [["y", "coordinate"], ["latitude"]], "rhs_tokens": ["longitude"]},
+  {"lhs": ["date", "description"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 230444, "distinct_rhs": 2, "lhs_distinct_ratio": 0.88759, "rhs_distinct_ratio": 8e-06, "redundancy": 29185, "redundancy_wl": 50720, "lhs_unique": false, "lhs_tokens": [["date"], ["description"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["block", "description"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 159998, "distinct_rhs": 2, "lhs_distinct_ratio": 0.616256, "rhs_distinct_ratio": 8e-06, "redundancy": 99631, "redundancy_wl": 140613, "lhs_unique": false, "lhs_tokens": [["block"], ["description"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["primary_type", "description"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 341, "distinct_rhs": 2, "lhs_distinct_ratio": 0.001313, "rhs_distinct_ratio": 8e-06, "redundancy": 259288, "redundancy_wl": 259595, "lhs_unique": false, "lhs_tokens": [["primary", "type"], ["description"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["description", "fbi_code"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 340, "distinct_rhs": 2, "lhs_distinct_ratio": 0.00131, "rhs_distinct_ratio": 8e-06, "redundancy": 259289, "redundancy_wl": 259595, "lhs_unique": false, "lhs_tokens": [["description"], ["fbi", "code"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["date", "block"], "rhs": "active", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 257605, "distinct_rhs": 2, "lhs_distinct_ratio": 0.992204, "rhs_distinct_ratio": 8e-06, "redundancy": 2024, "redundancy_wl": 3891, "lhs_unique": false, "lhs_tokens": [["date"], ["block"]], "rhs_tokens": ["active"]},
+  {"lhs": ["date", "primary_type"], "rhs": "active", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 204875, "distinct_rhs": 2, "lhs_distinct_ratio": 0.789107, "rhs_distinct_ratio": 8e-06, "redundancy": 54754, "redundancy_wl": 86365, "lhs_unique": false, "lhs_tokens": [["date"], ["primary", "type"]], "rhs_tokens": ["active"]},
+  {"lhs": ["block", "primary_type"], "rhs": "active", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 116925, "distinct_rhs": 2, "lhs_distinct_ratio": 0.450354, "rhs_distinct_ratio": 8e-06, "redundancy": 142704, "redundancy_wl": 191216, "lhs_unique": false, "lhs_tokens": [["block"], ["primary", "type"]], "rhs_tokens": ["active"]},
+  {"lhs": ["date", "beat"], "rhs": "active", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 254570, "distinct_rhs": 2, "lhs_distinct_ratio": 0.980515, "rhs_distinct_ratio": 8e-06, "redundancy": 5059, "redundancy_wl": 9765, "lhs_unique": false, "lhs_tokens": [["date"], ["beat"]], "rhs_tokens": ["active"]},
+  {"lhs": ["primary_type", "beat"], "rhs": "active", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 5677, "distinct_rhs": 2, "lhs_distinct_ratio": 0.021866, "rhs_distinct_ratio": 8e-06, "redundancy": 253952, "redundancy_wl": 258817, "lhs_unique": false, "lhs_tokens": [["primary", "type"], ["beat"]], "rhs_tokens": ["active"]},
+  {"lhs": ["date", "ward"], "rhs": "active", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 243598, "distinct_rhs": 2, "lhs_distinct_ratio": 0.938254, "rhs_distinct_ratio": 8e-06, "redundancy": 16031, "redundancy_wl": 30004, "lhs_unique": false, "lhs_tokens": [["date"], ["ward"]], "rhs_tokens": ["active"]},
+  {"lhs": ["date", "community_area"], "rhs": "active", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 245414, "distinct_rhs": 2, "lhs_distinct_ratio": 0.945249, "rhs_distinct_ratio": 8e-06, "redundancy": 14215, "redundancy_wl": 26581, "lhs_unique": false, "lhs_tokens": [["date"], ["community", "area"]], "rhs_tokens": ["active"]},
+  {"lhs": ["date", "fbi_code"], "rhs": "active", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 207032, "distinct_rhs": 2, "lhs_distinct_ratio": 0.797415, "rhs_distinct_ratio": 8e-06, "redundancy": 52597, "redundancy_wl": 83116, "lhs_unique": false, "lhs_tokens": [["date"], ["fbi", "code"]], "rhs_tokens": ["active"]},
+  {"lhs": ["primary_type", "fbi_code"], "rhs": "active", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 54, "distinct_rhs": 2, "lhs_distinct_ratio": 0.000208, "rhs_distinct_ratio": 8e-06, "redundancy": 259575, "redundancy_wl": 259625, "lhs_unique": false, "lhs_tokens": [["primary", "type"], ["fbi", "code"]], "rhs_tokens": ["active"]},
+  {"lhs": ["date", "x_coordinate"], "rhs": "active", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 257252, "distinct_rhs": 2, "lhs_distinct_ratio": 0.990845, "rhs_distinct_ratio": 8e-06, "redundancy": 2377, "redundancy_wl": 4189, "lhs_unique": false, "lhs_tokens": [["date"], ["x", "coordinate"]], "rhs_tokens": ["active"]},
+  {"lhs": ["primary_type", "x_coordinate"], "rhs": "active", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 152445, "distinct_rhs": 2, "lhs_distinct_ratio": 0.587165, "rhs_distinct_ratio": 8e-06, "redundancy": 107184, "redundancy_wl": 151950, "lhs_unique": false, "lhs_tokens": [["primary", "type"], ["x", "coordinate"]], "rhs_tokens": ["active"]},
+  {"lhs": ["date", "y_coordinate"], "rhs": "active", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 257262, "distinct_rhs": 2, "lhs_distinct_ratio": 0.990883, "rhs_distinct_ratio": 8e-06, "redundancy": 2367, "redundancy_wl": 4168, "lhs_unique": false, "lhs_tokens": [["date"], ["y", "coordinate"]], "rhs_tokens": ["active"]},
+  {"lhs": ["primary_type", "y_coordinate"], "rhs": "active", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 165580, "distinct_rhs": 2, "lhs_distinct_ratio": 0.637756, "rhs_distinct_ratio": 8e-06, "redundancy": 94049, "redundancy_wl": 133580, "lhs_unique": false, "lhs_tokens": [["primary", "type"], ["y", "coordinate"]], "rhs_tokens": ["active"]},
+  {"lhs": ["date", "latitude"], "rhs": "active", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 257317, "distinct_rhs": 2, "lhs_distinct_ratio": 0.991095, "rhs_distinct_ratio": 8e-06, "redundancy": 2312, "redundancy_wl": 4065, "lhs_unique": false, "lhs_tokens": [["date"], ["latitude"]], "rhs_tokens": ["active"]},
+  {"lhs": ["primary_type", "latitude"], "rhs": "active", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 186520, "distinct_rhs": 2, "lhs_distinct_ratio": 0.71841, "rhs_distinct_ratio": 8e-06, "redundancy": 73109, "redundancy_wl": 102019, "lhs_unique": false, "lhs_tokens": [["primary", "type"], ["latitude"]], "rhs_tokens": ["active"]},
+  {"lhs": ["fbi_code", "latitude"], "rhs": "active", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 189584, "distinct_rhs": 2, "lhs_distinct_ratio": 0.730211, "rhs_distinct_ratio": 8e-06, "redundancy": 70045, "redundancy_wl": 98022, "lhs_unique": false, "lhs_tokens": [["fbi", "code"], ["latitude"]], "rhs_tokens": ["active"]},
+  {"lhs": ["date", "longitude"], "rhs": "active", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 257317, "distinct_rhs": 2, "lhs_distinct_ratio": 0.991095, "rhs_distinct_ratio": 8e-06, "redundancy": 2312, "redundancy_wl": 4065, "lhs_unique": false, "lhs_tokens": [["date"], ["longitude"]], "rhs_tokens": ["active"]},
+  {"lhs": ["primary_type", "longitude"], "rhs": "active", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 186513, "distinct_rhs": 2, "lhs_distinct_ratio": 0.718383, "rhs_distinct_ratio": 8e-06, "redundancy": 73116, "redundancy_wl": 102024, "lhs_unique": false, "lhs_tokens": [["primary", "type"], ["longitude"]], "rhs_tokens": ["active"]},
+  {"lhs": ["fbi_code", "longitude"], "rhs": "active", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 189575, "distinct_rhs": 2, "lhs_distinct_ratio": 0.730177, "rhs_distinct_ratio": 8e-06, "redundancy": 70054, "redundancy_wl": 98032, "lhs_unique": false, "lhs_tokens": [["fbi", "code"], ["longitude"]], "rhs_tokens": ["active"]},
+  {"lhs": ["y_coordinate", "updated_on"], "rhs": "active", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 116367, "distinct_rhs": 2, "lhs_distinct_ratio": 0.448205, "rhs_distinct_ratio": 8e-06, "redundancy": 143262, "redundancy_wl": 192372, "lhs_unique": false, "lhs_tokens": [["y", "coordinate"], ["updated", "on"]], "rhs_tokens": ["active"]},
+  {"lhs": ["latitude", "updated_on"], "rhs": "active", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 157593, "distinct_rhs": 2, "lhs_distinct_ratio": 0.606993, "rhs_distinct_ratio": 8e-06, "redundancy": 102036, "redundancy_wl": 139369, "lhs_unique": false, "lhs_tokens": [["latitude"], ["updated", "on"]], "rhs_tokens": ["active"]},
+  {"lhs": ["longitude", "updated_on"], "rhs": "active", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 157581, "distinct_rhs": 2, "lhs_distinct_ratio": 0.606947, "rhs_distinct_ratio": 8e-06, "redundancy": 102048, "redundancy_wl": 139389, "lhs_unique": false, "lhs_tokens": [["longitude"], ["updated", "on"]], "rhs_tokens": ["active"]},
+  {"lhs": ["date", "block", "iucr"], "rhs": "community_area", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 258859, "distinct_rhs": 79, "lhs_distinct_ratio": 0.997034, "rhs_distinct_ratio": 0.000304, "redundancy": 770, "redundancy_wl": 1437, "lhs_unique": false, "lhs_tokens": [["date"], ["block"], ["iucr"]], "rhs_tokens": ["community", "area"]},
+  {"lhs": ["date", "block", "description"], "rhs": "community_area", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 258841, "distinct_rhs": 79, "lhs_distinct_ratio": 0.996965, "rhs_distinct_ratio": 0.000304, "redundancy": 788, "redundancy_wl": 1473, "lhs_unique": false, "lhs_tokens": [["date"], ["block"], ["description"]], "rhs_tokens": ["community", "area"]},
+  {"lhs": ["date", "block", "location_description"], "rhs": "community_area", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 258148, "distinct_rhs": 79, "lhs_distinct_ratio": 0.994296, "rhs_distinct_ratio": 0.000304, "redundancy": 1481, "redundancy_wl": 2847, "lhs_unique": false, "lhs_tokens": [["date"], ["block"], ["location", "description"]], "rhs_tokens": ["community", "area"]},
+  {"lhs": ["date", "block", "y_coordinate"], "rhs": "community_area", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 257942, "distinct_rhs": 79, "lhs_distinct_ratio": 0.993502, "rhs_distinct_ratio": 0.000304, "redundancy": 1687, "redundancy_wl": 3266, "lhs_unique": false, "lhs_tokens": [["date"], ["block"], ["y", "coordinate"]], "rhs_tokens": ["community", "area"]},
+  {"lhs": ["date", "block", "latitude"], "rhs": "community_area", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 257991, "distinct_rhs": 79, "lhs_distinct_ratio": 0.993691, "rhs_distinct_ratio": 0.000304, "redundancy": 1638, "redundancy_wl": 3175, "lhs_unique": false, "lhs_tokens": [["date"], ["block"], ["latitude"]], "rhs_tokens": ["community", "area"]},
+  {"lhs": ["date", "block", "longitude"], "rhs": "community_area", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 257991, "distinct_rhs": 79, "lhs_distinct_ratio": 0.993691, "rhs_distinct_ratio": 0.000304, "redundancy": 1638, "redundancy_wl": 3175, "lhs_unique": false, "lhs_tokens": [["date"], ["block"], ["longitude"]], "rhs_tokens": ["community", "area"]},
+  {"lhs": ["iucr", "beat", "latitude"], "rhs": "x_coordinate", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 210283, "distinct_rhs": 50472, "lhs_distinct_ratio": 0.809936, "rhs_distinct_ratio": 0.1944, "redundancy": 49346, "redundancy_wl": 71013, "lhs_unique": false, "lhs_tokens": [["iucr"], ["beat"], ["latitude"]], "rhs_tokens": ["x", "coordinate"]},
+  {"lhs": ["primary_type", "beat", "latitude"], "rhs": "x_coordinate", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 188268, "distinct_rhs": 50472, "lhs_distinct_ratio": 0.725142, "rhs_distinct_ratio": 0.1944, "redundancy": 71361, "redundancy_wl": 100410, "lhs_unique": false, "lhs_tokens": [["primary", "type"], ["beat"], ["latitude"]], "rhs_tokens": ["x", "coordinate"]},
+  {"lhs": ["description", "beat", "latitude"], "rhs": "x_coordinate", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 207342, "distinct_rhs": 50472, "lhs_distinct_ratio": 0.798609, "rhs_distinct_ratio": 0.1944, "redundancy": 52287, "redundancy_wl": 74512, "lhs_unique": false, "lhs_tokens": [["description"], ["beat"], ["latitude"]], "rhs_tokens": ["x", "coordinate"]},
+  {"lhs": ["location_description", "beat", "latitude"], "rhs": "x_coordinate", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 173971, "distinct_rhs": 50472, "lhs_distinct_ratio": 0.670075, "rhs_distinct_ratio": 0.1944, "redundancy": 85658, "redundancy_wl": 118401, "lhs_unique": false, "lhs_tokens": [["location", "description"], ["beat"], ["latitude"]], "rhs_tokens": ["x", "coordinate"]},
+  {"lhs": ["iucr", "district", "latitude"], "rhs": "x_coordinate", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 209262, "distinct_rhs": 50472, "lhs_distinct_ratio": 0.806004, "rhs_distinct_ratio": 0.1944, "redundancy": 50367, "redundancy_wl": 72267, "lhs_unique": false, "lhs_tokens": [["iucr"], ["district"], ["latitude"]], "rhs_tokens": ["x", "coordinate"]},
+  {"lhs": ["description", "district", "latitude"], "rhs": "x_coordinate", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 206294, "distinct_rhs": 50472, "lhs_distinct_ratio": 0.794572, "rhs_distinct_ratio": 0.1944, "redundancy": 53335, "redundancy_wl": 75765, "lhs_unique": false, "lhs_tokens": [["description"], ["district"], ["latitude"]], "rhs_tokens": ["x", "coordinate"]},
+  {"lhs": ["beat", "ward", "latitude"], "rhs": "x_coordinate", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 125051, "distinct_rhs": 50472, "lhs_distinct_ratio": 0.481653, "rhs_distinct_ratio": 0.1944, "redundancy": 134578, "redundancy_wl": 174923, "lhs_unique": false, "lhs_tokens": [["beat"], ["ward"], ["latitude"]], "rhs_tokens": ["x", "coordinate"]},
+  {"lhs": ["beat", "community_area", "latitude"], "rhs": "x_coordinate", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 124717, "distinct_rhs": 50472, "lhs_distinct_ratio": 0.480366, "rhs_distinct_ratio": 0.1944, "redundancy": 134912, "redundancy_wl": 175321, "lhs_unique": false, "lhs_tokens": [["beat"], ["community", "area"], ["latitude"]], "rhs_tokens": ["x", "coordinate"]},
+  {"lhs": ["beat", "fbi_code", "latitude"], "rhs": "x_coordinate", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 191315, "distinct_rhs": 50472, "lhs_distinct_ratio": 0.736878, "rhs_distinct_ratio": 0.1944, "redundancy": 68314, "redundancy_wl": 96431, "lhs_unique": false, "lhs_tokens": [["beat"], ["fbi", "code"], ["latitude"]], "rhs_tokens": ["x", "coordinate"]},
+  {"lhs": ["beat", "latitude", "updated_on"], "rhs": "x_coordinate", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 159362, "distinct_rhs": 50472, "lhs_distinct_ratio": 0.613807, "rhs_distinct_ratio": 0.1944, "redundancy": 100267, "redundancy_wl": 137296, "lhs_unique": false, "lhs_tokens": [["beat"], ["latitude"], ["updated", "on"]], "rhs_tokens": ["x", "coordinate"]},
+  {"lhs": ["district", "latitude", "updated_on"], "rhs": "x_coordinate", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 158247, "distinct_rhs": 50472, "lhs_distinct_ratio": 0.609512, "rhs_distinct_ratio": 0.1944, "redundancy": 101382, "redundancy_wl": 138470, "lhs_unique": false, "lhs_tokens": [["district"], ["latitude"], ["updated", "on"]], "rhs_tokens": ["x", "coordinate"]},
+  {"lhs": ["iucr", "beat", "latitude"], "rhs": "y_coordinate", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 210283, "distinct_rhs": 70684, "lhs_distinct_ratio": 0.809936, "rhs_distinct_ratio": 0.27225, "redundancy": 49346, "redundancy_wl": 71013, "lhs_unique": false, "lhs_tokens": [["iucr"], ["beat"], ["latitude"]], "rhs_tokens": ["y", "coordinate"]},
+  {"lhs": ["primary_type", "beat", "latitude"], "rhs": "y_coordinate", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 188268, "distinct_rhs": 70684, "lhs_distinct_ratio": 0.725142, "rhs_distinct_ratio": 0.27225, "redundancy": 71361, "redundancy_wl": 100410, "lhs_unique": false, "lhs_tokens": [["primary", "type"], ["beat"], ["latitude"]], "rhs_tokens": ["y", "coordinate"]},
+  {"lhs": ["description", "beat", "latitude"], "rhs": "y_coordinate", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 207342, "distinct_rhs": 70684, "lhs_distinct_ratio": 0.798609, "rhs_distinct_ratio": 0.27225, "redundancy": 52287, "redundancy_wl": 74512, "lhs_unique": false, "lhs_tokens": [["description"], ["beat"], ["latitude"]], "rhs_tokens": ["y", "coordinate"]},
+  {"lhs": ["location_description", "beat", "latitude"], "rhs": "y_coordinate", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 173971, "distinct_rhs": 70684, "lhs_distinct_ratio": 0.670075, "rhs_distinct_ratio": 0.27225, "redundancy": 85658, "redundancy_wl": 118401, "lhs_unique": false, "lhs_tokens": [["location", "description"], ["beat"], ["latitude"]], "rhs_tokens": ["y", "coordinate"]},
+  {"lhs": ["iucr", "district", "latitude"], "rhs": "y_coordinate", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 209262, "distinct_rhs": 70684, "lhs_distinct_ratio": 0.806004, "rhs_distinct_ratio": 0.27225, "redundancy": 50367, "redundancy_wl": 72267, "lhs_unique": false, "lhs_tokens": [["iucr"], ["district"], ["latitude"]], "rhs_tokens": ["y", "coordinate"]},
+  {"lhs": ["description", "district", "latitude"], "rhs": "y_coordinate", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 206294, "distinct_rhs": 70684, "lhs_distinct_ratio": 0.794572, "rhs_distinct_ratio": 0.27225, "redundancy": 53335, "redundancy_wl": 75765, "lhs_unique": false, "lhs_tokens": [["description"], ["district"], ["latitude"]], "rhs_tokens": ["y", "coordinate"]},
+  {"lhs": ["beat", "ward", "latitude"], "rhs": "y_coordinate", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 125051, "distinct_rhs": 70684, "lhs_distinct_ratio": 0.481653, "rhs_distinct_ratio": 0.27225, "redundancy": 134578, "redundancy_wl": 174923, "lhs_unique": false, "lhs_tokens": [["beat"], ["ward"], ["latitude"]], "rhs_tokens": ["y", "coordinate"]},
+  {"lhs": ["beat", "community_area", "latitude"], "rhs": "y_coordinate", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 124717, "distinct_rhs": 70684, "lhs_distinct_ratio": 0.480366, "rhs_distinct_ratio": 0.27225, "redundancy": 134912, "redundancy_wl": 175321, "lhs_unique": false, "lhs_tokens": [["beat"], ["community", "area"], ["latitude"]], "rhs_tokens": ["y", "coordinate"]},
+  {"lhs": ["beat", "fbi_code", "latitude"], "rhs": "y_coordinate", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 191315, "distinct_rhs": 70684, "lhs_distinct_ratio": 0.736878, "rhs_distinct_ratio": 0.27225, "redundancy": 68314, "redundancy_wl": 96431, "lhs_unique": false, "lhs_tokens": [["beat"], ["fbi", "code"], ["latitude"]], "rhs_tokens": ["y", "coordinate"]},
+  {"lhs": ["beat", "latitude", "updated_on"], "rhs": "y_coordinate", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 159362, "distinct_rhs": 70684, "lhs_distinct_ratio": 0.613807, "rhs_distinct_ratio": 0.27225, "redundancy": 100267, "redundancy_wl": 137296, "lhs_unique": false, "lhs_tokens": [["beat"], ["latitude"], ["updated", "on"]], "rhs_tokens": ["y", "coordinate"]},
+  {"lhs": ["district", "latitude", "updated_on"], "rhs": "y_coordinate", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 158247, "distinct_rhs": 70684, "lhs_distinct_ratio": 0.609512, "rhs_distinct_ratio": 0.27225, "redundancy": 101382, "redundancy_wl": 138470, "lhs_unique": false, "lhs_tokens": [["district"], ["latitude"], ["updated", "on"]], "rhs_tokens": ["y", "coordinate"]},
+  {"lhs": ["iucr", "beat", "latitude"], "rhs": "longitude", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 210283, "distinct_rhs": 122833, "lhs_distinct_ratio": 0.809936, "rhs_distinct_ratio": 0.47311, "redundancy": 49346, "redundancy_wl": 71013, "lhs_unique": false, "lhs_tokens": [["iucr"], ["beat"], ["latitude"]], "rhs_tokens": ["longitude"]},
+  {"lhs": ["primary_type", "beat", "latitude"], "rhs": "longitude", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 188268, "distinct_rhs": 122833, "lhs_distinct_ratio": 0.725142, "rhs_distinct_ratio": 0.47311, "redundancy": 71361, "redundancy_wl": 100410, "lhs_unique": false, "lhs_tokens": [["primary", "type"], ["beat"], ["latitude"]], "rhs_tokens": ["longitude"]},
+  {"lhs": ["description", "beat", "latitude"], "rhs": "longitude", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 207342, "distinct_rhs": 122833, "lhs_distinct_ratio": 0.798609, "rhs_distinct_ratio": 0.47311, "redundancy": 52287, "redundancy_wl": 74512, "lhs_unique": false, "lhs_tokens": [["description"], ["beat"], ["latitude"]], "rhs_tokens": ["longitude"]},
+  {"lhs": ["location_description", "beat", "latitude"], "rhs": "longitude", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 173971, "distinct_rhs": 122833, "lhs_distinct_ratio": 0.670075, "rhs_distinct_ratio": 0.47311, "redundancy": 85658, "redundancy_wl": 118401, "lhs_unique": false, "lhs_tokens": [["location", "description"], ["beat"], ["latitude"]], "rhs_tokens": ["longitude"]},
+  {"lhs": ["iucr", "district", "latitude"], "rhs": "longitude", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 209262, "distinct_rhs": 122833, "lhs_distinct_ratio": 0.806004, "rhs_distinct_ratio": 0.47311, "redundancy": 50367, "redundancy_wl": 72267, "lhs_unique": false, "lhs_tokens": [["iucr"], ["district"], ["latitude"]], "rhs_tokens": ["longitude"]},
+  {"lhs": ["description", "district", "latitude"], "rhs": "longitude", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 206294, "distinct_rhs": 122833, "lhs_distinct_ratio": 0.794572, "rhs_distinct_ratio": 0.47311, "redundancy": 53335, "redundancy_wl": 75765, "lhs_unique": false, "lhs_tokens": [["description"], ["district"], ["latitude"]], "rhs_tokens": ["longitude"]},
+  {"lhs": ["beat", "ward", "latitude"], "rhs": "longitude", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 125051, "distinct_rhs": 122833, "lhs_distinct_ratio": 0.481653, "rhs_distinct_ratio": 0.47311, "redundancy": 134578, "redundancy_wl": 174923, "lhs_unique": false, "lhs_tokens": [["beat"], ["ward"], ["latitude"]], "rhs_tokens": ["longitude"]},
+  {"lhs": ["beat", "community_area", "latitude"], "rhs": "longitude", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 124717, "distinct_rhs": 122833, "lhs_distinct_ratio": 0.480366, "rhs_distinct_ratio": 0.47311, "redundancy": 134912, "redundancy_wl": 175321, "lhs_unique": false, "lhs_tokens": [["beat"], ["community", "area"], ["latitude"]], "rhs_tokens": ["longitude"]},
+  {"lhs": ["beat", "fbi_code", "latitude"], "rhs": "longitude", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 191315, "distinct_rhs": 122833, "lhs_distinct_ratio": 0.736878, "rhs_distinct_ratio": 0.47311, "redundancy": 68314, "redundancy_wl": 96431, "lhs_unique": false, "lhs_tokens": [["beat"], ["fbi", "code"], ["latitude"]], "rhs_tokens": ["longitude"]},
+  {"lhs": ["beat", "latitude", "updated_on"], "rhs": "longitude", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 159362, "distinct_rhs": 122833, "lhs_distinct_ratio": 0.613807, "rhs_distinct_ratio": 0.47311, "redundancy": 100267, "redundancy_wl": 137296, "lhs_unique": false, "lhs_tokens": [["beat"], ["latitude"], ["updated", "on"]], "rhs_tokens": ["longitude"]},
+  {"lhs": ["district", "latitude", "updated_on"], "rhs": "longitude", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 158247, "distinct_rhs": 122833, "lhs_distinct_ratio": 0.609512, "rhs_distinct_ratio": 0.47311, "redundancy": 101382, "redundancy_wl": 138470, "lhs_unique": false, "lhs_tokens": [["district"], ["latitude"], ["updated", "on"]], "rhs_tokens": ["longitude"]},
+  {"lhs": ["description", "location_description", "beat"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 80469, "distinct_rhs": 2, "lhs_distinct_ratio": 0.309938, "rhs_distinct_ratio": 8e-06, "redundancy": 179160, "redundancy_wl": 211311, "lhs_unique": false, "lhs_tokens": [["description"], ["location", "description"], ["beat"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["date", "block", "fbi_code"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 258622, "distinct_rhs": 2, "lhs_distinct_ratio": 0.996121, "rhs_distinct_ratio": 8e-06, "redundancy": 1007, "redundancy_wl": 1890, "lhs_unique": false, "lhs_tokens": [["date"], ["block"], ["fbi", "code"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["date", "primary_type", "fbi_code"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 209136, "distinct_rhs": 2, "lhs_distinct_ratio": 0.805519, "rhs_distinct_ratio": 8e-06, "redundancy": 50493, "redundancy_wl": 79783, "lhs_unique": false, "lhs_tokens": [["date"], ["primary", "type"], ["fbi", "code"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["date", "beat", "fbi_code"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 257930, "distinct_rhs": 2, "lhs_distinct_ratio": 0.993456, "rhs_distinct_ratio": 8e-06, "redundancy": 1699, "redundancy_wl": 3233, "lhs_unique": false, "lhs_tokens": [["date"], ["beat"], ["fbi", "code"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["date", "community_area", "fbi_code"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 256062, "distinct_rhs": 2, "lhs_distinct_ratio": 0.986261, "rhs_distinct_ratio": 8e-06, "redundancy": 3567, "redundancy_wl": 6852, "lhs_unique": false, "lhs_tokens": [["date"], ["community", "area"], ["fbi", "code"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["description", "location_description", "x_coordinate"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 215681, "distinct_rhs": 2, "lhs_distinct_ratio": 0.830728, "rhs_distinct_ratio": 8e-06, "redundancy": 43948, "redundancy_wl": 65628, "lhs_unique": false, "lhs_tokens": [["description"], ["location", "description"], ["x", "coordinate"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["description", "domestic", "x_coordinate"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 191195, "distinct_rhs": 2, "lhs_distinct_ratio": 0.736416, "rhs_distinct_ratio": 8e-06, "redundancy": 68434, "redundancy_wl": 99456, "lhs_unique": false, "lhs_tokens": [["description"], ["domestic"], ["x", "coordinate"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["description", "beat", "x_coordinate"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 201095, "distinct_rhs": 2, "lhs_distinct_ratio": 0.774548, "rhs_distinct_ratio": 8e-06, "redundancy": 58534, "redundancy_wl": 84306, "lhs_unique": false, "lhs_tokens": [["description"], ["beat"], ["x", "coordinate"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["description", "district", "x_coordinate"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 198072, "distinct_rhs": 2, "lhs_distinct_ratio": 0.762904, "rhs_distinct_ratio": 8e-06, "redundancy": 61557, "redundancy_wl": 88747, "lhs_unique": false, "lhs_tokens": [["description"], ["district"], ["x", "coordinate"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["description", "ward", "x_coordinate"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 199319, "distinct_rhs": 2, "lhs_distinct_ratio": 0.767707, "rhs_distinct_ratio": 8e-06, "redundancy": 60310, "redundancy_wl": 86926, "lhs_unique": false, "lhs_tokens": [["description"], ["ward"], ["x", "coordinate"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["description", "community_area", "x_coordinate"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 199270, "distinct_rhs": 2, "lhs_distinct_ratio": 0.767518, "rhs_distinct_ratio": 8e-06, "redundancy": 60359, "redundancy_wl": 87016, "lhs_unique": false, "lhs_tokens": [["description"], ["community", "area"], ["x", "coordinate"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["primary_type", "fbi_code", "x_coordinate"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 160497, "distinct_rhs": 2, "lhs_distinct_ratio": 0.618178, "rhs_distinct_ratio": 8e-06, "redundancy": 99132, "redundancy_wl": 141639, "lhs_unique": false, "lhs_tokens": [["primary", "type"], ["fbi", "code"], ["x", "coordinate"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["description", "location_description", "y_coordinate"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 218640, "distinct_rhs": 2, "lhs_distinct_ratio": 0.842125, "rhs_distinct_ratio": 8e-06, "redundancy": 40989, "redundancy_wl": 60661, "lhs_unique": false, "lhs_tokens": [["description"], ["location", "description"], ["y", "coordinate"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["description", "domestic", "y_coordinate"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 197899, "distinct_rhs": 2, "lhs_distinct_ratio": 0.762238, "rhs_distinct_ratio": 8e-06, "redundancy": 61730, "redundancy_wl": 88986, "lhs_unique": false, "lhs_tokens": [["description"], ["domestic"], ["y", "coordinate"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["description", "beat", "y_coordinate"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 202827, "distinct_rhs": 2, "lhs_distinct_ratio": 0.781219, "rhs_distinct_ratio": 8e-06, "redundancy": 56802, "redundancy_wl": 81692, "lhs_unique": false, "lhs_tokens": [["description"], ["beat"], ["y", "coordinate"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["description", "district", "y_coordinate"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 199636, "distinct_rhs": 2, "lhs_distinct_ratio": 0.768928, "rhs_distinct_ratio": 8e-06, "redundancy": 59993, "redundancy_wl": 86453, "lhs_unique": false, "lhs_tokens": [["description"], ["district"], ["y", "coordinate"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["description", "ward", "y_coordinate"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 201122, "distinct_rhs": 2, "lhs_distinct_ratio": 0.774652, "rhs_distinct_ratio": 8e-06, "redundancy": 58507, "redundancy_wl": 84213, "lhs_unique": false, "lhs_tokens": [["description"], ["ward"], ["y", "coordinate"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["description", "community_area", "y_coordinate"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 200833, "distinct_rhs": 2, "lhs_distinct_ratio": 0.773538, "rhs_distinct_ratio": 8e-06, "redundancy": 58796, "redundancy_wl": 84683, "lhs_unique": false, "lhs_tokens": [["description"], ["community", "area"], ["y", "coordinate"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["primary_type", "fbi_code", "y_coordinate"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 172579, "distinct_rhs": 2, "lhs_distinct_ratio": 0.664714, "rhs_distinct_ratio": 8e-06, "redundancy": 87050, "redundancy_wl": 124410, "lhs_unique": false, "lhs_tokens": [["primary", "type"], ["fbi", "code"], ["y", "coordinate"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["description", "location_description", "latitude"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 223108, "distinct_rhs": 2, "lhs_distinct_ratio": 0.859334, "rhs_distinct_ratio": 8e-06, "redundancy": 36521, "redundancy_wl": 52900, "lhs_unique": false, "lhs_tokens": [["description"], ["location", "description"], ["latitude"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["description", "domestic", "latitude"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 207943, "distinct_rhs": 2, "lhs_distinct_ratio": 0.800924, "rhs_distinct_ratio": 8e-06, "redundancy": 51686, "redundancy_wl": 72646, "lhs_unique": false, "lhs_tokens": [["description"], ["domestic"], ["latitude"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["description", "beat", "latitude"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 207342, "distinct_rhs": 2, "lhs_distinct_ratio": 0.798609, "rhs_distinct_ratio": 8e-06, "redundancy": 52287, "redundancy_wl": 74512, "lhs_unique": false, "lhs_tokens": [["description"], ["beat"], ["latitude"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["description", "district", "latitude"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 206294, "distinct_rhs": 2, "lhs_distinct_ratio": 0.794572, "rhs_distinct_ratio": 8e-06, "redundancy": 53335, "redundancy_wl": 75765, "lhs_unique": false, "lhs_tokens": [["description"], ["district"], ["latitude"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["description", "ward", "latitude"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 206663, "distinct_rhs": 2, "lhs_distinct_ratio": 0.795994, "rhs_distinct_ratio": 8e-06, "redundancy": 52966, "redundancy_wl": 75383, "lhs_unique": false, "lhs_tokens": [["description"], ["ward"], ["latitude"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["description", "community_area", "latitude"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 206654, "distinct_rhs": 2, "lhs_distinct_ratio": 0.795959, "rhs_distinct_ratio": 8e-06, "redundancy": 52975, "redundancy_wl": 75406, "lhs_unique": false, "lhs_tokens": [["description"], ["community", "area"], ["latitude"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["primary_type", "fbi_code", "latitude"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 191541, "distinct_rhs": 2, "lhs_distinct_ratio": 0.737749, "rhs_distinct_ratio": 8e-06, "redundancy": 68088, "redundancy_wl": 95340, "lhs_unique": false, "lhs_tokens": [["primary", "type"], ["fbi", "code"], ["latitude"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["description", "location_description", "longitude"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 223104, "distinct_rhs": 2, "lhs_distinct_ratio": 0.859318, "rhs_distinct_ratio": 8e-06, "redundancy": 36525, "redundancy_wl": 52905, "lhs_unique": false, "lhs_tokens": [["description"], ["location", "description"], ["longitude"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["description", "domestic", "longitude"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 207933, "distinct_rhs": 2, "lhs_distinct_ratio": 0.800885, "rhs_distinct_ratio": 8e-06, "redundancy": 51696, "redundancy_wl": 72656, "lhs_unique": false, "lhs_tokens": [["description"], ["domestic"], ["longitude"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["description", "beat", "longitude"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 207336, "distinct_rhs": 2, "lhs_distinct_ratio": 0.798586, "rhs_distinct_ratio": 8e-06, "redundancy": 52293, "redundancy_wl": 74516, "lhs_unique": false, "lhs_tokens": [["description"], ["beat"], ["longitude"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["description", "district", "longitude"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 206288, "distinct_rhs": 2, "lhs_distinct_ratio": 0.794549, "rhs_distinct_ratio": 8e-06, "redundancy": 53341, "redundancy_wl": 75769, "lhs_unique": false, "lhs_tokens": [["description"], ["district"], ["longitude"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["description", "ward", "longitude"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 206658, "distinct_rhs": 2, "lhs_distinct_ratio": 0.795974, "rhs_distinct_ratio": 8e-06, "redundancy": 52971, "redundancy_wl": 75385, "lhs_unique": false, "lhs_tokens": [["description"], ["ward"], ["longitude"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["description", "community_area", "longitude"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 206650, "distinct_rhs": 2, "lhs_distinct_ratio": 0.795943, "rhs_distinct_ratio": 8e-06, "redundancy": 52979, "redundancy_wl": 75406, "lhs_unique": false, "lhs_tokens": [["description"], ["community", "area"], ["longitude"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["primary_type", "fbi_code", "longitude"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 191532, "distinct_rhs": 2, "lhs_distinct_ratio": 0.737714, "rhs_distinct_ratio": 8e-06, "redundancy": 68097, "redundancy_wl": 95350, "lhs_unique": false, "lhs_tokens": [["primary", "type"], ["fbi", "code"], ["longitude"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["description", "x_coordinate", "updated_on"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 211153, "distinct_rhs": 2, "lhs_distinct_ratio": 0.813287, "rhs_distinct_ratio": 8e-06, "redundancy": 48476, "redundancy_wl": 73048, "lhs_unique": false, "lhs_tokens": [["description"], ["x", "coordinate"], ["updated", "on"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["description", "y_coordinate", "updated_on"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 215220, "distinct_rhs": 2, "lhs_distinct_ratio": 0.828952, "rhs_distinct_ratio": 8e-06, "redundancy": 44409, "redundancy_wl": 66332, "lhs_unique": false, "lhs_tokens": [["description"], ["y", "coordinate"], ["updated", "on"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["description", "latitude", "updated_on"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 221534, "distinct_rhs": 2, "lhs_distinct_ratio": 0.853271, "rhs_distinct_ratio": 8e-06, "redundancy": 38095, "redundancy_wl": 55571, "lhs_unique": false, "lhs_tokens": [["description"], ["latitude"], ["updated", "on"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["description", "longitude", "updated_on"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 221525, "distinct_rhs": 2, "lhs_distinct_ratio": 0.853237, "rhs_distinct_ratio": 8e-06, "redundancy": 38104, "redundancy_wl": 55584, "lhs_unique": false, "lhs_tokens": [["description"], ["longitude"], ["updated", "on"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["date", "location_description", "district"], "rhs": "active", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 252086, "distinct_rhs": 2, "lhs_distinct_ratio": 0.970947, "rhs_distinct_ratio": 8e-06, "redundancy": 7543, "redundancy_wl": 14293, "lhs_unique": false, "lhs_tokens": [["date"], ["location", "description"], ["district"]], "rhs_tokens": ["active"]},
+  {"lhs": ["primary_type", "location_description", "ward"], "rhs": "active", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 19714, "distinct_rhs": 2, "lhs_distinct_ratio": 0.075931, "rhs_distinct_ratio": 8e-06, "redundancy": 239915, "redundancy_wl": 252166, "lhs_unique": false, "lhs_tokens": [["primary", "type"], ["location", "description"], ["ward"]], "rhs_tokens": ["active"]},
+  {"lhs": ["primary_type", "district", "ward"], "rhs": "active", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 2707, "distinct_rhs": 2, "lhs_distinct_ratio": 0.010426, "rhs_distinct_ratio": 8e-06, "redundancy": 256922, "redundancy_wl": 259264, "lhs_unique": false, "lhs_tokens": [["primary", "type"], ["district"], ["ward"]], "rhs_tokens": ["active"]},
+  {"lhs": ["primary_type", "ward", "community_area"], "rhs": "active", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 4488, "distinct_rhs": 2, "lhs_distinct_ratio": 0.017286, "rhs_distinct_ratio": 8e-06, "redundancy": 255141, "redundancy_wl": 258944, "lhs_unique": false, "lhs_tokens": [["primary", "type"], ["ward"], ["community", "area"]], "rhs_tokens": ["active"]},
+  {"lhs": ["block", "location_description", "fbi_code"], "rhs": "active", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 181429, "distinct_rhs": 2, "lhs_distinct_ratio": 0.698801, "rhs_distinct_ratio": 8e-06, "redundancy": 78200, "redundancy_wl": 115290, "lhs_unique": false, "lhs_tokens": [["block"], ["location", "description"], ["fbi", "code"]], "rhs_tokens": ["active"]},
+  {"lhs": ["block", "fbi_code", "x_coordinate"], "rhs": "active", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 182014, "distinct_rhs": 2, "lhs_distinct_ratio": 0.701054, "rhs_distinct_ratio": 8e-06, "redundancy": 77615, "redundancy_wl": 110203, "lhs_unique": false, "lhs_tokens": [["block"], ["fbi", "code"], ["x", "coordinate"]], "rhs_tokens": ["active"]},
+  {"lhs": ["beat", "fbi_code", "x_coordinate"], "rhs": "active", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 181435, "distinct_rhs": 2, "lhs_distinct_ratio": 0.698824, "rhs_distinct_ratio": 8e-06, "redundancy": 78194, "redundancy_wl": 111307, "lhs_unique": false, "lhs_tokens": [["beat"], ["fbi", "code"], ["x", "coordinate"]], "rhs_tokens": ["active"]},
+  {"lhs": ["district", "fbi_code", "x_coordinate"], "rhs": "active", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 176590, "distinct_rhs": 2, "lhs_distinct_ratio": 0.680163, "rhs_distinct_ratio": 8e-06, "redundancy": 83039, "redundancy_wl": 118040, "lhs_unique": false, "lhs_tokens": [["district"], ["fbi", "code"], ["x", "coordinate"]], "rhs_tokens": ["active"]},
+  {"lhs": ["location_description", "fbi_code", "y_coordinate"], "rhs": "active", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 207063, "distinct_rhs": 2, "lhs_distinct_ratio": 0.797534, "rhs_distinct_ratio": 8e-06, "redundancy": 52566, "redundancy_wl": 77658, "lhs_unique": false, "lhs_tokens": [["location", "description"], ["fbi", "code"], ["y", "coordinate"]], "rhs_tokens": ["active"]},
+  {"lhs": ["fbi_code", "x_coordinate", "y_coordinate"], "rhs": "active", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 189589, "distinct_rhs": 2, "lhs_distinct_ratio": 0.73023, "rhs_distinct_ratio": 8e-06, "redundancy": 70040, "redundancy_wl": 98013, "lhs_unique": false, "lhs_tokens": [["fbi", "code"], ["x", "coordinate"], ["y", "coordinate"]], "rhs_tokens": ["active"]},
+  {"lhs": ["block", "location_description", "updated_on"], "rhs": "active", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 142921, "distinct_rhs": 2, "lhs_distinct_ratio": 0.550482, "rhs_distinct_ratio": 8e-06, "redundancy": 116708, "redundancy_wl": 163732, "lhs_unique": false, "lhs_tokens": [["block"], ["location", "description"], ["updated", "on"]], "rhs_tokens": ["active"]},
+  {"lhs": ["block", "fbi_code", "updated_on"], "rhs": "active", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 164636, "distinct_rhs": 2, "lhs_distinct_ratio": 0.63412, "rhs_distinct_ratio": 8e-06, "redundancy": 94993, "redundancy_wl": 137893, "lhs_unique": false, "lhs_tokens": [["block"], ["fbi", "code"], ["updated", "on"]], "rhs_tokens": ["active"]},
+  {"lhs": ["block", "x_coordinate", "updated_on"], "rhs": "active", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 141595, "distinct_rhs": 2, "lhs_distinct_ratio": 0.545374, "rhs_distinct_ratio": 8e-06, "redundancy": 118034, "redundancy_wl": 159890, "lhs_unique": false, "lhs_tokens": [["block"], ["x", "coordinate"], ["updated", "on"]], "rhs_tokens": ["active"]},
+  {"lhs": ["beat", "x_coordinate", "updated_on"], "rhs": "active", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 140632, "distinct_rhs": 2, "lhs_distinct_ratio": 0.541665, "rhs_distinct_ratio": 8e-06, "redundancy": 118997, "redundancy_wl": 161631, "lhs_unique": false, "lhs_tokens": [["beat"], ["x", "coordinate"], ["updated", "on"]], "rhs_tokens": ["active"]},
+  {"lhs": ["district", "x_coordinate", "updated_on"], "rhs": "active", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 132087, "distinct_rhs": 2, "lhs_distinct_ratio": 0.508753, "rhs_distinct_ratio": 8e-06, "redundancy": 127542, "redundancy_wl": 172521, "lhs_unique": false, "lhs_tokens": [["district"], ["x", "coordinate"], ["updated", "on"]], "rhs_tokens": ["active"]},
+  {"lhs": ["block", "updated_on", "index_code"], "rhs": "active", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 91299, "distinct_rhs": 2, "lhs_distinct_ratio": 0.351652, "rhs_distinct_ratio": 8e-06, "redundancy": 168330, "redundancy_wl": 216745, "lhs_unique": false, "lhs_tokens": [["block"], ["updated", "on"], ["index", "code"]], "rhs_tokens": ["active"]},
+  {"lhs": ["date", "block", "description", "fbi_code"], "rhs": "iucr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 258859, "distinct_rhs": 341, "lhs_distinct_ratio": 0.997034, "rhs_distinct_ratio": 0.001313, "redundancy": 770, "redundancy_wl": 1437, "lhs_unique": false, "lhs_tokens": [["date"], ["block"], ["description"], ["fbi", "code"]], "rhs_tokens": ["iucr"]},
+  {"lhs": ["date", "description", "beat", "fbi_code"], "rhs": "iucr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 258557, "distinct_rhs": 341, "lhs_distinct_ratio": 0.995871, "rhs_distinct_ratio": 0.001313, "redundancy": 1072, "redundancy_wl": 2014, "lhs_unique": false, "lhs_tokens": [["date"], ["description"], ["beat"], ["fbi", "code"]], "rhs_tokens": ["iucr"]},
+  {"lhs": ["date", "block", "description", "fbi_code"], "rhs": "primary_type", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 258859, "distinct_rhs": 31, "lhs_distinct_ratio": 0.997034, "rhs_distinct_ratio": 0.000119, "redundancy": 770, "redundancy_wl": 1437, "lhs_unique": false, "lhs_tokens": [["date"], ["block"], ["description"], ["fbi", "code"]], "rhs_tokens": ["primary", "type"]},
+  {"lhs": ["date", "description", "beat", "fbi_code"], "rhs": "primary_type", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 258557, "distinct_rhs": 31, "lhs_distinct_ratio": 0.995871, "rhs_distinct_ratio": 0.000119, "redundancy": 1072, "redundancy_wl": 2014, "lhs_unique": false, "lhs_tokens": [["date"], ["description"], ["beat"], ["fbi", "code"]], "rhs_tokens": ["primary", "type"]},
+  {"lhs": ["date", "block", "district", "latitude"], "rhs": "beat", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 257992, "distinct_rhs": 276, "lhs_distinct_ratio": 0.993695, "rhs_distinct_ratio": 0.001063, "redundancy": 1637, "redundancy_wl": 3173, "lhs_unique": false, "lhs_tokens": [["date"], ["block"], ["district"], ["latitude"]], "rhs_tokens": ["beat"]},
+  {"lhs": ["date", "block", "district", "longitude"], "rhs": "beat", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 257992, "distinct_rhs": 276, "lhs_distinct_ratio": 0.993695, "rhs_distinct_ratio": 0.001063, "redundancy": 1637, "redundancy_wl": 3173, "lhs_unique": false, "lhs_tokens": [["date"], ["block"], ["district"], ["longitude"]], "rhs_tokens": ["beat"]},
+  {"lhs": ["date", "block", "primary_type", "beat"], "rhs": "community_area", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 258614, "distinct_rhs": 79, "lhs_distinct_ratio": 0.996091, "rhs_distinct_ratio": 0.000304, "redundancy": 1015, "redundancy_wl": 1911, "lhs_unique": false, "lhs_tokens": [["date"], ["block"], ["primary", "type"], ["beat"]], "rhs_tokens": ["community", "area"]},
+  {"lhs": ["date", "block", "domestic", "beat"], "rhs": "community_area", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 257739, "distinct_rhs": 79, "lhs_distinct_ratio": 0.99272, "rhs_distinct_ratio": 0.000304, "redundancy": 1890, "redundancy_wl": 3631, "lhs_unique": false, "lhs_tokens": [["date"], ["block"], ["domestic"], ["beat"]], "rhs_tokens": ["community", "area"]},
+  {"lhs": ["date", "block", "primary_type", "ward"], "rhs": "community_area", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 258610, "distinct_rhs": 79, "lhs_distinct_ratio": 0.996075, "rhs_distinct_ratio": 0.000304, "redundancy": 1019, "redundancy_wl": 1922, "lhs_unique": false, "lhs_tokens": [["date"], ["block"], ["primary", "type"], ["ward"]], "rhs_tokens": ["community", "area"]},
+  {"lhs": ["date", "block", "beat", "fbi_code"], "rhs": "community_area", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 258634, "distinct_rhs": 79, "lhs_distinct_ratio": 0.996168, "rhs_distinct_ratio": 0.000304, "redundancy": 995, "redundancy_wl": 1867, "lhs_unique": false, "lhs_tokens": [["date"], ["block"], ["beat"], ["fbi", "code"]], "rhs_tokens": ["community", "area"]},
+  {"lhs": ["date", "block", "ward", "fbi_code"], "rhs": "community_area", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 258629, "distinct_rhs": 79, "lhs_distinct_ratio": 0.996148, "rhs_distinct_ratio": 0.000304, "redundancy": 1000, "redundancy_wl": 1880, "lhs_unique": false, "lhs_tokens": [["date"], ["block"], ["ward"], ["fbi", "code"]], "rhs_tokens": ["community", "area"]},
+  {"lhs": ["date", "block", "primary_type", "x_coordinate"], "rhs": "community_area", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 258793, "distinct_rhs": 79, "lhs_distinct_ratio": 0.99678, "rhs_distinct_ratio": 0.000304, "redundancy": 836, "redundancy_wl": 1596, "lhs_unique": false, "lhs_tokens": [["date"], ["block"], ["primary", "type"], ["x", "coordinate"]], "rhs_tokens": ["community", "area"]},
+  {"lhs": ["date", "block", "beat", "x_coordinate"], "rhs": "community_area", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 257936, "distinct_rhs": 79, "lhs_distinct_ratio": 0.993479, "rhs_distinct_ratio": 0.000304, "redundancy": 1693, "redundancy_wl": 3279, "lhs_unique": false, "lhs_tokens": [["date"], ["block"], ["beat"], ["x", "coordinate"]], "rhs_tokens": ["community", "area"]},
+  {"lhs": ["date", "iucr", "beat", "x_coordinate"], "rhs": "community_area", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 259002, "distinct_rhs": 79, "lhs_distinct_ratio": 0.997585, "rhs_distinct_ratio": 0.000304, "redundancy": 627, "redundancy_wl": 1187, "lhs_unique": false, "lhs_tokens": [["date"], ["iucr"], ["beat"], ["x", "coordinate"]], "rhs_tokens": ["community", "area"]},
+  {"lhs": ["date", "description", "beat", "x_coordinate"], "rhs": "community_area", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 258987, "distinct_rhs": 79, "lhs_distinct_ratio": 0.997527, "rhs_distinct_ratio": 0.000304, "redundancy": 642, "redundancy_wl": 1217, "lhs_unique": false, "lhs_tokens": [["date"], ["description"], ["beat"], ["x", "coordinate"]], "rhs_tokens": ["community", "area"]},
+  {"lhs": ["date", "block", "fbi_code", "x_coordinate"], "rhs": "community_area", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 258806, "distinct_rhs": 79, "lhs_distinct_ratio": 0.99683, "rhs_distinct_ratio": 0.000304, "redundancy": 823, "redundancy_wl": 1566, "lhs_unique": false, "lhs_tokens": [["date"], ["block"], ["fbi", "code"], ["x", "coordinate"]], "rhs_tokens": ["community", "area"]},
+  {"lhs": ["date", "beat", "fbi_code", "x_coordinate"], "rhs": "community_area", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 258802, "distinct_rhs": 79, "lhs_distinct_ratio": 0.996815, "rhs_distinct_ratio": 0.000304, "redundancy": 827, "redundancy_wl": 1570, "lhs_unique": false, "lhs_tokens": [["date"], ["beat"], ["fbi", "code"], ["x", "coordinate"]], "rhs_tokens": ["community", "area"]},
+  {"lhs": ["date", "iucr", "beat", "y_coordinate"], "rhs": "community_area", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 259006, "distinct_rhs": 79, "lhs_distinct_ratio": 0.9976, "rhs_distinct_ratio": 0.000304, "redundancy": 623, "redundancy_wl": 1178, "lhs_unique": false, "lhs_tokens": [["date"], ["iucr"], ["beat"], ["y", "coordinate"]], "rhs_tokens": ["community", "area"]},
+  {"lhs": ["date", "description", "beat", "y_coordinate"], "rhs": "community_area", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 258991, "distinct_rhs": 79, "lhs_distinct_ratio": 0.997543, "rhs_distinct_ratio": 0.000304, "redundancy": 638, "redundancy_wl": 1208, "lhs_unique": false, "lhs_tokens": [["date"], ["description"], ["beat"], ["y", "coordinate"]], "rhs_tokens": ["community", "area"]},
+  {"lhs": ["date", "beat", "fbi_code", "y_coordinate"], "rhs": "community_area", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 258806, "distinct_rhs": 79, "lhs_distinct_ratio": 0.99683, "rhs_distinct_ratio": 0.000304, "redundancy": 823, "redundancy_wl": 1560, "lhs_unique": false, "lhs_tokens": [["date"], ["beat"], ["fbi", "code"], ["y", "coordinate"]], "rhs_tokens": ["community", "area"]},
+  {"lhs": ["date", "iucr", "beat", "latitude"], "rhs": "community_area", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 259036, "distinct_rhs": 79, "lhs_distinct_ratio": 0.997716, "rhs_distinct_ratio": 0.000304, "redundancy": 593, "redundancy_wl": 1124, "lhs_unique": false, "lhs_tokens": [["date"], ["iucr"], ["beat"], ["latitude"]], "rhs_tokens": ["community", "area"]},
+  {"lhs": ["date", "description", "beat", "latitude"], "rhs": "community_area", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 259021, "distinct_rhs": 79, "lhs_distinct_ratio": 0.997658, "rhs_distinct_ratio": 0.000304, "redundancy": 608, "redundancy_wl": 1154, "lhs_unique": false, "lhs_tokens": [["date"], ["description"], ["beat"], ["latitude"]], "rhs_tokens": ["community", "area"]},
+  {"lhs": ["date", "beat", "fbi_code", "latitude"], "rhs": "community_area", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 258840, "distinct_rhs": 79, "lhs_distinct_ratio": 0.996961, "rhs_distinct_ratio": 0.000304, "redundancy": 789, "redundancy_wl": 1499, "lhs_unique": false, "lhs_tokens": [["date"], ["beat"], ["fbi", "code"], ["latitude"]], "rhs_tokens": ["community", "area"]},
+  {"lhs": ["date", "iucr", "beat", "longitude"], "rhs": "community_area", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 259036, "distinct_rhs": 79, "lhs_distinct_ratio": 0.997716, "rhs_distinct_ratio": 0.000304, "redundancy": 593, "redundancy_wl": 1124, "lhs_unique": false, "lhs_tokens": [["date"], ["iucr"], ["beat"], ["longitude"]], "rhs_tokens": ["community", "area"]},
+  {"lhs": ["date", "description", "beat", "longitude"], "rhs": "community_area", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 259021, "distinct_rhs": 79, "lhs_distinct_ratio": 0.997658, "rhs_distinct_ratio": 0.000304, "redundancy": 608, "redundancy_wl": 1154, "lhs_unique": false, "lhs_tokens": [["date"], ["description"], ["beat"], ["longitude"]], "rhs_tokens": ["community", "area"]},
+  {"lhs": ["date", "beat", "fbi_code", "longitude"], "rhs": "community_area", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 258840, "distinct_rhs": 79, "lhs_distinct_ratio": 0.996961, "rhs_distinct_ratio": 0.000304, "redundancy": 789, "redundancy_wl": 1499, "lhs_unique": false, "lhs_tokens": [["date"], ["beat"], ["fbi", "code"], ["longitude"]], "rhs_tokens": ["community", "area"]},
+  {"lhs": ["date", "block", "x_coordinate", "index_code"], "rhs": "community_area", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 258540, "distinct_rhs": 79, "lhs_distinct_ratio": 0.995806, "rhs_distinct_ratio": 0.000304, "redundancy": 1089, "redundancy_wl": 2092, "lhs_unique": false, "lhs_tokens": [["date"], ["block"], ["x", "coordinate"], ["index", "code"]], "rhs_tokens": ["community", "area"]},
+  {"lhs": ["block", "primary_type", "location_description", "fbi_code"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 183904, "distinct_rhs": 2, "lhs_distinct_ratio": 0.708334, "rhs_distinct_ratio": 8e-06, "redundancy": 75725, "redundancy_wl": 111735, "lhs_unique": false, "lhs_tokens": [["block"], ["primary", "type"], ["location", "description"], ["fbi", "code"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["block", "primary_type", "arrest", "fbi_code"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 136618, "distinct_rhs": 2, "lhs_distinct_ratio": 0.526205, "rhs_distinct_ratio": 8e-06, "redundancy": 123011, "redundancy_wl": 169314, "lhs_unique": false, "lhs_tokens": [["block"], ["primary", "type"], ["arrest"], ["fbi", "code"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["primary_type", "arrest", "beat", "fbi_code"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 11628, "distinct_rhs": 2, "lhs_distinct_ratio": 0.044787, "rhs_distinct_ratio": 8e-06, "redundancy": 248001, "redundancy_wl": 257044, "lhs_unique": false, "lhs_tokens": [["primary", "type"], ["arrest"], ["beat"], ["fbi", "code"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["date", "location_description", "ward", "fbi_code"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 257994, "distinct_rhs": 2, "lhs_distinct_ratio": 0.993703, "rhs_distinct_ratio": 8e-06, "redundancy": 1635, "redundancy_wl": 3135, "lhs_unique": false, "lhs_tokens": [["date"], ["location", "description"], ["ward"], ["fbi", "code"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["date", "district", "ward", "fbi_code"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 256912, "distinct_rhs": 2, "lhs_distinct_ratio": 0.989535, "rhs_distinct_ratio": 8e-06, "redundancy": 2717, "redundancy_wl": 5225, "lhs_unique": false, "lhs_tokens": [["date"], ["district"], ["ward"], ["fbi", "code"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["date", "district", "fbi_code", "x_coordinate"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 258766, "distinct_rhs": 2, "lhs_distinct_ratio": 0.996676, "rhs_distinct_ratio": 8e-06, "redundancy": 863, "redundancy_wl": 1640, "lhs_unique": false, "lhs_tokens": [["date"], ["district"], ["fbi", "code"], ["x", "coordinate"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["date", "ward", "fbi_code", "x_coordinate"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 258788, "distinct_rhs": 2, "lhs_distinct_ratio": 0.996761, "rhs_distinct_ratio": 8e-06, "redundancy": 841, "redundancy_wl": 1597, "lhs_unique": false, "lhs_tokens": [["date"], ["ward"], ["fbi", "code"], ["x", "coordinate"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["date", "district", "fbi_code", "y_coordinate"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 258771, "distinct_rhs": 2, "lhs_distinct_ratio": 0.996695, "rhs_distinct_ratio": 8e-06, "redundancy": 858, "redundancy_wl": 1628, "lhs_unique": false, "lhs_tokens": [["date"], ["district"], ["fbi", "code"], ["y", "coordinate"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["date", "ward", "fbi_code", "y_coordinate"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 258793, "distinct_rhs": 2, "lhs_distinct_ratio": 0.99678, "rhs_distinct_ratio": 8e-06, "redundancy": 836, "redundancy_wl": 1585, "lhs_unique": false, "lhs_tokens": [["date"], ["ward"], ["fbi", "code"], ["y", "coordinate"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["date", "district", "fbi_code", "latitude"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 258806, "distinct_rhs": 2, "lhs_distinct_ratio": 0.99683, "rhs_distinct_ratio": 8e-06, "redundancy": 823, "redundancy_wl": 1565, "lhs_unique": false, "lhs_tokens": [["date"], ["district"], ["fbi", "code"], ["latitude"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["date", "ward", "fbi_code", "latitude"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 258827, "distinct_rhs": 2, "lhs_distinct_ratio": 0.996911, "rhs_distinct_ratio": 8e-06, "redundancy": 802, "redundancy_wl": 1524, "lhs_unique": false, "lhs_tokens": [["date"], ["ward"], ["fbi", "code"], ["latitude"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["date", "district", "fbi_code", "longitude"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 258806, "distinct_rhs": 2, "lhs_distinct_ratio": 0.99683, "rhs_distinct_ratio": 8e-06, "redundancy": 823, "redundancy_wl": 1565, "lhs_unique": false, "lhs_tokens": [["date"], ["district"], ["fbi", "code"], ["longitude"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["date", "ward", "fbi_code", "longitude"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 258827, "distinct_rhs": 2, "lhs_distinct_ratio": 0.996911, "rhs_distinct_ratio": 8e-06, "redundancy": 802, "redundancy_wl": 1524, "lhs_unique": false, "lhs_tokens": [["date"], ["ward"], ["fbi", "code"], ["longitude"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["block", "primary_type", "fbi_code", "updated_on"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 167879, "distinct_rhs": 2, "lhs_distinct_ratio": 0.646611, "rhs_distinct_ratio": 8e-06, "redundancy": 91750, "redundancy_wl": 133336, "lhs_unique": false, "lhs_tokens": [["block"], ["primary", "type"], ["fbi", "code"], ["updated", "on"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["date", "fbi_code", "x_coordinate", "updated_on"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 258717, "distinct_rhs": 2, "lhs_distinct_ratio": 0.996487, "rhs_distinct_ratio": 8e-06, "redundancy": 912, "redundancy_wl": 1706, "lhs_unique": false, "lhs_tokens": [["date"], ["fbi", "code"], ["x", "coordinate"], ["updated", "on"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["date", "fbi_code", "y_coordinate", "updated_on"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 258719, "distinct_rhs": 2, "lhs_distinct_ratio": 0.996495, "rhs_distinct_ratio": 8e-06, "redundancy": 910, "redundancy_wl": 1700, "lhs_unique": false, "lhs_tokens": [["date"], ["fbi", "code"], ["y", "coordinate"], ["updated", "on"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["date", "fbi_code", "latitude", "updated_on"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 258754, "distinct_rhs": 2, "lhs_distinct_ratio": 0.99663, "rhs_distinct_ratio": 8e-06, "redundancy": 875, "redundancy_wl": 1637, "lhs_unique": false, "lhs_tokens": [["date"], ["fbi", "code"], ["latitude"], ["updated", "on"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["date", "fbi_code", "longitude", "updated_on"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 258754, "distinct_rhs": 2, "lhs_distinct_ratio": 0.99663, "rhs_distinct_ratio": 8e-06, "redundancy": 875, "redundancy_wl": 1637, "lhs_unique": false, "lhs_tokens": [["date"], ["fbi", "code"], ["longitude"], ["updated", "on"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["date", "description", "location_description", "community_area", "fbi_code"], "rhs": "iucr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 258605, "distinct_rhs": 341, "lhs_distinct_ratio": 0.996056, "rhs_distinct_ratio": 0.001313, "redundancy": 1024, "redundancy_wl": 1938, "lhs_unique": false, "lhs_tokens": [["date"], ["description"], ["location", "description"], ["community", "area"], ["fbi", "code"]], "rhs_tokens": ["iucr"]},
+  {"lhs": ["date", "description", "ward", "community_area", "fbi_code"], "rhs": "iucr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 258305, "distinct_rhs": 341, "lhs_distinct_ratio": 0.9949, "rhs_distinct_ratio": 0.001313, "redundancy": 1324, "redundancy_wl": 2518, "lhs_unique": false, "lhs_tokens": [["date"], ["description"], ["ward"], ["community", "area"], ["fbi", "code"]], "rhs_tokens": ["iucr"]},
+  {"lhs": ["date", "description", "location_description", "fbi_code", "x_coordinate"], "rhs": "iucr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 259055, "distinct_rhs": 341, "lhs_distinct_ratio": 0.997789, "rhs_distinct_ratio": 0.001313, "redundancy": 574, "redundancy_wl": 1077, "lhs_unique": false, "lhs_tokens": [["date"], ["description"], ["location", "description"], ["fbi", "code"], ["x", "coordinate"]], "rhs_tokens": ["iucr"]},
+  {"lhs": ["date", "description", "domestic", "fbi_code", "x_coordinate"], "rhs": "iucr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 258875, "distinct_rhs": 341, "lhs_distinct_ratio": 0.997096, "rhs_distinct_ratio": 0.001313, "redundancy": 754, "redundancy_wl": 1393, "lhs_unique": false, "lhs_tokens": [["date"], ["description"], ["domestic"], ["fbi", "code"], ["x", "coordinate"]], "rhs_tokens": ["iucr"]},
+  {"lhs": ["date", "description", "district", "fbi_code", "x_coordinate"], "rhs": "iucr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 258986, "distinct_rhs": 341, "lhs_distinct_ratio": 0.997523, "rhs_distinct_ratio": 0.001313, "redundancy": 643, "redundancy_wl": 1219, "lhs_unique": false, "lhs_tokens": [["date"], ["description"], ["district"], ["fbi", "code"], ["x", "coordinate"]], "rhs_tokens": ["iucr"]},
+  {"lhs": ["date", "description", "ward", "fbi_code", "x_coordinate"], "rhs": "iucr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 258993, "distinct_rhs": 341, "lhs_distinct_ratio": 0.99755, "rhs_distinct_ratio": 0.001313, "redundancy": 636, "redundancy_wl": 1205, "lhs_unique": false, "lhs_tokens": [["date"], ["description"], ["ward"], ["fbi", "code"], ["x", "coordinate"]], "rhs_tokens": ["iucr"]},
+  {"lhs": ["date", "description", "community_area", "fbi_code", "x_coordinate"], "rhs": "iucr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 258996, "distinct_rhs": 341, "lhs_distinct_ratio": 0.997562, "rhs_distinct_ratio": 0.001313, "redundancy": 633, "redundancy_wl": 1198, "lhs_unique": false, "lhs_tokens": [["date"], ["description"], ["community", "area"], ["fbi", "code"], ["x", "coordinate"]], "rhs_tokens": ["iucr"]},
+  {"lhs": ["date", "description", "location_description", "fbi_code", "y_coordinate"], "rhs": "iucr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 259063, "distinct_rhs": 341, "lhs_distinct_ratio": 0.99782, "rhs_distinct_ratio": 0.001313, "redundancy": 566, "redundancy_wl": 1060, "lhs_unique": false, "lhs_tokens": [["date"], ["description"], ["location", "description"], ["fbi", "code"], ["y", "coordinate"]], "rhs_tokens": ["iucr"]},
+  {"lhs": ["date", "description", "domestic", "fbi_code", "y_coordinate"], "rhs": "iucr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 258880, "distinct_rhs": 341, "lhs_distinct_ratio": 0.997115, "rhs_distinct_ratio": 0.001313, "redundancy": 749, "redundancy_wl": 1382, "lhs_unique": false, "lhs_tokens": [["date"], ["description"], ["domestic"], ["fbi", "code"], ["y", "coordinate"]], "rhs_tokens": ["iucr"]},
+  {"lhs": ["date", "description", "district", "fbi_code", "y_coordinate"], "rhs": "iucr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 258991, "distinct_rhs": 341, "lhs_distinct_ratio": 0.997543, "rhs_distinct_ratio": 0.001313, "redundancy": 638, "redundancy_wl": 1208, "lhs_unique": false, "lhs_tokens": [["date"], ["description"], ["district"], ["fbi", "code"], ["y", "coordinate"]], "rhs_tokens": ["iucr"]},
+  {"lhs": ["date", "description", "ward", "fbi_code", "y_coordinate"], "rhs": "iucr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 258999, "distinct_rhs": 341, "lhs_distinct_ratio": 0.997573, "rhs_distinct_ratio": 0.001313, "redundancy": 630, "redundancy_wl": 1192, "lhs_unique": false, "lhs_tokens": [["date"], ["description"], ["ward"], ["fbi", "code"], ["y", "coordinate"]], "rhs_tokens": ["iucr"]},
+  {"lhs": ["date", "description", "community_area", "fbi_code", "y_coordinate"], "rhs": "iucr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 259001, "distinct_rhs": 341, "lhs_distinct_ratio": 0.997581, "rhs_distinct_ratio": 0.001313, "redundancy": 628, "redundancy_wl": 1187, "lhs_unique": false, "lhs_tokens": [["date"], ["description"], ["community", "area"], ["fbi", "code"], ["y", "coordinate"]], "rhs_tokens": ["iucr"]},
+  {"lhs": ["date", "description", "location_description", "fbi_code", "latitude"], "rhs": "iucr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 259085, "distinct_rhs": 341, "lhs_distinct_ratio": 0.997905, "rhs_distinct_ratio": 0.001313, "redundancy": 544, "redundancy_wl": 1021, "lhs_unique": false, "lhs_tokens": [["date"], ["description"], ["location", "description"], ["fbi", "code"], ["latitude"]], "rhs_tokens": ["iucr"]},
+  {"lhs": ["date", "description", "domestic", "fbi_code", "latitude"], "rhs": "iucr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 258911, "distinct_rhs": 341, "lhs_distinct_ratio": 0.997235, "rhs_distinct_ratio": 0.001313, "redundancy": 718, "redundancy_wl": 1326, "lhs_unique": false, "lhs_tokens": [["date"], ["description"], ["domestic"], ["fbi", "code"], ["latitude"]], "rhs_tokens": ["iucr"]},
+  {"lhs": ["date", "description", "district", "fbi_code", "latitude"], "rhs": "iucr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 259022, "distinct_rhs": 341, "lhs_distinct_ratio": 0.997662, "rhs_distinct_ratio": 0.001313, "redundancy": 607, "redundancy_wl": 1152, "lhs_unique": false, "lhs_tokens": [["date"], ["description"], ["district"], ["fbi", "code"], ["latitude"]], "rhs_tokens": ["iucr"]},
+  {"lhs": ["date", "description", "ward", "fbi_code", "latitude"], "rhs": "iucr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 259029, "distinct_rhs": 341, "lhs_distinct_ratio": 0.997689, "rhs_distinct_ratio": 0.001313, "redundancy": 600, "redundancy_wl": 1138, "lhs_unique": false, "lhs_tokens": [["date"], ["description"], ["ward"], ["fbi", "code"], ["latitude"]], "rhs_tokens": ["iucr"]},
+  {"lhs": ["date", "description", "community_area", "fbi_code", "latitude"], "rhs": "iucr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 259032, "distinct_rhs": 341, "lhs_distinct_ratio": 0.997701, "rhs_distinct_ratio": 0.001313, "redundancy": 597, "redundancy_wl": 1131, "lhs_unique": false, "lhs_tokens": [["date"], ["description"], ["community", "area"], ["fbi", "code"], ["latitude"]], "rhs_tokens": ["iucr"]},
+  {"lhs": ["date", "description", "location_description", "fbi_code", "longitude"], "rhs": "iucr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 259085, "distinct_rhs": 341, "lhs_distinct_ratio": 0.997905, "rhs_distinct_ratio": 0.001313, "redundancy": 544, "redundancy_wl": 1021, "lhs_unique": false, "lhs_tokens": [["date"], ["description"], ["location", "description"], ["fbi", "code"], ["longitude"]], "rhs_tokens": ["iucr"]},
+  {"lhs": ["date", "description", "domestic", "fbi_code", "longitude"], "rhs": "iucr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 258911, "distinct_rhs": 341, "lhs_distinct_ratio": 0.997235, "rhs_distinct_ratio": 0.001313, "redundancy": 718, "redundancy_wl": 1326, "lhs_unique": false, "lhs_tokens": [["date"], ["description"], ["domestic"], ["fbi", "code"], ["longitude"]], "rhs_tokens": ["iucr"]},
+  {"lhs": ["date", "description", "district", "fbi_code", "longitude"], "rhs": "iucr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 259022, "distinct_rhs": 341, "lhs_distinct_ratio": 0.997662, "rhs_distinct_ratio": 0.001313, "redundancy": 607, "redundancy_wl": 1152, "lhs_unique": false, "lhs_tokens": [["date"], ["description"], ["district"], ["fbi", "code"], ["longitude"]], "rhs_tokens": ["iucr"]},
+  {"lhs": ["date", "description", "ward", "fbi_code", "longitude"], "rhs": "iucr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 259029, "distinct_rhs": 341, "lhs_distinct_ratio": 0.997689, "rhs_distinct_ratio": 0.001313, "redundancy": 600, "redundancy_wl": 1138, "lhs_unique": false, "lhs_tokens": [["date"], ["description"], ["ward"], ["fbi", "code"], ["longitude"]], "rhs_tokens": ["iucr"]},
+  {"lhs": ["date", "description", "community_area", "fbi_code", "longitude"], "rhs": "iucr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 259032, "distinct_rhs": 341, "lhs_distinct_ratio": 0.997701, "rhs_distinct_ratio": 0.001313, "redundancy": 597, "redundancy_wl": 1131, "lhs_unique": false, "lhs_tokens": [["date"], ["description"], ["community", "area"], ["fbi", "code"], ["longitude"]], "rhs_tokens": ["iucr"]},
+  {"lhs": ["date", "description", "location_description", "community_area", "fbi_code"], "rhs": "primary_type", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 258605, "distinct_rhs": 31, "lhs_distinct_ratio": 0.996056, "rhs_distinct_ratio": 0.000119, "redundancy": 1024, "redundancy_wl": 1938, "lhs_unique": false, "lhs_tokens": [["date"], ["description"], ["location", "description"], ["community", "area"], ["fbi", "code"]], "rhs_tokens": ["primary", "type"]},
+  {"lhs": ["date", "description", "ward", "community_area", "fbi_code"], "rhs": "primary_type", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 258305, "distinct_rhs": 31, "lhs_distinct_ratio": 0.9949, "rhs_distinct_ratio": 0.000119, "redundancy": 1324, "redundancy_wl": 2518, "lhs_unique": false, "lhs_tokens": [["date"], ["description"], ["ward"], ["community", "area"], ["fbi", "code"]], "rhs_tokens": ["primary", "type"]},
+  {"lhs": ["date", "description", "location_description", "fbi_code", "x_coordinate"], "rhs": "primary_type", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 259055, "distinct_rhs": 31, "lhs_distinct_ratio": 0.997789, "rhs_distinct_ratio": 0.000119, "redundancy": 574, "redundancy_wl": 1077, "lhs_unique": false, "lhs_tokens": [["date"], ["description"], ["location", "description"], ["fbi", "code"], ["x", "coordinate"]], "rhs_tokens": ["primary", "type"]},
+  {"lhs": ["date", "description", "domestic", "fbi_code", "x_coordinate"], "rhs": "primary_type", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 258875, "distinct_rhs": 31, "lhs_distinct_ratio": 0.997096, "rhs_distinct_ratio": 0.000119, "redundancy": 754, "redundancy_wl": 1393, "lhs_unique": false, "lhs_tokens": [["date"], ["description"], ["domestic"], ["fbi", "code"], ["x", "coordinate"]], "rhs_tokens": ["primary", "type"]},
+  {"lhs": ["date", "description", "district", "fbi_code", "x_coordinate"], "rhs": "primary_type", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 258986, "distinct_rhs": 31, "lhs_distinct_ratio": 0.997523, "rhs_distinct_ratio": 0.000119, "redundancy": 643, "redundancy_wl": 1219, "lhs_unique": false, "lhs_tokens": [["date"], ["description"], ["district"], ["fbi", "code"], ["x", "coordinate"]], "rhs_tokens": ["primary", "type"]},
+  {"lhs": ["date", "description", "ward", "fbi_code", "x_coordinate"], "rhs": "primary_type", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 258993, "distinct_rhs": 31, "lhs_distinct_ratio": 0.99755, "rhs_distinct_ratio": 0.000119, "redundancy": 636, "redundancy_wl": 1205, "lhs_unique": false, "lhs_tokens": [["date"], ["description"], ["ward"], ["fbi", "code"], ["x", "coordinate"]], "rhs_tokens": ["primary", "type"]},
+  {"lhs": ["date", "description", "community_area", "fbi_code", "x_coordinate"], "rhs": "primary_type", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 258996, "distinct_rhs": 31, "lhs_distinct_ratio": 0.997562, "rhs_distinct_ratio": 0.000119, "redundancy": 633, "redundancy_wl": 1198, "lhs_unique": false, "lhs_tokens": [["date"], ["description"], ["community", "area"], ["fbi", "code"], ["x", "coordinate"]], "rhs_tokens": ["primary", "type"]},
+  {"lhs": ["date", "description", "location_description", "fbi_code", "y_coordinate"], "rhs": "primary_type", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 259063, "distinct_rhs": 31, "lhs_distinct_ratio": 0.99782, "rhs_distinct_ratio": 0.000119, "redundancy": 566, "redundancy_wl": 1060, "lhs_unique": false, "lhs_tokens": [["date"], ["description"], ["location", "description"], ["fbi", "code"], ["y", "coordinate"]], "rhs_tokens": ["primary", "type"]},
+  {"lhs": ["date", "description", "domestic", "fbi_code", "y_coordinate"], "rhs": "primary_type", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 258880, "distinct_rhs": 31, "lhs_distinct_ratio": 0.997115, "rhs_distinct_ratio": 0.000119, "redundancy": 749, "redundancy_wl": 1382, "lhs_unique": false, "lhs_tokens": [["date"], ["description"], ["domestic"], ["fbi", "code"], ["y", "coordinate"]], "rhs_tokens": ["primary", "type"]},
+  {"lhs": ["date", "description", "district", "fbi_code", "y_coordinate"], "rhs": "primary_type", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 258991, "distinct_rhs": 31, "lhs_distinct_ratio": 0.997543, "rhs_distinct_ratio": 0.000119, "redundancy": 638, "redundancy_wl": 1208, "lhs_unique": false, "lhs_tokens": [["date"], ["description"], ["district"], ["fbi", "code"], ["y", "coordinate"]], "rhs_tokens": ["primary", "type"]},
+  {"lhs": ["date", "description", "ward", "fbi_code", "y_coordinate"], "rhs": "primary_type", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 258999, "distinct_rhs": 31, "lhs_distinct_ratio": 0.997573, "rhs_distinct_ratio": 0.000119, "redundancy": 630, "redundancy_wl": 1192, "lhs_unique": false, "lhs_tokens": [["date"], ["description"], ["ward"], ["fbi", "code"], ["y", "coordinate"]], "rhs_tokens": ["primary", "type"]},
+  {"lhs": ["date", "description", "community_area", "fbi_code", "y_coordinate"], "rhs": "primary_type", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 259001, "distinct_rhs": 31, "lhs_distinct_ratio": 0.997581, "rhs_distinct_ratio": 0.000119, "redundancy": 628, "redundancy_wl": 1187, "lhs_unique": false, "lhs_tokens": [["date"], ["description"], ["community", "area"], ["fbi", "code"], ["y", "coordinate"]], "rhs_tokens": ["primary", "type"]},
+  {"lhs": ["date", "description", "location_description", "fbi_code", "latitude"], "rhs": "primary_type", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 259085, "distinct_rhs": 31, "lhs_distinct_ratio": 0.997905, "rhs_distinct_ratio": 0.000119, "redundancy": 544, "redundancy_wl": 1021, "lhs_unique": false, "lhs_tokens": [["date"], ["description"], ["location", "description"], ["fbi", "code"], ["latitude"]], "rhs_tokens": ["primary", "type"]},
+  {"lhs": ["date", "description", "domestic", "fbi_code", "latitude"], "rhs": "primary_type", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 258911, "distinct_rhs": 31, "lhs_distinct_ratio": 0.997235, "rhs_distinct_ratio": 0.000119, "redundancy": 718, "redundancy_wl": 1326, "lhs_unique": false, "lhs_tokens": [["date"], ["description"], ["domestic"], ["fbi", "code"], ["latitude"]], "rhs_tokens": ["primary", "type"]},
+  {"lhs": ["date", "description", "district", "fbi_code", "latitude"], "rhs": "primary_type", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 259022, "distinct_rhs": 31, "lhs_distinct_ratio": 0.997662, "rhs_distinct_ratio": 0.000119, "redundancy": 607, "redundancy_wl": 1152, "lhs_unique": false, "lhs_tokens": [["date"], ["description"], ["district"], ["fbi", "code"], ["latitude"]], "rhs_tokens": ["primary", "type"]},
+  {"lhs": ["date", "description", "ward", "fbi_code", "latitude"], "rhs": "primary_type", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 259029, "distinct_rhs": 31, "lhs_distinct_ratio": 0.997689, "rhs_distinct_ratio": 0.000119, "redundancy": 600, "redundancy_wl": 1138, "lhs_unique": false, "lhs_tokens": [["date"], ["description"], ["ward"], ["fbi", "code"], ["latitude"]], "rhs_tokens": ["primary", "type"]},
+  {"lhs": ["date", "description", "community_area", "fbi_code", "latitude"], "rhs": "primary_type", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 259032, "distinct_rhs": 31, "lhs_distinct_ratio": 0.997701, "rhs_distinct_ratio": 0.000119, "redundancy": 597, "redundancy_wl": 1131, "lhs_unique": false, "lhs_tokens": [["date"], ["description"], ["community", "area"], ["fbi", "code"], ["latitude"]], "rhs_tokens": ["primary", "type"]},
+  {"lhs": ["date", "description", "location_description", "fbi_code", "longitude"], "rhs": "primary_type", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 259085, "distinct_rhs": 31, "lhs_distinct_ratio": 0.997905, "rhs_distinct_ratio": 0.000119, "redundancy": 544, "redundancy_wl": 1021, "lhs_unique": false, "lhs_tokens": [["date"], ["description"], ["location", "description"], ["fbi", "code"], ["longitude"]], "rhs_tokens": ["primary", "type"]},
+  {"lhs": ["date", "description", "domestic", "fbi_code", "longitude"], "rhs": "primary_type", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 258911, "distinct_rhs": 31, "lhs_distinct_ratio": 0.997235, "rhs_distinct_ratio": 0.000119, "redundancy": 718, "redundancy_wl": 1326, "lhs_unique": false, "lhs_tokens": [["date"], ["description"], ["domestic"], ["fbi", "code"], ["longitude"]], "rhs_tokens": ["primary", "type"]},
+  {"lhs": ["date", "description", "district", "fbi_code", "longitude"], "rhs": "primary_type", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 259022, "distinct_rhs": 31, "lhs_distinct_ratio": 0.997662, "rhs_distinct_ratio": 0.000119, "redundancy": 607, "redundancy_wl": 1152, "lhs_unique": false, "lhs_tokens": [["date"], ["description"], ["district"], ["fbi", "code"], ["longitude"]], "rhs_tokens": ["primary", "type"]},
+  {"lhs": ["date", "description", "ward", "fbi_code", "longitude"], "rhs": "primary_type", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 259029, "distinct_rhs": 31, "lhs_distinct_ratio": 0.997689, "rhs_distinct_ratio": 0.000119, "redundancy": 600, "redundancy_wl": 1138, "lhs_unique": false, "lhs_tokens": [["date"], ["description"], ["ward"], ["fbi", "code"], ["longitude"]], "rhs_tokens": ["primary", "type"]},
+  {"lhs": ["date", "description", "community_area", "fbi_code", "longitude"], "rhs": "primary_type", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 259032, "distinct_rhs": 31, "lhs_distinct_ratio": 0.997701, "rhs_distinct_ratio": 0.000119, "redundancy": 597, "redundancy_wl": 1131, "lhs_unique": false, "lhs_tokens": [["date"], ["description"], ["community", "area"], ["fbi", "code"], ["longitude"]], "rhs_tokens": ["primary", "type"]},
+  {"lhs": ["date", "block", "location_description", "district", "y_coordinate"], "rhs": "beat", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 258356, "distinct_rhs": 276, "lhs_distinct_ratio": 0.995097, "rhs_distinct_ratio": 0.001063, "redundancy": 1273, "redundancy_wl": 2472, "lhs_unique": false, "lhs_tokens": [["date"], ["block"], ["location", "description"], ["district"], ["y", "coordinate"]], "rhs_tokens": ["beat"]},
+  {"lhs": ["date", "block", "district", "x_coordinate", "y_coordinate"], "rhs": "beat", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 257992, "distinct_rhs": 276, "lhs_distinct_ratio": 0.993695, "rhs_distinct_ratio": 0.001063, "redundancy": 1637, "redundancy_wl": 3173, "lhs_unique": false, "lhs_tokens": [["date"], ["block"], ["district"], ["x", "coordinate"], ["y", "coordinate"]], "rhs_tokens": ["beat"]},
+  {"lhs": ["date", "primary_type", "location_description", "beat", "x_coordinate"], "rhs": "community_area", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 258985, "distinct_rhs": 79, "lhs_distinct_ratio": 0.99752, "rhs_distinct_ratio": 0.000304, "redundancy": 644, "redundancy_wl": 1232, "lhs_unique": false, "lhs_tokens": [["date"], ["primary", "type"], ["location", "description"], ["beat"], ["x", "coordinate"]], "rhs_tokens": ["community", "area"]},
+  {"lhs": ["date", "primary_type", "beat", "ward", "x_coordinate"], "rhs": "community_area", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 258789, "distinct_rhs": 79, "lhs_distinct_ratio": 0.996765, "rhs_distinct_ratio": 0.000304, "redundancy": 840, "redundancy_wl": 1599, "lhs_unique": false, "lhs_tokens": [["date"], ["primary", "type"], ["beat"], ["ward"], ["x", "coordinate"]], "rhs_tokens": ["community", "area"]},
+  {"lhs": ["date", "primary_type", "location_description", "beat", "y_coordinate"], "rhs": "community_area", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 258993, "distinct_rhs": 79, "lhs_distinct_ratio": 0.99755, "rhs_distinct_ratio": 0.000304, "redundancy": 636, "redundancy_wl": 1215, "lhs_unique": false, "lhs_tokens": [["date"], ["primary", "type"], ["location", "description"], ["beat"], ["y", "coordinate"]], "rhs_tokens": ["community", "area"]},
+  {"lhs": ["date", "primary_type", "beat", "ward", "y_coordinate"], "rhs": "community_area", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 258792, "distinct_rhs": 79, "lhs_distinct_ratio": 0.996776, "rhs_distinct_ratio": 0.000304, "redundancy": 837, "redundancy_wl": 1591, "lhs_unique": false, "lhs_tokens": [["date"], ["primary", "type"], ["beat"], ["ward"], ["y", "coordinate"]], "rhs_tokens": ["community", "area"]},
+  {"lhs": ["date", "primary_type", "location_description", "beat", "latitude"], "rhs": "community_area", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 259016, "distinct_rhs": 79, "lhs_distinct_ratio": 0.997639, "rhs_distinct_ratio": 0.000304, "redundancy": 613, "redundancy_wl": 1174, "lhs_unique": false, "lhs_tokens": [["date"], ["primary", "type"], ["location", "description"], ["beat"], ["latitude"]], "rhs_tokens": ["community", "area"]},
+  {"lhs": ["date", "primary_type", "beat", "ward", "latitude"], "rhs": "community_area", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 258826, "distinct_rhs": 79, "lhs_distinct_ratio": 0.996907, "rhs_distinct_ratio": 0.000304, "redundancy": 803, "redundancy_wl": 1530, "lhs_unique": false, "lhs_tokens": [["date"], ["primary", "type"], ["beat"], ["ward"], ["latitude"]], "rhs_tokens": ["community", "area"]},
+  {"lhs": ["date", "primary_type", "location_description", "beat", "longitude"], "rhs": "community_area", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 259016, "distinct_rhs": 79, "lhs_distinct_ratio": 0.997639, "rhs_distinct_ratio": 0.000304, "redundancy": 613, "redundancy_wl": 1174, "lhs_unique": false, "lhs_tokens": [["date"], ["primary", "type"], ["location", "description"], ["beat"], ["longitude"]], "rhs_tokens": ["community", "area"]},
+  {"lhs": ["date", "primary_type", "beat", "ward", "longitude"], "rhs": "community_area", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 258826, "distinct_rhs": 79, "lhs_distinct_ratio": 0.996907, "rhs_distinct_ratio": 0.000304, "redundancy": 803, "redundancy_wl": 1530, "lhs_unique": false, "lhs_tokens": [["date"], ["primary", "type"], ["beat"], ["ward"], ["longitude"]], "rhs_tokens": ["community", "area"]},
+  {"lhs": ["date", "location_description", "beat", "x_coordinate", "updated_on"], "rhs": "community_area", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 258420, "distinct_rhs": 79, "lhs_distinct_ratio": 0.995343, "rhs_distinct_ratio": 0.000304, "redundancy": 1209, "redundancy_wl": 2350, "lhs_unique": false, "lhs_tokens": [["date"], ["location", "description"], ["beat"], ["x", "coordinate"], ["updated", "on"]], "rhs_tokens": ["community", "area"]},
+  {"lhs": ["date", "beat", "ward", "x_coordinate", "updated_on"], "rhs": "community_area", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 258028, "distinct_rhs": 79, "lhs_distinct_ratio": 0.993834, "rhs_distinct_ratio": 0.000304, "redundancy": 1601, "redundancy_wl": 3101, "lhs_unique": false, "lhs_tokens": [["date"], ["beat"], ["ward"], ["x", "coordinate"], ["updated", "on"]], "rhs_tokens": ["community", "area"]},
+  {"lhs": ["date", "location_description", "beat", "y_coordinate", "updated_on"], "rhs": "community_area", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 258428, "distinct_rhs": 79, "lhs_distinct_ratio": 0.995374, "rhs_distinct_ratio": 0.000304, "redundancy": 1201, "redundancy_wl": 2333, "lhs_unique": false, "lhs_tokens": [["date"], ["location", "description"], ["beat"], ["y", "coordinate"], ["updated", "on"]], "rhs_tokens": ["community", "area"]},
+  {"lhs": ["date", "beat", "ward", "y_coordinate", "updated_on"], "rhs": "community_area", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 258032, "distinct_rhs": 79, "lhs_distinct_ratio": 0.993849, "rhs_distinct_ratio": 0.000304, "redundancy": 1597, "redundancy_wl": 3091, "lhs_unique": false, "lhs_tokens": [["date"], ["beat"], ["ward"], ["y", "coordinate"], ["updated", "on"]], "rhs_tokens": ["community", "area"]},
+  {"lhs": ["date", "location_description", "beat", "latitude", "updated_on"], "rhs": "community_area", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 258456, "distinct_rhs": 79, "lhs_distinct_ratio": 0.995482, "rhs_distinct_ratio": 0.000304, "redundancy": 1173, "redundancy_wl": 2282, "lhs_unique": false, "lhs_tokens": [["date"], ["location", "description"], ["beat"], ["latitude"], ["updated", "on"]], "rhs_tokens": ["community", "area"]},
+  {"lhs": ["date", "beat", "ward", "latitude", "updated_on"], "rhs": "community_area", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 258079, "distinct_rhs": 79, "lhs_distinct_ratio": 0.99403, "rhs_distinct_ratio": 0.000304, "redundancy": 1550, "redundancy_wl": 3004, "lhs_unique": false, "lhs_tokens": [["date"], ["beat"], ["ward"], ["latitude"], ["updated", "on"]], "rhs_tokens": ["community", "area"]},
+  {"lhs": ["date", "location_description", "beat", "longitude", "updated_on"], "rhs": "community_area", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 258456, "distinct_rhs": 79, "lhs_distinct_ratio": 0.995482, "rhs_distinct_ratio": 0.000304, "redundancy": 1173, "redundancy_wl": 2282, "lhs_unique": false, "lhs_tokens": [["date"], ["location", "description"], ["beat"], ["longitude"], ["updated", "on"]], "rhs_tokens": ["community", "area"]},
+  {"lhs": ["date", "beat", "ward", "longitude", "updated_on"], "rhs": "community_area", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 258079, "distinct_rhs": 79, "lhs_distinct_ratio": 0.99403, "rhs_distinct_ratio": 0.000304, "redundancy": 1550, "redundancy_wl": 3004, "lhs_unique": false, "lhs_tokens": [["date"], ["beat"], ["ward"], ["longitude"], ["updated", "on"]], "rhs_tokens": ["community", "area"]},
+  {"lhs": ["date", "block", "domestic", "ward", "index_code"], "rhs": "community_area", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 258399, "distinct_rhs": 79, "lhs_distinct_ratio": 0.995262, "rhs_distinct_ratio": 0.000304, "redundancy": 1230, "redundancy_wl": 2340, "lhs_unique": false, "lhs_tokens": [["date"], ["block"], ["domestic"], ["ward"], ["index", "code"]], "rhs_tokens": ["community", "area"]},
+  {"lhs": ["date", "description", "location_description", "domestic", "district", "fbi_code"], "rhs": "iucr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 258213, "distinct_rhs": 341, "lhs_distinct_ratio": 0.994546, "rhs_distinct_ratio": 0.001313, "redundancy": 1416, "redundancy_wl": 2704, "lhs_unique": false, "lhs_tokens": [["date"], ["description"], ["location", "description"], ["domestic"], ["district"], ["fbi", "code"]], "rhs_tokens": ["iucr"]},
+  {"lhs": ["date", "description", "location_description", "domestic", "ward", "fbi_code"], "rhs": "iucr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 258575, "distinct_rhs": 341, "lhs_distinct_ratio": 0.99594, "rhs_distinct_ratio": 0.001313, "redundancy": 1054, "redundancy_wl": 2000, "lhs_unique": false, "lhs_tokens": [["date"], ["description"], ["location", "description"], ["domestic"], ["ward"], ["fbi", "code"]], "rhs_tokens": ["iucr"]},
+  {"lhs": ["date", "description", "domestic", "district", "ward", "fbi_code"], "rhs": "iucr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 258150, "distinct_rhs": 341, "lhs_distinct_ratio": 0.994303, "rhs_distinct_ratio": 0.001313, "redundancy": 1479, "redundancy_wl": 2822, "lhs_unique": false, "lhs_tokens": [["date"], ["description"], ["domestic"], ["district"], ["ward"], ["fbi", "code"]], "rhs_tokens": ["iucr"]},
+  {"lhs": ["date", "description", "location_description", "domestic", "district", "fbi_code"], "rhs": "primary_type", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 258213, "distinct_rhs": 31, "lhs_distinct_ratio": 0.994546, "rhs_distinct_ratio": 0.000119, "redundancy": 1416, "redundancy_wl": 2704, "lhs_unique": false, "lhs_tokens": [["date"], ["description"], ["location", "description"], ["domestic"], ["district"], ["fbi", "code"]], "rhs_tokens": ["primary", "type"]},
+  {"lhs": ["date", "description", "location_description", "domestic", "ward", "fbi_code"], "rhs": "primary_type", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 258575, "distinct_rhs": 31, "lhs_distinct_ratio": 0.99594, "rhs_distinct_ratio": 0.000119, "redundancy": 1054, "redundancy_wl": 2000, "lhs_unique": false, "lhs_tokens": [["date"], ["description"], ["location", "description"], ["domestic"], ["ward"], ["fbi", "code"]], "rhs_tokens": ["primary", "type"]},
+  {"lhs": ["date", "description", "domestic", "district", "ward", "fbi_code"], "rhs": "primary_type", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 258150, "distinct_rhs": 31, "lhs_distinct_ratio": 0.994303, "rhs_distinct_ratio": 0.000119, "redundancy": 1479, "redundancy_wl": 2822, "lhs_unique": false, "lhs_tokens": [["date"], ["description"], ["domestic"], ["district"], ["ward"], ["fbi", "code"]], "rhs_tokens": ["primary", "type"]},
+  {"lhs": ["date", "iucr", "district", "community_area", "latitude", "updated_on"], "rhs": "beat", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 259061, "distinct_rhs": 276, "lhs_distinct_ratio": 0.997812, "rhs_distinct_ratio": 0.001063, "redundancy": 568, "redundancy_wl": 1079, "lhs_unique": false, "lhs_tokens": [["date"], ["iucr"], ["district"], ["community", "area"], ["latitude"], ["updated", "on"]], "rhs_tokens": ["beat"]},
+  {"lhs": ["date", "description", "district", "community_area", "latitude", "updated_on"], "rhs": "beat", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 259048, "distinct_rhs": 276, "lhs_distinct_ratio": 0.997762, "rhs_distinct_ratio": 0.001063, "redundancy": 581, "redundancy_wl": 1105, "lhs_unique": false, "lhs_tokens": [["date"], ["description"], ["district"], ["community", "area"], ["latitude"], ["updated", "on"]], "rhs_tokens": ["beat"]},
+  {"lhs": ["date", "iucr", "district", "community_area", "longitude", "updated_on"], "rhs": "beat", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 259061, "distinct_rhs": 276, "lhs_distinct_ratio": 0.997812, "rhs_distinct_ratio": 0.001063, "redundancy": 568, "redundancy_wl": 1079, "lhs_unique": false, "lhs_tokens": [["date"], ["iucr"], ["district"], ["community", "area"], ["longitude"], ["updated", "on"]], "rhs_tokens": ["beat"]},
+  {"lhs": ["date", "description", "district", "community_area", "longitude", "updated_on"], "rhs": "beat", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 259048, "distinct_rhs": 276, "lhs_distinct_ratio": 0.997762, "rhs_distinct_ratio": 0.001063, "redundancy": 581, "redundancy_wl": 1105, "lhs_unique": false, "lhs_tokens": [["date"], ["description"], ["district"], ["community", "area"], ["longitude"], ["updated", "on"]], "rhs_tokens": ["beat"]},
+  {"lhs": ["primary_type", "location_description", "arrest", "community_area", "fbi_code", "updated_on"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 56112, "distinct_rhs": 2, "lhs_distinct_ratio": 0.216124, "rhs_distinct_ratio": 8e-06, "redundancy": 203517, "redundancy_wl": 228224, "lhs_unique": false, "lhs_tokens": [["primary", "type"], ["location", "description"], ["arrest"], ["community", "area"], ["fbi", "code"], ["updated", "on"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["date", "iucr", "location_description", "district", "community_area", "y_coordinate", "updated_on"], "rhs": "beat", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 7, "distinct_lhs": 259155, "distinct_rhs": 276, "lhs_distinct_ratio": 0.998174, "rhs_distinct_ratio": 0.001063, "redundancy": 474, "redundancy_wl": 905, "lhs_unique": false, "lhs_tokens": [["date"], ["iucr"], ["location", "description"], ["district"], ["community", "area"], ["y", "coordinate"], ["updated", "on"]], "rhs_tokens": ["beat"]},
+  {"lhs": ["date", "primary_type", "location_description", "district", "community_area", "y_coordinate", "updated_on"], "rhs": "beat", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 7, "distinct_lhs": 259027, "distinct_rhs": 276, "lhs_distinct_ratio": 0.997681, "rhs_distinct_ratio": 0.001063, "redundancy": 602, "redundancy_wl": 1154, "lhs_unique": false, "lhs_tokens": [["date"], ["primary", "type"], ["location", "description"], ["district"], ["community", "area"], ["y", "coordinate"], ["updated", "on"]], "rhs_tokens": ["beat"]},
+  {"lhs": ["date", "description", "location_description", "district", "community_area", "y_coordinate", "updated_on"], "rhs": "beat", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 7, "distinct_lhs": 259148, "distinct_rhs": 276, "lhs_distinct_ratio": 0.998147, "rhs_distinct_ratio": 0.001063, "redundancy": 481, "redundancy_wl": 919, "lhs_unique": false, "lhs_tokens": [["date"], ["description"], ["location", "description"], ["district"], ["community", "area"], ["y", "coordinate"], ["updated", "on"]], "rhs_tokens": ["beat"]},
+  {"lhs": ["date", "location_description", "district", "community_area", "fbi_code", "y_coordinate", "updated_on"], "rhs": "beat", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 7, "distinct_lhs": 259033, "distinct_rhs": 276, "lhs_distinct_ratio": 0.997704, "rhs_distinct_ratio": 0.001063, "redundancy": 596, "redundancy_wl": 1140, "lhs_unique": false, "lhs_tokens": [["date"], ["location", "description"], ["district"], ["community", "area"], ["fbi", "code"], ["y", "coordinate"], ["updated", "on"]], "rhs_tokens": ["beat"]},
+  {"lhs": ["date", "iucr", "district", "community_area", "x_coordinate", "y_coordinate", "updated_on"], "rhs": "beat", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 7, "distinct_lhs": 259061, "distinct_rhs": 276, "lhs_distinct_ratio": 0.997812, "rhs_distinct_ratio": 0.001063, "redundancy": 568, "redundancy_wl": 1079, "lhs_unique": false, "lhs_tokens": [["date"], ["iucr"], ["district"], ["community", "area"], ["x", "coordinate"], ["y", "coordinate"], ["updated", "on"]], "rhs_tokens": ["beat"]},
+  {"lhs": ["date", "description", "district", "community_area", "x_coordinate", "y_coordinate", "updated_on"], "rhs": "beat", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 7, "distinct_lhs": 259048, "distinct_rhs": 276, "lhs_distinct_ratio": 0.997762, "rhs_distinct_ratio": 0.001063, "redundancy": 581, "redundancy_wl": 1105, "lhs_unique": false, "lhs_tokens": [["date"], ["description"], ["district"], ["community", "area"], ["x", "coordinate"], ["y", "coordinate"], ["updated", "on"]], "rhs_tokens": ["beat"]},
+  {"lhs": ["date", "primary_type", "location_description", "district", "community_area", "latitude", "updated_on"], "rhs": "beat", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 7, "distinct_lhs": 259050, "distinct_rhs": 276, "lhs_distinct_ratio": 0.99777, "rhs_distinct_ratio": 0.001063, "redundancy": 579, "redundancy_wl": 1113, "lhs_unique": false, "lhs_tokens": [["date"], ["primary", "type"], ["location", "description"], ["district"], ["community", "area"], ["latitude"], ["updated", "on"]], "rhs_tokens": ["beat"]},
+  {"lhs": ["date", "location_description", "district", "community_area", "fbi_code", "latitude", "updated_on"], "rhs": "beat", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 7, "distinct_lhs": 259056, "distinct_rhs": 276, "lhs_distinct_ratio": 0.997793, "rhs_distinct_ratio": 0.001063, "redundancy": 573, "redundancy_wl": 1099, "lhs_unique": false, "lhs_tokens": [["date"], ["location", "description"], ["district"], ["community", "area"], ["fbi", "code"], ["latitude"], ["updated", "on"]], "rhs_tokens": ["beat"]},
+  {"lhs": ["date", "district", "ward", "community_area", "fbi_code", "latitude", "updated_on"], "rhs": "beat", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 7, "distinct_lhs": 258883, "distinct_rhs": 276, "lhs_distinct_ratio": 0.997127, "rhs_distinct_ratio": 0.001063, "redundancy": 746, "redundancy_wl": 1421, "lhs_unique": false, "lhs_tokens": [["date"], ["district"], ["ward"], ["community", "area"], ["fbi", "code"], ["latitude"], ["updated", "on"]], "rhs_tokens": ["beat"]},
+  {"lhs": ["date", "primary_type", "location_description", "district", "community_area", "longitude", "updated_on"], "rhs": "beat", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 7, "distinct_lhs": 259050, "distinct_rhs": 276, "lhs_distinct_ratio": 0.99777, "rhs_distinct_ratio": 0.001063, "redundancy": 579, "redundancy_wl": 1113, "lhs_unique": false, "lhs_tokens": [["date"], ["primary", "type"], ["location", "description"], ["district"], ["community", "area"], ["longitude"], ["updated", "on"]], "rhs_tokens": ["beat"]},
+  {"lhs": ["date", "location_description", "district", "community_area", "fbi_code", "longitude", "updated_on"], "rhs": "beat", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 7, "distinct_lhs": 259056, "distinct_rhs": 276, "lhs_distinct_ratio": 0.997793, "rhs_distinct_ratio": 0.001063, "redundancy": 573, "redundancy_wl": 1099, "lhs_unique": false, "lhs_tokens": [["date"], ["location", "description"], ["district"], ["community", "area"], ["fbi", "code"], ["longitude"], ["updated", "on"]], "rhs_tokens": ["beat"]},
+  {"lhs": ["date", "district", "ward", "community_area", "fbi_code", "longitude", "updated_on"], "rhs": "beat", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 7, "distinct_lhs": 258883, "distinct_rhs": 276, "lhs_distinct_ratio": 0.997127, "rhs_distinct_ratio": 0.001063, "redundancy": 746, "redundancy_wl": 1421, "lhs_unique": false, "lhs_tokens": [["date"], ["district"], ["ward"], ["community", "area"], ["fbi", "code"], ["longitude"], ["updated", "on"]], "rhs_tokens": ["beat"]},
+  {"lhs": ["date", "location_description", "district", "community_area", "y_coordinate", "updated_on", "index_code"], "rhs": "beat", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 7, "distinct_lhs": 258876, "distinct_rhs": 276, "lhs_distinct_ratio": 0.9971, "rhs_distinct_ratio": 0.001063, "redundancy": 753, "redundancy_wl": 1453, "lhs_unique": false, "lhs_tokens": [["date"], ["location", "description"], ["district"], ["community", "area"], ["y", "coordinate"], ["updated", "on"], ["index", "code"]], "rhs_tokens": ["beat"]},
+  {"lhs": ["date", "location_description", "district", "community_area", "latitude", "updated_on", "index_code"], "rhs": "beat", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 7, "distinct_lhs": 258900, "distinct_rhs": 276, "lhs_distinct_ratio": 0.997192, "rhs_distinct_ratio": 0.001063, "redundancy": 729, "redundancy_wl": 1410, "lhs_unique": false, "lhs_tokens": [["date"], ["location", "description"], ["district"], ["community", "area"], ["latitude"], ["updated", "on"], ["index", "code"]], "rhs_tokens": ["beat"]},
+  {"lhs": ["date", "location_description", "district", "community_area", "longitude", "updated_on", "index_code"], "rhs": "beat", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 7, "distinct_lhs": 258900, "distinct_rhs": 276, "lhs_distinct_ratio": 0.997192, "rhs_distinct_ratio": 0.001063, "redundancy": 729, "redundancy_wl": 1410, "lhs_unique": false, "lhs_tokens": [["date"], ["location", "description"], ["district"], ["community", "area"], ["longitude"], ["updated", "on"], ["index", "code"]], "rhs_tokens": ["beat"]},
+  {"lhs": ["primary_type", "location_description", "arrest", "district", "ward", "fbi_code", "updated_on"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 7, "distinct_lhs": 65986, "distinct_rhs": 2, "lhs_distinct_ratio": 0.254155, "rhs_distinct_ratio": 8e-06, "redundancy": 193643, "redundancy_wl": 221612, "lhs_unique": false, "lhs_tokens": [["primary", "type"], ["location", "description"], ["arrest"], ["district"], ["ward"], ["fbi", "code"], ["updated", "on"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["primary_type", "arrest", "district", "ward", "community_area", "fbi_code", "updated_on"], "rhs": "index_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 7, "distinct_lhs": 25114, "distinct_rhs": 2, "lhs_distinct_ratio": 0.09673, "rhs_distinct_ratio": 8e-06, "redundancy": 234515, "redundancy_wl": 249567, "lhs_unique": false, "lhs_tokens": [["primary", "type"], ["arrest"], ["district"], ["ward"], ["community", "area"], ["fbi", "code"], ["updated", "on"]], "rhs_tokens": ["index", "code"]},
+  {"lhs": ["date", "district", "ward", "community_area", "fbi_code", "x_coordinate", "y_coordinate", "updated_on"], "rhs": "beat", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 8, "distinct_lhs": 258883, "distinct_rhs": 276, "lhs_distinct_ratio": 0.997127, "rhs_distinct_ratio": 0.001063, "redundancy": 746, "redundancy_wl": 1421, "lhs_unique": false, "lhs_tokens": [["date"], ["district"], ["ward"], ["community", "area"], ["fbi", "code"], ["x", "coordinate"], ["y", "coordinate"], ["updated", "on"]], "rhs_tokens": ["beat"]},
+  {"lhs": ["date", "primary_type", "domestic", "district", "ward", "community_area", "latitude", "updated_on"], "rhs": "beat", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 8, "distinct_lhs": 258894, "distinct_rhs": 276, "lhs_distinct_ratio": 0.997169, "rhs_distinct_ratio": 0.001063, "redundancy": 735, "redundancy_wl": 1402, "lhs_unique": false, "lhs_tokens": [["date"], ["primary", "type"], ["domestic"], ["district"], ["ward"], ["community", "area"], ["latitude"], ["updated", "on"]], "rhs_tokens": ["beat"]},
+  {"lhs": ["date", "primary_type", "domestic", "district", "ward", "community_area", "longitude", "updated_on"], "rhs": "beat", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 8, "distinct_lhs": 258894, "distinct_rhs": 276, "lhs_distinct_ratio": 0.997169, "rhs_distinct_ratio": 0.001063, "redundancy": 735, "redundancy_wl": 1402, "lhs_unique": false, "lhs_tokens": [["date"], ["primary", "type"], ["domestic"], ["district"], ["ward"], ["community", "area"], ["longitude"], ["updated", "on"]], "rhs_tokens": ["beat"]},
+  {"lhs": ["date", "primary_type", "district", "ward", "community_area", "latitude", "updated_on", "index_code"], "rhs": "beat", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 8, "distinct_lhs": 258889, "distinct_rhs": 276, "lhs_distinct_ratio": 0.99715, "rhs_distinct_ratio": 0.001063, "redundancy": 740, "redundancy_wl": 1411, "lhs_unique": false, "lhs_tokens": [["date"], ["primary", "type"], ["district"], ["ward"], ["community", "area"], ["latitude"], ["updated", "on"], ["index", "code"]], "rhs_tokens": ["beat"]},
+  {"lhs": ["date", "primary_type", "district", "ward", "community_area", "longitude", "updated_on", "index_code"], "rhs": "beat", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 8, "distinct_lhs": 258889, "distinct_rhs": 276, "lhs_distinct_ratio": 0.99715, "rhs_distinct_ratio": 0.001063, "redundancy": 740, "redundancy_wl": 1411, "lhs_unique": false, "lhs_tokens": [["date"], ["primary", "type"], ["district"], ["ward"], ["community", "area"], ["longitude"], ["updated", "on"], ["index", "code"]], "rhs_tokens": ["beat"]},
+  {"lhs": ["date", "primary_type", "domestic", "district", "ward", "community_area", "x_coordinate", "y_coordinate", "updated_on"], "rhs": "beat", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 9, "distinct_lhs": 258894, "distinct_rhs": 276, "lhs_distinct_ratio": 0.997169, "rhs_distinct_ratio": 0.001063, "redundancy": 735, "redundancy_wl": 1402, "lhs_unique": false, "lhs_tokens": [["date"], ["primary", "type"], ["domestic"], ["district"], ["ward"], ["community", "area"], ["x", "coordinate"], ["y", "coordinate"], ["updated", "on"]], "rhs_tokens": ["beat"]},
+  {"lhs": ["date", "primary_type", "district", "ward", "community_area", "x_coordinate", "y_coordinate", "updated_on", "index_code"], "rhs": "beat", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 9, "distinct_lhs": 258889, "distinct_rhs": 276, "lhs_distinct_ratio": 0.99715, "rhs_distinct_ratio": 0.001063, "redundancy": 740, "redundancy_wl": 1411, "lhs_unique": false, "lhs_tokens": [["date"], ["primary", "type"], ["district"], ["ward"], ["community", "area"], ["x", "coordinate"], ["y", "coordinate"], ["updated", "on"], ["index", "code"]], "rhs_tokens": ["beat"]},
+  {"lhs": ["date", "arrest", "domestic", "district", "ward", "community_area", "latitude", "updated_on", "index_code"], "rhs": "beat", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 9, "distinct_lhs": 258772, "distinct_rhs": 276, "lhs_distinct_ratio": 0.996699, "rhs_distinct_ratio": 0.001063, "redundancy": 857, "redundancy_wl": 1645, "lhs_unique": false, "lhs_tokens": [["date"], ["arrest"], ["domestic"], ["district"], ["ward"], ["community", "area"], ["latitude"], ["updated", "on"], ["index", "code"]], "rhs_tokens": ["beat"]},
+  {"lhs": ["date", "arrest", "domestic", "district", "ward", "community_area", "longitude", "updated_on", "index_code"], "rhs": "beat", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 9, "distinct_lhs": 258772, "distinct_rhs": 276, "lhs_distinct_ratio": 0.996699, "rhs_distinct_ratio": 0.001063, "redundancy": 857, "redundancy_wl": 1645, "lhs_unique": false, "lhs_tokens": [["date"], ["arrest"], ["domestic"], ["district"], ["ward"], ["community", "area"], ["longitude"], ["updated", "on"], ["index", "code"]], "rhs_tokens": ["beat"]},
+  {"lhs": ["date", "arrest", "domestic", "district", "ward", "community_area", "x_coordinate", "y_coordinate", "updated_on", "index_code"], "rhs": "beat", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 10, "distinct_lhs": 258772, "distinct_rhs": 276, "lhs_distinct_ratio": 0.996699, "rhs_distinct_ratio": 0.001063, "redundancy": 857, "redundancy_wl": 1645, "lhs_unique": false, "lhs_tokens": [["date"], ["arrest"], ["domestic"], ["district"], ["ward"], ["community", "area"], ["x", "coordinate"], ["y", "coordinate"], ["updated", "on"], ["index", "code"]], "rhs_tokens": ["beat"]}
+ ]
+}

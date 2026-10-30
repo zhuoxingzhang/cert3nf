@@ -1,0 +1,845 @@
+{
+ "dataset": "fresh_usda_sr",
+ "family": "fresh",
+ "truth_kind": "documented (confirmatory)",
+ "source": "Publisher documentation saved under e3/truth/docs/fresh/ (sha256 in SHA256SUMS): TPC-DS v3.2.0; LDBC SNB specification (v2.2.5-SNAPSHOT, Appendix D for the Interactive v1 legacy data sets); GTFS Schedule Reference; FAA ardata.pdf (5/8/2025); ABS ASGS Edition 3 web pages; SEC Financial Statement Data Sets; College Scorecard Field of Study documentation (October 2026) and data dictionary; EPA AirData FileFormats (v3.0.0); 2024 ACS PUMS data dictionary and Census regions and divisions; City of Chicago portal metadata (ijzp-q8t2, c7ck-438e); USDA FoodData Central download field descriptions (October 2020)",
+ "rule": "Sigma* is the set of FDs that the publisher documentation implies among the attributes of each relation, projected and closed over the dropped columns, each with a verbatim quote; sure when the quoted text states it (declared key, foreign key to a declared key, an explicit one-to-one or nesting statement), unsure when it needs an inference the text does not spell out. Dependencies the documentation hints at but does not state are listed under undocumented_regularities and are not part of Sigma*. Written from the documentation alone, before any data file was opened.",
+ "instance": {
+  "generator": "public data fixed before download for the confirmatory evaluation, joined by fresh.py",
+  "rows": 644125,
+  "construction": "USDA FoodData Central SR Legacy CSV release (FoodData_Central_sr_legacy_food_csv_2018-04, frozen April 2018 data): food_nutrient (root) left-joined to food and sr_legacy_food on fdc_id, food_category on food_category_id, nutrient on nutrient_id, food_nutrient_derivation on derivation_id and food_nutrient_source on its source_id; dropped food_nutrient.footnote (free text), food.data_type (constant in an SR Legacy release) and nutrient columns absent from the field descriptions.",
+  "cleaning": {
+   "records": 644125,
+   "records_after_deduplication": 644125,
+   "sampled_from": null,
+   "kept": 644125,
+   "repaired_for": "the sure FDs of Sigma*",
+   "removed_per_fd": {},
+   "missing_values": "empty and missing references become '?', kept as a value (null = null)"
+  }
+ },
+ "attributes": [
+  "food_nutrient_id",
+  "fdc_id",
+  "nutrient_id",
+  "amount",
+  "data_points",
+  "derivation_id",
+  "min",
+  "max",
+  "food_description",
+  "food_category_id",
+  "NDB_number",
+  "category_code",
+  "category_description",
+  "nutrient_name",
+  "unit_name",
+  "nutrient_nbr",
+  "derivation_code",
+  "derivation_description",
+  "source_id",
+  "source_code",
+  "source_description"
+ ],
+ "dropped_constant_columns": [
+  "median",
+  "min_year_acquired",
+  "publication_date"
+ ],
+ "distinct_values": {
+  "food_nutrient_id": 644125,
+  "fdc_id": 7793,
+  "nutrient_id": 149,
+  "amount": 19551,
+  "data_points": 394,
+  "derivation_id": 55,
+  "min": 6908,
+  "max": 7849,
+  "food_description": 7793,
+  "food_category_id": 25,
+  "NDB_number": 7793,
+  "category_code": 25,
+  "category_description": 25,
+  "nutrient_name": 148,
+  "unit_name": 6,
+  "nutrient_nbr": 149,
+  "derivation_code": 55,
+  "derivation_description": 55,
+  "source_id": 11,
+  "source_code": 11,
+  "source_description": 11
+ },
+ "truth": [
+  {
+   "lhs": [
+    "food_nutrient_id"
+   ],
+   "rhs": [
+    "fdc_id",
+    "nutrient_id",
+    "amount",
+    "data_points",
+    "derivation_id",
+    "min",
+    "max"
+   ],
+   "sure": true,
+   "clause": "usda_fdc_Download_Field_Descriptions_Oct2020.pdf, Field Descriptions, GLOBAL column definitions (p. 2): \"id Unique permanent identifier of other kinds of data (e.g. nutrients, lab methods, etc.) in their related table\"; food_nutrient (p. 5): \"food_nutrient A nutrient value for a food\"",
+   "justification": "id is the unique identifier of a food_nutrient row, whose fields these are.",
+   "audit": {
+    "verdicts": {
+     "fdc_id": "TRUE",
+     "nutrient_id": "TRUE",
+     "amount": "TRUE",
+     "data_points": "TRUE",
+     "derivation_id": "TRUE",
+     "min": "TRUE",
+     "max": "TRUE",
+     "median": "TRUE",
+     "min_year_acquired": "TRUE"
+    },
+    "quote": "GLOBAL column definitions (p. 2): \"id Unique permanent identifier of other kinds of data (e.g. nutrients, lab methods, etc.) in their related table\"; food_nutrient (p. 5): \"food_nutrient A nutrient value for a food\"; Abbreviations (p. 13): \"id unique identification number\"",
+    "source": "usda_fdc_Download_Field_Descriptions_Oct2020.pdf (FoodData Central Download Field Descriptions), p. 2, p. 5, p. 13"
+   }
+  },
+  {
+   "lhs": [
+    "fdc_id"
+   ],
+   "rhs": [
+    "food_description",
+    "food_category_id",
+    "NDB_number"
+   ],
+   "sure": true,
+   "clause": "usda_fdc_Download_Field_Descriptions_Oct2020.pdf, GLOBAL column definitions (p. 2): \"fdc_id Unique permanent identifier of a food in the food table\"; food (p. 3): \"food_category_id Id of the food category the food belongs to\"; Conventions (p. 14): \"subtype of a food ID of the food in the food table\"; sr_legacy_food (p. 11): \"fdc_id ID of the food in the food table\"",
+   "justification": "fdc_id identifies the food row, and sr_legacy_food is a subtype of food keyed by fdc_id, so fdc_id determines its NDB_number.",
+   "audit": {
+    "verdicts": {
+     "food_description": "TRUE",
+     "food_category_id": "TRUE",
+     "publication_date": "TRUE",
+     "NDB_number": "TRUE"
+    },
+    "quote": "GLOBAL column definitions (p. 2): \"fdc_id Unique permanent identifier of a food in the food table\"; food (p. 3): \"fdc_id Unique permanent identifier of the food\", \"description Description of the food\", \"food_category_id Id of the food category the food belongs to\", \"publication_date Date when the food was published to FoodData Central\"; sr_legacy_food (p. 11): \"fdc_id ID of the food in the food table\", \"NDB_number Unique number assigned for final food, starts from the minimum number of 100,000\"; Conventions (p. 14), Food relationship definitions: \"subtype of a food | ID of the food in the food table\"",
+    "source": "usda_fdc_Download_Field_Descriptions_Oct2020.pdf (FoodData Central Download Field Descriptions), p. 2, p. 3; usda_fdc_Download_Field_Descriptions_Oct2020.pdf (FoodData Central Download Field Descriptions), p. 11, p. 14"
+   }
+  },
+  {
+   "lhs": [
+    "NDB_number"
+   ],
+   "rhs": [
+    "fdc_id"
+   ],
+   "sure": true,
+   "clause": "usda_fdc_Download_Field_Descriptions_Oct2020.pdf, sr_legacy_food (p. 11): \"NDB_number Unique number assigned for final food, starts from the minimum number of 100,000\"",
+   "justification": "NDB_number is unique per food, so it determines the food's fdc_id.",
+   "audit": {
+    "verdicts": {
+     "fdc_id": "TRUE"
+    },
+    "quote": "sr_legacy_food (p. 11): \"NDB_number Unique number assigned for final food, starts from the minimum number of 100,000\"",
+    "source": "usda_fdc_Download_Field_Descriptions_Oct2020.pdf (FoodData Central Download Field Descriptions), p. 11"
+   }
+  },
+  {
+   "lhs": [
+    "food_category_id"
+   ],
+   "rhs": [
+    "category_code",
+    "category_description"
+   ],
+   "sure": true,
+   "clause": "usda_fdc_Download_Field_Descriptions_Oct2020.pdf, Field Descriptions, GLOBAL column definitions (p. 2): \"id Unique permanent identifier of other kinds of data (e.g. nutrients, lab methods, etc.) in their related table\"; food_category (p. 4): \"food_category Foods of defined similarity\", \"code Food group code\", \"description Description of the food group\"",
+   "justification": "food_category_id references the unique id of food_category.",
+   "audit": {
+    "verdicts": {
+     "category_code": "TRUE",
+     "category_description": "TRUE"
+    },
+    "quote": "GLOBAL column definitions (p. 2): \"id Unique permanent identifier of other kinds of data (e.g. nutrients, lab methods, etc.) in their related table\"; food_category (p. 4): \"food_category Foods of defined similarity\", \"code Food group code\", \"description Description of the food group\"",
+    "source": "usda_fdc_Download_Field_Descriptions_Oct2020.pdf (FoodData Central Download Field Descriptions), p. 2, p. 4"
+   }
+  },
+  {
+   "lhs": [
+    "nutrient_id"
+   ],
+   "rhs": [
+    "nutrient_name",
+    "unit_name",
+    "nutrient_nbr"
+   ],
+   "sure": true,
+   "clause": "usda_fdc_Download_Field_Descriptions_Oct2020.pdf, Field Descriptions, GLOBAL column definitions (p. 2): \"id Unique permanent identifier of other kinds of data (e.g. nutrients, lab methods, etc.) in their related table\"; food_nutrient (p. 5): \"nutrient_id ID of the nutrient to which the food nutrient pertains\" and \"Specified in unit defined in the nutrient table.\"; nutrient (p. 10): \"unit_name The standard unit of measure for the nutrient (per 100g of food)\"",
+   "justification": "nutrient_id references the unique id of nutrient, whose name, unit and number it determines.",
+   "audit": {
+    "verdicts": {
+     "nutrient_name": "TRUE",
+     "unit_name": "TRUE",
+     "nutrient_nbr": "TRUE"
+    },
+    "quote": "GLOBAL column definitions (p. 2): \"id Unique permanent identifier of other kinds of data (e.g. nutrients, lab methods, etc.) in their related table\"; nutrient (p. 10): \"name Name of the nutrient\", \"unit_name The standard unit of measure for the nutrient (per 100g of food)\", \"nutrient_nbr A unique code identifying a nutrient or food constituent\"",
+    "source": "usda_fdc_Download_Field_Descriptions_Oct2020.pdf (FoodData Central Download Field Descriptions), p. 2, p. 10"
+   }
+  },
+  {
+   "lhs": [
+    "nutrient_nbr"
+   ],
+   "rhs": [
+    "nutrient_id"
+   ],
+   "sure": true,
+   "clause": "usda_fdc_Download_Field_Descriptions_Oct2020.pdf, nutrient (p. 10): \"nutrient_nbr A unique code identifying a nutrient or food constituent\"",
+   "justification": "nutrient_nbr is a unique code of the nutrient.",
+   "audit": {
+    "verdicts": {
+     "nutrient_id": "TRUE"
+    },
+    "quote": "nutrient (p. 10): \"nutrient_nbr A unique code identifying a nutrient or food constituent\"",
+    "source": "usda_fdc_Download_Field_Descriptions_Oct2020.pdf (FoodData Central Download Field Descriptions), p. 10"
+   }
+  },
+  {
+   "lhs": [
+    "derivation_id"
+   ],
+   "rhs": [
+    "derivation_code",
+    "derivation_description",
+    "source_id"
+   ],
+   "sure": true,
+   "clause": "usda_fdc_Download_Field_Descriptions_Oct2020.pdf, Field Descriptions, GLOBAL column definitions (p. 2): \"id Unique permanent identifier of other kinds of data (e.g. nutrients, lab methods, etc.) in their related table\"; food_nutrient (p. 5): \"derivation_id ID of the food nutrient derivation technique used to derive the value\"; food_nutrient_derivation (p. 6): \"source_id ID of the nutrient source associated with the derivation\"",
+   "justification": "derivation_id references the unique id of food_nutrient_derivation, which holds one source per derivation.",
+   "audit": {
+    "verdicts": {
+     "derivation_code": "TRUE",
+     "derivation_description": "TRUE",
+     "source_id": "TRUE"
+    },
+    "quote": "GLOBAL column definitions (p. 2): \"id Unique permanent identifier of other kinds of data (e.g. nutrients, lab methods, etc.) in their related table\"; food_nutrient_derivation (p. 6): \"Procedure indicating how a food nutrient value was obtained\", \"code Code used for the derivation (e.g. A means analytical)\", \"description Description of the derivation\", \"source_id ID of the nutrient source associated with the derivation\"",
+    "source": "usda_fdc_Download_Field_Descriptions_Oct2020.pdf (FoodData Central Download Field Descriptions), p. 2, p. 6"
+   }
+  },
+  {
+   "lhs": [
+    "source_id"
+   ],
+   "rhs": [
+    "source_code",
+    "source_description"
+   ],
+   "sure": true,
+   "clause": "usda_fdc_Download_Field_Descriptions_Oct2020.pdf, Field Descriptions, GLOBAL column definitions (p. 2): \"id Unique permanent identifier of other kinds of data (e.g. nutrients, lab methods, etc.) in their related table\"; food_nutrient_source (p. 6): \"food_nutrient_source An information source from which we can obtain food nutrient values\"",
+   "justification": "source_id references the unique id of food_nutrient_source.",
+   "audit": {
+    "verdicts": {
+     "source_code": "TRUE",
+     "source_description": "TRUE"
+    },
+    "quote": "GLOBAL column definitions (p. 2): \"id Unique permanent identifier of other kinds of data (e.g. nutrients, lab methods, etc.) in their related table\"; food_nutrient_source (p. 6): \"An information source from which we can obtain food nutrient values\", \"code Code used for the source (e.g. 4 means calculated or imputed)\", \"description Description of the source\"",
+    "source": "usda_fdc_Download_Field_Descriptions_Oct2020.pdf (FoodData Central Download Field Descriptions), p. 2, p. 6"
+   }
+  },
+  {
+   "lhs": [
+    "fdc_id",
+    "nutrient_id"
+   ],
+   "rhs": [
+    "food_nutrient_id",
+    "amount",
+    "data_points",
+    "derivation_id",
+    "min",
+    "max"
+   ],
+   "sure": false,
+   "clause": "usda_fdc_Download_Field_Descriptions_Oct2020.pdf, food_nutrient (p. 5): \"food_nutrient A nutrient value for a food\" and \"amount Amount of the nutrient per 100g of food.\"",
+   "justification": "One amount per food and nutrient is suggested by the description, but uniqueness of (fdc_id, nutrient_id) is not stated; unsure.",
+   "audit": {
+    "verdicts": {
+     "food_nutrient_id": "UNDETERMINED",
+     "amount": "UNDETERMINED",
+     "data_points": "UNDETERMINED",
+     "derivation_id": "UNDETERMINED",
+     "min": "UNDETERMINED",
+     "max": "UNDETERMINED",
+     "median": "UNDETERMINED",
+     "min_year_acquired": "UNDETERMINED"
+    },
+    "quote": "food_nutrient (p. 5): \"food_nutrient A nutrient value for a food\", \"amount Amount of the nutrient per 100g of food. Specified in unit defined in the nutrient table.\"",
+    "source": "usda_fdc_Download_Field_Descriptions_Oct2020.pdf (FoodData Central Download Field Descriptions), p. 5"
+   }
+  }
+ ],
+ "truth_counts": {
+  "fds": 9,
+  "single_rhs": 28,
+  "sure_single_rhs": 22
+ },
+ "random_columns": null,
+ "truth_fds_violated_by_data": [],
+ "gold_design": null,
+ "gold_design_note": "No normalized design is published; the 3NF designs of Sigma* are synthesized.",
+ "truth_design": {
+  "keys": [
+   [
+    "NDB_number",
+    "nutrient_nbr"
+   ],
+   [
+    "food_nutrient_id"
+   ],
+   [
+    "fdc_id",
+    "nutrient_nbr"
+   ],
+   [
+    "NDB_number",
+    "nutrient_id"
+   ],
+   [
+    "fdc_id",
+    "nutrient_id"
+   ]
+  ],
+  "atomic_closure": 89,
+  "synthesis": [
+   [
+    "NDB_number",
+    "amount",
+    "nutrient_nbr"
+   ],
+   [
+    "NDB_number",
+    "data_points",
+    "nutrient_nbr"
+   ],
+   [
+    "NDB_number",
+    "derivation_id",
+    "nutrient_nbr"
+   ],
+   [
+    "NDB_number",
+    "fdc_id"
+   ],
+   [
+    "NDB_number",
+    "food_category_id"
+   ],
+   [
+    "NDB_number",
+    "food_description"
+   ],
+   [
+    "NDB_number",
+    "food_nutrient_id",
+    "nutrient_nbr"
+   ],
+   [
+    "NDB_number",
+    "max",
+    "nutrient_nbr"
+   ],
+   [
+    "NDB_number",
+    "min",
+    "nutrient_nbr"
+   ],
+   [
+    "category_code",
+    "food_category_id"
+   ],
+   [
+    "category_description",
+    "food_category_id"
+   ],
+   [
+    "derivation_code",
+    "derivation_id"
+   ],
+   [
+    "derivation_description",
+    "derivation_id"
+   ],
+   [
+    "derivation_id",
+    "source_id"
+   ],
+   [
+    "nutrient_id",
+    "nutrient_nbr"
+   ],
+   [
+    "nutrient_name",
+    "nutrient_nbr"
+   ],
+   [
+    "nutrient_nbr",
+    "unit_name"
+   ],
+   [
+    "source_code",
+    "source_id"
+   ],
+   [
+    "source_description",
+    "source_id"
+   ]
+  ],
+  "iconf": [
+   [
+    "NDB_number",
+    "amount",
+    "nutrient_nbr"
+   ],
+   [
+    "NDB_number",
+    "data_points",
+    "nutrient_nbr"
+   ],
+   [
+    "NDB_number",
+    "derivation_id",
+    "nutrient_nbr"
+   ],
+   [
+    "NDB_number",
+    "fdc_id"
+   ],
+   [
+    "NDB_number",
+    "food_category_id"
+   ],
+   [
+    "NDB_number",
+    "food_description"
+   ],
+   [
+    "NDB_number",
+    "food_nutrient_id",
+    "nutrient_nbr"
+   ],
+   [
+    "NDB_number",
+    "max",
+    "nutrient_nbr"
+   ],
+   [
+    "NDB_number",
+    "min",
+    "nutrient_nbr"
+   ],
+   [
+    "category_code",
+    "food_category_id"
+   ],
+   [
+    "category_description",
+    "food_category_id"
+   ],
+   [
+    "derivation_code",
+    "derivation_id"
+   ],
+   [
+    "derivation_description",
+    "derivation_id"
+   ],
+   [
+    "derivation_id",
+    "source_id"
+   ],
+   [
+    "nutrient_id",
+    "nutrient_nbr"
+   ],
+   [
+    "nutrient_name",
+    "nutrient_nbr"
+   ],
+   [
+    "nutrient_nbr",
+    "unit_name"
+   ],
+   [
+    "source_code",
+    "source_id"
+   ],
+   [
+    "source_description",
+    "source_id"
+   ]
+  ]
+ },
+ "mined": {
+  "algorithm": "fdmine.py: exact discovery of all minimal FDs in the style of HyFD (no HyFD binary was available); the complete set of minimal FDs is unique, so it equals HyFD's output",
+  "file": "mined/fresh_usda_sr-fds.txt",
+  "seconds": 15.8,
+  "count": 181,
+  "implied_by_truth": 89,
+  "accidental": 92,
+  "implied_by_sure_truth": 45
+ },
+ "truth_design_sure_only": {
+  "keys": [
+   [
+    "food_nutrient_id"
+   ]
+  ],
+  "atomic_closure": 45,
+  "synthesis": [
+   [
+    "NDB_number",
+    "fdc_id"
+   ],
+   [
+    "NDB_number",
+    "food_category_id"
+   ],
+   [
+    "NDB_number",
+    "food_description"
+   ],
+   [
+    "NDB_number",
+    "food_nutrient_id"
+   ],
+   [
+    "amount",
+    "food_nutrient_id"
+   ],
+   [
+    "category_code",
+    "food_category_id"
+   ],
+   [
+    "category_description",
+    "food_category_id"
+   ],
+   [
+    "data_points",
+    "food_nutrient_id"
+   ],
+   [
+    "derivation_code",
+    "derivation_id"
+   ],
+   [
+    "derivation_description",
+    "derivation_id"
+   ],
+   [
+    "derivation_id",
+    "food_nutrient_id"
+   ],
+   [
+    "derivation_id",
+    "source_id"
+   ],
+   [
+    "food_nutrient_id",
+    "max"
+   ],
+   [
+    "food_nutrient_id",
+    "min"
+   ],
+   [
+    "food_nutrient_id",
+    "nutrient_nbr"
+   ],
+   [
+    "nutrient_id",
+    "nutrient_nbr"
+   ],
+   [
+    "nutrient_name",
+    "nutrient_nbr"
+   ],
+   [
+    "nutrient_nbr",
+    "unit_name"
+   ],
+   [
+    "source_code",
+    "source_id"
+   ],
+   [
+    "source_description",
+    "source_id"
+   ]
+  ],
+  "iconf": [
+   [
+    "NDB_number",
+    "fdc_id"
+   ],
+   [
+    "NDB_number",
+    "food_category_id"
+   ],
+   [
+    "NDB_number",
+    "food_description"
+   ],
+   [
+    "NDB_number",
+    "food_nutrient_id"
+   ],
+   [
+    "amount",
+    "food_nutrient_id"
+   ],
+   [
+    "category_code",
+    "food_category_id"
+   ],
+   [
+    "category_description",
+    "food_category_id"
+   ],
+   [
+    "data_points",
+    "food_nutrient_id"
+   ],
+   [
+    "derivation_code",
+    "derivation_id"
+   ],
+   [
+    "derivation_description",
+    "derivation_id"
+   ],
+   [
+    "derivation_id",
+    "food_nutrient_id"
+   ],
+   [
+    "derivation_id",
+    "source_id"
+   ],
+   [
+    "food_nutrient_id",
+    "max"
+   ],
+   [
+    "food_nutrient_id",
+    "min"
+   ],
+   [
+    "food_nutrient_id",
+    "nutrient_nbr"
+   ],
+   [
+    "nutrient_id",
+    "nutrient_nbr"
+   ],
+   [
+    "nutrient_name",
+    "nutrient_nbr"
+   ],
+   [
+    "nutrient_nbr",
+    "unit_name"
+   ],
+   [
+    "source_code",
+    "source_id"
+   ],
+   [
+    "source_description",
+    "source_id"
+   ]
+  ]
+ },
+ "fds": [
+  {"lhs": ["food_nutrient_id"], "rhs": "fdc_id", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 644125, "distinct_rhs": 7793, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.012099, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["food", "nutrient", "id"]], "rhs_tokens": ["fdc", "id"]},
+  {"lhs": ["food_description"], "rhs": "fdc_id", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 7793, "distinct_rhs": 7793, "lhs_distinct_ratio": 0.012099, "rhs_distinct_ratio": 0.012099, "redundancy": 636332, "redundancy_wl": 644125, "lhs_unique": false, "lhs_tokens": [["food", "description"]], "rhs_tokens": ["fdc", "id"]},
+  {"lhs": ["NDB_number"], "rhs": "fdc_id", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 7793, "distinct_rhs": 7793, "lhs_distinct_ratio": 0.012099, "rhs_distinct_ratio": 0.012099, "redundancy": 636332, "redundancy_wl": 644125, "lhs_unique": false, "lhs_tokens": [["ndb", "number"]], "rhs_tokens": ["fdc", "id"]},
+  {"lhs": ["food_nutrient_id"], "rhs": "nutrient_id", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 644125, "distinct_rhs": 149, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.000231, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["food", "nutrient", "id"]], "rhs_tokens": ["nutrient", "id"]},
+  {"lhs": ["nutrient_nbr"], "rhs": "nutrient_id", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 149, "distinct_rhs": 149, "lhs_distinct_ratio": 0.000231, "rhs_distinct_ratio": 0.000231, "redundancy": 643976, "redundancy_wl": 644125, "lhs_unique": false, "lhs_tokens": [["nutrient", "nbr"]], "rhs_tokens": ["nutrient", "id"]},
+  {"lhs": ["food_nutrient_id"], "rhs": "amount", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 644125, "distinct_rhs": 19551, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.030353, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["food", "nutrient", "id"]], "rhs_tokens": ["amount"]},
+  {"lhs": ["food_nutrient_id"], "rhs": "data_points", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 644125, "distinct_rhs": 394, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.000612, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["food", "nutrient", "id"]], "rhs_tokens": ["data", "points"]},
+  {"lhs": ["food_nutrient_id"], "rhs": "derivation_id", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 644125, "distinct_rhs": 55, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 8.5e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["food", "nutrient", "id"]], "rhs_tokens": ["derivation", "id"]},
+  {"lhs": ["derivation_code"], "rhs": "derivation_id", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 55, "distinct_rhs": 55, "lhs_distinct_ratio": 8.5e-05, "rhs_distinct_ratio": 8.5e-05, "redundancy": 644070, "redundancy_wl": 644124, "lhs_unique": false, "lhs_tokens": [["derivation", "code"]], "rhs_tokens": ["derivation", "id"]},
+  {"lhs": ["derivation_description"], "rhs": "derivation_id", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 55, "distinct_rhs": 55, "lhs_distinct_ratio": 8.5e-05, "rhs_distinct_ratio": 8.5e-05, "redundancy": 644070, "redundancy_wl": 644124, "lhs_unique": false, "lhs_tokens": [["derivation", "description"]], "rhs_tokens": ["derivation", "id"]},
+  {"lhs": ["food_nutrient_id"], "rhs": "min", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 644125, "distinct_rhs": 6908, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.010725, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["food", "nutrient", "id"]], "rhs_tokens": ["min"]},
+  {"lhs": ["food_nutrient_id"], "rhs": "max", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 644125, "distinct_rhs": 7849, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.012186, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["food", "nutrient", "id"]], "rhs_tokens": ["max"]},
+  {"lhs": ["food_nutrient_id"], "rhs": "food_description", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 644125, "distinct_rhs": 7793, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.012099, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["food", "nutrient", "id"]], "rhs_tokens": ["food", "description"]},
+  {"lhs": ["fdc_id"], "rhs": "food_description", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 7793, "distinct_rhs": 7793, "lhs_distinct_ratio": 0.012099, "rhs_distinct_ratio": 0.012099, "redundancy": 636332, "redundancy_wl": 644125, "lhs_unique": false, "lhs_tokens": [["fdc", "id"]], "rhs_tokens": ["food", "description"]},
+  {"lhs": ["NDB_number"], "rhs": "food_description", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 7793, "distinct_rhs": 7793, "lhs_distinct_ratio": 0.012099, "rhs_distinct_ratio": 0.012099, "redundancy": 636332, "redundancy_wl": 644125, "lhs_unique": false, "lhs_tokens": [["ndb", "number"]], "rhs_tokens": ["food", "description"]},
+  {"lhs": ["food_nutrient_id"], "rhs": "food_category_id", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 644125, "distinct_rhs": 25, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 3.9e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["food", "nutrient", "id"]], "rhs_tokens": ["food", "category", "id"]},
+  {"lhs": ["fdc_id"], "rhs": "food_category_id", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 7793, "distinct_rhs": 25, "lhs_distinct_ratio": 0.012099, "rhs_distinct_ratio": 3.9e-05, "redundancy": 636332, "redundancy_wl": 644125, "lhs_unique": false, "lhs_tokens": [["fdc", "id"]], "rhs_tokens": ["food", "category", "id"]},
+  {"lhs": ["food_description"], "rhs": "food_category_id", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 7793, "distinct_rhs": 25, "lhs_distinct_ratio": 0.012099, "rhs_distinct_ratio": 3.9e-05, "redundancy": 636332, "redundancy_wl": 644125, "lhs_unique": false, "lhs_tokens": [["food", "description"]], "rhs_tokens": ["food", "category", "id"]},
+  {"lhs": ["NDB_number"], "rhs": "food_category_id", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 7793, "distinct_rhs": 25, "lhs_distinct_ratio": 0.012099, "rhs_distinct_ratio": 3.9e-05, "redundancy": 636332, "redundancy_wl": 644125, "lhs_unique": false, "lhs_tokens": [["ndb", "number"]], "rhs_tokens": ["food", "category", "id"]},
+  {"lhs": ["category_code"], "rhs": "food_category_id", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 25, "distinct_rhs": 25, "lhs_distinct_ratio": 3.9e-05, "rhs_distinct_ratio": 3.9e-05, "redundancy": 644100, "redundancy_wl": 644125, "lhs_unique": false, "lhs_tokens": [["category", "code"]], "rhs_tokens": ["food", "category", "id"]},
+  {"lhs": ["category_description"], "rhs": "food_category_id", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 25, "distinct_rhs": 25, "lhs_distinct_ratio": 3.9e-05, "rhs_distinct_ratio": 3.9e-05, "redundancy": 644100, "redundancy_wl": 644125, "lhs_unique": false, "lhs_tokens": [["category", "description"]], "rhs_tokens": ["food", "category", "id"]},
+  {"lhs": ["food_nutrient_id"], "rhs": "NDB_number", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 644125, "distinct_rhs": 7793, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.012099, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["food", "nutrient", "id"]], "rhs_tokens": ["ndb", "number"]},
+  {"lhs": ["fdc_id"], "rhs": "NDB_number", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 7793, "distinct_rhs": 7793, "lhs_distinct_ratio": 0.012099, "rhs_distinct_ratio": 0.012099, "redundancy": 636332, "redundancy_wl": 644125, "lhs_unique": false, "lhs_tokens": [["fdc", "id"]], "rhs_tokens": ["ndb", "number"]},
+  {"lhs": ["food_description"], "rhs": "NDB_number", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 7793, "distinct_rhs": 7793, "lhs_distinct_ratio": 0.012099, "rhs_distinct_ratio": 0.012099, "redundancy": 636332, "redundancy_wl": 644125, "lhs_unique": false, "lhs_tokens": [["food", "description"]], "rhs_tokens": ["ndb", "number"]},
+  {"lhs": ["food_nutrient_id"], "rhs": "category_code", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 644125, "distinct_rhs": 25, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 3.9e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["food", "nutrient", "id"]], "rhs_tokens": ["category", "code"]},
+  {"lhs": ["fdc_id"], "rhs": "category_code", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 7793, "distinct_rhs": 25, "lhs_distinct_ratio": 0.012099, "rhs_distinct_ratio": 3.9e-05, "redundancy": 636332, "redundancy_wl": 644125, "lhs_unique": false, "lhs_tokens": [["fdc", "id"]], "rhs_tokens": ["category", "code"]},
+  {"lhs": ["food_description"], "rhs": "category_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 7793, "distinct_rhs": 25, "lhs_distinct_ratio": 0.012099, "rhs_distinct_ratio": 3.9e-05, "redundancy": 636332, "redundancy_wl": 644125, "lhs_unique": false, "lhs_tokens": [["food", "description"]], "rhs_tokens": ["category", "code"]},
+  {"lhs": ["food_category_id"], "rhs": "category_code", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 25, "distinct_rhs": 25, "lhs_distinct_ratio": 3.9e-05, "rhs_distinct_ratio": 3.9e-05, "redundancy": 644100, "redundancy_wl": 644125, "lhs_unique": false, "lhs_tokens": [["food", "category", "id"]], "rhs_tokens": ["category", "code"]},
+  {"lhs": ["NDB_number"], "rhs": "category_code", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 7793, "distinct_rhs": 25, "lhs_distinct_ratio": 0.012099, "rhs_distinct_ratio": 3.9e-05, "redundancy": 636332, "redundancy_wl": 644125, "lhs_unique": false, "lhs_tokens": [["ndb", "number"]], "rhs_tokens": ["category", "code"]},
+  {"lhs": ["category_description"], "rhs": "category_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 25, "distinct_rhs": 25, "lhs_distinct_ratio": 3.9e-05, "rhs_distinct_ratio": 3.9e-05, "redundancy": 644100, "redundancy_wl": 644125, "lhs_unique": false, "lhs_tokens": [["category", "description"]], "rhs_tokens": ["category", "code"]},
+  {"lhs": ["food_nutrient_id"], "rhs": "category_description", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 644125, "distinct_rhs": 25, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 3.9e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["food", "nutrient", "id"]], "rhs_tokens": ["category", "description"]},
+  {"lhs": ["fdc_id"], "rhs": "category_description", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 7793, "distinct_rhs": 25, "lhs_distinct_ratio": 0.012099, "rhs_distinct_ratio": 3.9e-05, "redundancy": 636332, "redundancy_wl": 644125, "lhs_unique": false, "lhs_tokens": [["fdc", "id"]], "rhs_tokens": ["category", "description"]},
+  {"lhs": ["food_description"], "rhs": "category_description", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 7793, "distinct_rhs": 25, "lhs_distinct_ratio": 0.012099, "rhs_distinct_ratio": 3.9e-05, "redundancy": 636332, "redundancy_wl": 644125, "lhs_unique": false, "lhs_tokens": [["food", "description"]], "rhs_tokens": ["category", "description"]},
+  {"lhs": ["food_category_id"], "rhs": "category_description", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 25, "distinct_rhs": 25, "lhs_distinct_ratio": 3.9e-05, "rhs_distinct_ratio": 3.9e-05, "redundancy": 644100, "redundancy_wl": 644125, "lhs_unique": false, "lhs_tokens": [["food", "category", "id"]], "rhs_tokens": ["category", "description"]},
+  {"lhs": ["NDB_number"], "rhs": "category_description", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 7793, "distinct_rhs": 25, "lhs_distinct_ratio": 0.012099, "rhs_distinct_ratio": 3.9e-05, "redundancy": 636332, "redundancy_wl": 644125, "lhs_unique": false, "lhs_tokens": [["ndb", "number"]], "rhs_tokens": ["category", "description"]},
+  {"lhs": ["category_code"], "rhs": "category_description", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 25, "distinct_rhs": 25, "lhs_distinct_ratio": 3.9e-05, "rhs_distinct_ratio": 3.9e-05, "redundancy": 644100, "redundancy_wl": 644125, "lhs_unique": false, "lhs_tokens": [["category", "code"]], "rhs_tokens": ["category", "description"]},
+  {"lhs": ["food_nutrient_id"], "rhs": "nutrient_name", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 644125, "distinct_rhs": 148, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.00023, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["food", "nutrient", "id"]], "rhs_tokens": ["nutrient", "name"]},
+  {"lhs": ["nutrient_id"], "rhs": "nutrient_name", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 149, "distinct_rhs": 148, "lhs_distinct_ratio": 0.000231, "rhs_distinct_ratio": 0.00023, "redundancy": 643976, "redundancy_wl": 644125, "lhs_unique": false, "lhs_tokens": [["nutrient", "id"]], "rhs_tokens": ["nutrient", "name"]},
+  {"lhs": ["nutrient_nbr"], "rhs": "nutrient_name", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 149, "distinct_rhs": 148, "lhs_distinct_ratio": 0.000231, "rhs_distinct_ratio": 0.00023, "redundancy": 643976, "redundancy_wl": 644125, "lhs_unique": false, "lhs_tokens": [["nutrient", "nbr"]], "rhs_tokens": ["nutrient", "name"]},
+  {"lhs": ["food_nutrient_id"], "rhs": "unit_name", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 644125, "distinct_rhs": 6, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 9e-06, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["food", "nutrient", "id"]], "rhs_tokens": ["unit", "name"]},
+  {"lhs": ["nutrient_id"], "rhs": "unit_name", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 149, "distinct_rhs": 6, "lhs_distinct_ratio": 0.000231, "rhs_distinct_ratio": 9e-06, "redundancy": 643976, "redundancy_wl": 644125, "lhs_unique": false, "lhs_tokens": [["nutrient", "id"]], "rhs_tokens": ["unit", "name"]},
+  {"lhs": ["nutrient_nbr"], "rhs": "unit_name", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 149, "distinct_rhs": 6, "lhs_distinct_ratio": 0.000231, "rhs_distinct_ratio": 9e-06, "redundancy": 643976, "redundancy_wl": 644125, "lhs_unique": false, "lhs_tokens": [["nutrient", "nbr"]], "rhs_tokens": ["unit", "name"]},
+  {"lhs": ["food_nutrient_id"], "rhs": "nutrient_nbr", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 644125, "distinct_rhs": 149, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.000231, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["food", "nutrient", "id"]], "rhs_tokens": ["nutrient", "nbr"]},
+  {"lhs": ["nutrient_id"], "rhs": "nutrient_nbr", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 149, "distinct_rhs": 149, "lhs_distinct_ratio": 0.000231, "rhs_distinct_ratio": 0.000231, "redundancy": 643976, "redundancy_wl": 644125, "lhs_unique": false, "lhs_tokens": [["nutrient", "id"]], "rhs_tokens": ["nutrient", "nbr"]},
+  {"lhs": ["food_nutrient_id"], "rhs": "derivation_code", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 644125, "distinct_rhs": 55, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 8.5e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["food", "nutrient", "id"]], "rhs_tokens": ["derivation", "code"]},
+  {"lhs": ["derivation_id"], "rhs": "derivation_code", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 55, "distinct_rhs": 55, "lhs_distinct_ratio": 8.5e-05, "rhs_distinct_ratio": 8.5e-05, "redundancy": 644070, "redundancy_wl": 644124, "lhs_unique": false, "lhs_tokens": [["derivation", "id"]], "rhs_tokens": ["derivation", "code"]},
+  {"lhs": ["derivation_description"], "rhs": "derivation_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 55, "distinct_rhs": 55, "lhs_distinct_ratio": 8.5e-05, "rhs_distinct_ratio": 8.5e-05, "redundancy": 644070, "redundancy_wl": 644124, "lhs_unique": false, "lhs_tokens": [["derivation", "description"]], "rhs_tokens": ["derivation", "code"]},
+  {"lhs": ["food_nutrient_id"], "rhs": "derivation_description", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 644125, "distinct_rhs": 55, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 8.5e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["food", "nutrient", "id"]], "rhs_tokens": ["derivation", "description"]},
+  {"lhs": ["derivation_id"], "rhs": "derivation_description", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 55, "distinct_rhs": 55, "lhs_distinct_ratio": 8.5e-05, "rhs_distinct_ratio": 8.5e-05, "redundancy": 644070, "redundancy_wl": 644124, "lhs_unique": false, "lhs_tokens": [["derivation", "id"]], "rhs_tokens": ["derivation", "description"]},
+  {"lhs": ["derivation_code"], "rhs": "derivation_description", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 55, "distinct_rhs": 55, "lhs_distinct_ratio": 8.5e-05, "rhs_distinct_ratio": 8.5e-05, "redundancy": 644070, "redundancy_wl": 644124, "lhs_unique": false, "lhs_tokens": [["derivation", "code"]], "rhs_tokens": ["derivation", "description"]},
+  {"lhs": ["food_nutrient_id"], "rhs": "source_id", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 644125, "distinct_rhs": 11, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.7e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["food", "nutrient", "id"]], "rhs_tokens": ["source", "id"]},
+  {"lhs": ["derivation_id"], "rhs": "source_id", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 55, "distinct_rhs": 11, "lhs_distinct_ratio": 8.5e-05, "rhs_distinct_ratio": 1.7e-05, "redundancy": 644070, "redundancy_wl": 644124, "lhs_unique": false, "lhs_tokens": [["derivation", "id"]], "rhs_tokens": ["source", "id"]},
+  {"lhs": ["derivation_code"], "rhs": "source_id", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 55, "distinct_rhs": 11, "lhs_distinct_ratio": 8.5e-05, "rhs_distinct_ratio": 1.7e-05, "redundancy": 644070, "redundancy_wl": 644124, "lhs_unique": false, "lhs_tokens": [["derivation", "code"]], "rhs_tokens": ["source", "id"]},
+  {"lhs": ["derivation_description"], "rhs": "source_id", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 55, "distinct_rhs": 11, "lhs_distinct_ratio": 8.5e-05, "rhs_distinct_ratio": 1.7e-05, "redundancy": 644070, "redundancy_wl": 644124, "lhs_unique": false, "lhs_tokens": [["derivation", "description"]], "rhs_tokens": ["source", "id"]},
+  {"lhs": ["source_code"], "rhs": "source_id", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 11, "distinct_rhs": 11, "lhs_distinct_ratio": 1.7e-05, "rhs_distinct_ratio": 1.7e-05, "redundancy": 644114, "redundancy_wl": 644125, "lhs_unique": false, "lhs_tokens": [["source", "code"]], "rhs_tokens": ["source", "id"]},
+  {"lhs": ["source_description"], "rhs": "source_id", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 11, "distinct_rhs": 11, "lhs_distinct_ratio": 1.7e-05, "rhs_distinct_ratio": 1.7e-05, "redundancy": 644114, "redundancy_wl": 644125, "lhs_unique": false, "lhs_tokens": [["source", "description"]], "rhs_tokens": ["source", "id"]},
+  {"lhs": ["food_nutrient_id"], "rhs": "source_code", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 644125, "distinct_rhs": 11, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.7e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["food", "nutrient", "id"]], "rhs_tokens": ["source", "code"]},
+  {"lhs": ["derivation_id"], "rhs": "source_code", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 55, "distinct_rhs": 11, "lhs_distinct_ratio": 8.5e-05, "rhs_distinct_ratio": 1.7e-05, "redundancy": 644070, "redundancy_wl": 644124, "lhs_unique": false, "lhs_tokens": [["derivation", "id"]], "rhs_tokens": ["source", "code"]},
+  {"lhs": ["derivation_code"], "rhs": "source_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 55, "distinct_rhs": 11, "lhs_distinct_ratio": 8.5e-05, "rhs_distinct_ratio": 1.7e-05, "redundancy": 644070, "redundancy_wl": 644124, "lhs_unique": false, "lhs_tokens": [["derivation", "code"]], "rhs_tokens": ["source", "code"]},
+  {"lhs": ["derivation_description"], "rhs": "source_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 55, "distinct_rhs": 11, "lhs_distinct_ratio": 8.5e-05, "rhs_distinct_ratio": 1.7e-05, "redundancy": 644070, "redundancy_wl": 644124, "lhs_unique": false, "lhs_tokens": [["derivation", "description"]], "rhs_tokens": ["source", "code"]},
+  {"lhs": ["source_id"], "rhs": "source_code", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 11, "distinct_rhs": 11, "lhs_distinct_ratio": 1.7e-05, "rhs_distinct_ratio": 1.7e-05, "redundancy": 644114, "redundancy_wl": 644125, "lhs_unique": false, "lhs_tokens": [["source", "id"]], "rhs_tokens": ["source", "code"]},
+  {"lhs": ["source_description"], "rhs": "source_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 11, "distinct_rhs": 11, "lhs_distinct_ratio": 1.7e-05, "rhs_distinct_ratio": 1.7e-05, "redundancy": 644114, "redundancy_wl": 644125, "lhs_unique": false, "lhs_tokens": [["source", "description"]], "rhs_tokens": ["source", "code"]},
+  {"lhs": ["food_nutrient_id"], "rhs": "source_description", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 644125, "distinct_rhs": 11, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.7e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["food", "nutrient", "id"]], "rhs_tokens": ["source", "description"]},
+  {"lhs": ["derivation_id"], "rhs": "source_description", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 55, "distinct_rhs": 11, "lhs_distinct_ratio": 8.5e-05, "rhs_distinct_ratio": 1.7e-05, "redundancy": 644070, "redundancy_wl": 644124, "lhs_unique": false, "lhs_tokens": [["derivation", "id"]], "rhs_tokens": ["source", "description"]},
+  {"lhs": ["derivation_code"], "rhs": "source_description", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 55, "distinct_rhs": 11, "lhs_distinct_ratio": 8.5e-05, "rhs_distinct_ratio": 1.7e-05, "redundancy": 644070, "redundancy_wl": 644124, "lhs_unique": false, "lhs_tokens": [["derivation", "code"]], "rhs_tokens": ["source", "description"]},
+  {"lhs": ["derivation_description"], "rhs": "source_description", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 55, "distinct_rhs": 11, "lhs_distinct_ratio": 8.5e-05, "rhs_distinct_ratio": 1.7e-05, "redundancy": 644070, "redundancy_wl": 644124, "lhs_unique": false, "lhs_tokens": [["derivation", "description"]], "rhs_tokens": ["source", "description"]},
+  {"lhs": ["source_id"], "rhs": "source_description", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 11, "distinct_rhs": 11, "lhs_distinct_ratio": 1.7e-05, "rhs_distinct_ratio": 1.7e-05, "redundancy": 644114, "redundancy_wl": 644125, "lhs_unique": false, "lhs_tokens": [["source", "id"]], "rhs_tokens": ["source", "description"]},
+  {"lhs": ["source_code"], "rhs": "source_description", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 11, "distinct_rhs": 11, "lhs_distinct_ratio": 1.7e-05, "rhs_distinct_ratio": 1.7e-05, "redundancy": 644114, "redundancy_wl": 644125, "lhs_unique": false, "lhs_tokens": [["source", "code"]], "rhs_tokens": ["source", "description"]},
+  {"lhs": ["fdc_id", "nutrient_id"], "rhs": "food_nutrient_id", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 644125, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["fdc", "id"], ["nutrient", "id"]], "rhs_tokens": ["food", "nutrient", "id"]},
+  {"lhs": ["nutrient_id", "food_description"], "rhs": "food_nutrient_id", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 644125, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["nutrient", "id"], ["food", "description"]], "rhs_tokens": ["food", "nutrient", "id"]},
+  {"lhs": ["nutrient_id", "NDB_number"], "rhs": "food_nutrient_id", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 644125, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["nutrient", "id"], ["ndb", "number"]], "rhs_tokens": ["food", "nutrient", "id"]},
+  {"lhs": ["fdc_id", "nutrient_nbr"], "rhs": "food_nutrient_id", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 644125, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["fdc", "id"], ["nutrient", "nbr"]], "rhs_tokens": ["food", "nutrient", "id"]},
+  {"lhs": ["food_description", "nutrient_nbr"], "rhs": "food_nutrient_id", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 644125, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["food", "description"], ["nutrient", "nbr"]], "rhs_tokens": ["food", "nutrient", "id"]},
+  {"lhs": ["NDB_number", "nutrient_nbr"], "rhs": "food_nutrient_id", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 644125, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["ndb", "number"], ["nutrient", "nbr"]], "rhs_tokens": ["food", "nutrient", "id"]},
+  {"lhs": ["nutrient_name", "unit_name"], "rhs": "nutrient_id", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 149, "distinct_rhs": 149, "lhs_distinct_ratio": 0.000231, "rhs_distinct_ratio": 0.000231, "redundancy": 643976, "redundancy_wl": 644125, "lhs_unique": false, "lhs_tokens": [["nutrient", "name"], ["unit", "name"]], "rhs_tokens": ["nutrient", "id"]},
+  {"lhs": ["fdc_id", "nutrient_id"], "rhs": "amount", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 19551, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.030353, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["fdc", "id"], ["nutrient", "id"]], "rhs_tokens": ["amount"]},
+  {"lhs": ["nutrient_id", "food_description"], "rhs": "amount", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 19551, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.030353, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["nutrient", "id"], ["food", "description"]], "rhs_tokens": ["amount"]},
+  {"lhs": ["nutrient_id", "NDB_number"], "rhs": "amount", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 19551, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.030353, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["nutrient", "id"], ["ndb", "number"]], "rhs_tokens": ["amount"]},
+  {"lhs": ["fdc_id", "nutrient_nbr"], "rhs": "amount", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 19551, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.030353, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["fdc", "id"], ["nutrient", "nbr"]], "rhs_tokens": ["amount"]},
+  {"lhs": ["food_description", "nutrient_nbr"], "rhs": "amount", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 19551, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.030353, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["food", "description"], ["nutrient", "nbr"]], "rhs_tokens": ["amount"]},
+  {"lhs": ["NDB_number", "nutrient_nbr"], "rhs": "amount", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 19551, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.030353, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["ndb", "number"], ["nutrient", "nbr"]], "rhs_tokens": ["amount"]},
+  {"lhs": ["fdc_id", "nutrient_id"], "rhs": "data_points", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 394, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.000612, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["fdc", "id"], ["nutrient", "id"]], "rhs_tokens": ["data", "points"]},
+  {"lhs": ["nutrient_id", "food_description"], "rhs": "data_points", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 394, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.000612, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["nutrient", "id"], ["food", "description"]], "rhs_tokens": ["data", "points"]},
+  {"lhs": ["nutrient_id", "NDB_number"], "rhs": "data_points", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 394, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.000612, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["nutrient", "id"], ["ndb", "number"]], "rhs_tokens": ["data", "points"]},
+  {"lhs": ["fdc_id", "nutrient_nbr"], "rhs": "data_points", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 394, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.000612, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["fdc", "id"], ["nutrient", "nbr"]], "rhs_tokens": ["data", "points"]},
+  {"lhs": ["food_description", "nutrient_nbr"], "rhs": "data_points", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 394, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.000612, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["food", "description"], ["nutrient", "nbr"]], "rhs_tokens": ["data", "points"]},
+  {"lhs": ["NDB_number", "nutrient_nbr"], "rhs": "data_points", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 394, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.000612, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["ndb", "number"], ["nutrient", "nbr"]], "rhs_tokens": ["data", "points"]},
+  {"lhs": ["fdc_id", "nutrient_id"], "rhs": "derivation_id", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 55, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 8.5e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["fdc", "id"], ["nutrient", "id"]], "rhs_tokens": ["derivation", "id"]},
+  {"lhs": ["nutrient_id", "food_description"], "rhs": "derivation_id", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 55, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 8.5e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["nutrient", "id"], ["food", "description"]], "rhs_tokens": ["derivation", "id"]},
+  {"lhs": ["nutrient_id", "NDB_number"], "rhs": "derivation_id", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 55, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 8.5e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["nutrient", "id"], ["ndb", "number"]], "rhs_tokens": ["derivation", "id"]},
+  {"lhs": ["fdc_id", "nutrient_nbr"], "rhs": "derivation_id", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 55, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 8.5e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["fdc", "id"], ["nutrient", "nbr"]], "rhs_tokens": ["derivation", "id"]},
+  {"lhs": ["food_description", "nutrient_nbr"], "rhs": "derivation_id", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 55, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 8.5e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["food", "description"], ["nutrient", "nbr"]], "rhs_tokens": ["derivation", "id"]},
+  {"lhs": ["NDB_number", "nutrient_nbr"], "rhs": "derivation_id", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 55, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 8.5e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["ndb", "number"], ["nutrient", "nbr"]], "rhs_tokens": ["derivation", "id"]},
+  {"lhs": ["fdc_id", "nutrient_id"], "rhs": "min", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 6908, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.010725, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["fdc", "id"], ["nutrient", "id"]], "rhs_tokens": ["min"]},
+  {"lhs": ["nutrient_id", "food_description"], "rhs": "min", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 6908, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.010725, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["nutrient", "id"], ["food", "description"]], "rhs_tokens": ["min"]},
+  {"lhs": ["nutrient_id", "NDB_number"], "rhs": "min", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 6908, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.010725, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["nutrient", "id"], ["ndb", "number"]], "rhs_tokens": ["min"]},
+  {"lhs": ["fdc_id", "nutrient_nbr"], "rhs": "min", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 6908, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.010725, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["fdc", "id"], ["nutrient", "nbr"]], "rhs_tokens": ["min"]},
+  {"lhs": ["food_description", "nutrient_nbr"], "rhs": "min", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 6908, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.010725, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["food", "description"], ["nutrient", "nbr"]], "rhs_tokens": ["min"]},
+  {"lhs": ["NDB_number", "nutrient_nbr"], "rhs": "min", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 6908, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.010725, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["ndb", "number"], ["nutrient", "nbr"]], "rhs_tokens": ["min"]},
+  {"lhs": ["fdc_id", "nutrient_id"], "rhs": "max", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 7849, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.012186, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["fdc", "id"], ["nutrient", "id"]], "rhs_tokens": ["max"]},
+  {"lhs": ["nutrient_id", "food_description"], "rhs": "max", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 7849, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.012186, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["nutrient", "id"], ["food", "description"]], "rhs_tokens": ["max"]},
+  {"lhs": ["nutrient_id", "NDB_number"], "rhs": "max", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 7849, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.012186, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["nutrient", "id"], ["ndb", "number"]], "rhs_tokens": ["max"]},
+  {"lhs": ["fdc_id", "nutrient_nbr"], "rhs": "max", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 7849, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.012186, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["fdc", "id"], ["nutrient", "nbr"]], "rhs_tokens": ["max"]},
+  {"lhs": ["food_description", "nutrient_nbr"], "rhs": "max", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 7849, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.012186, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["food", "description"], ["nutrient", "nbr"]], "rhs_tokens": ["max"]},
+  {"lhs": ["NDB_number", "nutrient_nbr"], "rhs": "max", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 7849, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.012186, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["ndb", "number"], ["nutrient", "nbr"]], "rhs_tokens": ["max"]},
+  {"lhs": ["nutrient_name", "unit_name"], "rhs": "nutrient_nbr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 149, "distinct_rhs": 149, "lhs_distinct_ratio": 0.000231, "rhs_distinct_ratio": 0.000231, "redundancy": 643976, "redundancy_wl": 644125, "lhs_unique": false, "lhs_tokens": [["nutrient", "name"], ["unit", "name"]], "rhs_tokens": ["nutrient", "nbr"]},
+  {"lhs": ["fdc_id", "nutrient_id"], "rhs": "derivation_code", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 55, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 8.5e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["fdc", "id"], ["nutrient", "id"]], "rhs_tokens": ["derivation", "code"]},
+  {"lhs": ["nutrient_id", "food_description"], "rhs": "derivation_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 55, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 8.5e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["nutrient", "id"], ["food", "description"]], "rhs_tokens": ["derivation", "code"]},
+  {"lhs": ["nutrient_id", "NDB_number"], "rhs": "derivation_code", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 55, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 8.5e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["nutrient", "id"], ["ndb", "number"]], "rhs_tokens": ["derivation", "code"]},
+  {"lhs": ["fdc_id", "nutrient_nbr"], "rhs": "derivation_code", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 55, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 8.5e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["fdc", "id"], ["nutrient", "nbr"]], "rhs_tokens": ["derivation", "code"]},
+  {"lhs": ["food_description", "nutrient_nbr"], "rhs": "derivation_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 55, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 8.5e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["food", "description"], ["nutrient", "nbr"]], "rhs_tokens": ["derivation", "code"]},
+  {"lhs": ["NDB_number", "nutrient_nbr"], "rhs": "derivation_code", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 55, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 8.5e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["ndb", "number"], ["nutrient", "nbr"]], "rhs_tokens": ["derivation", "code"]},
+  {"lhs": ["fdc_id", "nutrient_id"], "rhs": "derivation_description", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 55, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 8.5e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["fdc", "id"], ["nutrient", "id"]], "rhs_tokens": ["derivation", "description"]},
+  {"lhs": ["nutrient_id", "food_description"], "rhs": "derivation_description", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 55, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 8.5e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["nutrient", "id"], ["food", "description"]], "rhs_tokens": ["derivation", "description"]},
+  {"lhs": ["nutrient_id", "NDB_number"], "rhs": "derivation_description", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 55, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 8.5e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["nutrient", "id"], ["ndb", "number"]], "rhs_tokens": ["derivation", "description"]},
+  {"lhs": ["fdc_id", "nutrient_nbr"], "rhs": "derivation_description", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 55, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 8.5e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["fdc", "id"], ["nutrient", "nbr"]], "rhs_tokens": ["derivation", "description"]},
+  {"lhs": ["food_description", "nutrient_nbr"], "rhs": "derivation_description", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 55, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 8.5e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["food", "description"], ["nutrient", "nbr"]], "rhs_tokens": ["derivation", "description"]},
+  {"lhs": ["NDB_number", "nutrient_nbr"], "rhs": "derivation_description", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 55, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 8.5e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["ndb", "number"], ["nutrient", "nbr"]], "rhs_tokens": ["derivation", "description"]},
+  {"lhs": ["fdc_id", "nutrient_id"], "rhs": "source_id", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 11, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.7e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["fdc", "id"], ["nutrient", "id"]], "rhs_tokens": ["source", "id"]},
+  {"lhs": ["nutrient_id", "food_description"], "rhs": "source_id", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 11, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.7e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["nutrient", "id"], ["food", "description"]], "rhs_tokens": ["source", "id"]},
+  {"lhs": ["nutrient_id", "NDB_number"], "rhs": "source_id", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 11, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.7e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["nutrient", "id"], ["ndb", "number"]], "rhs_tokens": ["source", "id"]},
+  {"lhs": ["fdc_id", "nutrient_nbr"], "rhs": "source_id", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 11, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.7e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["fdc", "id"], ["nutrient", "nbr"]], "rhs_tokens": ["source", "id"]},
+  {"lhs": ["food_description", "nutrient_nbr"], "rhs": "source_id", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 11, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.7e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["food", "description"], ["nutrient", "nbr"]], "rhs_tokens": ["source", "id"]},
+  {"lhs": ["NDB_number", "nutrient_nbr"], "rhs": "source_id", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 11, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.7e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["ndb", "number"], ["nutrient", "nbr"]], "rhs_tokens": ["source", "id"]},
+  {"lhs": ["fdc_id", "nutrient_id"], "rhs": "source_code", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 11, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.7e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["fdc", "id"], ["nutrient", "id"]], "rhs_tokens": ["source", "code"]},
+  {"lhs": ["nutrient_id", "food_description"], "rhs": "source_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 11, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.7e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["nutrient", "id"], ["food", "description"]], "rhs_tokens": ["source", "code"]},
+  {"lhs": ["nutrient_id", "NDB_number"], "rhs": "source_code", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 11, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.7e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["nutrient", "id"], ["ndb", "number"]], "rhs_tokens": ["source", "code"]},
+  {"lhs": ["fdc_id", "nutrient_nbr"], "rhs": "source_code", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 11, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.7e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["fdc", "id"], ["nutrient", "nbr"]], "rhs_tokens": ["source", "code"]},
+  {"lhs": ["food_description", "nutrient_nbr"], "rhs": "source_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 11, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.7e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["food", "description"], ["nutrient", "nbr"]], "rhs_tokens": ["source", "code"]},
+  {"lhs": ["NDB_number", "nutrient_nbr"], "rhs": "source_code", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 11, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.7e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["ndb", "number"], ["nutrient", "nbr"]], "rhs_tokens": ["source", "code"]},
+  {"lhs": ["fdc_id", "nutrient_id"], "rhs": "source_description", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 11, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.7e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["fdc", "id"], ["nutrient", "id"]], "rhs_tokens": ["source", "description"]},
+  {"lhs": ["nutrient_id", "food_description"], "rhs": "source_description", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 11, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.7e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["nutrient", "id"], ["food", "description"]], "rhs_tokens": ["source", "description"]},
+  {"lhs": ["nutrient_id", "NDB_number"], "rhs": "source_description", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 11, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.7e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["nutrient", "id"], ["ndb", "number"]], "rhs_tokens": ["source", "description"]},
+  {"lhs": ["fdc_id", "nutrient_nbr"], "rhs": "source_description", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 11, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.7e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["fdc", "id"], ["nutrient", "nbr"]], "rhs_tokens": ["source", "description"]},
+  {"lhs": ["food_description", "nutrient_nbr"], "rhs": "source_description", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 11, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.7e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["food", "description"], ["nutrient", "nbr"]], "rhs_tokens": ["source", "description"]},
+  {"lhs": ["NDB_number", "nutrient_nbr"], "rhs": "source_description", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 644125, "distinct_rhs": 11, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.7e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["ndb", "number"], ["nutrient", "nbr"]], "rhs_tokens": ["source", "description"]},
+  {"lhs": ["fdc_id", "nutrient_name", "unit_name"], "rhs": "food_nutrient_id", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 644125, "distinct_rhs": 644125, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["fdc", "id"], ["nutrient", "name"], ["unit", "name"]], "rhs_tokens": ["food", "nutrient", "id"]},
+  {"lhs": ["food_description", "nutrient_name", "unit_name"], "rhs": "food_nutrient_id", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 644125, "distinct_rhs": 644125, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["food", "description"], ["nutrient", "name"], ["unit", "name"]], "rhs_tokens": ["food", "nutrient", "id"]},
+  {"lhs": ["NDB_number", "nutrient_name", "unit_name"], "rhs": "food_nutrient_id", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 644125, "distinct_rhs": 644125, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["ndb", "number"], ["nutrient", "name"], ["unit", "name"]], "rhs_tokens": ["food", "nutrient", "id"]},
+  {"lhs": ["fdc_id", "nutrient_name", "unit_name"], "rhs": "amount", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 644125, "distinct_rhs": 19551, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.030353, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["fdc", "id"], ["nutrient", "name"], ["unit", "name"]], "rhs_tokens": ["amount"]},
+  {"lhs": ["food_description", "nutrient_name", "unit_name"], "rhs": "amount", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 644125, "distinct_rhs": 19551, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.030353, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["food", "description"], ["nutrient", "name"], ["unit", "name"]], "rhs_tokens": ["amount"]},
+  {"lhs": ["NDB_number", "nutrient_name", "unit_name"], "rhs": "amount", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 644125, "distinct_rhs": 19551, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.030353, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["ndb", "number"], ["nutrient", "name"], ["unit", "name"]], "rhs_tokens": ["amount"]},
+  {"lhs": ["fdc_id", "nutrient_name", "unit_name"], "rhs": "data_points", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 644125, "distinct_rhs": 394, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.000612, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["fdc", "id"], ["nutrient", "name"], ["unit", "name"]], "rhs_tokens": ["data", "points"]},
+  {"lhs": ["food_description", "nutrient_name", "unit_name"], "rhs": "data_points", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 644125, "distinct_rhs": 394, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.000612, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["food", "description"], ["nutrient", "name"], ["unit", "name"]], "rhs_tokens": ["data", "points"]},
+  {"lhs": ["NDB_number", "nutrient_name", "unit_name"], "rhs": "data_points", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 644125, "distinct_rhs": 394, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.000612, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["ndb", "number"], ["nutrient", "name"], ["unit", "name"]], "rhs_tokens": ["data", "points"]},
+  {"lhs": ["fdc_id", "nutrient_name", "unit_name"], "rhs": "derivation_id", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 644125, "distinct_rhs": 55, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 8.5e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["fdc", "id"], ["nutrient", "name"], ["unit", "name"]], "rhs_tokens": ["derivation", "id"]},
+  {"lhs": ["food_description", "nutrient_name", "unit_name"], "rhs": "derivation_id", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 644125, "distinct_rhs": 55, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 8.5e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["food", "description"], ["nutrient", "name"], ["unit", "name"]], "rhs_tokens": ["derivation", "id"]},
+  {"lhs": ["NDB_number", "nutrient_name", "unit_name"], "rhs": "derivation_id", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 644125, "distinct_rhs": 55, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 8.5e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["ndb", "number"], ["nutrient", "name"], ["unit", "name"]], "rhs_tokens": ["derivation", "id"]},
+  {"lhs": ["fdc_id", "amount", "nutrient_name"], "rhs": "min", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 644090, "distinct_rhs": 6908, "lhs_distinct_ratio": 0.999946, "rhs_distinct_ratio": 0.010725, "redundancy": 35, "redundancy_wl": 70, "lhs_unique": false, "lhs_tokens": [["fdc", "id"], ["amount"], ["nutrient", "name"]], "rhs_tokens": ["min"]},
+  {"lhs": ["fdc_id", "max", "nutrient_name"], "rhs": "min", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 636354, "distinct_rhs": 6908, "lhs_distinct_ratio": 0.987936, "rhs_distinct_ratio": 0.010725, "redundancy": 7771, "redundancy_wl": 15542, "lhs_unique": false, "lhs_tokens": [["fdc", "id"], ["max"], ["nutrient", "name"]], "rhs_tokens": ["min"]},
+  {"lhs": ["amount", "food_description", "nutrient_name"], "rhs": "min", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 644090, "distinct_rhs": 6908, "lhs_distinct_ratio": 0.999946, "rhs_distinct_ratio": 0.010725, "redundancy": 35, "redundancy_wl": 70, "lhs_unique": false, "lhs_tokens": [["amount"], ["food", "description"], ["nutrient", "name"]], "rhs_tokens": ["min"]},
+  {"lhs": ["max", "food_description", "nutrient_name"], "rhs": "min", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 636354, "distinct_rhs": 6908, "lhs_distinct_ratio": 0.987936, "rhs_distinct_ratio": 0.010725, "redundancy": 7771, "redundancy_wl": 15542, "lhs_unique": false, "lhs_tokens": [["max"], ["food", "description"], ["nutrient", "name"]], "rhs_tokens": ["min"]},
+  {"lhs": ["amount", "NDB_number", "nutrient_name"], "rhs": "min", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 644090, "distinct_rhs": 6908, "lhs_distinct_ratio": 0.999946, "rhs_distinct_ratio": 0.010725, "redundancy": 35, "redundancy_wl": 70, "lhs_unique": false, "lhs_tokens": [["amount"], ["ndb", "number"], ["nutrient", "name"]], "rhs_tokens": ["min"]},
+  {"lhs": ["max", "NDB_number", "nutrient_name"], "rhs": "min", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 636354, "distinct_rhs": 6908, "lhs_distinct_ratio": 0.987936, "rhs_distinct_ratio": 0.010725, "redundancy": 7771, "redundancy_wl": 15542, "lhs_unique": false, "lhs_tokens": [["max"], ["ndb", "number"], ["nutrient", "name"]], "rhs_tokens": ["min"]},
+  {"lhs": ["fdc_id", "nutrient_name", "unit_name"], "rhs": "min", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 644125, "distinct_rhs": 6908, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.010725, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["fdc", "id"], ["nutrient", "name"], ["unit", "name"]], "rhs_tokens": ["min"]},
+  {"lhs": ["food_description", "nutrient_name", "unit_name"], "rhs": "min", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 644125, "distinct_rhs": 6908, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.010725, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["food", "description"], ["nutrient", "name"], ["unit", "name"]], "rhs_tokens": ["min"]},
+  {"lhs": ["NDB_number", "nutrient_name", "unit_name"], "rhs": "min", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 644125, "distinct_rhs": 6908, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.010725, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["ndb", "number"], ["nutrient", "name"], ["unit", "name"]], "rhs_tokens": ["min"]},
+  {"lhs": ["fdc_id", "amount", "nutrient_name"], "rhs": "max", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 644090, "distinct_rhs": 7849, "lhs_distinct_ratio": 0.999946, "rhs_distinct_ratio": 0.012186, "redundancy": 35, "redundancy_wl": 70, "lhs_unique": false, "lhs_tokens": [["fdc", "id"], ["amount"], ["nutrient", "name"]], "rhs_tokens": ["max"]},
+  {"lhs": ["fdc_id", "min", "nutrient_name"], "rhs": "max", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 636354, "distinct_rhs": 7849, "lhs_distinct_ratio": 0.987936, "rhs_distinct_ratio": 0.012186, "redundancy": 7771, "redundancy_wl": 15542, "lhs_unique": false, "lhs_tokens": [["fdc", "id"], ["min"], ["nutrient", "name"]], "rhs_tokens": ["max"]},
+  {"lhs": ["amount", "food_description", "nutrient_name"], "rhs": "max", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 644090, "distinct_rhs": 7849, "lhs_distinct_ratio": 0.999946, "rhs_distinct_ratio": 0.012186, "redundancy": 35, "redundancy_wl": 70, "lhs_unique": false, "lhs_tokens": [["amount"], ["food", "description"], ["nutrient", "name"]], "rhs_tokens": ["max"]},
+  {"lhs": ["min", "food_description", "nutrient_name"], "rhs": "max", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 636354, "distinct_rhs": 7849, "lhs_distinct_ratio": 0.987936, "rhs_distinct_ratio": 0.012186, "redundancy": 7771, "redundancy_wl": 15542, "lhs_unique": false, "lhs_tokens": [["min"], ["food", "description"], ["nutrient", "name"]], "rhs_tokens": ["max"]},
+  {"lhs": ["amount", "NDB_number", "nutrient_name"], "rhs": "max", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 644090, "distinct_rhs": 7849, "lhs_distinct_ratio": 0.999946, "rhs_distinct_ratio": 0.012186, "redundancy": 35, "redundancy_wl": 70, "lhs_unique": false, "lhs_tokens": [["amount"], ["ndb", "number"], ["nutrient", "name"]], "rhs_tokens": ["max"]},
+  {"lhs": ["min", "NDB_number", "nutrient_name"], "rhs": "max", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 636354, "distinct_rhs": 7849, "lhs_distinct_ratio": 0.987936, "rhs_distinct_ratio": 0.012186, "redundancy": 7771, "redundancy_wl": 15542, "lhs_unique": false, "lhs_tokens": [["min"], ["ndb", "number"], ["nutrient", "name"]], "rhs_tokens": ["max"]},
+  {"lhs": ["fdc_id", "nutrient_name", "unit_name"], "rhs": "max", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 644125, "distinct_rhs": 7849, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.012186, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["fdc", "id"], ["nutrient", "name"], ["unit", "name"]], "rhs_tokens": ["max"]},
+  {"lhs": ["food_description", "nutrient_name", "unit_name"], "rhs": "max", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 644125, "distinct_rhs": 7849, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.012186, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["food", "description"], ["nutrient", "name"], ["unit", "name"]], "rhs_tokens": ["max"]},
+  {"lhs": ["NDB_number", "nutrient_name", "unit_name"], "rhs": "max", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 644125, "distinct_rhs": 7849, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.012186, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["ndb", "number"], ["nutrient", "name"], ["unit", "name"]], "rhs_tokens": ["max"]},
+  {"lhs": ["fdc_id", "nutrient_name", "unit_name"], "rhs": "derivation_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 644125, "distinct_rhs": 55, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 8.5e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["fdc", "id"], ["nutrient", "name"], ["unit", "name"]], "rhs_tokens": ["derivation", "code"]},
+  {"lhs": ["food_description", "nutrient_name", "unit_name"], "rhs": "derivation_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 644125, "distinct_rhs": 55, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 8.5e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["food", "description"], ["nutrient", "name"], ["unit", "name"]], "rhs_tokens": ["derivation", "code"]},
+  {"lhs": ["NDB_number", "nutrient_name", "unit_name"], "rhs": "derivation_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 644125, "distinct_rhs": 55, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 8.5e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["ndb", "number"], ["nutrient", "name"], ["unit", "name"]], "rhs_tokens": ["derivation", "code"]},
+  {"lhs": ["fdc_id", "nutrient_name", "unit_name"], "rhs": "derivation_description", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 644125, "distinct_rhs": 55, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 8.5e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["fdc", "id"], ["nutrient", "name"], ["unit", "name"]], "rhs_tokens": ["derivation", "description"]},
+  {"lhs": ["food_description", "nutrient_name", "unit_name"], "rhs": "derivation_description", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 644125, "distinct_rhs": 55, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 8.5e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["food", "description"], ["nutrient", "name"], ["unit", "name"]], "rhs_tokens": ["derivation", "description"]},
+  {"lhs": ["NDB_number", "nutrient_name", "unit_name"], "rhs": "derivation_description", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 644125, "distinct_rhs": 55, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 8.5e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["ndb", "number"], ["nutrient", "name"], ["unit", "name"]], "rhs_tokens": ["derivation", "description"]},
+  {"lhs": ["fdc_id", "nutrient_name", "unit_name"], "rhs": "source_id", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 644125, "distinct_rhs": 11, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.7e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["fdc", "id"], ["nutrient", "name"], ["unit", "name"]], "rhs_tokens": ["source", "id"]},
+  {"lhs": ["food_description", "nutrient_name", "unit_name"], "rhs": "source_id", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 644125, "distinct_rhs": 11, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.7e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["food", "description"], ["nutrient", "name"], ["unit", "name"]], "rhs_tokens": ["source", "id"]},
+  {"lhs": ["NDB_number", "nutrient_name", "unit_name"], "rhs": "source_id", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 644125, "distinct_rhs": 11, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.7e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["ndb", "number"], ["nutrient", "name"], ["unit", "name"]], "rhs_tokens": ["source", "id"]},
+  {"lhs": ["fdc_id", "nutrient_name", "unit_name"], "rhs": "source_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 644125, "distinct_rhs": 11, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.7e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["fdc", "id"], ["nutrient", "name"], ["unit", "name"]], "rhs_tokens": ["source", "code"]},
+  {"lhs": ["food_description", "nutrient_name", "unit_name"], "rhs": "source_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 644125, "distinct_rhs": 11, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.7e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["food", "description"], ["nutrient", "name"], ["unit", "name"]], "rhs_tokens": ["source", "code"]},
+  {"lhs": ["NDB_number", "nutrient_name", "unit_name"], "rhs": "source_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 644125, "distinct_rhs": 11, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.7e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["ndb", "number"], ["nutrient", "name"], ["unit", "name"]], "rhs_tokens": ["source", "code"]},
+  {"lhs": ["fdc_id", "nutrient_name", "unit_name"], "rhs": "source_description", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 644125, "distinct_rhs": 11, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.7e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["fdc", "id"], ["nutrient", "name"], ["unit", "name"]], "rhs_tokens": ["source", "description"]},
+  {"lhs": ["food_description", "nutrient_name", "unit_name"], "rhs": "source_description", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 644125, "distinct_rhs": 11, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.7e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["food", "description"], ["nutrient", "name"], ["unit", "name"]], "rhs_tokens": ["source", "description"]},
+  {"lhs": ["NDB_number", "nutrient_name", "unit_name"], "rhs": "source_description", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 644125, "distinct_rhs": 11, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.7e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["ndb", "number"], ["nutrient", "name"], ["unit", "name"]], "rhs_tokens": ["source", "description"]}
+ ]
+}

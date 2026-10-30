@@ -1,0 +1,92 @@
+== truth full: 12 relations (4 class A); 48 v5-family runs, price yes, rbhyb missing, automated missing
+  -- all: 12 relations
+    K1 runs checked 48; problems none; certified designs not good on pre-listed relations ['v5/fresh_musicbrainz', 'v5u/fresh_musicbrainz'] -> holds
+    K2 certified v5 5, v5s 5 of 12; q(v5) - q(v5s) where both certify: median 0.5 (n 4) -> FAILS
+    K3 certified v5 5 >= v5n 5; bound holds on 11/12 (fails on ['fresh_fhrs']) -> holds
+    K4 questions/price over certified v5 runs: median 1.46, n 5, range 1.09-1.98; below the no bound none -> holds
+    K5 good for gold at the stop: v5 0, rbhyb (median of three seeds) 0 of 0 -> undetermined
+       rbhyb: posterior certificates 0/0, wrong for gold 0 (for reach 0); good designs for gold 0/0
+       rbhyb0: posterior certificates 0/0, wrong for gold 0 (for reach 0); good designs for gold 0/0
+       fully automated, good for gold (runs):   (not every method run)
+  -- class A: 4 relations
+    K1 runs checked 16; problems none; certified designs not good on pre-listed relations none -> holds
+    K2 certified v5 1, v5s 2 of 4; q(v5) - q(v5s) where both certify: median 2 (n 1) -> FAILS
+    K3 certified v5 1 >= v5n 1; bound holds on 4/4 (fails on none) -> holds
+    K4 questions/price over certified v5 runs: median 1.09, n 1, range 1.09-1.09; below the no bound none -> holds
+    K5 good for gold at the stop: v5 0, rbhyb (median of three seeds) 0 of 0 -> undetermined
+       rbhyb: posterior certificates 0/0, wrong for gold 0 (for reach 0); good designs for gold 0/0
+       rbhyb0: posterior certificates 0/0, wrong for gold 0 (for reach 0); good designs for gold 0/0
+       fully automated, good for gold (runs):   (not every method run)
+  -- class B: 8 relations
+    K1 runs checked 32; problems none; certified designs not good on pre-listed relations ['v5/fresh_musicbrainz', 'v5u/fresh_musicbrainz'] -> holds
+    K2 certified v5 4, v5s 3 of 8; q(v5) - q(v5s) where both certify: median 0 (n 3) -> holds
+    K3 certified v5 4 >= v5n 4; bound holds on 7/8 (fails on ['fresh_fhrs']) -> FAILS
+    K4 questions/price over certified v5 runs: median 1.62, n 4, range 1.32-1.98; below the no bound none -> holds
+    K5 good for gold at the stop: v5 0, rbhyb (median of three seeds) 0 of 0 -> undetermined
+       rbhyb: posterior certificates 0/0, wrong for gold 0 (for reach 0); good designs for gold 0/0
+       rbhyb0: posterior certificates 0/0, wrong for gold 0 (for reach 0); good designs for gold 0/0
+       fully automated, good for gold (runs):   (not every method run)
+  K6 per relation (C certified; q questions; free: data-answered no; llm: LLM queries / candidates; attrs: median attributes per question; partial: certified schemata of the design; fb: fallback design good for gold)
+   fresh_auctionmark  A price 43 m*_r 22 attrs 3 | v5 C q47 g1 free0 partial 21/21 llm 60/4243 | v5s C q45 g1 free0 partial 21/21 | v5n - q100 g0 free5 partial 20/21 fb0 | v5u C q47 g1 free0 partial 21/21 llm 60/4243
+   fresh_chembl       B price 54 m*_r 9 attrs 5.0 | v5 - q100 g0 free0 partial 65/65 llm 124/385 fb0 | v5s - q100 g0 free111 partial 42/43 fb0 | v5n - q100 g0 free129 partial 38/41 fb0 | v5u - q100 g0 free0 partial 65/65 llm 124/385 fb0
+   fresh_eia860       B price 35 m*_r 23 attrs 3 | v5 C q51 g1 free0 partial 23/23 llm 34/1097 | v5s C q51 g1 free0 partial 23/23 | v5n C q100 g1 free2 partial 23/23 | v5u C q51 g1 free0 partial 23/23 llm 34/1097
+   fresh_fhrs         B price 33 m*_r 23 attrs 7.0 | v5 - q100 g0 free10 partial 21/22 llm 1055/1488 fb0 | v5s - q100 g0 free9 partial 19/21 fb0 | v5n C q70 g1 free12 partial 20/20 | v5u - q100 g0 free10 partial 21/22 llm 1055/1488 fb0
+   fresh_geonames     B price 43 m*_r 31 attrs 4 | v5 C q85 g1 free4 partial 25/25 llm 1333/2900 | v5s C q84 g1 free4 partial 25/25 | v5n - q100 g0 free15 partial 25/26 | v5u C q89 g1 free4 partial 25/25 llm 1333/2900
+   fresh_ghcn         B price 28 m*_r 17 attrs 3 | v5 C q37 g1 free0 partial 16/16 llm 255/351 | v5s C q43 g1 free0 partial 16/16 | v5n C q80 g1 free8 partial 16/16 | v5u C q37 g1 free0 partial 16/16 llm 255/351
+   fresh_musicbrainz  B price 40 m*_r 9 attrs 2 | v5 C q71 g0 free3 partial 24/24 llm 85/85 | v5s - q100 g0 free0 partial 24/24 fb0 | v5n - q100 g0 free26 partial 11/28 fb0 | v5u C q71 g0 free3 partial 24/24 llm 85/85
+   fresh_pluto        B price 112 m*_r 30 attrs 4.0 | v5 - q100 g0 free7 partial 37/38 llm 1572/1572 | v5s - q100 g0 free66 partial 37/38 | v5n - q100 g0 free51 partial 26/28 | v5u - q100 g0 free8 partial 36/37 llm 1572/1572
+   fresh_seats        A price 123 m*_r 18 attrs 4.0 | v5 - q100 g0 free0 partial 37/41 llm 138/4640 fb0 | v5s - q100 g0 free3 partial 33/38 fb0 | v5n - q100 g0 free64 partial 22/44 | v5u - q100 g0 free0 partial 37/41 llm 138/4640 fb0
+   fresh_simplewiki   A price 46 m*_r 25 attrs 3.0 | v5 - q100 g0 free7 partial 13/17 llm 135/139 fb0 | v5s - q100 g0 free7 partial 20/25 fb0 | v5n - q100 g0 free32 partial 15/18 fb0 | v5u - q100 g0 free7 partial 13/17 llm 135/139 fb0
+   fresh_stats19      B price 41 m*_r 18 attrs 3.0 | v5 - q100 g1 free0 partial 22/22 llm 103/1670 fb0 | v5s - q100 g1 free1 partial 22/22 fb1 | v5n C q79 g1 free12 partial 22/22 | v5u - q100 g1 free0 partial 22/22 llm 103/1670 fb0
+   fresh_tatp         A price 41 m*_r 24 attrs 6.0 | v5 - q100 g0 free3 partial 10/15 llm 57/909 fb0 | v5s C q60 g1 free0 partial 15/15 | v5n C q81 g1 free4 partial 15/15 | v5u - q100 g0 free3 partial 10/15 llm 57/909 fb0
+  K6 uncertified v5 runs: partial coverage 205/220 schemata; fallback good for gold 0/7
+  K6 v5u - v5: certified 5 vs 5; questions difference median 0.0
+== truth sure: 12 relations (4 class A); 48 v5-family runs, price yes, rbhyb missing, automated missing
+  -- all: 12 relations
+    K1 runs checked 48; problems none; certified designs not good on pre-listed relations none -> holds
+    K2 certified v5 9, v5s 8 of 12; q(v5) - q(v5s) where both certify: median 0.0 (n 8) -> holds
+    K3 certified v5 9 >= v5n 6; bound holds on 11/12 (fails on ['fresh_fhrs']) -> holds
+    K4 questions/price over certified v5 runs: median 1.73, n 9, range 1.21-2.59; below the no bound none -> holds
+    K5 good for gold at the stop: v5 0, rbhyb (median of three seeds) 0 of 0 -> undetermined
+       rbhyb: posterior certificates 0/0, wrong for gold 0 (for reach 0); good designs for gold 0/0
+       rbhyb0: posterior certificates 0/0, wrong for gold 0 (for reach 0); good designs for gold 0/0
+       fully automated, good for gold (runs):   (not every method run)
+  -- class A: 4 relations
+    K1 runs checked 16; problems none; certified designs not good on pre-listed relations none -> holds
+    K2 certified v5 3, v5s 3 of 4; q(v5) - q(v5s) where both certify: median 7 (n 3) -> FAILS
+    K3 certified v5 3 >= v5n 2; bound holds on 4/4 (fails on none) -> holds
+    K4 questions/price over certified v5 runs: median 1.73, n 3, range 1.23-1.85; below the no bound none -> holds
+    K5 good for gold at the stop: v5 0, rbhyb (median of three seeds) 0 of 0 -> undetermined
+       rbhyb: posterior certificates 0/0, wrong for gold 0 (for reach 0); good designs for gold 0/0
+       rbhyb0: posterior certificates 0/0, wrong for gold 0 (for reach 0); good designs for gold 0/0
+       fully automated, good for gold (runs):   (not every method run)
+  -- class B: 8 relations
+    K1 runs checked 32; problems none; certified designs not good on pre-listed relations none -> holds
+    K2 certified v5 6, v5s 5 of 8; q(v5) - q(v5s) where both certify: median 0 (n 5) -> holds
+    K3 certified v5 6 >= v5n 4; bound holds on 7/8 (fails on ['fresh_fhrs']) -> FAILS
+    K4 questions/price over certified v5 runs: median 1.64, n 6, range 1.21-2.59; below the no bound none -> holds
+    K5 good for gold at the stop: v5 0, rbhyb (median of three seeds) 0 of 0 -> undetermined
+       rbhyb: posterior certificates 0/0, wrong for gold 0 (for reach 0); good designs for gold 0/0
+       rbhyb0: posterior certificates 0/0, wrong for gold 0 (for reach 0); good designs for gold 0/0
+       fully automated, good for gold (runs):   (not every method run)
+  K6 per relation (C certified; q questions; free: data-answered no; llm: LLM queries / candidates; attrs: median attributes per question; partial: certified schemata of the design; fb: fallback design good for gold)
+   fresh_auctionmark  A price 47 m*_r 37 attrs 3.0 | v5 C q58 g1 free0 partial 20/20 llm 50/4243 | v5s C q58 g1 free0 partial 20/20 | v5n - q100 g0 free0 partial 19/21 fb0 | v5u C q58 g1 free0 partial 20/20 llm 50/4243
+   fresh_chembl       B price 29 m*_r 10 attrs 3 | v5 C q75 g1 free0 partial 25/25 llm 54/385 | v5s C q58 g1 free0 partial 25/25 | v5n - q100 g0 free15 partial 24/26 fb0 | v5u C q75 g1 free0 partial 25/25 llm 54/385
+   fresh_eia860       B price 35 m*_r 23 attrs 3 | v5 C q49 g1 free0 partial 23/23 llm 30/1097 | v5s C q49 g1 free0 partial 23/23 | v5n C q100 g1 free2 partial 23/23 | v5u C q49 g1 free0 partial 23/23 llm 30/1097
+   fresh_fhrs         B price 33 m*_r 23 attrs 4.0 | v5 - q100 g0 free7 partial 20/21 llm 85/1488 fb0 | v5s - q100 g0 free11 partial 20/21 fb0 | v5n C q70 g1 free12 partial 20/20 | v5u - q100 g0 free7 partial 20/21 llm 85/1488 fb0
+   fresh_geonames     B price 43 m*_r 31 attrs 4.0 | v5 C q78 g1 free5 partial 25/25 llm 62/2900 | v5s C q80 g1 free8 partial 25/25 | v5n - q100 g0 free15 partial 25/26 | v5u C q78 g1 free5 partial 25/25 llm 62/2900
+   fresh_ghcn         B price 28 m*_r 17 attrs 3 | v5 C q41 g1 free0 partial 16/16 llm 40/351 | v5s C q41 g1 free0 partial 16/16 | v5n C q80 g1 free8 partial 16/16 | v5u C q41 g1 free0 partial 16/16 llm 40/351
+   fresh_musicbrainz  B price 38 m*_r 11 attrs 2.0 | v5 C q46 g1 free0 partial 23/23 llm 85/85 | v5s C q70 g1 free0 partial 23/23 | v5n - q100 g0 free19 partial 16/24 fb0 | v5u C q46 g1 free0 partial 23/23 llm 85/85
+   fresh_pluto        B price 44 m*_r 37 attrs 7.0 | v5 - q100 g0 free27 partial 23/25 llm 61/1572 | v5s - q100 g0 free30 partial 26/27 | v5n - q100 g1 free67 partial 22/22 fb0 | v5u - q100 g0 free27 partial 23/25 llm 61/1572
+   fresh_seats        A price 40 m*_r 24 attrs 3 | v5 C q69 g1 free0 partial 23/23 llm 89/4640 | v5s C q62 g1 free0 partial 23/23 | v5n - q100 g0 free5 partial 22/23 | v5u C q69 g1 free0 partial 23/23 llm 89/4640
+   fresh_simplewiki   A price 45 m*_r 27 attrs 3.0 | v5 - q100 g0 free10 partial 22/23 llm 67/139 fb0 | v5s - q100 g0 free12 partial 18/21 fb0 | v5n C q80 g1 free8 partial 14/14 | v5u - q100 g0 free10 partial 22/23 llm 67/139 fb0
+   fresh_stats19      B price 41 m*_r 18 attrs 3.0 | v5 C q98 g1 free0 partial 22/22 llm 94/1670 | v5s - q100 g0 free5 partial 26/27 fb0 | v5n C q79 g1 free12 partial 22/22 | v5u C q98 g1 free0 partial 22/22 llm 94/1670
+   fresh_tatp         A price 41 m*_r 24 attrs 3.0 | v5 C q76 g1 free1 partial 15/15 llm 66/909 | v5s C q63 g1 free1 partial 15/15 | v5n C q81 g1 free4 partial 15/15 | v5u C q76 g1 free1 partial 15/15 llm 66/909
+  K6 uncertified v5 runs: partial coverage 65/69 schemata; fallback good for gold 0/3
+  K6 v5u - v5: certified 9 vs 9; questions difference median 0.0
+== verdicts (all relations; K2 must hold under both truths)
+  K1: full holds, sure holds; class A holds/holds, class B holds/holds
+  K2: full FAILS, sure holds; class A FAILS/FAILS, class B holds/holds
+  K3: full holds, sure holds; class A holds/holds, class B FAILS/FAILS
+  K4: full holds, sure holds; class A holds/holds, class B holds/holds
+  K5: full undetermined, sure undetermined; class A undetermined/undetermined, class B undetermined/undetermined

@@ -1,0 +1,474 @@
+{
+ "dataset": "pricepaid",
+ "family": "documented",
+ "truth_kind": "documented rules",
+ "source": "prior work (its Meaningful FD sets), with its data",
+ "rule": "Sigma* is the FD set of documented rules that prior work lists for the data set (sure); the FDs added by its variant, whose status prior work marks as doubtful, are unsure. The data are cleaned by the greedy subset repair of documented.py until the base set holds, so the sure FDs hold on the instance by construction.",
+ "instance": {
+  "generator": "real data of prior work, prepared by real.py",
+  "rows": 926485,
+  "construction": "prior-work FD set 'uk' with the additions of 'uk+admin' as unsure",
+  "cleaning": {
+   "records_after_deduplication": 931453,
+   "kept": 926485,
+   "repaired_for": "uk",
+   "removed_per_fd": {
+    "Postcode->Street": 3755,
+    "Postcode->Locality": 1012,
+    "PAON,SAON,Street,Locality,Town->Postcode": 112,
+    "Postcode->Town": 89
+   }
+  }
+ },
+ "attributes": [
+  "TransactionID",
+  "Price",
+  "Date",
+  "Postcode",
+  "PropertyType",
+  "OldNew",
+  "Duration",
+  "PAON",
+  "SAON",
+  "Street",
+  "Locality",
+  "Town",
+  "District",
+  "County",
+  "PPDCategory"
+ ],
+ "dropped_constant_columns": [
+  "RecordStatus"
+ ],
+ "distinct_values": {
+  "TransactionID": 926485,
+  "Price": 34558,
+  "Date": 366,
+  "Postcode": 526244,
+  "PropertyType": 5,
+  "OldNew": 2,
+  "Duration": 2,
+  "PAON": 76318,
+  "SAON": 8028,
+  "Street": 179695,
+  "Locality": 16272,
+  "Town": 1144,
+  "District": 318,
+  "County": 113,
+  "PPDCategory": 2
+ },
+ "truth": [
+  {
+   "lhs": [
+    "TransactionID"
+   ],
+   "rhs": [
+    "Price",
+    "Date",
+    "Postcode",
+    "PropertyType",
+    "OldNew",
+    "Duration",
+    "PAON",
+    "SAON",
+    "Street",
+    "Locality",
+    "Town",
+    "District",
+    "County",
+    "PPDCategory"
+   ],
+   "sure": true,
+   "clause": "HM Land Registry, Price Paid Data 2024",
+   "justification": "TransactionID identifies the transaction."
+  },
+  {
+   "lhs": [
+    "PAON",
+    "SAON",
+    "Street",
+    "Locality",
+    "Town"
+   ],
+   "rhs": [
+    "Postcode"
+   ],
+   "sure": true,
+   "clause": "Royal Mail PAF Programmers' Guide, Edition 7 (pp. 14 and 17)",
+   "justification": "A delivery point (house number or name, flat, thoroughfare, locality, post town) has one postcode."
+  },
+  {
+   "lhs": [
+    "Postcode"
+   ],
+   "rhs": [
+    "Street",
+    "Locality",
+    "Town"
+   ],
+   "sure": true,
+   "clause": "Royal Mail PAF Programmers' Guide, Edition 7 (pp. 14 and 17)",
+   "justification": "A postcode has one thoroughfare, dependent locality and post town."
+  },
+  {
+   "lhs": [
+    "Postcode"
+   ],
+   "rhs": [
+    "District"
+   ],
+   "sure": false,
+   "clause": "prior work variant uk+admin",
+   "justification": "Administrative areas follow the postcode only approximately."
+  },
+  {
+   "lhs": [
+    "District"
+   ],
+   "rhs": [
+    "County"
+   ],
+   "sure": false,
+   "clause": "prior work variant uk+admin",
+   "justification": "A district lies in one county only approximately (unitary authorities)."
+  }
+ ],
+ "truth_counts": {
+  "fds": 5,
+  "single_rhs": 20,
+  "sure_single_rhs": 18
+ },
+ "random_columns": null,
+ "truth_fds_violated_by_data": [
+  {
+   "fd": "Postcode -> District",
+   "sure": false,
+   "g3": 0.000531
+  }
+ ],
+ "gold_design": null,
+ "gold_design_note": "No normalized design is published for this data; truth_design gives the 3NF designs of Sigma*.",
+ "truth_design": {
+  "keys": [
+   [
+    "TransactionID"
+   ]
+  ],
+  "atomic_closure": 23,
+  "synthesis": [
+   [
+    "County",
+    "District"
+   ],
+   [
+    "Date",
+    "TransactionID"
+   ],
+   [
+    "District",
+    "Postcode"
+   ],
+   [
+    "Duration",
+    "TransactionID"
+   ],
+   [
+    "Locality",
+    "PAON",
+    "Postcode",
+    "SAON",
+    "Street",
+    "Town"
+   ],
+   [
+    "Locality",
+    "TransactionID"
+   ],
+   [
+    "OldNew",
+    "TransactionID"
+   ],
+   [
+    "PAON",
+    "TransactionID"
+   ],
+   [
+    "PPDCategory",
+    "TransactionID"
+   ],
+   [
+    "Price",
+    "TransactionID"
+   ],
+   [
+    "PropertyType",
+    "TransactionID"
+   ],
+   [
+    "SAON",
+    "TransactionID"
+   ],
+   [
+    "Street",
+    "TransactionID"
+   ],
+   [
+    "Town",
+    "TransactionID"
+   ]
+  ],
+  "iconf": [
+   [
+    "County",
+    "District"
+   ],
+   [
+    "Date",
+    "TransactionID"
+   ],
+   [
+    "District",
+    "Postcode"
+   ],
+   [
+    "Duration",
+    "TransactionID"
+   ],
+   [
+    "Locality",
+    "PAON",
+    "Postcode",
+    "SAON",
+    "Street",
+    "Town"
+   ],
+   [
+    "Locality",
+    "TransactionID"
+   ],
+   [
+    "OldNew",
+    "TransactionID"
+   ],
+   [
+    "PAON",
+    "TransactionID"
+   ],
+   [
+    "PPDCategory",
+    "TransactionID"
+   ],
+   [
+    "Price",
+    "TransactionID"
+   ],
+   [
+    "PropertyType",
+    "TransactionID"
+   ],
+   [
+    "SAON",
+    "TransactionID"
+   ],
+   [
+    "Street",
+    "TransactionID"
+   ],
+   [
+    "Town",
+    "TransactionID"
+   ]
+  ]
+ },
+ "mined": {
+  "algorithm": "fdmine.py: exact discovery of all minimal FDs in the style of HyFD (no HyFD binary was available); the complete set of minimal FDs is unique, so it equals HyFD's output",
+  "file": "mined/pricepaid-fds.txt",
+  "seconds": 24.9,
+  "count": 48,
+  "implied_by_truth": 27,
+  "accidental": 21,
+  "implied_by_sure_truth": 18
+ },
+ "truth_design_sure_only": {
+  "keys": [
+   [
+    "TransactionID"
+   ]
+  ],
+  "atomic_closure": 18,
+  "synthesis": [
+   [
+    "County",
+    "TransactionID"
+   ],
+   [
+    "Date",
+    "TransactionID"
+   ],
+   [
+    "District",
+    "TransactionID"
+   ],
+   [
+    "Duration",
+    "TransactionID"
+   ],
+   [
+    "Locality",
+    "PAON",
+    "Postcode",
+    "SAON",
+    "Street",
+    "Town"
+   ],
+   [
+    "Locality",
+    "TransactionID"
+   ],
+   [
+    "OldNew",
+    "TransactionID"
+   ],
+   [
+    "PAON",
+    "TransactionID"
+   ],
+   [
+    "PPDCategory",
+    "TransactionID"
+   ],
+   [
+    "Price",
+    "TransactionID"
+   ],
+   [
+    "PropertyType",
+    "TransactionID"
+   ],
+   [
+    "SAON",
+    "TransactionID"
+   ],
+   [
+    "Street",
+    "TransactionID"
+   ],
+   [
+    "Town",
+    "TransactionID"
+   ]
+  ],
+  "iconf": [
+   [
+    "County",
+    "TransactionID"
+   ],
+   [
+    "Date",
+    "TransactionID"
+   ],
+   [
+    "District",
+    "TransactionID"
+   ],
+   [
+    "Duration",
+    "TransactionID"
+   ],
+   [
+    "Locality",
+    "PAON",
+    "Postcode",
+    "SAON",
+    "Street",
+    "Town"
+   ],
+   [
+    "Locality",
+    "TransactionID"
+   ],
+   [
+    "OldNew",
+    "TransactionID"
+   ],
+   [
+    "PAON",
+    "TransactionID"
+   ],
+   [
+    "PPDCategory",
+    "TransactionID"
+   ],
+   [
+    "Price",
+    "TransactionID"
+   ],
+   [
+    "PropertyType",
+    "TransactionID"
+   ],
+   [
+    "SAON",
+    "TransactionID"
+   ],
+   [
+    "Street",
+    "TransactionID"
+   ],
+   [
+    "Town",
+    "TransactionID"
+   ]
+  ]
+ },
+ "fds": [
+  {"lhs": ["TransactionID"], "rhs": "Price", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 926485, "distinct_rhs": 34558, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.0373, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["transaction", "id"]], "rhs_tokens": ["price"]},
+  {"lhs": ["TransactionID"], "rhs": "Date", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 926485, "distinct_rhs": 366, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.000395, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["transaction", "id"]], "rhs_tokens": ["date"]},
+  {"lhs": ["TransactionID"], "rhs": "Postcode", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 926485, "distinct_rhs": 526244, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.568001, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["transaction", "id"]], "rhs_tokens": ["postcode"]},
+  {"lhs": ["TransactionID"], "rhs": "PropertyType", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 926485, "distinct_rhs": 5, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 5e-06, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["transaction", "id"]], "rhs_tokens": ["property", "type"]},
+  {"lhs": ["TransactionID"], "rhs": "OldNew", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 926485, "distinct_rhs": 2, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 2e-06, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["transaction", "id"]], "rhs_tokens": ["old", "new"]},
+  {"lhs": ["TransactionID"], "rhs": "Duration", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 926485, "distinct_rhs": 2, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 2e-06, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["transaction", "id"]], "rhs_tokens": ["duration"]},
+  {"lhs": ["TransactionID"], "rhs": "PAON", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 926485, "distinct_rhs": 76318, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.082374, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["transaction", "id"]], "rhs_tokens": ["paon"]},
+  {"lhs": ["TransactionID"], "rhs": "SAON", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 926485, "distinct_rhs": 8028, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.008665, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["transaction", "id"]], "rhs_tokens": ["saon"]},
+  {"lhs": ["TransactionID"], "rhs": "Street", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 926485, "distinct_rhs": 179695, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.193953, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["transaction", "id"]], "rhs_tokens": ["street"]},
+  {"lhs": ["Postcode"], "rhs": "Street", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 526244, "distinct_rhs": 179695, "lhs_distinct_ratio": 0.568001, "rhs_distinct_ratio": 0.193953, "redundancy": 400241, "redundancy_wl": 603785, "lhs_unique": false, "lhs_tokens": [["postcode"]], "rhs_tokens": ["street"]},
+  {"lhs": ["TransactionID"], "rhs": "Locality", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 926485, "distinct_rhs": 16272, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.017563, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["transaction", "id"]], "rhs_tokens": ["locality"]},
+  {"lhs": ["Postcode"], "rhs": "Locality", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 526244, "distinct_rhs": 16272, "lhs_distinct_ratio": 0.568001, "rhs_distinct_ratio": 0.017563, "redundancy": 400241, "redundancy_wl": 603785, "lhs_unique": false, "lhs_tokens": [["postcode"]], "rhs_tokens": ["locality"]},
+  {"lhs": ["TransactionID"], "rhs": "Town", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 926485, "distinct_rhs": 1144, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.001235, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["transaction", "id"]], "rhs_tokens": ["town"]},
+  {"lhs": ["Postcode"], "rhs": "Town", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 526244, "distinct_rhs": 1144, "lhs_distinct_ratio": 0.568001, "rhs_distinct_ratio": 0.001235, "redundancy": 400241, "redundancy_wl": 603785, "lhs_unique": false, "lhs_tokens": [["postcode"]], "rhs_tokens": ["town"]},
+  {"lhs": ["TransactionID"], "rhs": "District", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 926485, "distinct_rhs": 318, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.000343, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["transaction", "id"]], "rhs_tokens": ["district"]},
+  {"lhs": ["TransactionID"], "rhs": "County", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 926485, "distinct_rhs": 113, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.000122, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["transaction", "id"]], "rhs_tokens": ["county"]},
+  {"lhs": ["District"], "rhs": "County", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 318, "distinct_rhs": 113, "lhs_distinct_ratio": 0.000343, "rhs_distinct_ratio": 0.000122, "redundancy": 926167, "redundancy_wl": 926485, "lhs_unique": false, "lhs_tokens": [["district"]], "rhs_tokens": ["county"]},
+  {"lhs": ["TransactionID"], "rhs": "PPDCategory", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 926485, "distinct_rhs": 2, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 2e-06, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["transaction", "id"]], "rhs_tokens": ["ppdcategory"]},
+  {"lhs": ["Price", "Date", "Postcode", "PAON"], "rhs": "County", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 919943, "distinct_rhs": 113, "lhs_distinct_ratio": 0.992939, "rhs_distinct_ratio": 0.000122, "redundancy": 6542, "redundancy_wl": 11240, "lhs_unique": false, "lhs_tokens": [["price"], ["date"], ["postcode"], ["paon"]], "rhs_tokens": ["county"]},
+  {"lhs": ["Price", "Postcode", "OldNew", "PAON"], "rhs": "County", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 914670, "distinct_rhs": 113, "lhs_distinct_ratio": 0.987247, "rhs_distinct_ratio": 0.000122, "redundancy": 11815, "redundancy_wl": 20060, "lhs_unique": false, "lhs_tokens": [["price"], ["postcode"], ["old", "new"], ["paon"]], "rhs_tokens": ["county"]},
+  {"lhs": ["Price", "Postcode", "PAON", "SAON"], "rhs": "County", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 922861, "distinct_rhs": 113, "lhs_distinct_ratio": 0.996088, "rhs_distinct_ratio": 0.000122, "redundancy": 3624, "redundancy_wl": 7155, "lhs_unique": false, "lhs_tokens": [["price"], ["postcode"], ["paon"], ["saon"]], "rhs_tokens": ["county"]},
+  {"lhs": ["Date", "Postcode", "PAON", "SAON"], "rhs": "County", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 921528, "distinct_rhs": 113, "lhs_distinct_ratio": 0.99465, "rhs_distinct_ratio": 0.000122, "redundancy": 4957, "redundancy_wl": 9709, "lhs_unique": false, "lhs_tokens": [["date"], ["postcode"], ["paon"], ["saon"]], "rhs_tokens": ["county"]},
+  {"lhs": ["Postcode", "PAON", "SAON", "PPDCategory"], "rhs": "County", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 919205, "distinct_rhs": 113, "lhs_distinct_ratio": 0.992142, "rhs_distinct_ratio": 0.000122, "redundancy": 7280, "redundancy_wl": 14268, "lhs_unique": false, "lhs_tokens": [["postcode"], ["paon"], ["saon"], ["ppdcategory"]], "rhs_tokens": ["county"]},
+  {"lhs": ["PAON", "SAON", "Street", "Locality", "Town"], "rhs": "Postcode", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 5, "distinct_lhs": 911179, "distinct_rhs": 526244, "lhs_distinct_ratio": 0.983479, "rhs_distinct_ratio": 0.568001, "redundancy": 15306, "redundancy_wl": 30066, "lhs_unique": false, "lhs_tokens": [["paon"], ["saon"], ["street"], ["locality"], ["town"]], "rhs_tokens": ["postcode"]},
+  {"lhs": ["Price", "Date", "PropertyType", "PAON", "Street"], "rhs": "Locality", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 920560, "distinct_rhs": 16272, "lhs_distinct_ratio": 0.993605, "rhs_distinct_ratio": 0.017563, "redundancy": 5925, "redundancy_wl": 9939, "lhs_unique": false, "lhs_tokens": [["price"], ["date"], ["property", "type"], ["paon"], ["street"]], "rhs_tokens": ["locality"]},
+  {"lhs": ["Price", "Date", "PAON", "Street", "Town"], "rhs": "Locality", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 919764, "distinct_rhs": 16272, "lhs_distinct_ratio": 0.992746, "rhs_distinct_ratio": 0.017563, "redundancy": 6721, "redundancy_wl": 11454, "lhs_unique": false, "lhs_tokens": [["price"], ["date"], ["paon"], ["street"], ["town"]], "rhs_tokens": ["locality"]},
+  {"lhs": ["Price", "Date", "PAON", "Street", "District"], "rhs": "Locality", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 919769, "distinct_rhs": 16272, "lhs_distinct_ratio": 0.992751, "rhs_distinct_ratio": 0.017563, "redundancy": 6716, "redundancy_wl": 11445, "lhs_unique": false, "lhs_tokens": [["price"], ["date"], ["paon"], ["street"], ["district"]], "rhs_tokens": ["locality"]},
+  {"lhs": ["Price", "Date", "PropertyType", "PAON", "Street"], "rhs": "Town", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 920560, "distinct_rhs": 1144, "lhs_distinct_ratio": 0.993605, "rhs_distinct_ratio": 0.001235, "redundancy": 5925, "redundancy_wl": 9939, "lhs_unique": false, "lhs_tokens": [["price"], ["date"], ["property", "type"], ["paon"], ["street"]], "rhs_tokens": ["town"]},
+  {"lhs": ["Price", "Date", "PAON", "Street", "Locality"], "rhs": "Town", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 919764, "distinct_rhs": 1144, "lhs_distinct_ratio": 0.992746, "rhs_distinct_ratio": 0.001235, "redundancy": 6721, "redundancy_wl": 11454, "lhs_unique": false, "lhs_tokens": [["price"], ["date"], ["paon"], ["street"], ["locality"]], "rhs_tokens": ["town"]},
+  {"lhs": ["Price", "Date", "PAON", "Street", "District"], "rhs": "Town", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 919769, "distinct_rhs": 1144, "lhs_distinct_ratio": 0.992751, "rhs_distinct_ratio": 0.001235, "redundancy": 6716, "redundancy_wl": 11445, "lhs_unique": false, "lhs_tokens": [["price"], ["date"], ["paon"], ["street"], ["district"]], "rhs_tokens": ["town"]},
+  {"lhs": ["Price", "Date", "Street", "Locality", "District"], "rhs": "Town", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 913349, "distinct_rhs": 1144, "lhs_distinct_ratio": 0.985822, "rhs_distinct_ratio": 0.001235, "redundancy": 13136, "redundancy_wl": 22443, "lhs_unique": false, "lhs_tokens": [["price"], ["date"], ["street"], ["locality"], ["district"]], "rhs_tokens": ["town"]},
+  {"lhs": ["Price", "Date", "PropertyType", "PAON", "Street"], "rhs": "County", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 920560, "distinct_rhs": 113, "lhs_distinct_ratio": 0.993605, "rhs_distinct_ratio": 0.000122, "redundancy": 5925, "redundancy_wl": 9939, "lhs_unique": false, "lhs_tokens": [["price"], ["date"], ["property", "type"], ["paon"], ["street"]], "rhs_tokens": ["county"]},
+  {"lhs": ["Price", "Date", "PAON", "Street", "Locality"], "rhs": "County", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 919764, "distinct_rhs": 113, "lhs_distinct_ratio": 0.992746, "rhs_distinct_ratio": 0.000122, "redundancy": 6721, "redundancy_wl": 11454, "lhs_unique": false, "lhs_tokens": [["price"], ["date"], ["paon"], ["street"], ["locality"]], "rhs_tokens": ["county"]},
+  {"lhs": ["Price", "Date", "PAON", "Street", "Town"], "rhs": "County", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 919764, "distinct_rhs": 113, "lhs_distinct_ratio": 0.992746, "rhs_distinct_ratio": 0.000122, "redundancy": 6721, "redundancy_wl": 11454, "lhs_unique": false, "lhs_tokens": [["price"], ["date"], ["paon"], ["street"], ["town"]], "rhs_tokens": ["county"]},
+  {"lhs": ["Price", "Date", "PropertyType", "PAON", "SAON", "Street"], "rhs": "Postcode", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 924435, "distinct_rhs": 526244, "lhs_distinct_ratio": 0.997787, "rhs_distinct_ratio": 0.568001, "redundancy": 2050, "redundancy_wl": 4049, "lhs_unique": false, "lhs_tokens": [["price"], ["date"], ["property", "type"], ["paon"], ["saon"], ["street"]], "rhs_tokens": ["postcode"]},
+  {"lhs": ["Price", "Date", "PAON", "SAON", "Street", "Locality"], "rhs": "Postcode", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 923801, "distinct_rhs": 526244, "lhs_distinct_ratio": 0.997103, "rhs_distinct_ratio": 0.568001, "redundancy": 2684, "redundancy_wl": 5292, "lhs_unique": false, "lhs_tokens": [["price"], ["date"], ["paon"], ["saon"], ["street"], ["locality"]], "rhs_tokens": ["postcode"]},
+  {"lhs": ["Price", "Date", "PAON", "SAON", "Street", "Town"], "rhs": "Postcode", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 923801, "distinct_rhs": 526244, "lhs_distinct_ratio": 0.997103, "rhs_distinct_ratio": 0.568001, "redundancy": 2684, "redundancy_wl": 5292, "lhs_unique": false, "lhs_tokens": [["price"], ["date"], ["paon"], ["saon"], ["street"], ["town"]], "rhs_tokens": ["postcode"]},
+  {"lhs": ["Price", "Date", "PAON", "SAON", "Street", "District"], "rhs": "Postcode", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 923805, "distinct_rhs": 526244, "lhs_distinct_ratio": 0.997107, "rhs_distinct_ratio": 0.568001, "redundancy": 2680, "redundancy_wl": 5284, "lhs_unique": false, "lhs_tokens": [["price"], ["date"], ["paon"], ["saon"], ["street"], ["district"]], "rhs_tokens": ["postcode"]},
+  {"lhs": ["Price", "Date", "OldNew", "PAON", "Street", "County"], "rhs": "Locality", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 919880, "distinct_rhs": 16272, "lhs_distinct_ratio": 0.992871, "rhs_distinct_ratio": 0.017563, "redundancy": 6605, "redundancy_wl": 11238, "lhs_unique": false, "lhs_tokens": [["price"], ["date"], ["old", "new"], ["paon"], ["street"], ["county"]], "rhs_tokens": ["locality"]},
+  {"lhs": ["Price", "Date", "OldNew", "PAON", "Street", "County"], "rhs": "Town", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 919880, "distinct_rhs": 1144, "lhs_distinct_ratio": 0.992871, "rhs_distinct_ratio": 0.001235, "redundancy": 6605, "redundancy_wl": 11238, "lhs_unique": false, "lhs_tokens": [["price"], ["date"], ["old", "new"], ["paon"], ["street"], ["county"]], "rhs_tokens": ["town"]},
+  {"lhs": ["Price", "PropertyType", "OldNew", "PAON", "Street", "Town"], "rhs": "County", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 914996, "distinct_rhs": 113, "lhs_distinct_ratio": 0.987599, "rhs_distinct_ratio": 0.000122, "redundancy": 11489, "redundancy_wl": 19217, "lhs_unique": false, "lhs_tokens": [["price"], ["property", "type"], ["old", "new"], ["paon"], ["street"], ["town"]], "rhs_tokens": ["county"]},
+  {"lhs": ["Price", "PropertyType", "PAON", "SAON", "Street", "Town"], "rhs": "County", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 923536, "distinct_rhs": 113, "lhs_distinct_ratio": 0.996817, "rhs_distinct_ratio": 0.000122, "redundancy": 2949, "redundancy_wl": 5835, "lhs_unique": false, "lhs_tokens": [["price"], ["property", "type"], ["paon"], ["saon"], ["street"], ["town"]], "rhs_tokens": ["county"]},
+  {"lhs": ["Date", "PropertyType", "PAON", "SAON", "Street", "Town"], "rhs": "County", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 922491, "distinct_rhs": 113, "lhs_distinct_ratio": 0.995689, "rhs_distinct_ratio": 0.000122, "redundancy": 3994, "redundancy_wl": 7845, "lhs_unique": false, "lhs_tokens": [["date"], ["property", "type"], ["paon"], ["saon"], ["street"], ["town"]], "rhs_tokens": ["county"]},
+  {"lhs": ["Price", "OldNew", "PAON", "Street", "Locality", "Town"], "rhs": "County", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 914057, "distinct_rhs": 113, "lhs_distinct_ratio": 0.986586, "rhs_distinct_ratio": 0.000122, "redundancy": 12428, "redundancy_wl": 20951, "lhs_unique": false, "lhs_tokens": [["price"], ["old", "new"], ["paon"], ["street"], ["locality"], ["town"]], "rhs_tokens": ["county"]},
+  {"lhs": ["Price", "PAON", "SAON", "Street", "Locality", "Town"], "rhs": "County", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 922861, "distinct_rhs": 113, "lhs_distinct_ratio": 0.996088, "rhs_distinct_ratio": 0.000122, "redundancy": 3624, "redundancy_wl": 7155, "lhs_unique": false, "lhs_tokens": [["price"], ["paon"], ["saon"], ["street"], ["locality"], ["town"]], "rhs_tokens": ["county"]},
+  {"lhs": ["Date", "PAON", "SAON", "Street", "Locality", "Town"], "rhs": "County", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 921528, "distinct_rhs": 113, "lhs_distinct_ratio": 0.99465, "rhs_distinct_ratio": 0.000122, "redundancy": 4957, "redundancy_wl": 9709, "lhs_unique": false, "lhs_tokens": [["date"], ["paon"], ["saon"], ["street"], ["locality"], ["town"]], "rhs_tokens": ["county"]},
+  {"lhs": ["PAON", "SAON", "Street", "Locality", "Town", "PPDCategory"], "rhs": "County", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 919205, "distinct_rhs": 113, "lhs_distinct_ratio": 0.992142, "rhs_distinct_ratio": 0.000122, "redundancy": 7280, "redundancy_wl": 14268, "lhs_unique": false, "lhs_tokens": [["paon"], ["saon"], ["street"], ["locality"], ["town"], ["ppdcategory"]], "rhs_tokens": ["county"]},
+  {"lhs": ["Price", "Date", "OldNew", "PAON", "SAON", "Street", "County"], "rhs": "Postcode", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 7, "distinct_lhs": 923892, "distinct_rhs": 526244, "lhs_distinct_ratio": 0.997201, "rhs_distinct_ratio": 0.568001, "redundancy": 2593, "redundancy_wl": 5110, "lhs_unique": false, "lhs_tokens": [["price"], ["date"], ["old", "new"], ["paon"], ["saon"], ["street"], ["county"]], "rhs_tokens": ["postcode"]}
+ ]
+}

@@ -1,0 +1,49 @@
+v5   fresh_auctionmark            run says certified True ; checker: maximal sets    37 unrefuted     0, candidates open     0 of   4243 (yes 20, no 38) -> certified True , premises wrong yes 0 no 0
+v5s  fresh_auctionmark            run says certified True ; checker: maximal sets    37 unrefuted     0, candidates open     0 of   4243 (yes 20, no 38) -> certified True , premises wrong yes 0 no 0
+v5n  fresh_auctionmark            run says certified False; checker: maximal sets    50 unrefuted    17, candidates open   275 of   4243 (yes 54, no 46) -> certified False, premises wrong yes 0 no 0
+v5u  fresh_auctionmark            run says certified True ; checker: maximal sets    37 unrefuted     0, candidates open     0 of   4243 (yes 20, no 38) -> certified True , premises wrong yes 0 no 0
+v5   fresh_chembl                 run says certified True ; checker: maximal sets    10 unrefuted     0, candidates open     0 of    385 (yes 64, no 11) -> certified True , premises wrong yes 0 no 0
+v5s  fresh_chembl                 run says certified True ; checker: maximal sets    10 unrefuted     0, candidates open     0 of    385 (yes 46, no 12) -> certified True , premises wrong yes 0 no 0
+v5n  fresh_chembl                 run says certified False; checker: maximal sets    25 unrefuted    17, candidates open    55 of    385 (yes 92, no 8) -> certified False, premises wrong yes 0 no 0
+v5u  fresh_chembl                 run says certified True ; checker: maximal sets    10 unrefuted     0, candidates open     0 of    385 (yes 64, no 11) -> certified True , premises wrong yes 0 no 0
+v5   fresh_eia860                 run says certified True ; checker: maximal sets    23 unrefuted     0, candidates open     0 of   1097 (yes 26, no 23) -> certified True , premises wrong yes 0 no 0
+v5s  fresh_eia860                 run says certified True ; checker: maximal sets    23 unrefuted     0, candidates open     0 of   1097 (yes 26, no 23) -> certified True , premises wrong yes 0 no 0
+v5n  fresh_eia860                 run says certified True ; checker: maximal sets    23 unrefuted     0, candidates open     0 of   1097 (yes 71, no 29) -> certified True , premises wrong yes 0 no 0
+v5u  fresh_eia860                 run says certified True ; checker: maximal sets    23 unrefuted     0, candidates open     0 of   1097 (yes 26, no 23) -> certified True , premises wrong yes 0 no 0
+v5   fresh_fhrs                   run says certified False; checker: maximal sets    31 unrefuted    22, candidates open    96 of   1488 (yes 58, no 42) -> certified False, premises wrong yes 0 no 0
+v5s  fresh_fhrs                   run says certified False; checker: maximal sets    33 unrefuted    31, candidates open   294 of   1488 (yes 70, no 30) -> certified False, premises wrong yes 0 no 0
+v5n  fresh_fhrs                   run says certified True ; checker: maximal sets    26 unrefuted     0, candidates open     0 of   1488 (yes 45, no 25) -> certified True , premises wrong yes 0 no 0
+v5u  fresh_fhrs                   run says certified False; checker: maximal sets    31 unrefuted    22, candidates open    96 of   1488 (yes 58, no 42) -> certified False, premises wrong yes 0 no 0
+v5   fresh_geonames               run says certified True ; checker: maximal sets    31 unrefuted     0, candidates open     0 of   2900 (yes 31, no 47) -> certified True , premises wrong yes 0 no 0
+v5s  fresh_geonames               run says certified True ; checker: maximal sets    31 unrefuted     0, candidates open     0 of   2900 (yes 38, no 42) -> certified True , premises wrong yes 0 no 0
+v5n  fresh_geonames               run says certified False; checker: maximal sets    41 unrefuted    23, candidates open   525 of   2900 (yes 62, no 38) -> certified False, premises wrong yes 0 no 0
+v5u  fresh_geonames               run says certified True ; checker: maximal sets    31 unrefuted     0, candidates open     0 of   2900 (yes 31, no 47) -> certified True , premises wrong yes 0 no 0
+v5   fresh_ghcn                   run says certified True ; checker: maximal sets    17 unrefuted     0, candidates open     0 of    351 (yes 24, no 17) -> certified True , premises wrong yes 0 no 0
+v5s  fresh_ghcn                   run says certified True ; checker: maximal sets    17 unrefuted     0, candidates open     0 of    351 (yes 24, no 17) -> certified True , premises wrong yes 0 no 0
+v5n  fresh_ghcn                   run says certified True ; checker: maximal sets    17 unrefuted     0, candidates open     0 of    351 (yes 62, no 18) -> certified True , premises wrong yes 0 no 0
+v5u  fresh_ghcn                   run says certified True ; checker: maximal sets    17 unrefuted     0, candidates open     0 of    351 (yes 24, no 17) -> certified True , premises wrong yes 0 no 0
+v5   fresh_musicbrainz            run says certified True ; checker: maximal sets    12 unrefuted     0, candidates open     0 of     85 (yes 25, no 21) -> certified True , premises wrong yes 0 no 0
+v5s  fresh_musicbrainz            run says certified True ; checker: maximal sets    12 unrefuted     0, candidates open     0 of     85 (yes 54, no 16) -> certified True , premises wrong yes 0 no 0
+v5n  fresh_musicbrainz            run says certified False; checker: maximal sets    34 unrefuted    26, candidates open    26 of     85 (yes 91, no 9) -> certified False, premises wrong yes 0 no 0
+v5u  fresh_musicbrainz            run says certified True ; checker: maximal sets    12 unrefuted     0, candidates open     0 of     85 (yes 25, no 21) -> certified True , premises wrong yes 0 no 0
+v5   fresh_pluto                  run says certified False; checker: maximal sets    44 unrefuted    42, candidates open   595 of   1572 (yes 67, no 33) -> certified False, premises wrong yes 0 no 0
+v5s  fresh_pluto                  run says certified False; checker: maximal sets    45 unrefuted    43, candidates open   554 of   1572 (yes 68, no 32) -> certified False, premises wrong yes 0 no 0
+v5n  fresh_pluto                  run says certified False; checker: maximal sets    39 unrefuted    11, candidates open    36 of   1572 (yes 67, no 33) -> certified False, premises wrong yes 0 no 0
+v5u  fresh_pluto                  run says certified False; checker: maximal sets    44 unrefuted    42, candidates open   595 of   1572 (yes 67, no 33) -> certified False, premises wrong yes 0 no 0
+v5   fresh_seats                  run says certified True ; checker: maximal sets    24 unrefuted     0, candidates open     0 of   4640 (yes 38, no 31) -> certified True , premises wrong yes 0 no 0
+v5s  fresh_seats                  run says certified True ; checker: maximal sets    24 unrefuted     0, candidates open     0 of   4640 (yes 32, no 30) -> certified True , premises wrong yes 0 no 0
+v5n  fresh_seats                  run says certified False; checker: maximal sets    25 unrefuted     5, candidates open   600 of   4640 (yes 77, no 23) -> certified False, premises wrong yes 0 no 0
+v5u  fresh_seats                  run says certified True ; checker: maximal sets    24 unrefuted     0, candidates open     0 of   4640 (yes 38, no 31) -> certified True , premises wrong yes 0 no 0
+v5   fresh_simplewiki             run says certified False; checker: maximal sets    28 unrefuted    27, candidates open    36 of    139 (yes 62, no 38) -> certified False, premises wrong yes 0 no 0
+v5s  fresh_simplewiki             run says certified False; checker: maximal sets    35 unrefuted    34, candidates open    37 of    139 (yes 56, no 44) -> certified False, premises wrong yes 0 no 0
+v5n  fresh_simplewiki             run says certified True ; checker: maximal sets    29 unrefuted     0, candidates open     0 of    139 (yes 53, no 27) -> certified True , premises wrong yes 0 no 0
+v5u  fresh_simplewiki             run says certified False; checker: maximal sets    28 unrefuted    27, candidates open    36 of    139 (yes 62, no 38) -> certified False, premises wrong yes 0 no 0
+v5   fresh_stats19                run says certified True ; checker: maximal sets    18 unrefuted     0, candidates open     0 of   1670 (yes 76, no 22) -> certified True , premises wrong yes 0 no 0
+v5s  fresh_stats19                run says certified False; checker: maximal sets    32 unrefuted    22, candidates open    34 of   1670 (yes 69, no 31) -> certified False, premises wrong yes 0 no 0
+v5n  fresh_stats19                run says certified True ; checker: maximal sets    18 unrefuted     0, candidates open     0 of   1670 (yes 61, no 18) -> certified True , premises wrong yes 0 no 0
+v5u  fresh_stats19                run says certified True ; checker: maximal sets    18 unrefuted     0, candidates open     0 of   1670 (yes 76, no 22) -> certified True , premises wrong yes 0 no 0
+v5   fresh_tatp                   run says certified True ; checker: maximal sets    25 unrefuted     0, candidates open     0 of    909 (yes 38, no 38) -> certified True , premises wrong yes 0 no 0
+v5s  fresh_tatp                   run says certified True ; checker: maximal sets    25 unrefuted     0, candidates open     0 of    909 (yes 32, no 31) -> certified True , premises wrong yes 0 no 0
+v5n  fresh_tatp                   run says certified True ; checker: maximal sets    25 unrefuted     0, candidates open     0 of    909 (yes 56, no 25) -> certified True , premises wrong yes 0 no 0
+v5u  fresh_tatp                   run says certified True ; checker: maximal sets    25 unrefuted     0, candidates open     0 of    909 (yes 38, no 38) -> certified True , premises wrong yes 0 no 0
+disagreements or unsound: 0

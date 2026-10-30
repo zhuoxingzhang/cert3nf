@@ -1,0 +1,63 @@
+set  truth  rho var   eps runs cert wrong  share     N  bound
+conf full  0.00 v5st 0.02   36    6     1  0.167  49.0  0.058
+conf full  0.00 v5st 0.05   36    1     0  0.000    52  0.377
+conf full  0.00 v5t  0.02   36    4     1  0.250  48.0  0.057
+conf full  0.00 v5t  0.05   36    3     0  0.000    37  0.268
+conf full  0.25 v5st 0.02   36    5     1  0.200    51  0.588
+conf full  0.25 v5st 0.05   36    0     0  0.000     -   None
+conf full  0.25 v5t  0.02   36    5     1  0.200    47  0.542
+conf full  0.25 v5t  0.05   36    0     0  0.000     -   None
+conf full  0.50 v5st 0.02   36    4     0  0.000  44.0  0.742
+conf full  0.50 v5st 0.05   36    1     0  0.000    47    1.0
+conf full  0.50 v5t  0.02   36    4     0  0.000  42.0  0.708
+conf full  0.50 v5t  0.05   36    1     0  0.000    41    1.0
+conf sure  0.00 v5st 0.02   36    2     0  0.000  45.0  0.053
+conf sure  0.00 v5st 0.05   36    1     0  0.000    50  0.363
+conf sure  0.00 v5t  0.02   36    4     1  0.250  47.5  0.056
+conf sure  0.00 v5t  0.05   36    1     0  0.000    50  0.363
+conf sure  0.25 v5st 0.02   36    5     2  0.400    49  0.565
+conf sure  0.25 v5st 0.05   36    1     1  1.000    61    1.0
+conf sure  0.25 v5t  0.02   36    7     1  0.143    48  0.554
+conf sure  0.25 v5t  0.05   36    1     1  1.000    48    1.0
+conf sure  0.50 v5st 0.02   36    4     0  0.000  45.0  0.759
+conf sure  0.50 v5st 0.05   36    2     0  0.000  51.5    1.0
+conf sure  0.50 v5t  0.02   36    5     0  0.000    46  0.776
+conf sure  0.50 v5t  0.05   36    1     0  0.000    45    1.0
+dev  full  0.00 v5st 0.02   72   24     1  0.042  36.0  0.043
+dev  full  0.00 v5st 0.05   72   17     1  0.059    35  0.254
+dev  full  0.00 v5t  0.02   69   31     1  0.032    34   0.04
+dev  full  0.00 v5t  0.05   69   19     1  0.053    31  0.225
+dev  full  0.25 v5st 0.02   72   18     3  0.167  28.0  0.323
+dev  full  0.25 v5st 0.05   72   16     8  0.500  29.5  0.907
+dev  full  0.25 v5t  0.02   69   25     3  0.120    28  0.323
+dev  full  0.25 v5t  0.05   69   20    12  0.600  34.5    1.0
+dev  full  0.50 v5st 0.02   72   18     6  0.333  28.0  0.472
+dev  full  0.50 v5st 0.05   72   16    10  0.625  29.5    1.0
+dev  full  0.50 v5t  0.02   69   26    12  0.462  28.0  0.472
+dev  full  0.50 v5t  0.05   69   22    12  0.545  34.0    1.0
+dev  sure  0.00 v5st 0.02   72   35     0  0.000    39  0.046
+dev  sure  0.00 v5st 0.05   72   21     2  0.095    29   0.21
+dev  sure  0.00 v5t  0.02   69   32     1  0.031  30.0  0.036
+dev  sure  0.00 v5t  0.05   69   21     2  0.095    32  0.232
+dev  sure  0.25 v5st 0.02   72   33     2  0.061    39   0.45
+dev  sure  0.25 v5st 0.05   72   20     8  0.400  24.0  0.738
+dev  sure  0.25 v5t  0.02   69   32     3  0.094  33.5  0.386
+dev  sure  0.25 v5t  0.05   69   19     8  0.421    29  0.892
+dev  sure  0.50 v5st 0.02   72   26     6  0.231  36.5  0.616
+dev  sure  0.50 v5st 0.05   72   19    10  0.526    16  0.686
+dev  sure  0.50 v5t  0.02   69   27     8  0.296    37  0.624
+dev  sure  0.50 v5t  0.05   69   22    11  0.500  25.0    1.0
+
+pooled over sets and truths
+  rho 0.00 v5st eps 0.02: runs  216 cert   67 wrong   2 share 0.030
+  rho 0.00 v5st eps 0.05: runs  216 cert   40 wrong   3 share 0.075
+  rho 0.00 v5t  eps 0.02: runs  210 cert   71 wrong   4 share 0.056
+  rho 0.00 v5t  eps 0.05: runs  210 cert   44 wrong   3 share 0.068
+  rho 0.25 v5st eps 0.02: runs  216 cert   61 wrong   8 share 0.131
+  rho 0.25 v5st eps 0.05: runs  216 cert   37 wrong  17 share 0.459
+  rho 0.25 v5t  eps 0.02: runs  210 cert   69 wrong   8 share 0.116
+  rho 0.25 v5t  eps 0.05: runs  210 cert   40 wrong  21 share 0.525
+  rho 0.50 v5st eps 0.02: runs  216 cert   52 wrong  12 share 0.231
+  rho 0.50 v5st eps 0.05: runs  216 cert   38 wrong  20 share 0.526
+  rho 0.50 v5t  eps 0.02: runs  210 cert   62 wrong  20 share 0.323
+  rho 0.50 v5t  eps 0.05: runs  210 cert   46 wrong  23 share 0.500

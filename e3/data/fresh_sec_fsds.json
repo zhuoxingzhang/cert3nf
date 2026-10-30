@@ -1,0 +1,1023 @@
+{
+ "dataset": "fresh_sec_fsds",
+ "family": "fresh",
+ "truth_kind": "documented (confirmatory)",
+ "source": "Publisher documentation saved under e3/truth/docs/fresh/ (sha256 in SHA256SUMS): TPC-DS v3.2.0; LDBC SNB specification (v2.2.5-SNAPSHOT, Appendix D for the Interactive v1 legacy data sets); GTFS Schedule Reference; FAA ardata.pdf (5/8/2025); ABS ASGS Edition 3 web pages; SEC Financial Statement Data Sets; College Scorecard Field of Study documentation (October 2026) and data dictionary; EPA AirData FileFormats (v3.0.0); 2024 ACS PUMS data dictionary and Census regions and divisions; City of Chicago portal metadata (ijzp-q8t2, c7ck-438e); USDA FoodData Central download field descriptions (October 2020)",
+ "rule": "Sigma* is the set of FDs that the publisher documentation implies among the attributes of each relation, projected and closed over the dropped columns, each with a verbatim quote; sure when the quoted text states it (declared key, foreign key to a declared key, an explicit one-to-one or nesting statement), unsure when it needs an inference the text does not spell out. Dependencies the documentation hints at but does not state are listed under undocumented_regularities and are not part of Sigma*. Written from the documentation alone, before any data file was opened.",
+ "instance": {
+  "generator": "public data fixed before download for the confirmatory evaluation, joined by fresh.py",
+  "rows": 999991,
+  "construction": "SEC Financial Statement Data Sets, quarter 2026Q3 (2026q3.zip): NUM (root, sampled to 1,000,000 records if larger) left-joined to SUB on adsh and to TAG on (tag, version); empty segments and coreg are the value '?'; dropped NUM footnote and TAG doc (free text), TAG abstract (0 for every tag of a numeric fact in NUM), and the address, phone, incorporation, former-name, filing-status and file-name columns of SUB to stay within 25 columns.",
+  "cleaning": {
+   "records": 3905397,
+   "records_after_deduplication": 3905064,
+   "sampled_from": 3905064,
+   "kept": 999991,
+   "repaired_for": "the sure FDs of Sigma*",
+   "removed_per_fd": {
+    "adsh,tag,version,ddate,qtrs,uom,segments,coreg->value": 7,
+    "tag,version->datatype": 1,
+    "tag,version->crdr": 1
+   },
+   "missing_values": "empty and missing references become '?', kept as a value (null = null)"
+  }
+ },
+ "attributes": [
+  "adsh",
+  "tag",
+  "version",
+  "ddate",
+  "qtrs",
+  "uom",
+  "segments",
+  "coreg",
+  "value",
+  "cik",
+  "name",
+  "sic",
+  "countryba",
+  "stprba",
+  "cityba",
+  "afs",
+  "form",
+  "period",
+  "fy",
+  "fp",
+  "custom",
+  "datatype",
+  "iord",
+  "crdr",
+  "tlabel"
+ ],
+ "dropped_constant_columns": [],
+ "distinct_values": {
+  "adsh": 6516,
+  "tag": 38591,
+  "version": 6094,
+  "ddate": 182,
+  "qtrs": 39,
+  "uom": 67,
+  "segments": 154316,
+  "coreg": 479,
+  "value": 318490,
+  "cik": 6008,
+  "name": 6012,
+  "sic": 393,
+  "countryba": 47,
+  "stprba": 58,
+  "cityba": 1576,
+  "afs": 4,
+  "form": 26,
+  "period": 27,
+  "fy": 6,
+  "fp": 5,
+  "custom": 2,
+  "datatype": 9,
+  "iord": 2,
+  "crdr": 3,
+  "tlabel": 40034
+ },
+ "truth": [
+  {
+   "lhs": [
+    "adsh",
+    "tag",
+    "version",
+    "ddate",
+    "qtrs",
+    "uom",
+    "segments",
+    "coreg"
+   ],
+   "rhs": [
+    "value"
+   ],
+   "sure": true,
+   "clause": "sec_financial-statement-data-sets.pdf, 3 Organization (pp. 2-3): \"NUM is a data set of all numeric XBRL facts presented on the primary financial statements as rendered by the Comission. A unique key of each row is a combination of the following fields:\" (adsh, tag, version, ddate, qtrs, uom, segments, coreg); sec_financial-statement-data-sets.pdf, 5 Table Definitions (p. 4): \"the column is a function of all or some of a unique key.\"",
+   "justification": "The eight fields are the declared unique key of NUM, and value is a non-key column of NUM; empty segments and coreg are kept as the value '?'.",
+   "audit": {
+    "verdicts": {
+     "value": "TRUE"
+    },
+    "quote": "\"NUM is a data set of all numeric XBRL facts presented on the primary financial statements as rendered by the Comission. A unique key of each row is a combination of the following fields:\" (adsh, tag, version, ddate, qtrs, uom, segments, coreg) (3 Organization, pp. 2-3); \"the column is a function of all or some of a unique key.\" (5 Table Definitions, p. 4)",
+    "source": "sec_financial-statement-data-sets.pdf, pp. 2-4"
+   }
+  },
+  {
+   "lhs": [
+    "adsh"
+   ],
+   "rhs": [
+    "cik",
+    "name",
+    "sic",
+    "countryba",
+    "stprba",
+    "cityba",
+    "afs",
+    "form",
+    "period",
+    "fy",
+    "fp"
+   ],
+   "sure": true,
+   "clause": "sec_financial-statement-data-sets.pdf, 3 Organization (p. 2): \"SUB identifies all the EDGAR submissions with amounts rendered by the Commission on the primary financial statements in the data set, with each row having the unique (primary) key adsh\"; (p. 3): \"The Accession Number (adsh) found in the NUM data set can be used to retrieve information about the submission in SUB.\"; sec_financial-statement-data-sets.pdf, 5 Table Definitions (p. 4): \"the column is a function of all or some of a unique key.\"",
+   "justification": "adsh is the primary key of SUB, referenced from NUM; name and sic are 'as of the filing date', so cik does not determine them across submissions.",
+   "audit": {
+    "verdicts": {
+     "cik": "TRUE",
+     "name": "TRUE",
+     "sic": "TRUE",
+     "countryba": "TRUE",
+     "stprba": "TRUE",
+     "cityba": "TRUE",
+     "afs": "TRUE",
+     "form": "TRUE",
+     "period": "TRUE",
+     "fy": "TRUE",
+     "fp": "TRUE"
+    },
+    "quote": "\"SUB identifies all the EDGAR submissions with amounts rendered by the Commission on the primary financial statements in the data set, with each row having the unique (primary) key adsh\" (p. 2); \"The Accession Number (adsh) found in the NUM data set can be used to retrieve information about the submission in SUB.\" (p. 3); \"the column is a function of all or some of a unique key.\" (5 Table Definitions, p. 4)",
+    "source": "sec_financial-statement-data-sets.pdf, pp. 2-6"
+   }
+  },
+  {
+   "lhs": [
+    "tag",
+    "version"
+   ],
+   "rhs": [
+    "custom",
+    "datatype",
+    "iord",
+    "crdr",
+    "tlabel"
+   ],
+   "sure": true,
+   "clause": "sec_financial-statement-data-sets.pdf, 3 Organization (p. 2): \"TAG is a data set of all numerical tags used in the submissions, both standard and custom. A unique key of each row is a combination of these fields:\" (tag, version); (p. 3): \"Information about the tag used can be found in TAG.\"; sec_financial-statement-data-sets.pdf, 5 Table Definitions (p. 4): \"the column is a function of all or some of a unique key.\"",
+   "justification": "(tag, version) is the declared unique key of TAG, referenced from NUM.",
+   "audit": {
+    "verdicts": {
+     "custom": "TRUE",
+     "datatype": "TRUE",
+     "iord": "TRUE",
+     "crdr": "TRUE",
+     "tlabel": "TRUE"
+    },
+    "quote": "\"TAG is a data set of all numerical tags used in the submissions, both standard and custom. A unique key of each row is a combination of these fields:\" (tag, version) (p. 2); \"Information about the tag used can be found in TAG.\" (p. 3); \"the column is a function of all or some of a unique key.\" (5 Table Definitions, p. 4)",
+    "source": "sec_financial-statement-data-sets.pdf, pp. 2-4, 7-8"
+   }
+  },
+  {
+   "lhs": [
+    "adsh",
+    "version"
+   ],
+   "rhs": [
+    "custom"
+   ],
+   "sure": true,
+   "clause": "sec_financial-statement-data-sets.pdf, 5.2 TAG (p. 7): \"custom 1 if tag is custom (version=adsh), 0 if it is standard. Note: This flag is technically redundant with the version and adsh columns.\"",
+   "justification": "The documentation states that custom is redundant with version and adsh (custom = 1 exactly when version equals the accession number).",
+   "audit": {
+    "verdicts": {
+     "custom": "TRUE"
+    },
+    "quote": "\"1 if tag is custom (version=adsh), 0 if it is standard. Note: This flag is technically redundant with the version and adsh columns.\" (5.2 TAG, Figure 3, p. 7)",
+    "source": "sec_financial-statement-data-sets.pdf, p. 7"
+   }
+  },
+  {
+   "lhs": [
+    "version"
+   ],
+   "rhs": [
+    "custom"
+   ],
+   "sure": false,
+   "clause": "sec_financial-statement-data-sets.pdf, 5.2 TAG (p. 7): \"For a standard tag, an identifier for the taxonomy; otherwise the accession number where the tag was defined.\"",
+   "justification": "A version value is either a taxonomy identifier (custom = 0) or an accession number (custom = 1), so it determines custom if the two kinds of value never coincide, which is not stated; unsure.",
+   "audit": {
+    "verdicts": {
+     "custom": "UNDETERMINED"
+    },
+    "quote": "\"For a standard tag, an identifier for the taxonomy; otherwise the accession number where the tag was defined.\" (5.2 TAG, p. 7)",
+    "source": "sec_financial-statement-data-sets.pdf, p. 7"
+   }
+  }
+ ],
+ "truth_counts": {
+  "fds": 5,
+  "single_rhs": 19,
+  "sure_single_rhs": 18
+ },
+ "random_columns": null,
+ "truth_fds_violated_by_data": [],
+ "gold_design": null,
+ "gold_design_note": "No normalized design is published; the 3NF designs of Sigma* are synthesized.",
+ "truth_design": {
+  "keys": [
+   [
+    "adsh",
+    "coreg",
+    "ddate",
+    "qtrs",
+    "segments",
+    "tag",
+    "uom",
+    "version"
+   ]
+  ],
+  "atomic_closure": 17,
+  "synthesis": [
+   [
+    "adsh",
+    "afs"
+   ],
+   [
+    "adsh",
+    "cik"
+   ],
+   [
+    "adsh",
+    "cityba"
+   ],
+   [
+    "adsh",
+    "coreg",
+    "ddate",
+    "qtrs",
+    "segments",
+    "tag",
+    "uom",
+    "value",
+    "version"
+   ],
+   [
+    "adsh",
+    "countryba"
+   ],
+   [
+    "adsh",
+    "form"
+   ],
+   [
+    "adsh",
+    "fp"
+   ],
+   [
+    "adsh",
+    "fy"
+   ],
+   [
+    "adsh",
+    "name"
+   ],
+   [
+    "adsh",
+    "period"
+   ],
+   [
+    "adsh",
+    "sic"
+   ],
+   [
+    "adsh",
+    "stprba"
+   ],
+   [
+    "crdr",
+    "tag",
+    "version"
+   ],
+   [
+    "custom",
+    "version"
+   ],
+   [
+    "datatype",
+    "tag",
+    "version"
+   ],
+   [
+    "iord",
+    "tag",
+    "version"
+   ],
+   [
+    "tag",
+    "tlabel",
+    "version"
+   ]
+  ],
+  "iconf": [
+   [
+    "adsh",
+    "afs"
+   ],
+   [
+    "adsh",
+    "cik"
+   ],
+   [
+    "adsh",
+    "cityba"
+   ],
+   [
+    "adsh",
+    "coreg",
+    "ddate",
+    "qtrs",
+    "segments",
+    "tag",
+    "uom",
+    "value",
+    "version"
+   ],
+   [
+    "adsh",
+    "countryba"
+   ],
+   [
+    "adsh",
+    "form"
+   ],
+   [
+    "adsh",
+    "fp"
+   ],
+   [
+    "adsh",
+    "fy"
+   ],
+   [
+    "adsh",
+    "name"
+   ],
+   [
+    "adsh",
+    "period"
+   ],
+   [
+    "adsh",
+    "sic"
+   ],
+   [
+    "adsh",
+    "stprba"
+   ],
+   [
+    "crdr",
+    "tag",
+    "version"
+   ],
+   [
+    "custom",
+    "version"
+   ],
+   [
+    "datatype",
+    "tag",
+    "version"
+   ],
+   [
+    "iord",
+    "tag",
+    "version"
+   ],
+   [
+    "tag",
+    "tlabel",
+    "version"
+   ]
+  ]
+ },
+ "mined": {
+  "algorithm": "fdmine.py: exact discovery of all minimal FDs in the style of HyFD (no HyFD binary was available); the complete set of minimal FDs is unique, so it equals HyFD's output",
+  "file": "mined/fresh_sec_fsds-fds.txt",
+  "seconds": 158.2,
+  "count": 428,
+  "implied_by_truth": 16,
+  "accidental": 412,
+  "implied_by_sure_truth": 15
+ },
+ "truth_design_sure_only": {
+  "keys": [
+   [
+    "adsh",
+    "coreg",
+    "ddate",
+    "qtrs",
+    "segments",
+    "tag",
+    "uom",
+    "version"
+   ]
+  ],
+  "atomic_closure": 18,
+  "synthesis": [
+   [
+    "adsh",
+    "afs"
+   ],
+   [
+    "adsh",
+    "cik"
+   ],
+   [
+    "adsh",
+    "cityba"
+   ],
+   [
+    "adsh",
+    "coreg",
+    "ddate",
+    "qtrs",
+    "segments",
+    "tag",
+    "uom",
+    "value",
+    "version"
+   ],
+   [
+    "adsh",
+    "countryba"
+   ],
+   [
+    "adsh",
+    "custom",
+    "version"
+   ],
+   [
+    "adsh",
+    "form"
+   ],
+   [
+    "adsh",
+    "fp"
+   ],
+   [
+    "adsh",
+    "fy"
+   ],
+   [
+    "adsh",
+    "name"
+   ],
+   [
+    "adsh",
+    "period"
+   ],
+   [
+    "adsh",
+    "sic"
+   ],
+   [
+    "adsh",
+    "stprba"
+   ],
+   [
+    "crdr",
+    "tag",
+    "version"
+   ],
+   [
+    "custom",
+    "tag",
+    "version"
+   ],
+   [
+    "datatype",
+    "tag",
+    "version"
+   ],
+   [
+    "iord",
+    "tag",
+    "version"
+   ],
+   [
+    "tag",
+    "tlabel",
+    "version"
+   ]
+  ],
+  "iconf": [
+   [
+    "adsh",
+    "afs"
+   ],
+   [
+    "adsh",
+    "cik"
+   ],
+   [
+    "adsh",
+    "cityba"
+   ],
+   [
+    "adsh",
+    "coreg",
+    "ddate",
+    "qtrs",
+    "segments",
+    "tag",
+    "uom",
+    "value",
+    "version"
+   ],
+   [
+    "adsh",
+    "countryba"
+   ],
+   [
+    "adsh",
+    "custom",
+    "version"
+   ],
+   [
+    "adsh",
+    "form"
+   ],
+   [
+    "adsh",
+    "fp"
+   ],
+   [
+    "adsh",
+    "fy"
+   ],
+   [
+    "adsh",
+    "name"
+   ],
+   [
+    "adsh",
+    "period"
+   ],
+   [
+    "adsh",
+    "sic"
+   ],
+   [
+    "adsh",
+    "stprba"
+   ],
+   [
+    "crdr",
+    "tag",
+    "version"
+   ],
+   [
+    "custom",
+    "tag",
+    "version"
+   ],
+   [
+    "datatype",
+    "tag",
+    "version"
+   ],
+   [
+    "iord",
+    "tag",
+    "version"
+   ],
+   [
+    "tag",
+    "tlabel",
+    "version"
+   ]
+  ]
+ },
+ "fds": [
+  {"lhs": ["segments"], "rhs": "coreg", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 154316, "distinct_rhs": 479, "lhs_distinct_ratio": 0.154317, "rhs_distinct_ratio": 0.000479, "redundancy": 845675, "redundancy_wl": 928615, "lhs_unique": false, "lhs_tokens": [["segments"]], "rhs_tokens": ["coreg"]},
+  {"lhs": ["adsh"], "rhs": "cik", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 6516, "distinct_rhs": 6008, "lhs_distinct_ratio": 0.006516, "rhs_distinct_ratio": 0.006008, "redundancy": 993475, "redundancy_wl": 999990, "lhs_unique": false, "lhs_tokens": [["adsh"]], "rhs_tokens": ["cik"]},
+  {"lhs": ["name"], "rhs": "cik", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 6012, "distinct_rhs": 6008, "lhs_distinct_ratio": 0.006012, "rhs_distinct_ratio": 0.006008, "redundancy": 993979, "redundancy_wl": 999990, "lhs_unique": false, "lhs_tokens": [["name"]], "rhs_tokens": ["cik"]},
+  {"lhs": ["adsh"], "rhs": "name", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 6516, "distinct_rhs": 6012, "lhs_distinct_ratio": 0.006516, "rhs_distinct_ratio": 0.006012, "redundancy": 993475, "redundancy_wl": 999990, "lhs_unique": false, "lhs_tokens": [["adsh"]], "rhs_tokens": ["name"]},
+  {"lhs": ["adsh"], "rhs": "sic", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 6516, "distinct_rhs": 393, "lhs_distinct_ratio": 0.006516, "rhs_distinct_ratio": 0.000393, "redundancy": 993475, "redundancy_wl": 999990, "lhs_unique": false, "lhs_tokens": [["adsh"]], "rhs_tokens": ["sic"]},
+  {"lhs": ["adsh"], "rhs": "countryba", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 6516, "distinct_rhs": 47, "lhs_distinct_ratio": 0.006516, "rhs_distinct_ratio": 4.7e-05, "redundancy": 993475, "redundancy_wl": 999990, "lhs_unique": false, "lhs_tokens": [["adsh"]], "rhs_tokens": ["countryba"]},
+  {"lhs": ["adsh"], "rhs": "stprba", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 6516, "distinct_rhs": 58, "lhs_distinct_ratio": 0.006516, "rhs_distinct_ratio": 5.8e-05, "redundancy": 993475, "redundancy_wl": 999990, "lhs_unique": false, "lhs_tokens": [["adsh"]], "rhs_tokens": ["stprba"]},
+  {"lhs": ["adsh"], "rhs": "cityba", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 6516, "distinct_rhs": 1576, "lhs_distinct_ratio": 0.006516, "rhs_distinct_ratio": 0.001576, "redundancy": 993475, "redundancy_wl": 999990, "lhs_unique": false, "lhs_tokens": [["adsh"]], "rhs_tokens": ["cityba"]},
+  {"lhs": ["adsh"], "rhs": "afs", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 6516, "distinct_rhs": 4, "lhs_distinct_ratio": 0.006516, "rhs_distinct_ratio": 4e-06, "redundancy": 993475, "redundancy_wl": 999990, "lhs_unique": false, "lhs_tokens": [["adsh"]], "rhs_tokens": ["afs"]},
+  {"lhs": ["adsh"], "rhs": "form", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 6516, "distinct_rhs": 26, "lhs_distinct_ratio": 0.006516, "rhs_distinct_ratio": 2.6e-05, "redundancy": 993475, "redundancy_wl": 999990, "lhs_unique": false, "lhs_tokens": [["adsh"]], "rhs_tokens": ["form"]},
+  {"lhs": ["adsh"], "rhs": "period", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 6516, "distinct_rhs": 27, "lhs_distinct_ratio": 0.006516, "rhs_distinct_ratio": 2.7e-05, "redundancy": 993475, "redundancy_wl": 999990, "lhs_unique": false, "lhs_tokens": [["adsh"]], "rhs_tokens": ["period"]},
+  {"lhs": ["adsh"], "rhs": "fy", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 6516, "distinct_rhs": 6, "lhs_distinct_ratio": 0.006516, "rhs_distinct_ratio": 6e-06, "redundancy": 993475, "redundancy_wl": 999990, "lhs_unique": false, "lhs_tokens": [["adsh"]], "rhs_tokens": ["fy"]},
+  {"lhs": ["adsh"], "rhs": "fp", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 6516, "distinct_rhs": 5, "lhs_distinct_ratio": 0.006516, "rhs_distinct_ratio": 5e-06, "redundancy": 993475, "redundancy_wl": 999990, "lhs_unique": false, "lhs_tokens": [["adsh"]], "rhs_tokens": ["fp"]},
+  {"lhs": ["version"], "rhs": "custom", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 6094, "distinct_rhs": 2, "lhs_distinct_ratio": 0.006094, "rhs_distinct_ratio": 2e-06, "redundancy": 993897, "redundancy_wl": 999537, "lhs_unique": false, "lhs_tokens": [["version"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["adsh", "tag"], "rhs": "version", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 384568, "distinct_rhs": 6094, "lhs_distinct_ratio": 0.384571, "rhs_distinct_ratio": 0.006094, "redundancy": 615423, "redundancy_wl": 771233, "lhs_unique": false, "lhs_tokens": [["adsh"], ["tag"]], "rhs_tokens": ["version"]},
+  {"lhs": ["cik", "stprba"], "rhs": "countryba", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 6015, "distinct_rhs": 47, "lhs_distinct_ratio": 0.006015, "rhs_distinct_ratio": 4.7e-05, "redundancy": 993976, "redundancy_wl": 999990, "lhs_unique": false, "lhs_tokens": [["cik"], ["stprba"]], "rhs_tokens": ["countryba"]},
+  {"lhs": ["name", "stprba"], "rhs": "countryba", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 6016, "distinct_rhs": 47, "lhs_distinct_ratio": 0.006016, "rhs_distinct_ratio": 4.7e-05, "redundancy": 993975, "redundancy_wl": 999990, "lhs_unique": false, "lhs_tokens": [["name"], ["stprba"]], "rhs_tokens": ["countryba"]},
+  {"lhs": ["cik", "form"], "rhs": "countryba", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 6362, "distinct_rhs": 47, "lhs_distinct_ratio": 0.006362, "rhs_distinct_ratio": 4.7e-05, "redundancy": 993629, "redundancy_wl": 999990, "lhs_unique": false, "lhs_tokens": [["cik"], ["form"]], "rhs_tokens": ["countryba"]},
+  {"lhs": ["name", "form"], "rhs": "countryba", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 6363, "distinct_rhs": 47, "lhs_distinct_ratio": 0.006363, "rhs_distinct_ratio": 4.7e-05, "redundancy": 993628, "redundancy_wl": 999990, "lhs_unique": false, "lhs_tokens": [["name"], ["form"]], "rhs_tokens": ["countryba"]},
+  {"lhs": ["cik", "period"], "rhs": "countryba", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 6297, "distinct_rhs": 47, "lhs_distinct_ratio": 0.006297, "rhs_distinct_ratio": 4.7e-05, "redundancy": 993694, "redundancy_wl": 999990, "lhs_unique": false, "lhs_tokens": [["cik"], ["period"]], "rhs_tokens": ["countryba"]},
+  {"lhs": ["name", "period"], "rhs": "countryba", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 6300, "distinct_rhs": 47, "lhs_distinct_ratio": 0.0063, "rhs_distinct_ratio": 4.7e-05, "redundancy": 993691, "redundancy_wl": 999990, "lhs_unique": false, "lhs_tokens": [["name"], ["period"]], "rhs_tokens": ["countryba"]},
+  {"lhs": ["cik", "form"], "rhs": "stprba", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 6362, "distinct_rhs": 58, "lhs_distinct_ratio": 0.006362, "rhs_distinct_ratio": 5.8e-05, "redundancy": 993629, "redundancy_wl": 999990, "lhs_unique": false, "lhs_tokens": [["cik"], ["form"]], "rhs_tokens": ["stprba"]},
+  {"lhs": ["name", "form"], "rhs": "stprba", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 6363, "distinct_rhs": 58, "lhs_distinct_ratio": 0.006363, "rhs_distinct_ratio": 5.8e-05, "redundancy": 993628, "redundancy_wl": 999990, "lhs_unique": false, "lhs_tokens": [["name"], ["form"]], "rhs_tokens": ["stprba"]},
+  {"lhs": ["cik", "form"], "rhs": "cityba", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 6362, "distinct_rhs": 1576, "lhs_distinct_ratio": 0.006362, "rhs_distinct_ratio": 0.001576, "redundancy": 993629, "redundancy_wl": 999990, "lhs_unique": false, "lhs_tokens": [["cik"], ["form"]], "rhs_tokens": ["cityba"]},
+  {"lhs": ["name", "form"], "rhs": "cityba", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 6363, "distinct_rhs": 1576, "lhs_distinct_ratio": 0.006363, "rhs_distinct_ratio": 0.001576, "redundancy": 993628, "redundancy_wl": 999990, "lhs_unique": false, "lhs_tokens": [["name"], ["form"]], "rhs_tokens": ["cityba"]},
+  {"lhs": ["cik", "period"], "rhs": "afs", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 6297, "distinct_rhs": 4, "lhs_distinct_ratio": 0.006297, "rhs_distinct_ratio": 4e-06, "redundancy": 993694, "redundancy_wl": 999990, "lhs_unique": false, "lhs_tokens": [["cik"], ["period"]], "rhs_tokens": ["afs"]},
+  {"lhs": ["name", "period"], "rhs": "afs", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 6300, "distinct_rhs": 4, "lhs_distinct_ratio": 0.0063, "rhs_distinct_ratio": 4e-06, "redundancy": 993691, "redundancy_wl": 999990, "lhs_unique": false, "lhs_tokens": [["name"], ["period"]], "rhs_tokens": ["afs"]},
+  {"lhs": ["cik", "fp"], "rhs": "afs", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 6340, "distinct_rhs": 4, "lhs_distinct_ratio": 0.00634, "rhs_distinct_ratio": 4e-06, "redundancy": 993651, "redundancy_wl": 999990, "lhs_unique": false, "lhs_tokens": [["cik"], ["fp"]], "rhs_tokens": ["afs"]},
+  {"lhs": ["name", "fp"], "rhs": "afs", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 6341, "distinct_rhs": 4, "lhs_distinct_ratio": 0.006341, "rhs_distinct_ratio": 4e-06, "redundancy": 993650, "redundancy_wl": 999990, "lhs_unique": false, "lhs_tokens": [["name"], ["fp"]], "rhs_tokens": ["afs"]},
+  {"lhs": ["adsh", "tag"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 384568, "distinct_rhs": 2, "lhs_distinct_ratio": 0.384571, "rhs_distinct_ratio": 2e-06, "redundancy": 615423, "redundancy_wl": 771233, "lhs_unique": false, "lhs_tokens": [["adsh"], ["tag"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "cik"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 363031, "distinct_rhs": 2, "lhs_distinct_ratio": 0.363034, "rhs_distinct_ratio": 2e-06, "redundancy": 636960, "redundancy_wl": 789957, "lhs_unique": false, "lhs_tokens": [["tag"], ["cik"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "name"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 363222, "distinct_rhs": 2, "lhs_distinct_ratio": 0.363225, "rhs_distinct_ratio": 2e-06, "redundancy": 636769, "redundancy_wl": 789841, "lhs_unique": false, "lhs_tokens": [["tag"], ["name"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["adsh", "tag"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 384568, "distinct_rhs": 9, "lhs_distinct_ratio": 0.384571, "rhs_distinct_ratio": 9e-06, "redundancy": 615423, "redundancy_wl": 771233, "lhs_unique": false, "lhs_tokens": [["adsh"], ["tag"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["tag", "version"], "rhs": "datatype", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 2, "distinct_lhs": 51303, "distinct_rhs": 9, "lhs_distinct_ratio": 0.051303, "rhs_distinct_ratio": 9e-06, "redundancy": 948688, "redundancy_wl": 970921, "lhs_unique": false, "lhs_tokens": [["tag"], ["version"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["adsh", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 384475, "distinct_rhs": 9, "lhs_distinct_ratio": 0.384478, "rhs_distinct_ratio": 9e-06, "redundancy": 615516, "redundancy_wl": 771343, "lhs_unique": false, "lhs_tokens": [["adsh"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["version", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 51265, "distinct_rhs": 9, "lhs_distinct_ratio": 0.051265, "rhs_distinct_ratio": 9e-06, "redundancy": 948726, "redundancy_wl": 970952, "lhs_unique": false, "lhs_tokens": [["version"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["adsh", "tag"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 384568, "distinct_rhs": 2, "lhs_distinct_ratio": 0.384571, "rhs_distinct_ratio": 2e-06, "redundancy": 615423, "redundancy_wl": 771233, "lhs_unique": false, "lhs_tokens": [["adsh"], ["tag"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["tag", "version"], "rhs": "iord", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 2, "distinct_lhs": 51303, "distinct_rhs": 2, "lhs_distinct_ratio": 0.051303, "rhs_distinct_ratio": 2e-06, "redundancy": 948688, "redundancy_wl": 970921, "lhs_unique": false, "lhs_tokens": [["tag"], ["version"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["adsh", "tag"], "rhs": "crdr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 384568, "distinct_rhs": 3, "lhs_distinct_ratio": 0.384571, "rhs_distinct_ratio": 3e-06, "redundancy": 615423, "redundancy_wl": 771233, "lhs_unique": false, "lhs_tokens": [["adsh"], ["tag"]], "rhs_tokens": ["crdr"]},
+  {"lhs": ["tag", "version"], "rhs": "crdr", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 2, "distinct_lhs": 51303, "distinct_rhs": 3, "lhs_distinct_ratio": 0.051303, "rhs_distinct_ratio": 3e-06, "redundancy": 948688, "redundancy_wl": 970921, "lhs_unique": false, "lhs_tokens": [["tag"], ["version"]], "rhs_tokens": ["crdr"]},
+  {"lhs": ["adsh", "tag"], "rhs": "tlabel", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 384568, "distinct_rhs": 40034, "lhs_distinct_ratio": 0.384571, "rhs_distinct_ratio": 0.040034, "redundancy": 615423, "redundancy_wl": 771233, "lhs_unique": false, "lhs_tokens": [["adsh"], ["tag"]], "rhs_tokens": ["tlabel"]},
+  {"lhs": ["tag", "version"], "rhs": "tlabel", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 2, "distinct_lhs": 51303, "distinct_rhs": 40034, "lhs_distinct_ratio": 0.051303, "rhs_distinct_ratio": 0.040034, "redundancy": 948688, "redundancy_wl": 970921, "lhs_unique": false, "lhs_tokens": [["tag"], ["version"]], "rhs_tokens": ["tlabel"]},
+  {"lhs": ["adsh", "custom", "tlabel"], "rhs": "version", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 384495, "distinct_rhs": 6094, "lhs_distinct_ratio": 0.384498, "rhs_distinct_ratio": 0.006094, "redundancy": 615496, "redundancy_wl": 771320, "lhs_unique": false, "lhs_tokens": [["adsh"], ["custom"], ["tlabel"]], "rhs_tokens": ["version"]},
+  {"lhs": ["version", "cik", "cityba"], "rhs": "countryba", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 12226, "distinct_rhs": 47, "lhs_distinct_ratio": 0.012226, "rhs_distinct_ratio": 4.7e-05, "redundancy": 987765, "redundancy_wl": 999514, "lhs_unique": false, "lhs_tokens": [["version"], ["cik"], ["cityba"]], "rhs_tokens": ["countryba"]},
+  {"lhs": ["version", "name", "cityba"], "rhs": "countryba", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 12227, "distinct_rhs": 47, "lhs_distinct_ratio": 0.012227, "rhs_distinct_ratio": 4.7e-05, "redundancy": 987764, "redundancy_wl": 999514, "lhs_unique": false, "lhs_tokens": [["version"], ["name"], ["cityba"]], "rhs_tokens": ["countryba"]},
+  {"lhs": ["version", "cik", "fy"], "rhs": "countryba", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 12399, "distinct_rhs": 47, "lhs_distinct_ratio": 0.012399, "rhs_distinct_ratio": 4.7e-05, "redundancy": 987592, "redundancy_wl": 999514, "lhs_unique": false, "lhs_tokens": [["version"], ["cik"], ["fy"]], "rhs_tokens": ["countryba"]},
+  {"lhs": ["version", "name", "fy"], "rhs": "countryba", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 12400, "distinct_rhs": 47, "lhs_distinct_ratio": 0.0124, "rhs_distinct_ratio": 4.7e-05, "redundancy": 987591, "redundancy_wl": 999514, "lhs_unique": false, "lhs_tokens": [["version"], ["name"], ["fy"]], "rhs_tokens": ["countryba"]},
+  {"lhs": ["version", "cik", "fp"], "rhs": "countryba", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 12478, "distinct_rhs": 47, "lhs_distinct_ratio": 0.012478, "rhs_distinct_ratio": 4.7e-05, "redundancy": 987513, "redundancy_wl": 999514, "lhs_unique": false, "lhs_tokens": [["version"], ["cik"], ["fp"]], "rhs_tokens": ["countryba"]},
+  {"lhs": ["version", "name", "fp"], "rhs": "countryba", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 12479, "distinct_rhs": 47, "lhs_distinct_ratio": 0.012479, "rhs_distinct_ratio": 4.7e-05, "redundancy": 987512, "redundancy_wl": 999514, "lhs_unique": false, "lhs_tokens": [["version"], ["name"], ["fp"]], "rhs_tokens": ["countryba"]},
+  {"lhs": ["version", "cik", "cityba"], "rhs": "stprba", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 12226, "distinct_rhs": 58, "lhs_distinct_ratio": 0.012226, "rhs_distinct_ratio": 5.8e-05, "redundancy": 987765, "redundancy_wl": 999514, "lhs_unique": false, "lhs_tokens": [["version"], ["cik"], ["cityba"]], "rhs_tokens": ["stprba"]},
+  {"lhs": ["version", "name", "cityba"], "rhs": "stprba", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 12227, "distinct_rhs": 58, "lhs_distinct_ratio": 0.012227, "rhs_distinct_ratio": 5.8e-05, "redundancy": 987764, "redundancy_wl": 999514, "lhs_unique": false, "lhs_tokens": [["version"], ["name"], ["cityba"]], "rhs_tokens": ["stprba"]},
+  {"lhs": ["cik", "countryba", "cityba"], "rhs": "stprba", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 6018, "distinct_rhs": 58, "lhs_distinct_ratio": 0.006018, "rhs_distinct_ratio": 5.8e-05, "redundancy": 993973, "redundancy_wl": 999990, "lhs_unique": false, "lhs_tokens": [["cik"], ["countryba"], ["cityba"]], "rhs_tokens": ["stprba"]},
+  {"lhs": ["name", "countryba", "cityba"], "rhs": "stprba", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 6019, "distinct_rhs": 58, "lhs_distinct_ratio": 0.006019, "rhs_distinct_ratio": 5.8e-05, "redundancy": 993972, "redundancy_wl": 999990, "lhs_unique": false, "lhs_tokens": [["name"], ["countryba"], ["cityba"]], "rhs_tokens": ["stprba"]},
+  {"lhs": ["cik", "cityba", "period"], "rhs": "stprba", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 6303, "distinct_rhs": 58, "lhs_distinct_ratio": 0.006303, "rhs_distinct_ratio": 5.8e-05, "redundancy": 993688, "redundancy_wl": 999990, "lhs_unique": false, "lhs_tokens": [["cik"], ["cityba"], ["period"]], "rhs_tokens": ["stprba"]},
+  {"lhs": ["name", "cityba", "period"], "rhs": "stprba", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 6304, "distinct_rhs": 58, "lhs_distinct_ratio": 0.006304, "rhs_distinct_ratio": 5.8e-05, "redundancy": 993687, "redundancy_wl": 999990, "lhs_unique": false, "lhs_tokens": [["name"], ["cityba"], ["period"]], "rhs_tokens": ["stprba"]},
+  {"lhs": ["cik", "form", "period"], "rhs": "fy", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 6439, "distinct_rhs": 6, "lhs_distinct_ratio": 0.006439, "rhs_distinct_ratio": 6e-06, "redundancy": 993552, "redundancy_wl": 999990, "lhs_unique": false, "lhs_tokens": [["cik"], ["form"], ["period"]], "rhs_tokens": ["fy"]},
+  {"lhs": ["name", "form", "period"], "rhs": "fy", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 6440, "distinct_rhs": 6, "lhs_distinct_ratio": 0.00644, "rhs_distinct_ratio": 6e-06, "redundancy": 993551, "redundancy_wl": 999990, "lhs_unique": false, "lhs_tokens": [["name"], ["form"], ["period"]], "rhs_tokens": ["fy"]},
+  {"lhs": ["cik", "period", "fp"], "rhs": "fy", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 6378, "distinct_rhs": 6, "lhs_distinct_ratio": 0.006378, "rhs_distinct_ratio": 6e-06, "redundancy": 993613, "redundancy_wl": 999990, "lhs_unique": false, "lhs_tokens": [["cik"], ["period"], ["fp"]], "rhs_tokens": ["fy"]},
+  {"lhs": ["name", "period", "fp"], "rhs": "fy", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 6379, "distinct_rhs": 6, "lhs_distinct_ratio": 0.006379, "rhs_distinct_ratio": 6e-06, "redundancy": 993612, "redundancy_wl": 999990, "lhs_unique": false, "lhs_tokens": [["name"], ["period"], ["fp"]], "rhs_tokens": ["fy"]},
+  {"lhs": ["cik", "form", "period"], "rhs": "fp", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 6439, "distinct_rhs": 5, "lhs_distinct_ratio": 0.006439, "rhs_distinct_ratio": 5e-06, "redundancy": 993552, "redundancy_wl": 999990, "lhs_unique": false, "lhs_tokens": [["cik"], ["form"], ["period"]], "rhs_tokens": ["fp"]},
+  {"lhs": ["name", "form", "period"], "rhs": "fp", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 6440, "distinct_rhs": 5, "lhs_distinct_ratio": 0.00644, "rhs_distinct_ratio": 5e-06, "redundancy": 993551, "redundancy_wl": 999990, "lhs_unique": false, "lhs_tokens": [["name"], ["form"], ["period"]], "rhs_tokens": ["fp"]},
+  {"lhs": ["cik", "period", "fy"], "rhs": "fp", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 6378, "distinct_rhs": 5, "lhs_distinct_ratio": 0.006378, "rhs_distinct_ratio": 5e-06, "redundancy": 993613, "redundancy_wl": 999990, "lhs_unique": false, "lhs_tokens": [["cik"], ["period"], ["fy"]], "rhs_tokens": ["fp"]},
+  {"lhs": ["name", "period", "fy"], "rhs": "fp", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 6379, "distinct_rhs": 5, "lhs_distinct_ratio": 0.006379, "rhs_distinct_ratio": 5e-06, "redundancy": 993612, "redundancy_wl": 999990, "lhs_unique": false, "lhs_tokens": [["name"], ["period"], ["fy"]], "rhs_tokens": ["fp"]},
+  {"lhs": ["tag", "value", "cityba"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 775425, "distinct_rhs": 2, "lhs_distinct_ratio": 0.775432, "rhs_distinct_ratio": 2e-06, "redundancy": 224566, "redundancy_wl": 302025, "lhs_unique": false, "lhs_tokens": [["tag"], ["value"], ["cityba"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "value", "form"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 688586, "distinct_rhs": 2, "lhs_distinct_ratio": 0.688592, "rhs_distinct_ratio": 2e-06, "redundancy": 311405, "redundancy_wl": 388124, "lhs_unique": false, "lhs_tokens": [["tag"], ["value"], ["form"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "uom", "cik"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 364681, "distinct_rhs": 9, "lhs_distinct_ratio": 0.364684, "rhs_distinct_ratio": 9e-06, "redundancy": 635310, "redundancy_wl": 788178, "lhs_unique": false, "lhs_tokens": [["tag"], ["uom"], ["cik"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["tag", "uom", "name"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 364872, "distinct_rhs": 9, "lhs_distinct_ratio": 0.364875, "rhs_distinct_ratio": 9e-06, "redundancy": 635119, "redundancy_wl": 788062, "lhs_unique": false, "lhs_tokens": [["tag"], ["uom"], ["name"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["tag", "cik", "form"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 377433, "distinct_rhs": 9, "lhs_distinct_ratio": 0.377436, "rhs_distinct_ratio": 9e-06, "redundancy": 622558, "redundancy_wl": 777267, "lhs_unique": false, "lhs_tokens": [["tag"], ["cik"], ["form"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["tag", "name", "form"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 377537, "distinct_rhs": 9, "lhs_distinct_ratio": 0.37754, "rhs_distinct_ratio": 9e-06, "redundancy": 622454, "redundancy_wl": 777172, "lhs_unique": false, "lhs_tokens": [["tag"], ["name"], ["form"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["tag", "cik", "period"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 373419, "distinct_rhs": 9, "lhs_distinct_ratio": 0.373422, "rhs_distinct_ratio": 9e-06, "redundancy": 626572, "redundancy_wl": 780734, "lhs_unique": false, "lhs_tokens": [["tag"], ["cik"], ["period"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["tag", "name", "period"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 373555, "distinct_rhs": 9, "lhs_distinct_ratio": 0.373558, "rhs_distinct_ratio": 9e-06, "redundancy": 626436, "redundancy_wl": 780616, "lhs_unique": false, "lhs_tokens": [["tag"], ["name"], ["period"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["tag", "cik", "fy"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 371957, "distinct_rhs": 9, "lhs_distinct_ratio": 0.37196, "rhs_distinct_ratio": 9e-06, "redundancy": 628034, "redundancy_wl": 781836, "lhs_unique": false, "lhs_tokens": [["tag"], ["cik"], ["fy"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["tag", "name", "fy"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 372088, "distinct_rhs": 9, "lhs_distinct_ratio": 0.372091, "rhs_distinct_ratio": 9e-06, "redundancy": 627903, "redundancy_wl": 781767, "lhs_unique": false, "lhs_tokens": [["tag"], ["name"], ["fy"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["tag", "cik", "fp"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 374398, "distinct_rhs": 9, "lhs_distinct_ratio": 0.374401, "rhs_distinct_ratio": 9e-06, "redundancy": 625593, "redundancy_wl": 779231, "lhs_unique": false, "lhs_tokens": [["tag"], ["cik"], ["fp"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["tag", "name", "fp"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 374529, "distinct_rhs": 9, "lhs_distinct_ratio": 0.374532, "rhs_distinct_ratio": 9e-06, "redundancy": 625462, "redundancy_wl": 779162, "lhs_unique": false, "lhs_tokens": [["tag"], ["name"], ["fp"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["tag", "cik", "crdr"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 363052, "distinct_rhs": 9, "lhs_distinct_ratio": 0.363055, "rhs_distinct_ratio": 9e-06, "redundancy": 636939, "redundancy_wl": 789940, "lhs_unique": false, "lhs_tokens": [["tag"], ["cik"], ["crdr"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["tag", "name", "crdr"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 363243, "distinct_rhs": 9, "lhs_distinct_ratio": 0.363246, "rhs_distinct_ratio": 9e-06, "redundancy": 636748, "redundancy_wl": 789824, "lhs_unique": false, "lhs_tokens": [["tag"], ["name"], ["crdr"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["cik", "form", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 377495, "distinct_rhs": 9, "lhs_distinct_ratio": 0.377498, "rhs_distinct_ratio": 9e-06, "redundancy": 622496, "redundancy_wl": 777235, "lhs_unique": false, "lhs_tokens": [["cik"], ["form"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["name", "form", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 377599, "distinct_rhs": 9, "lhs_distinct_ratio": 0.377602, "rhs_distinct_ratio": 9e-06, "redundancy": 622392, "redundancy_wl": 777140, "lhs_unique": false, "lhs_tokens": [["name"], ["form"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["cik", "period", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 373549, "distinct_rhs": 9, "lhs_distinct_ratio": 0.373552, "rhs_distinct_ratio": 9e-06, "redundancy": 626442, "redundancy_wl": 780628, "lhs_unique": false, "lhs_tokens": [["cik"], ["period"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["name", "period", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 373678, "distinct_rhs": 9, "lhs_distinct_ratio": 0.373681, "rhs_distinct_ratio": 9e-06, "redundancy": 626313, "redundancy_wl": 780515, "lhs_unique": false, "lhs_tokens": [["name"], ["period"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["cik", "fy", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 372197, "distinct_rhs": 9, "lhs_distinct_ratio": 0.3722, "rhs_distinct_ratio": 9e-06, "redundancy": 627794, "redundancy_wl": 781621, "lhs_unique": false, "lhs_tokens": [["cik"], ["fy"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["name", "fy", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 372328, "distinct_rhs": 9, "lhs_distinct_ratio": 0.372331, "rhs_distinct_ratio": 9e-06, "redundancy": 627663, "redundancy_wl": 781552, "lhs_unique": false, "lhs_tokens": [["name"], ["fy"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["cik", "fp", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 374547, "distinct_rhs": 9, "lhs_distinct_ratio": 0.37455, "rhs_distinct_ratio": 9e-06, "redundancy": 625444, "redundancy_wl": 779142, "lhs_unique": false, "lhs_tokens": [["cik"], ["fp"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["name", "fp", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 374678, "distinct_rhs": 9, "lhs_distinct_ratio": 0.374681, "rhs_distinct_ratio": 9e-06, "redundancy": 625313, "redundancy_wl": 779073, "lhs_unique": false, "lhs_tokens": [["name"], ["fp"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["cik", "crdr", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 364183, "distinct_rhs": 9, "lhs_distinct_ratio": 0.364186, "rhs_distinct_ratio": 9e-06, "redundancy": 635808, "redundancy_wl": 788966, "lhs_unique": false, "lhs_tokens": [["cik"], ["crdr"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["name", "crdr", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 364358, "distinct_rhs": 9, "lhs_distinct_ratio": 0.364361, "rhs_distinct_ratio": 9e-06, "redundancy": 635633, "redundancy_wl": 788863, "lhs_unique": false, "lhs_tokens": [["name"], ["crdr"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["tag", "qtrs", "cik"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 423847, "distinct_rhs": 2, "lhs_distinct_ratio": 0.423851, "rhs_distinct_ratio": 2e-06, "redundancy": 576144, "redundancy_wl": 724941, "lhs_unique": false, "lhs_tokens": [["tag"], ["qtrs"], ["cik"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["tag", "qtrs", "name"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 424045, "distinct_rhs": 2, "lhs_distinct_ratio": 0.424049, "rhs_distinct_ratio": 2e-06, "redundancy": 575946, "redundancy_wl": 724792, "lhs_unique": false, "lhs_tokens": [["tag"], ["qtrs"], ["name"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["tag", "cik", "period"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 373419, "distinct_rhs": 2, "lhs_distinct_ratio": 0.373422, "rhs_distinct_ratio": 2e-06, "redundancy": 626572, "redundancy_wl": 780734, "lhs_unique": false, "lhs_tokens": [["tag"], ["cik"], ["period"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["tag", "name", "period"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 373555, "distinct_rhs": 2, "lhs_distinct_ratio": 0.373558, "rhs_distinct_ratio": 2e-06, "redundancy": 626436, "redundancy_wl": 780616, "lhs_unique": false, "lhs_tokens": [["tag"], ["name"], ["period"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["tag", "cik", "fp"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 374398, "distinct_rhs": 2, "lhs_distinct_ratio": 0.374401, "rhs_distinct_ratio": 2e-06, "redundancy": 625593, "redundancy_wl": 779231, "lhs_unique": false, "lhs_tokens": [["tag"], ["cik"], ["fp"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["tag", "name", "fp"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 374529, "distinct_rhs": 2, "lhs_distinct_ratio": 0.374532, "rhs_distinct_ratio": 2e-06, "redundancy": 625462, "redundancy_wl": 779162, "lhs_unique": false, "lhs_tokens": [["tag"], ["name"], ["fp"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["tag", "cik", "crdr"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 363052, "distinct_rhs": 2, "lhs_distinct_ratio": 0.363055, "rhs_distinct_ratio": 2e-06, "redundancy": 636939, "redundancy_wl": 789940, "lhs_unique": false, "lhs_tokens": [["tag"], ["cik"], ["crdr"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["tag", "name", "crdr"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 363243, "distinct_rhs": 2, "lhs_distinct_ratio": 0.363246, "rhs_distinct_ratio": 2e-06, "redundancy": 636748, "redundancy_wl": 789824, "lhs_unique": false, "lhs_tokens": [["tag"], ["name"], ["crdr"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["adsh", "qtrs", "tlabel"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 442600, "distinct_rhs": 2, "lhs_distinct_ratio": 0.442604, "rhs_distinct_ratio": 2e-06, "redundancy": 557391, "redundancy_wl": 706709, "lhs_unique": false, "lhs_tokens": [["adsh"], ["qtrs"], ["tlabel"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["tag", "cik", "tlabel"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 364271, "distinct_rhs": 2, "lhs_distinct_ratio": 0.364274, "rhs_distinct_ratio": 2e-06, "redundancy": 635720, "redundancy_wl": 788882, "lhs_unique": false, "lhs_tokens": [["tag"], ["cik"], ["tlabel"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["qtrs", "cik", "tlabel"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 424663, "distinct_rhs": 2, "lhs_distinct_ratio": 0.424667, "rhs_distinct_ratio": 2e-06, "redundancy": 575328, "redundancy_wl": 724220, "lhs_unique": false, "lhs_tokens": [["qtrs"], ["cik"], ["tlabel"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["tag", "name", "tlabel"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 364446, "distinct_rhs": 2, "lhs_distinct_ratio": 0.364449, "rhs_distinct_ratio": 2e-06, "redundancy": 635545, "redundancy_wl": 788779, "lhs_unique": false, "lhs_tokens": [["tag"], ["name"], ["tlabel"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["qtrs", "name", "tlabel"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 424848, "distinct_rhs": 2, "lhs_distinct_ratio": 0.424852, "rhs_distinct_ratio": 2e-06, "redundancy": 575143, "redundancy_wl": 724087, "lhs_unique": false, "lhs_tokens": [["qtrs"], ["name"], ["tlabel"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["tag", "ddate", "value", "sic"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 793748, "distinct_rhs": 2, "lhs_distinct_ratio": 0.793755, "rhs_distinct_ratio": 2e-06, "redundancy": 206243, "redundancy_wl": 275490, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["value"], ["sic"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "qtrs", "value", "sic"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 753256, "distinct_rhs": 2, "lhs_distinct_ratio": 0.753263, "rhs_distinct_ratio": 2e-06, "redundancy": 246735, "redundancy_wl": 320958, "lhs_unique": false, "lhs_tokens": [["tag"], ["qtrs"], ["value"], ["sic"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "segments", "value", "sic"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 922677, "distinct_rhs": 2, "lhs_distinct_ratio": 0.922685, "rhs_distinct_ratio": 2e-06, "redundancy": 77314, "redundancy_wl": 124572, "lhs_unique": false, "lhs_tokens": [["tag"], ["segments"], ["value"], ["sic"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "segments", "value", "countryba"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 878488, "distinct_rhs": 2, "lhs_distinct_ratio": 0.878496, "rhs_distinct_ratio": 2e-06, "redundancy": 121503, "redundancy_wl": 170644, "lhs_unique": false, "lhs_tokens": [["tag"], ["segments"], ["value"], ["countryba"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "value", "sic", "countryba"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 744272, "distinct_rhs": 2, "lhs_distinct_ratio": 0.744279, "rhs_distinct_ratio": 2e-06, "redundancy": 255719, "redundancy_wl": 332549, "lhs_unique": false, "lhs_tokens": [["tag"], ["value"], ["sic"], ["countryba"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "value", "sic", "stprba"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 779976, "distinct_rhs": 2, "lhs_distinct_ratio": 0.779983, "rhs_distinct_ratio": 2e-06, "redundancy": 220015, "redundancy_wl": 297588, "lhs_unique": false, "lhs_tokens": [["tag"], ["value"], ["sic"], ["stprba"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "ddate", "sic", "cityba"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 484113, "distinct_rhs": 2, "lhs_distinct_ratio": 0.484117, "rhs_distinct_ratio": 2e-06, "redundancy": 515878, "redundancy_wl": 647446, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["sic"], ["cityba"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "uom", "sic", "cityba"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 317338, "distinct_rhs": 2, "lhs_distinct_ratio": 0.317341, "rhs_distinct_ratio": 2e-06, "redundancy": 682653, "redundancy_wl": 824888, "lhs_unique": false, "lhs_tokens": [["tag"], ["uom"], ["sic"], ["cityba"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "sic", "countryba", "cityba"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 316747, "distinct_rhs": 2, "lhs_distinct_ratio": 0.31675, "rhs_distinct_ratio": 2e-06, "redundancy": 683244, "redundancy_wl": 825902, "lhs_unique": false, "lhs_tokens": [["tag"], ["sic"], ["countryba"], ["cityba"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "sic", "stprba", "cityba"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 316226, "distinct_rhs": 2, "lhs_distinct_ratio": 0.316229, "rhs_distinct_ratio": 2e-06, "redundancy": 683765, "redundancy_wl": 826208, "lhs_unique": false, "lhs_tokens": [["tag"], ["sic"], ["stprba"], ["cityba"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "value", "sic", "afs"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 758847, "distinct_rhs": 2, "lhs_distinct_ratio": 0.758854, "rhs_distinct_ratio": 2e-06, "redundancy": 241144, "redundancy_wl": 317538, "lhs_unique": false, "lhs_tokens": [["tag"], ["value"], ["sic"], ["afs"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "sic", "countryba", "form"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 179239, "distinct_rhs": 2, "lhs_distinct_ratio": 0.179241, "rhs_distinct_ratio": 2e-06, "redundancy": 820752, "redundancy_wl": 915438, "lhs_unique": false, "lhs_tokens": [["tag"], ["sic"], ["countryba"], ["form"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "sic", "cityba", "form"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 332727, "distinct_rhs": 2, "lhs_distinct_ratio": 0.33273, "rhs_distinct_ratio": 2e-06, "redundancy": 667264, "redundancy_wl": 812645, "lhs_unique": false, "lhs_tokens": [["tag"], ["sic"], ["cityba"], ["form"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "value", "sic", "period"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 751723, "distinct_rhs": 2, "lhs_distinct_ratio": 0.75173, "rhs_distinct_ratio": 2e-06, "redundancy": 248268, "redundancy_wl": 323104, "lhs_unique": false, "lhs_tokens": [["tag"], ["value"], ["sic"], ["period"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "sic", "cityba", "period"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 328805, "distinct_rhs": 2, "lhs_distinct_ratio": 0.328808, "rhs_distinct_ratio": 2e-06, "redundancy": 671186, "redundancy_wl": 815677, "lhs_unique": false, "lhs_tokens": [["tag"], ["sic"], ["cityba"], ["period"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "value", "sic", "fy"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 751131, "distinct_rhs": 2, "lhs_distinct_ratio": 0.751138, "rhs_distinct_ratio": 2e-06, "redundancy": 248860, "redundancy_wl": 323163, "lhs_unique": false, "lhs_tokens": [["tag"], ["value"], ["sic"], ["fy"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "value", "sic", "fp"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 760634, "distinct_rhs": 2, "lhs_distinct_ratio": 0.760641, "rhs_distinct_ratio": 2e-06, "redundancy": 239357, "redundancy_wl": 313828, "lhs_unique": false, "lhs_tokens": [["tag"], ["value"], ["sic"], ["fp"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "sic", "cityba", "fp"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 332390, "distinct_rhs": 2, "lhs_distinct_ratio": 0.332393, "rhs_distinct_ratio": 2e-06, "redundancy": 667601, "redundancy_wl": 812489, "lhs_unique": false, "lhs_tokens": [["tag"], ["sic"], ["cityba"], ["fp"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "value", "sic", "tlabel"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 748536, "distinct_rhs": 2, "lhs_distinct_ratio": 0.748543, "rhs_distinct_ratio": 2e-06, "redundancy": 251455, "redundancy_wl": 327313, "lhs_unique": false, "lhs_tokens": [["tag"], ["value"], ["sic"], ["tlabel"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "sic", "cityba", "tlabel"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 319586, "distinct_rhs": 2, "lhs_distinct_ratio": 0.319589, "rhs_distinct_ratio": 2e-06, "redundancy": 680405, "redundancy_wl": 823714, "lhs_unique": false, "lhs_tokens": [["tag"], ["sic"], ["cityba"], ["tlabel"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "cityba", "form", "tlabel"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 240977, "distinct_rhs": 2, "lhs_distinct_ratio": 0.240979, "rhs_distinct_ratio": 2e-06, "redundancy": 759014, "redundancy_wl": 878798, "lhs_unique": false, "lhs_tokens": [["tag"], ["cityba"], ["form"], ["tlabel"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "uom", "value", "stprba"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 745800, "distinct_rhs": 9, "lhs_distinct_ratio": 0.745807, "rhs_distinct_ratio": 9e-06, "redundancy": 254191, "redundancy_wl": 329434, "lhs_unique": false, "lhs_tokens": [["tag"], ["uom"], ["value"], ["stprba"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["tag", "uom", "value", "cityba"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 776252, "distinct_rhs": 9, "lhs_distinct_ratio": 0.776259, "rhs_distinct_ratio": 9e-06, "redundancy": 223739, "redundancy_wl": 301199, "lhs_unique": false, "lhs_tokens": [["tag"], ["uom"], ["value"], ["cityba"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["tag", "value", "stprba", "form"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 763067, "distinct_rhs": 9, "lhs_distinct_ratio": 0.763074, "rhs_distinct_ratio": 9e-06, "redundancy": 236924, "redundancy_wl": 308860, "lhs_unique": false, "lhs_tokens": [["tag"], ["value"], ["stprba"], ["form"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["tag", "value", "cityba", "form"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 790485, "distinct_rhs": 9, "lhs_distinct_ratio": 0.790492, "rhs_distinct_ratio": 9e-06, "redundancy": 209506, "redundancy_wl": 282769, "lhs_unique": false, "lhs_tokens": [["tag"], ["value"], ["cityba"], ["form"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["tag", "value", "stprba", "period"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 757247, "distinct_rhs": 9, "lhs_distinct_ratio": 0.757254, "rhs_distinct_ratio": 9e-06, "redundancy": 242744, "redundancy_wl": 316704, "lhs_unique": false, "lhs_tokens": [["tag"], ["value"], ["stprba"], ["period"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["tag", "value", "cityba", "period"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 785432, "distinct_rhs": 9, "lhs_distinct_ratio": 0.785439, "rhs_distinct_ratio": 9e-06, "redundancy": 214559, "redundancy_wl": 290179, "lhs_unique": false, "lhs_tokens": [["tag"], ["value"], ["cityba"], ["period"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["tag", "value", "stprba", "fy"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 755538, "distinct_rhs": 9, "lhs_distinct_ratio": 0.755545, "rhs_distinct_ratio": 9e-06, "redundancy": 244453, "redundancy_wl": 317888, "lhs_unique": false, "lhs_tokens": [["tag"], ["value"], ["stprba"], ["fy"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["tag", "value", "cityba", "fy"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 784530, "distinct_rhs": 9, "lhs_distinct_ratio": 0.784537, "rhs_distinct_ratio": 9e-06, "redundancy": 215461, "redundancy_wl": 290642, "lhs_unique": false, "lhs_tokens": [["tag"], ["value"], ["cityba"], ["fy"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["tag", "value", "stprba", "fp"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 765294, "distinct_rhs": 9, "lhs_distinct_ratio": 0.765301, "rhs_distinct_ratio": 9e-06, "redundancy": 234697, "redundancy_wl": 307856, "lhs_unique": false, "lhs_tokens": [["tag"], ["value"], ["stprba"], ["fp"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["tag", "value", "cityba", "fp"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 791657, "distinct_rhs": 9, "lhs_distinct_ratio": 0.791664, "rhs_distinct_ratio": 9e-06, "redundancy": 208334, "redundancy_wl": 283075, "lhs_unique": false, "lhs_tokens": [["tag"], ["value"], ["cityba"], ["fp"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["tag", "value", "stprba", "crdr"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 744280, "distinct_rhs": 9, "lhs_distinct_ratio": 0.744287, "rhs_distinct_ratio": 9e-06, "redundancy": 255711, "redundancy_wl": 330836, "lhs_unique": false, "lhs_tokens": [["tag"], ["value"], ["stprba"], ["crdr"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["tag", "value", "cityba", "crdr"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 775456, "distinct_rhs": 9, "lhs_distinct_ratio": 0.775463, "rhs_distinct_ratio": 9e-06, "redundancy": 224535, "redundancy_wl": 301983, "lhs_unique": false, "lhs_tokens": [["tag"], ["value"], ["cityba"], ["crdr"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["uom", "value", "cik", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 827048, "distinct_rhs": 9, "lhs_distinct_ratio": 0.827055, "rhs_distinct_ratio": 9e-06, "redundancy": 172943, "redundancy_wl": 248525, "lhs_unique": false, "lhs_tokens": [["uom"], ["value"], ["cik"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["uom", "value", "name", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 827267, "distinct_rhs": 9, "lhs_distinct_ratio": 0.827274, "rhs_distinct_ratio": 9e-06, "redundancy": 172724, "redundancy_wl": 248259, "lhs_unique": false, "lhs_tokens": [["uom"], ["value"], ["name"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["uom", "value", "cityba", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 781013, "distinct_rhs": 9, "lhs_distinct_ratio": 0.78102, "rhs_distinct_ratio": 9e-06, "redundancy": 218978, "redundancy_wl": 295543, "lhs_unique": false, "lhs_tokens": [["uom"], ["value"], ["cityba"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["value", "cityba", "form", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 794099, "distinct_rhs": 9, "lhs_distinct_ratio": 0.794106, "rhs_distinct_ratio": 9e-06, "redundancy": 205892, "redundancy_wl": 278547, "lhs_unique": false, "lhs_tokens": [["value"], ["cityba"], ["form"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["value", "cityba", "period", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 789099, "distinct_rhs": 9, "lhs_distinct_ratio": 0.789106, "rhs_distinct_ratio": 9e-06, "redundancy": 210892, "redundancy_wl": 285845, "lhs_unique": false, "lhs_tokens": [["value"], ["cityba"], ["period"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["value", "cityba", "fy", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 788287, "distinct_rhs": 9, "lhs_distinct_ratio": 0.788294, "rhs_distinct_ratio": 9e-06, "redundancy": 211704, "redundancy_wl": 286243, "lhs_unique": false, "lhs_tokens": [["value"], ["cityba"], ["fy"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["value", "cityba", "fp", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 794999, "distinct_rhs": 9, "lhs_distinct_ratio": 0.795006, "rhs_distinct_ratio": 9e-06, "redundancy": 204992, "redundancy_wl": 279027, "lhs_unique": false, "lhs_tokens": [["value"], ["cityba"], ["fp"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["value", "stprba", "crdr", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 750377, "distinct_rhs": 9, "lhs_distinct_ratio": 0.750384, "rhs_distinct_ratio": 9e-06, "redundancy": 249614, "redundancy_wl": 323811, "lhs_unique": false, "lhs_tokens": [["value"], ["stprba"], ["crdr"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["value", "cityba", "crdr", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 780232, "distinct_rhs": 9, "lhs_distinct_ratio": 0.780239, "rhs_distinct_ratio": 9e-06, "redundancy": 219759, "redundancy_wl": 296316, "lhs_unique": false, "lhs_tokens": [["value"], ["cityba"], ["crdr"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["tag", "ddate", "qtrs", "segments"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 497973, "distinct_rhs": 2, "lhs_distinct_ratio": 0.497977, "rhs_distinct_ratio": 2e-06, "redundancy": 502018, "redundancy_wl": 556467, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["qtrs"], ["segments"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["tag", "ddate", "qtrs", "value"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 742623, "distinct_rhs": 2, "lhs_distinct_ratio": 0.74263, "rhs_distinct_ratio": 2e-06, "redundancy": 257368, "redundancy_wl": 327399, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["qtrs"], ["value"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["tag", "ddate", "segments", "cik"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 949187, "distinct_rhs": 2, "lhs_distinct_ratio": 0.949196, "rhs_distinct_ratio": 2e-06, "redundancy": 50804, "redundancy_wl": 98974, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["segments"], ["cik"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["tag", "segments", "value", "cik"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 950007, "distinct_rhs": 2, "lhs_distinct_ratio": 0.950016, "rhs_distinct_ratio": 2e-06, "redundancy": 49984, "redundancy_wl": 90067, "lhs_unique": false, "lhs_tokens": [["tag"], ["segments"], ["value"], ["cik"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["tag", "ddate", "segments", "name"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 949438, "distinct_rhs": 2, "lhs_distinct_ratio": 0.949447, "rhs_distinct_ratio": 2e-06, "redundancy": 50553, "redundancy_wl": 98549, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["segments"], ["name"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["tag", "segments", "value", "name"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 950277, "distinct_rhs": 2, "lhs_distinct_ratio": 0.950286, "rhs_distinct_ratio": 2e-06, "redundancy": 49714, "redundancy_wl": 89704, "lhs_unique": false, "lhs_tokens": [["tag"], ["segments"], ["value"], ["name"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["tag", "ddate", "qtrs", "stprba"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 206499, "distinct_rhs": 2, "lhs_distinct_ratio": 0.206501, "rhs_distinct_ratio": 2e-06, "redundancy": 793492, "redundancy_wl": 876150, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["qtrs"], ["stprba"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["tag", "qtrs", "value", "stprba"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 758377, "distinct_rhs": 2, "lhs_distinct_ratio": 0.758384, "rhs_distinct_ratio": 2e-06, "redundancy": 241614, "redundancy_wl": 314600, "lhs_unique": false, "lhs_tokens": [["tag"], ["qtrs"], ["value"], ["stprba"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["tag", "ddate", "qtrs", "cityba"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 406501, "distinct_rhs": 2, "lhs_distinct_ratio": 0.406505, "rhs_distinct_ratio": 2e-06, "redundancy": 593490, "redundancy_wl": 715307, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["qtrs"], ["cityba"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["tag", "qtrs", "value", "cityba"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 786839, "distinct_rhs": 2, "lhs_distinct_ratio": 0.786846, "rhs_distinct_ratio": 2e-06, "redundancy": 213152, "redundancy_wl": 288035, "lhs_unique": false, "lhs_tokens": [["tag"], ["qtrs"], ["value"], ["cityba"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["tag", "ddate", "cik", "form"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 547417, "distinct_rhs": 2, "lhs_distinct_ratio": 0.547422, "rhs_distinct_ratio": 2e-06, "redundancy": 452574, "redundancy_wl": 581205, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["cik"], ["form"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["tag", "value", "cik", "form"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 837699, "distinct_rhs": 2, "lhs_distinct_ratio": 0.837707, "rhs_distinct_ratio": 2e-06, "redundancy": 162292, "redundancy_wl": 233361, "lhs_unique": false, "lhs_tokens": [["tag"], ["value"], ["cik"], ["form"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["tag", "ddate", "name", "form"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 547534, "distinct_rhs": 2, "lhs_distinct_ratio": 0.547539, "rhs_distinct_ratio": 2e-06, "redundancy": 452457, "redundancy_wl": 581086, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["name"], ["form"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["tag", "value", "name", "form"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 837807, "distinct_rhs": 2, "lhs_distinct_ratio": 0.837815, "rhs_distinct_ratio": 2e-06, "redundancy": 162184, "redundancy_wl": 233206, "lhs_unique": false, "lhs_tokens": [["tag"], ["value"], ["name"], ["form"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["tag", "ddate", "cik", "fy"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 542381, "distinct_rhs": 2, "lhs_distinct_ratio": 0.542386, "rhs_distinct_ratio": 2e-06, "redundancy": 457610, "redundancy_wl": 587142, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["cik"], ["fy"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["tag", "value", "cik", "fy"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 832484, "distinct_rhs": 2, "lhs_distinct_ratio": 0.832491, "rhs_distinct_ratio": 2e-06, "redundancy": 167507, "redundancy_wl": 240781, "lhs_unique": false, "lhs_tokens": [["tag"], ["value"], ["cik"], ["fy"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["tag", "ddate", "name", "fy"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 542545, "distinct_rhs": 2, "lhs_distinct_ratio": 0.54255, "rhs_distinct_ratio": 2e-06, "redundancy": 457446, "redundancy_wl": 586982, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["name"], ["fy"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["tag", "value", "name", "fy"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 832666, "distinct_rhs": 2, "lhs_distinct_ratio": 0.832673, "rhs_distinct_ratio": 2e-06, "redundancy": 167325, "redundancy_wl": 240560, "lhs_unique": false, "lhs_tokens": [["tag"], ["value"], ["name"], ["fy"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["version", "qtrs", "segments", "tlabel"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 417503, "distinct_rhs": 2, "lhs_distinct_ratio": 0.417507, "rhs_distinct_ratio": 2e-06, "redundancy": 582488, "redundancy_wl": 662673, "lhs_unique": false, "lhs_tokens": [["version"], ["qtrs"], ["segments"], ["tlabel"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["ddate", "qtrs", "segments", "tlabel"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 504390, "distinct_rhs": 2, "lhs_distinct_ratio": 0.504395, "rhs_distinct_ratio": 2e-06, "redundancy": 495601, "redundancy_wl": 550757, "lhs_unique": false, "lhs_tokens": [["ddate"], ["qtrs"], ["segments"], ["tlabel"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["version", "qtrs", "value", "tlabel"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 708827, "distinct_rhs": 2, "lhs_distinct_ratio": 0.708833, "rhs_distinct_ratio": 2e-06, "redundancy": 291164, "redundancy_wl": 364892, "lhs_unique": false, "lhs_tokens": [["version"], ["qtrs"], ["value"], ["tlabel"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["ddate", "qtrs", "value", "tlabel"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 750653, "distinct_rhs": 2, "lhs_distinct_ratio": 0.75066, "rhs_distinct_ratio": 2e-06, "redundancy": 249338, "redundancy_wl": 317887, "lhs_unique": false, "lhs_tokens": [["ddate"], ["qtrs"], ["value"], ["tlabel"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["qtrs", "value", "stprba", "tlabel"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 764167, "distinct_rhs": 2, "lhs_distinct_ratio": 0.764174, "rhs_distinct_ratio": 2e-06, "redundancy": 235824, "redundancy_wl": 307853, "lhs_unique": false, "lhs_tokens": [["qtrs"], ["value"], ["stprba"], ["tlabel"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["qtrs", "value", "cityba", "tlabel"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 791412, "distinct_rhs": 2, "lhs_distinct_ratio": 0.791419, "rhs_distinct_ratio": 2e-06, "redundancy": 208579, "redundancy_wl": 282563, "lhs_unique": false, "lhs_tokens": [["qtrs"], ["value"], ["cityba"], ["tlabel"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["version", "qtrs", "form", "tlabel"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 77910, "distinct_rhs": 2, "lhs_distinct_ratio": 0.077911, "rhs_distinct_ratio": 2e-06, "redundancy": 922081, "redundancy_wl": 956563, "lhs_unique": false, "lhs_tokens": [["version"], ["qtrs"], ["form"], ["tlabel"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["version", "qtrs", "crdr", "tlabel"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 63521, "distinct_rhs": 2, "lhs_distinct_ratio": 0.063522, "rhs_distinct_ratio": 2e-06, "redundancy": 936470, "redundancy_wl": 962327, "lhs_unique": false, "lhs_tokens": [["version"], ["qtrs"], ["crdr"], ["tlabel"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["adsh", "ddate", "segments", "value", "tlabel"], "rhs": "version", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 995199, "distinct_rhs": 6094, "lhs_distinct_ratio": 0.995208, "rhs_distinct_ratio": 0.006094, "redundancy": 4792, "redundancy_wl": 9584, "lhs_unique": false, "lhs_tokens": [["adsh"], ["ddate"], ["segments"], ["value"], ["tlabel"]], "rhs_tokens": ["version"]},
+  {"lhs": ["adsh", "qtrs", "segments", "value", "tlabel"], "rhs": "version", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 974837, "distinct_rhs": 6094, "lhs_distinct_ratio": 0.974846, "rhs_distinct_ratio": 0.006094, "redundancy": 25154, "redundancy_wl": 47958, "lhs_unique": false, "lhs_tokens": [["adsh"], ["qtrs"], ["segments"], ["value"], ["tlabel"]], "rhs_tokens": ["version"]},
+  {"lhs": ["adsh", "segments", "value", "crdr", "tlabel"], "rhs": "version", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 967514, "distinct_rhs": 6094, "lhs_distinct_ratio": 0.967523, "rhs_distinct_ratio": 0.006094, "redundancy": 32477, "redundancy_wl": 61354, "lhs_unique": false, "lhs_tokens": [["adsh"], ["segments"], ["value"], ["crdr"], ["tlabel"]], "rhs_tokens": ["version"]},
+  {"lhs": ["tag", "ddate", "uom", "segments", "value"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 916700, "distinct_rhs": 2, "lhs_distinct_ratio": 0.916708, "rhs_distinct_ratio": 2e-06, "redundancy": 83291, "redundancy_wl": 117207, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["uom"], ["segments"], ["value"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "ddate", "qtrs", "value", "countryba"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 750605, "distinct_rhs": 2, "lhs_distinct_ratio": 0.750612, "rhs_distinct_ratio": 2e-06, "redundancy": 249386, "redundancy_wl": 319362, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["qtrs"], ["value"], ["countryba"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "ddate", "segments", "value", "stprba"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 952655, "distinct_rhs": 2, "lhs_distinct_ratio": 0.952664, "rhs_distinct_ratio": 2e-06, "redundancy": 47336, "redundancy_wl": 76619, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["segments"], ["value"], ["stprba"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "ddate", "segments", "value", "afs"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 926949, "distinct_rhs": 2, "lhs_distinct_ratio": 0.926957, "rhs_distinct_ratio": 2e-06, "redundancy": 73042, "redundancy_wl": 104635, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["segments"], ["value"], ["afs"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "uom", "segments", "sic", "form"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 545208, "distinct_rhs": 2, "lhs_distinct_ratio": 0.545213, "rhs_distinct_ratio": 2e-06, "redundancy": 454783, "redundancy_wl": 611551, "lhs_unique": false, "lhs_tokens": [["tag"], ["uom"], ["segments"], ["sic"], ["form"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "uom", "sic", "stprba", "form"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 276603, "distinct_rhs": 2, "lhs_distinct_ratio": 0.276605, "rhs_distinct_ratio": 2e-06, "redundancy": 723388, "redundancy_wl": 855545, "lhs_unique": false, "lhs_tokens": [["tag"], ["uom"], ["sic"], ["stprba"], ["form"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "uom", "segments", "cityba", "form"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 627598, "distinct_rhs": 2, "lhs_distinct_ratio": 0.627604, "rhs_distinct_ratio": 2e-06, "redundancy": 372393, "redundancy_wl": 546402, "lhs_unique": false, "lhs_tokens": [["tag"], ["uom"], ["segments"], ["cityba"], ["form"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "uom", "countryba", "cityba", "form"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 239467, "distinct_rhs": 2, "lhs_distinct_ratio": 0.239469, "rhs_distinct_ratio": 2e-06, "redundancy": 760524, "redundancy_wl": 878706, "lhs_unique": false, "lhs_tokens": [["tag"], ["uom"], ["countryba"], ["cityba"], ["form"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "uom", "sic", "afs", "form"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 203068, "distinct_rhs": 2, "lhs_distinct_ratio": 0.20307, "rhs_distinct_ratio": 2e-06, "redundancy": 796923, "redundancy_wl": 902574, "lhs_unique": false, "lhs_tokens": [["tag"], ["uom"], ["sic"], ["afs"], ["form"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "segments", "value", "afs", "period"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 895499, "distinct_rhs": 2, "lhs_distinct_ratio": 0.895507, "rhs_distinct_ratio": 2e-06, "redundancy": 104492, "redundancy_wl": 148609, "lhs_unique": false, "lhs_tokens": [["tag"], ["segments"], ["value"], ["afs"], ["period"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "ddate", "segments", "value", "fy"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 923754, "distinct_rhs": 2, "lhs_distinct_ratio": 0.923762, "rhs_distinct_ratio": 2e-06, "redundancy": 76237, "redundancy_wl": 107044, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["segments"], ["value"], ["fy"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "uom", "cityba", "form", "fy"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 243574, "distinct_rhs": 2, "lhs_distinct_ratio": 0.243576, "rhs_distinct_ratio": 2e-06, "redundancy": 756417, "redundancy_wl": 875884, "lhs_unique": false, "lhs_tokens": [["tag"], ["uom"], ["cityba"], ["form"], ["fy"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "ddate", "segments", "value", "fp"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 927925, "distinct_rhs": 2, "lhs_distinct_ratio": 0.927933, "rhs_distinct_ratio": 2e-06, "redundancy": 72066, "redundancy_wl": 102069, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["segments"], ["value"], ["fp"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "segments", "sic", "form", "fp"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 561654, "distinct_rhs": 2, "lhs_distinct_ratio": 0.561659, "rhs_distinct_ratio": 2e-06, "redundancy": 438337, "redundancy_wl": 599237, "lhs_unique": false, "lhs_tokens": [["tag"], ["segments"], ["sic"], ["form"], ["fp"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "sic", "stprba", "form", "fp"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 284112, "distinct_rhs": 2, "lhs_distinct_ratio": 0.284115, "rhs_distinct_ratio": 2e-06, "redundancy": 715879, "redundancy_wl": 850008, "lhs_unique": false, "lhs_tokens": [["tag"], ["sic"], ["stprba"], ["form"], ["fp"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "uom", "cityba", "form", "fp"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 249728, "distinct_rhs": 2, "lhs_distinct_ratio": 0.24973, "rhs_distinct_ratio": 2e-06, "redundancy": 750263, "redundancy_wl": 871350, "lhs_unique": false, "lhs_tokens": [["tag"], ["uom"], ["cityba"], ["form"], ["fp"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "countryba", "cityba", "form", "fp"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 250478, "distinct_rhs": 2, "lhs_distinct_ratio": 0.25048, "rhs_distinct_ratio": 2e-06, "redundancy": 749513, "redundancy_wl": 871255, "lhs_unique": false, "lhs_tokens": [["tag"], ["countryba"], ["cityba"], ["form"], ["fp"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "sic", "afs", "form", "fp"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 215535, "distinct_rhs": 2, "lhs_distinct_ratio": 0.215537, "rhs_distinct_ratio": 2e-06, "redundancy": 784456, "redundancy_wl": 894332, "lhs_unique": false, "lhs_tokens": [["tag"], ["sic"], ["afs"], ["form"], ["fp"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "ddate", "segments", "value", "crdr"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 916006, "distinct_rhs": 2, "lhs_distinct_ratio": 0.916014, "rhs_distinct_ratio": 2e-06, "redundancy": 83985, "redundancy_wl": 118138, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["segments"], ["value"], ["crdr"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "uom", "cityba", "form", "crdr"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 236426, "distinct_rhs": 2, "lhs_distinct_ratio": 0.236428, "rhs_distinct_ratio": 2e-06, "redundancy": 763565, "redundancy_wl": 881014, "lhs_unique": false, "lhs_tokens": [["tag"], ["uom"], ["cityba"], ["form"], ["crdr"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "cityba", "form", "fp", "crdr"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 247581, "distinct_rhs": 2, "lhs_distinct_ratio": 0.247583, "rhs_distinct_ratio": 2e-06, "redundancy": 752410, "redundancy_wl": 873338, "lhs_unique": false, "lhs_tokens": [["tag"], ["cityba"], ["form"], ["fp"], ["crdr"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["adsh", "ddate", "segments", "value", "tlabel"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 995199, "distinct_rhs": 2, "lhs_distinct_ratio": 0.995208, "rhs_distinct_ratio": 2e-06, "redundancy": 4792, "redundancy_wl": 9584, "lhs_unique": false, "lhs_tokens": [["adsh"], ["ddate"], ["segments"], ["value"], ["tlabel"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "ddate", "segments", "value", "tlabel"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 919145, "distinct_rhs": 2, "lhs_distinct_ratio": 0.919153, "rhs_distinct_ratio": 2e-06, "redundancy": 80846, "redundancy_wl": 114328, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["segments"], ["value"], ["tlabel"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["adsh", "qtrs", "segments", "value", "tlabel"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 974837, "distinct_rhs": 2, "lhs_distinct_ratio": 0.974846, "rhs_distinct_ratio": 2e-06, "redundancy": 25154, "redundancy_wl": 47958, "lhs_unique": false, "lhs_tokens": [["adsh"], ["qtrs"], ["segments"], ["value"], ["tlabel"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "ddate", "value", "countryba", "tlabel"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 745724, "distinct_rhs": 2, "lhs_distinct_ratio": 0.745731, "rhs_distinct_ratio": 2e-06, "redundancy": 254267, "redundancy_wl": 325423, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["value"], ["countryba"], ["tlabel"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "uom", "value", "countryba", "tlabel"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 687184, "distinct_rhs": 2, "lhs_distinct_ratio": 0.68719, "rhs_distinct_ratio": 2e-06, "redundancy": 312807, "redundancy_wl": 392238, "lhs_unique": false, "lhs_tokens": [["tag"], ["uom"], ["value"], ["countryba"], ["tlabel"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "ddate", "value", "stprba", "tlabel"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 802592, "distinct_rhs": 2, "lhs_distinct_ratio": 0.802599, "rhs_distinct_ratio": 2e-06, "redundancy": 197399, "redundancy_wl": 264753, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["value"], ["stprba"], ["tlabel"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "uom", "value", "stprba", "tlabel"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 752062, "distinct_rhs": 2, "lhs_distinct_ratio": 0.752069, "rhs_distinct_ratio": 2e-06, "redundancy": 247929, "redundancy_wl": 322254, "lhs_unique": false, "lhs_tokens": [["tag"], ["uom"], ["value"], ["stprba"], ["tlabel"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "segments", "value", "stprba", "tlabel"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 913868, "distinct_rhs": 2, "lhs_distinct_ratio": 0.913876, "rhs_distinct_ratio": 2e-06, "redundancy": 86123, "redundancy_wl": 132906, "lhs_unique": false, "lhs_tokens": [["tag"], ["segments"], ["value"], ["stprba"], ["tlabel"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "ddate", "value", "afs", "tlabel"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 760134, "distinct_rhs": 2, "lhs_distinct_ratio": 0.760141, "rhs_distinct_ratio": 2e-06, "redundancy": 239857, "redundancy_wl": 308859, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["value"], ["afs"], ["tlabel"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "value", "countryba", "afs", "tlabel"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 711451, "distinct_rhs": 2, "lhs_distinct_ratio": 0.711457, "rhs_distinct_ratio": 2e-06, "redundancy": 288540, "redundancy_wl": 365476, "lhs_unique": false, "lhs_tokens": [["tag"], ["value"], ["countryba"], ["afs"], ["tlabel"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "value", "stprba", "afs", "tlabel"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 767150, "distinct_rhs": 2, "lhs_distinct_ratio": 0.767157, "rhs_distinct_ratio": 2e-06, "redundancy": 232841, "redundancy_wl": 306797, "lhs_unique": false, "lhs_tokens": [["tag"], ["value"], ["stprba"], ["afs"], ["tlabel"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "ddate", "cityba", "afs", "tlabel"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 410026, "distinct_rhs": 2, "lhs_distinct_ratio": 0.41003, "rhs_distinct_ratio": 2e-06, "redundancy": 589965, "redundancy_wl": 720232, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["cityba"], ["afs"], ["tlabel"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "uom", "cityba", "afs", "tlabel"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 250148, "distinct_rhs": 2, "lhs_distinct_ratio": 0.25015, "rhs_distinct_ratio": 2e-06, "redundancy": 749843, "redundancy_wl": 873959, "lhs_unique": false, "lhs_tokens": [["tag"], ["uom"], ["cityba"], ["afs"], ["tlabel"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "segments", "sic", "form", "tlabel"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 552014, "distinct_rhs": 2, "lhs_distinct_ratio": 0.552019, "rhs_distinct_ratio": 2e-06, "redundancy": 447977, "redundancy_wl": 607798, "lhs_unique": false, "lhs_tokens": [["tag"], ["segments"], ["sic"], ["form"], ["tlabel"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "sic", "stprba", "form", "tlabel"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 279589, "distinct_rhs": 2, "lhs_distinct_ratio": 0.279592, "rhs_distinct_ratio": 2e-06, "redundancy": 720402, "redundancy_wl": 854094, "lhs_unique": false, "lhs_tokens": [["tag"], ["sic"], ["stprba"], ["form"], ["tlabel"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "sic", "afs", "form", "tlabel"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 208602, "distinct_rhs": 2, "lhs_distinct_ratio": 0.208604, "rhs_distinct_ratio": 2e-06, "redundancy": 791389, "redundancy_wl": 899938, "lhs_unique": false, "lhs_tokens": [["tag"], ["sic"], ["afs"], ["form"], ["tlabel"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "value", "countryba", "period", "tlabel"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 699823, "distinct_rhs": 2, "lhs_distinct_ratio": 0.699829, "rhs_distinct_ratio": 2e-06, "redundancy": 300168, "redundancy_wl": 377954, "lhs_unique": false, "lhs_tokens": [["tag"], ["value"], ["countryba"], ["period"], ["tlabel"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "value", "afs", "period", "tlabel"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 716681, "distinct_rhs": 2, "lhs_distinct_ratio": 0.716687, "rhs_distinct_ratio": 2e-06, "redundancy": 283310, "redundancy_wl": 358522, "lhs_unique": false, "lhs_tokens": [["tag"], ["value"], ["afs"], ["period"], ["tlabel"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "cityba", "afs", "period", "tlabel"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 268036, "distinct_rhs": 2, "lhs_distinct_ratio": 0.268038, "rhs_distinct_ratio": 2e-06, "redundancy": 731955, "redundancy_wl": 861145, "lhs_unique": false, "lhs_tokens": [["tag"], ["cityba"], ["afs"], ["period"], ["tlabel"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "value", "countryba", "fy", "tlabel"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 697848, "distinct_rhs": 2, "lhs_distinct_ratio": 0.697854, "rhs_distinct_ratio": 2e-06, "redundancy": 302143, "redundancy_wl": 379661, "lhs_unique": false, "lhs_tokens": [["tag"], ["value"], ["countryba"], ["fy"], ["tlabel"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "value", "stprba", "fy", "tlabel"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 760831, "distinct_rhs": 2, "lhs_distinct_ratio": 0.760838, "rhs_distinct_ratio": 2e-06, "redundancy": 239160, "redundancy_wl": 311854, "lhs_unique": false, "lhs_tokens": [["tag"], ["value"], ["stprba"], ["fy"], ["tlabel"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "value", "countryba", "fp", "tlabel"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 710626, "distinct_rhs": 2, "lhs_distinct_ratio": 0.710632, "rhs_distinct_ratio": 2e-06, "redundancy": 289365, "redundancy_wl": 365978, "lhs_unique": false, "lhs_tokens": [["tag"], ["value"], ["countryba"], ["fp"], ["tlabel"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "value", "stprba", "fp", "tlabel"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 770121, "distinct_rhs": 2, "lhs_distinct_ratio": 0.770128, "rhs_distinct_ratio": 2e-06, "redundancy": 229870, "redundancy_wl": 302272, "lhs_unique": false, "lhs_tokens": [["tag"], ["value"], ["stprba"], ["fp"], ["tlabel"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["adsh", "segments", "value", "crdr", "tlabel"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 967514, "distinct_rhs": 2, "lhs_distinct_ratio": 0.967523, "rhs_distinct_ratio": 2e-06, "redundancy": 32477, "redundancy_wl": 61354, "lhs_unique": false, "lhs_tokens": [["adsh"], ["segments"], ["value"], ["crdr"], ["tlabel"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "ddate", "uom", "value", "sic"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 794751, "distinct_rhs": 9, "lhs_distinct_ratio": 0.794758, "rhs_distinct_ratio": 9e-06, "redundancy": 205240, "redundancy_wl": 274398, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["uom"], ["value"], ["sic"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["tag", "uom", "segments", "value", "sic"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 922996, "distinct_rhs": 9, "lhs_distinct_ratio": 0.923004, "rhs_distinct_ratio": 9e-06, "redundancy": 76995, "redundancy_wl": 124090, "lhs_unique": false, "lhs_tokens": [["tag"], ["uom"], ["segments"], ["value"], ["sic"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["tag", "ddate", "value", "sic", "form"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 806585, "distinct_rhs": 9, "lhs_distinct_ratio": 0.806592, "rhs_distinct_ratio": 9e-06, "redundancy": 193406, "redundancy_wl": 257093, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["value"], ["sic"], ["form"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["tag", "ddate", "value", "sic", "period"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 799570, "distinct_rhs": 9, "lhs_distinct_ratio": 0.799577, "rhs_distinct_ratio": 9e-06, "redundancy": 200421, "redundancy_wl": 267270, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["value"], ["sic"], ["period"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["tag", "ddate", "value", "sic", "fy"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 800933, "distinct_rhs": 9, "lhs_distinct_ratio": 0.80094, "rhs_distinct_ratio": 9e-06, "redundancy": 199058, "redundancy_wl": 265242, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["value"], ["sic"], ["fy"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["tag", "ddate", "value", "sic", "fp"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 806305, "distinct_rhs": 9, "lhs_distinct_ratio": 0.806312, "rhs_distinct_ratio": 9e-06, "redundancy": 193686, "redundancy_wl": 259143, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["value"], ["sic"], ["fp"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["tag", "ddate", "value", "sic", "crdr"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 793769, "distinct_rhs": 9, "lhs_distinct_ratio": 0.793776, "rhs_distinct_ratio": 9e-06, "redundancy": 206222, "redundancy_wl": 275465, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["value"], ["sic"], ["crdr"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["ddate", "uom", "segments", "cik", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 950306, "distinct_rhs": 9, "lhs_distinct_ratio": 0.950315, "rhs_distinct_ratio": 9e-06, "redundancy": 49685, "redundancy_wl": 96869, "lhs_unique": false, "lhs_tokens": [["ddate"], ["uom"], ["segments"], ["cik"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["ddate", "uom", "segments", "name", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 950551, "distinct_rhs": 9, "lhs_distinct_ratio": 0.95056, "rhs_distinct_ratio": 9e-06, "redundancy": 49440, "redundancy_wl": 96456, "lhs_unique": false, "lhs_tokens": [["ddate"], ["uom"], ["segments"], ["name"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["ddate", "uom", "value", "sic", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 801123, "distinct_rhs": 9, "lhs_distinct_ratio": 0.80113, "rhs_distinct_ratio": 9e-06, "redundancy": 198868, "redundancy_wl": 266601, "lhs_unique": false, "lhs_tokens": [["ddate"], ["uom"], ["value"], ["sic"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["uom", "segments", "value", "sic", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 924831, "distinct_rhs": 9, "lhs_distinct_ratio": 0.924839, "rhs_distinct_ratio": 9e-06, "redundancy": 75160, "redundancy_wl": 121727, "lhs_unique": false, "lhs_tokens": [["uom"], ["segments"], ["value"], ["sic"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["uom", "segments", "value", "stprba", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 914473, "distinct_rhs": 9, "lhs_distinct_ratio": 0.914481, "rhs_distinct_ratio": 9e-06, "redundancy": 85518, "redundancy_wl": 132199, "lhs_unique": false, "lhs_tokens": [["uom"], ["segments"], ["value"], ["stprba"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["uom", "value", "sic", "stprba", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 785406, "distinct_rhs": 9, "lhs_distinct_ratio": 0.785413, "rhs_distinct_ratio": 9e-06, "redundancy": 214585, "redundancy_wl": 291141, "lhs_unique": false, "lhs_tokens": [["uom"], ["value"], ["sic"], ["stprba"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["ddate", "value", "sic", "form", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 812064, "distinct_rhs": 9, "lhs_distinct_ratio": 0.812071, "rhs_distinct_ratio": 9e-06, "redundancy": 187927, "redundancy_wl": 250581, "lhs_unique": false, "lhs_tokens": [["ddate"], ["value"], ["sic"], ["form"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["segments", "value", "sic", "form", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 937295, "distinct_rhs": 9, "lhs_distinct_ratio": 0.937303, "rhs_distinct_ratio": 9e-06, "redundancy": 62696, "redundancy_wl": 103390, "lhs_unique": false, "lhs_tokens": [["segments"], ["value"], ["sic"], ["form"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["segments", "value", "stprba", "form", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 928862, "distinct_rhs": 9, "lhs_distinct_ratio": 0.92887, "rhs_distinct_ratio": 9e-06, "redundancy": 71129, "redundancy_wl": 112617, "lhs_unique": false, "lhs_tokens": [["segments"], ["value"], ["stprba"], ["form"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["value", "sic", "stprba", "form", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 797186, "distinct_rhs": 9, "lhs_distinct_ratio": 0.797193, "rhs_distinct_ratio": 9e-06, "redundancy": 202805, "redundancy_wl": 275293, "lhs_unique": false, "lhs_tokens": [["value"], ["sic"], ["stprba"], ["form"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["ddate", "value", "sic", "period", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 805172, "distinct_rhs": 9, "lhs_distinct_ratio": 0.805179, "rhs_distinct_ratio": 9e-06, "redundancy": 194819, "redundancy_wl": 260587, "lhs_unique": false, "lhs_tokens": [["ddate"], ["value"], ["sic"], ["period"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["segments", "value", "sic", "period", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 932265, "distinct_rhs": 9, "lhs_distinct_ratio": 0.932273, "rhs_distinct_ratio": 9e-06, "redundancy": 67726, "redundancy_wl": 111460, "lhs_unique": false, "lhs_tokens": [["segments"], ["value"], ["sic"], ["period"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["segments", "value", "stprba", "period", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 923551, "distinct_rhs": 9, "lhs_distinct_ratio": 0.923559, "rhs_distinct_ratio": 9e-06, "redundancy": 76440, "redundancy_wl": 120740, "lhs_unique": false, "lhs_tokens": [["segments"], ["value"], ["stprba"], ["period"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["value", "sic", "stprba", "period", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 792509, "distinct_rhs": 9, "lhs_distinct_ratio": 0.792516, "rhs_distinct_ratio": 9e-06, "redundancy": 207482, "redundancy_wl": 282321, "lhs_unique": false, "lhs_tokens": [["value"], ["sic"], ["stprba"], ["period"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["ddate", "value", "sic", "fy", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 806477, "distinct_rhs": 9, "lhs_distinct_ratio": 0.806484, "rhs_distinct_ratio": 9e-06, "redundancy": 193514, "redundancy_wl": 258619, "lhs_unique": false, "lhs_tokens": [["ddate"], ["value"], ["sic"], ["fy"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["segments", "value", "sic", "fy", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 931473, "distinct_rhs": 9, "lhs_distinct_ratio": 0.931481, "rhs_distinct_ratio": 9e-06, "redundancy": 68518, "redundancy_wl": 112226, "lhs_unique": false, "lhs_tokens": [["segments"], ["value"], ["sic"], ["fy"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["segments", "value", "stprba", "fy", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 922086, "distinct_rhs": 9, "lhs_distinct_ratio": 0.922094, "rhs_distinct_ratio": 9e-06, "redundancy": 77905, "redundancy_wl": 122175, "lhs_unique": false, "lhs_tokens": [["segments"], ["value"], ["stprba"], ["fy"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["value", "sic", "stprba", "fy", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 791946, "distinct_rhs": 9, "lhs_distinct_ratio": 0.791953, "rhs_distinct_ratio": 9e-06, "redundancy": 208045, "redundancy_wl": 282378, "lhs_unique": false, "lhs_tokens": [["value"], ["sic"], ["stprba"], ["fy"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["ddate", "value", "sic", "fp", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 811529, "distinct_rhs": 9, "lhs_distinct_ratio": 0.811536, "rhs_distinct_ratio": 9e-06, "redundancy": 188462, "redundancy_wl": 252755, "lhs_unique": false, "lhs_tokens": [["ddate"], ["value"], ["sic"], ["fp"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["segments", "value", "sic", "fp", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 934494, "distinct_rhs": 9, "lhs_distinct_ratio": 0.934502, "rhs_distinct_ratio": 9e-06, "redundancy": 65497, "redundancy_wl": 108284, "lhs_unique": false, "lhs_tokens": [["segments"], ["value"], ["sic"], ["fp"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["segments", "value", "stprba", "fp", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 926439, "distinct_rhs": 9, "lhs_distinct_ratio": 0.926447, "rhs_distinct_ratio": 9e-06, "redundancy": 73552, "redundancy_wl": 117105, "lhs_unique": false, "lhs_tokens": [["segments"], ["value"], ["stprba"], ["fp"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["value", "sic", "stprba", "fp", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 798384, "distinct_rhs": 9, "lhs_distinct_ratio": 0.798391, "rhs_distinct_ratio": 9e-06, "redundancy": 201607, "redundancy_wl": 275428, "lhs_unique": false, "lhs_tokens": [["value"], ["sic"], ["stprba"], ["fp"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["ddate", "value", "sic", "crdr", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 800155, "distinct_rhs": 9, "lhs_distinct_ratio": 0.800162, "rhs_distinct_ratio": 9e-06, "redundancy": 199836, "redundancy_wl": 267649, "lhs_unique": false, "lhs_tokens": [["ddate"], ["value"], ["sic"], ["crdr"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["segments", "value", "sic", "crdr", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 924545, "distinct_rhs": 9, "lhs_distinct_ratio": 0.924553, "rhs_distinct_ratio": 9e-06, "redundancy": 75446, "redundancy_wl": 122156, "lhs_unique": false, "lhs_tokens": [["segments"], ["value"], ["sic"], ["crdr"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["version", "ddate", "qtrs", "sic", "tlabel"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 333376, "distinct_rhs": 2, "lhs_distinct_ratio": 0.333379, "rhs_distinct_ratio": 2e-06, "redundancy": 666615, "redundancy_wl": 777711, "lhs_unique": false, "lhs_tokens": [["version"], ["ddate"], ["qtrs"], ["sic"], ["tlabel"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["ddate", "qtrs", "sic", "stprba", "tlabel"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 467917, "distinct_rhs": 2, "lhs_distinct_ratio": 0.467921, "rhs_distinct_ratio": 2e-06, "redundancy": 532074, "redundancy_wl": 659212, "lhs_unique": false, "lhs_tokens": [["ddate"], ["qtrs"], ["sic"], ["stprba"], ["tlabel"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["ddate", "qtrs", "sic", "cityba", "tlabel"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 536401, "distinct_rhs": 2, "lhs_distinct_ratio": 0.536406, "rhs_distinct_ratio": 2e-06, "redundancy": 463590, "redundancy_wl": 584203, "lhs_unique": false, "lhs_tokens": [["ddate"], ["qtrs"], ["sic"], ["cityba"], ["tlabel"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["ddate", "qtrs", "stprba", "form", "tlabel"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 245385, "distinct_rhs": 2, "lhs_distinct_ratio": 0.245387, "rhs_distinct_ratio": 2e-06, "redundancy": 754606, "redundancy_wl": 846192, "lhs_unique": false, "lhs_tokens": [["ddate"], ["qtrs"], ["stprba"], ["form"], ["tlabel"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["ddate", "qtrs", "cityba", "form", "tlabel"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 435217, "distinct_rhs": 2, "lhs_distinct_ratio": 0.435221, "rhs_distinct_ratio": 2e-06, "redundancy": 564774, "redundancy_wl": 686706, "lhs_unique": false, "lhs_tokens": [["ddate"], ["qtrs"], ["cityba"], ["form"], ["tlabel"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["version", "ddate", "qtrs", "fy", "tlabel"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 122432, "distinct_rhs": 2, "lhs_distinct_ratio": 0.122433, "rhs_distinct_ratio": 2e-06, "redundancy": 877559, "redundancy_wl": 921089, "lhs_unique": false, "lhs_tokens": [["version"], ["ddate"], ["qtrs"], ["fy"], ["tlabel"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["ddate", "qtrs", "stprba", "fy", "tlabel"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 234448, "distinct_rhs": 2, "lhs_distinct_ratio": 0.23445, "rhs_distinct_ratio": 2e-06, "redundancy": 765543, "redundancy_wl": 856023, "lhs_unique": false, "lhs_tokens": [["ddate"], ["qtrs"], ["stprba"], ["fy"], ["tlabel"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["ddate", "qtrs", "cityba", "fy", "tlabel"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 428711, "distinct_rhs": 2, "lhs_distinct_ratio": 0.428715, "rhs_distinct_ratio": 2e-06, "redundancy": 571280, "redundancy_wl": 693744, "lhs_unique": false, "lhs_tokens": [["ddate"], ["qtrs"], ["cityba"], ["fy"], ["tlabel"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["version", "ddate", "qtrs", "fp", "tlabel"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 126620, "distinct_rhs": 2, "lhs_distinct_ratio": 0.126621, "rhs_distinct_ratio": 2e-06, "redundancy": 873371, "redundancy_wl": 918929, "lhs_unique": false, "lhs_tokens": [["version"], ["ddate"], ["qtrs"], ["fp"], ["tlabel"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["ddate", "qtrs", "stprba", "fp", "tlabel"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 242856, "distinct_rhs": 2, "lhs_distinct_ratio": 0.242858, "rhs_distinct_ratio": 2e-06, "redundancy": 757135, "redundancy_wl": 849989, "lhs_unique": false, "lhs_tokens": [["ddate"], ["qtrs"], ["stprba"], ["fp"], ["tlabel"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["ddate", "qtrs", "cityba", "fp", "tlabel"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 434467, "distinct_rhs": 2, "lhs_distinct_ratio": 0.434471, "rhs_distinct_ratio": 2e-06, "redundancy": 565524, "redundancy_wl": 688336, "lhs_unique": false, "lhs_tokens": [["ddate"], ["qtrs"], ["cityba"], ["fp"], ["tlabel"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["ddate", "qtrs", "stprba", "crdr", "tlabel"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 216340, "distinct_rhs": 2, "lhs_distinct_ratio": 0.216342, "rhs_distinct_ratio": 2e-06, "redundancy": 783651, "redundancy_wl": 869637, "lhs_unique": false, "lhs_tokens": [["ddate"], ["qtrs"], ["stprba"], ["crdr"], ["tlabel"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["ddate", "qtrs", "cityba", "crdr", "tlabel"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 416088, "distinct_rhs": 2, "lhs_distinct_ratio": 0.416092, "rhs_distinct_ratio": 2e-06, "redundancy": 583903, "redundancy_wl": 706299, "lhs_unique": false, "lhs_tokens": [["ddate"], ["qtrs"], ["cityba"], ["crdr"], ["tlabel"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["tag", "value", "cik", "form", "period"], "rhs": "crdr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 839631, "distinct_rhs": 3, "lhs_distinct_ratio": 0.839639, "rhs_distinct_ratio": 3e-06, "redundancy": 160360, "redundancy_wl": 230703, "lhs_unique": false, "lhs_tokens": [["tag"], ["value"], ["cik"], ["form"], ["period"]], "rhs_tokens": ["crdr"]},
+  {"lhs": ["tag", "value", "name", "form", "period"], "rhs": "crdr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 839739, "distinct_rhs": 3, "lhs_distinct_ratio": 0.839747, "rhs_distinct_ratio": 3e-06, "redundancy": 160252, "redundancy_wl": 230548, "lhs_unique": false, "lhs_tokens": [["tag"], ["value"], ["name"], ["form"], ["period"]], "rhs_tokens": ["crdr"]},
+  {"lhs": ["adsh", "qtrs", "segments", "value", "tlabel"], "rhs": "crdr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 974837, "distinct_rhs": 3, "lhs_distinct_ratio": 0.974846, "rhs_distinct_ratio": 3e-06, "redundancy": 25154, "redundancy_wl": 47958, "lhs_unique": false, "lhs_tokens": [["adsh"], ["qtrs"], ["segments"], ["value"], ["tlabel"]], "rhs_tokens": ["crdr"]},
+  {"lhs": ["adsh", "tag", "ddate", "qtrs", "uom", "segments"], "rhs": "value", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 999991, "distinct_rhs": 318490, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.318493, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["adsh"], ["tag"], ["ddate"], ["qtrs"], ["uom"], ["segments"]], "rhs_tokens": ["value"]},
+  {"lhs": ["tag", "qtrs", "uom", "segments", "value", "afs"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 899624, "distinct_rhs": 2, "lhs_distinct_ratio": 0.899632, "rhs_distinct_ratio": 2e-06, "redundancy": 100367, "redundancy_wl": 142141, "lhs_unique": false, "lhs_tokens": [["tag"], ["qtrs"], ["uom"], ["segments"], ["value"], ["afs"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "ddate", "qtrs", "value", "stprba", "afs"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 822878, "distinct_rhs": 2, "lhs_distinct_ratio": 0.822885, "rhs_distinct_ratio": 2e-06, "redundancy": 177113, "redundancy_wl": 242004, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["qtrs"], ["value"], ["stprba"], ["afs"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "uom", "segments", "value", "stprba", "afs"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 920399, "distinct_rhs": 2, "lhs_distinct_ratio": 0.920407, "rhs_distinct_ratio": 2e-06, "redundancy": 79592, "redundancy_wl": 124643, "lhs_unique": false, "lhs_tokens": [["tag"], ["uom"], ["segments"], ["value"], ["stprba"], ["afs"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "ddate", "uom", "sic", "stprba", "afs"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 447622, "distinct_rhs": 2, "lhs_distinct_ratio": 0.447626, "rhs_distinct_ratio": 2e-06, "redundancy": 552369, "redundancy_wl": 686517, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["uom"], ["sic"], ["stprba"], ["afs"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "uom", "segments", "sic", "stprba", "afs"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 676524, "distinct_rhs": 2, "lhs_distinct_ratio": 0.67653, "rhs_distinct_ratio": 2e-06, "redundancy": 323467, "redundancy_wl": 508274, "lhs_unique": false, "lhs_tokens": [["tag"], ["uom"], ["segments"], ["sic"], ["stprba"], ["afs"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "ddate", "segments", "countryba", "cityba", "form"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 814608, "distinct_rhs": 2, "lhs_distinct_ratio": 0.814615, "rhs_distinct_ratio": 2e-06, "redundancy": 185383, "redundancy_wl": 275617, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["segments"], ["countryba"], ["cityba"], ["form"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "segments", "value", "stprba", "afs", "fy"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 928383, "distinct_rhs": 2, "lhs_distinct_ratio": 0.928391, "rhs_distinct_ratio": 2e-06, "redundancy": 71608, "redundancy_wl": 113842, "lhs_unique": false, "lhs_tokens": [["tag"], ["segments"], ["value"], ["stprba"], ["afs"], ["fy"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "ddate", "segments", "sic", "form", "fy"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 723994, "distinct_rhs": 2, "lhs_distinct_ratio": 0.724001, "rhs_distinct_ratio": 2e-06, "redundancy": 275997, "redundancy_wl": 373604, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["segments"], ["sic"], ["form"], ["fy"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "uom", "segments", "value", "afs", "fp"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 899555, "distinct_rhs": 2, "lhs_distinct_ratio": 0.899563, "rhs_distinct_ratio": 2e-06, "redundancy": 100436, "redundancy_wl": 143588, "lhs_unique": false, "lhs_tokens": [["tag"], ["uom"], ["segments"], ["value"], ["afs"], ["fp"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "ddate", "sic", "stprba", "afs", "fp"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 461668, "distinct_rhs": 2, "lhs_distinct_ratio": 0.461672, "rhs_distinct_ratio": 2e-06, "redundancy": 538323, "redundancy_wl": 671646, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["sic"], ["stprba"], ["afs"], ["fp"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "segments", "sic", "stprba", "afs", "fp"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 701721, "distinct_rhs": 2, "lhs_distinct_ratio": 0.701727, "rhs_distinct_ratio": 2e-06, "redundancy": 298270, "redundancy_wl": 481729, "lhs_unique": false, "lhs_tokens": [["tag"], ["segments"], ["sic"], ["stprba"], ["afs"], ["fp"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "qtrs", "uom", "segments", "value", "crdr"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 888118, "distinct_rhs": 2, "lhs_distinct_ratio": 0.888126, "rhs_distinct_ratio": 2e-06, "redundancy": 111873, "redundancy_wl": 156115, "lhs_unique": false, "lhs_tokens": [["tag"], ["qtrs"], ["uom"], ["segments"], ["value"], ["crdr"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "ddate", "qtrs", "value", "stprba", "crdr"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 807447, "distinct_rhs": 2, "lhs_distinct_ratio": 0.807454, "rhs_distinct_ratio": 2e-06, "redundancy": 192544, "redundancy_wl": 258803, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["qtrs"], ["value"], ["stprba"], ["crdr"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "uom", "segments", "value", "stprba", "crdr"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 912236, "distinct_rhs": 2, "lhs_distinct_ratio": 0.912244, "rhs_distinct_ratio": 2e-06, "redundancy": 87755, "redundancy_wl": 134893, "lhs_unique": false, "lhs_tokens": [["tag"], ["uom"], ["segments"], ["value"], ["stprba"], ["crdr"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "qtrs", "segments", "value", "period", "crdr"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 897853, "distinct_rhs": 2, "lhs_distinct_ratio": 0.897861, "rhs_distinct_ratio": 2e-06, "redundancy": 102138, "redundancy_wl": 144246, "lhs_unique": false, "lhs_tokens": [["tag"], ["qtrs"], ["segments"], ["value"], ["period"], ["crdr"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "uom", "segments", "value", "period", "crdr"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 884653, "distinct_rhs": 2, "lhs_distinct_ratio": 0.884661, "rhs_distinct_ratio": 2e-06, "redundancy": 115338, "redundancy_wl": 161796, "lhs_unique": false, "lhs_tokens": [["tag"], ["uom"], ["segments"], ["value"], ["period"], ["crdr"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "segments", "value", "stprba", "period", "crdr"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 921966, "distinct_rhs": 2, "lhs_distinct_ratio": 0.921974, "rhs_distinct_ratio": 2e-06, "redundancy": 78025, "redundancy_wl": 122551, "lhs_unique": false, "lhs_tokens": [["tag"], ["segments"], ["value"], ["stprba"], ["period"], ["crdr"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "segments", "value", "stprba", "fy", "crdr"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 920407, "distinct_rhs": 2, "lhs_distinct_ratio": 0.920415, "rhs_distinct_ratio": 2e-06, "redundancy": 79584, "redundancy_wl": 124072, "lhs_unique": false, "lhs_tokens": [["tag"], ["segments"], ["value"], ["stprba"], ["fy"], ["crdr"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "uom", "segments", "value", "fp", "crdr"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 888202, "distinct_rhs": 2, "lhs_distinct_ratio": 0.88821, "rhs_distinct_ratio": 2e-06, "redundancy": 111789, "redundancy_wl": 157316, "lhs_unique": false, "lhs_tokens": [["tag"], ["uom"], ["segments"], ["value"], ["fp"], ["crdr"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "ddate", "cityba", "afs", "fp", "crdr"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 423690, "distinct_rhs": 2, "lhs_distinct_ratio": 0.423694, "rhs_distinct_ratio": 2e-06, "redundancy": 576301, "redundancy_wl": 706512, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["cityba"], ["afs"], ["fp"], ["crdr"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "uom", "cityba", "afs", "fp", "crdr"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 272250, "distinct_rhs": 2, "lhs_distinct_ratio": 0.272252, "rhs_distinct_ratio": 2e-06, "redundancy": 727741, "redundancy_wl": 857391, "lhs_unique": false, "lhs_tokens": [["tag"], ["uom"], ["cityba"], ["afs"], ["fp"], ["crdr"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "cityba", "afs", "period", "fp", "crdr"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 279483, "distinct_rhs": 2, "lhs_distinct_ratio": 0.279486, "rhs_distinct_ratio": 2e-06, "redundancy": 720508, "redundancy_wl": 852543, "lhs_unique": false, "lhs_tokens": [["tag"], ["cityba"], ["afs"], ["period"], ["fp"], ["crdr"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "qtrs", "uom", "segments", "value", "tlabel"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 891518, "distinct_rhs": 2, "lhs_distinct_ratio": 0.891526, "rhs_distinct_ratio": 2e-06, "redundancy": 108473, "redundancy_wl": 152039, "lhs_unique": false, "lhs_tokens": [["tag"], ["qtrs"], ["uom"], ["segments"], ["value"], ["tlabel"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "qtrs", "uom", "value", "afs", "tlabel"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 722781, "distinct_rhs": 2, "lhs_distinct_ratio": 0.722788, "rhs_distinct_ratio": 2e-06, "redundancy": 277210, "redundancy_wl": 350786, "lhs_unique": false, "lhs_tokens": [["tag"], ["qtrs"], ["uom"], ["value"], ["afs"], ["tlabel"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "segments", "sic", "countryba", "afs", "tlabel"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 583941, "distinct_rhs": 2, "lhs_distinct_ratio": 0.583946, "rhs_distinct_ratio": 2e-06, "redundancy": 416050, "redundancy_wl": 584320, "lhs_unique": false, "lhs_tokens": [["tag"], ["segments"], ["sic"], ["countryba"], ["afs"], ["tlabel"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "ddate", "sic", "stprba", "afs", "tlabel"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 451551, "distinct_rhs": 2, "lhs_distinct_ratio": 0.451555, "rhs_distinct_ratio": 2e-06, "redundancy": 548440, "redundancy_wl": 682866, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["sic"], ["stprba"], ["afs"], ["tlabel"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "segments", "sic", "stprba", "afs", "tlabel"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 681106, "distinct_rhs": 2, "lhs_distinct_ratio": 0.681112, "rhs_distinct_ratio": 2e-06, "redundancy": 318885, "redundancy_wl": 504516, "lhs_unique": false, "lhs_tokens": [["tag"], ["segments"], ["sic"], ["stprba"], ["afs"], ["tlabel"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "qtrs", "segments", "value", "period", "tlabel"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 900672, "distinct_rhs": 2, "lhs_distinct_ratio": 0.90068, "rhs_distinct_ratio": 2e-06, "redundancy": 99319, "redundancy_wl": 141023, "lhs_unique": false, "lhs_tokens": [["tag"], ["qtrs"], ["segments"], ["value"], ["period"], ["tlabel"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "uom", "segments", "value", "period", "tlabel"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 887690, "distinct_rhs": 2, "lhs_distinct_ratio": 0.887698, "rhs_distinct_ratio": 2e-06, "redundancy": 112301, "redundancy_wl": 158346, "lhs_unique": false, "lhs_tokens": [["tag"], ["uom"], ["segments"], ["value"], ["period"], ["tlabel"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["ddate", "segments", "value", "cik", "period", "tlabel"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 985495, "distinct_rhs": 2, "lhs_distinct_ratio": 0.985504, "rhs_distinct_ratio": 2e-06, "redundancy": 14496, "redundancy_wl": 27807, "lhs_unique": false, "lhs_tokens": [["ddate"], ["segments"], ["value"], ["cik"], ["period"], ["tlabel"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["qtrs", "segments", "value", "cik", "period", "tlabel"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 964282, "distinct_rhs": 2, "lhs_distinct_ratio": 0.964291, "rhs_distinct_ratio": 2e-06, "redundancy": 35709, "redundancy_wl": 66442, "lhs_unique": false, "lhs_tokens": [["qtrs"], ["segments"], ["value"], ["cik"], ["period"], ["tlabel"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["ddate", "segments", "value", "name", "period", "tlabel"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 985618, "distinct_rhs": 2, "lhs_distinct_ratio": 0.985627, "rhs_distinct_ratio": 2e-06, "redundancy": 14373, "redundancy_wl": 27561, "lhs_unique": false, "lhs_tokens": [["ddate"], ["segments"], ["value"], ["name"], ["period"], ["tlabel"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["qtrs", "segments", "value", "name", "period", "tlabel"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 964429, "distinct_rhs": 2, "lhs_distinct_ratio": 0.964438, "rhs_distinct_ratio": 2e-06, "redundancy": 35562, "redundancy_wl": 66171, "lhs_unique": false, "lhs_tokens": [["qtrs"], ["segments"], ["value"], ["name"], ["period"], ["tlabel"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "ddate", "uom", "value", "fp", "tlabel"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 756195, "distinct_rhs": 2, "lhs_distinct_ratio": 0.756202, "rhs_distinct_ratio": 2e-06, "redundancy": 243796, "redundancy_wl": 312024, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["uom"], ["value"], ["fp"], ["tlabel"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "qtrs", "uom", "value", "fp", "tlabel"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 718155, "distinct_rhs": 2, "lhs_distinct_ratio": 0.718161, "rhs_distinct_ratio": 2e-06, "redundancy": 281836, "redundancy_wl": 355363, "lhs_unique": false, "lhs_tokens": [["tag"], ["qtrs"], ["uom"], ["value"], ["fp"], ["tlabel"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "uom", "segments", "value", "fp", "tlabel"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 891253, "distinct_rhs": 2, "lhs_distinct_ratio": 0.891261, "rhs_distinct_ratio": 2e-06, "redundancy": 108738, "redundancy_wl": 153934, "lhs_unique": false, "lhs_tokens": [["tag"], ["uom"], ["segments"], ["value"], ["fp"], ["tlabel"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "uom", "value", "afs", "fp", "tlabel"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 727851, "distinct_rhs": 2, "lhs_distinct_ratio": 0.727858, "rhs_distinct_ratio": 2e-06, "redundancy": 272140, "redundancy_wl": 346018, "lhs_unique": false, "lhs_tokens": [["tag"], ["uom"], ["value"], ["afs"], ["fp"], ["tlabel"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "ddate", "value", "period", "fp", "tlabel"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 757518, "distinct_rhs": 2, "lhs_distinct_ratio": 0.757525, "rhs_distinct_ratio": 2e-06, "redundancy": 242473, "redundancy_wl": 310196, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["value"], ["period"], ["fp"], ["tlabel"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "qtrs", "value", "period", "fp", "tlabel"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 724088, "distinct_rhs": 2, "lhs_distinct_ratio": 0.724095, "rhs_distinct_ratio": 2e-06, "redundancy": 275903, "redundancy_wl": 349364, "lhs_unique": false, "lhs_tokens": [["tag"], ["qtrs"], ["value"], ["period"], ["fp"], ["tlabel"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "uom", "value", "period", "fp", "tlabel"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 711645, "distinct_rhs": 2, "lhs_distinct_ratio": 0.711651, "rhs_distinct_ratio": 2e-06, "redundancy": 288346, "redundancy_wl": 364850, "lhs_unique": false, "lhs_tokens": [["tag"], ["uom"], ["value"], ["period"], ["fp"], ["tlabel"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["segments", "value", "cik", "period", "crdr", "tlabel"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 956528, "distinct_rhs": 2, "lhs_distinct_ratio": 0.956537, "rhs_distinct_ratio": 2e-06, "redundancy": 43463, "redundancy_wl": 79928, "lhs_unique": false, "lhs_tokens": [["segments"], ["value"], ["cik"], ["period"], ["crdr"], ["tlabel"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["segments", "value", "name", "period", "crdr", "tlabel"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 956685, "distinct_rhs": 2, "lhs_distinct_ratio": 0.956694, "rhs_distinct_ratio": 2e-06, "redundancy": 43306, "redundancy_wl": 79660, "lhs_unique": false, "lhs_tokens": [["segments"], ["value"], ["name"], ["period"], ["crdr"], ["tlabel"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "segments", "value", "sic", "countryba", "form"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 937812, "distinct_rhs": 9, "lhs_distinct_ratio": 0.93782, "rhs_distinct_ratio": 9e-06, "redundancy": 62179, "redundancy_wl": 102910, "lhs_unique": false, "lhs_tokens": [["tag"], ["segments"], ["value"], ["sic"], ["countryba"], ["form"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["tag", "segments", "value", "sic", "countryba", "period"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 933080, "distinct_rhs": 9, "lhs_distinct_ratio": 0.933088, "rhs_distinct_ratio": 9e-06, "redundancy": 66911, "redundancy_wl": 110689, "lhs_unique": false, "lhs_tokens": [["tag"], ["segments"], ["value"], ["sic"], ["countryba"], ["period"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["tag", "segments", "value", "sic", "countryba", "fy"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 932434, "distinct_rhs": 9, "lhs_distinct_ratio": 0.932442, "rhs_distinct_ratio": 9e-06, "redundancy": 67557, "redundancy_wl": 111290, "lhs_unique": false, "lhs_tokens": [["tag"], ["segments"], ["value"], ["sic"], ["countryba"], ["fy"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["tag", "segments", "value", "sic", "countryba", "fp"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 935189, "distinct_rhs": 9, "lhs_distinct_ratio": 0.935197, "rhs_distinct_ratio": 9e-06, "redundancy": 64802, "redundancy_wl": 107636, "lhs_unique": false, "lhs_tokens": [["tag"], ["segments"], ["value"], ["sic"], ["countryba"], ["fp"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["tag", "segments", "value", "sic", "countryba", "crdr"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 925249, "distinct_rhs": 9, "lhs_distinct_ratio": 0.925257, "rhs_distinct_ratio": 9e-06, "redundancy": 74742, "redundancy_wl": 121815, "lhs_unique": false, "lhs_tokens": [["tag"], ["segments"], ["value"], ["sic"], ["countryba"], ["crdr"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["tag", "uom", "segments", "sic", "stprba", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 648714, "distinct_rhs": 9, "lhs_distinct_ratio": 0.64872, "rhs_distinct_ratio": 9e-06, "redundancy": 351277, "redundancy_wl": 536861, "lhs_unique": false, "lhs_tokens": [["tag"], ["uom"], ["segments"], ["sic"], ["stprba"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["ddate", "uom", "segments", "sic", "stprba", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 846104, "distinct_rhs": 9, "lhs_distinct_ratio": 0.846112, "rhs_distinct_ratio": 9e-06, "redundancy": 153887, "redundancy_wl": 246024, "lhs_unique": false, "lhs_tokens": [["ddate"], ["uom"], ["segments"], ["sic"], ["stprba"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["tag", "uom", "segments", "sic", "cityba", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 713099, "distinct_rhs": 9, "lhs_distinct_ratio": 0.713105, "rhs_distinct_ratio": 9e-06, "redundancy": 286892, "redundancy_wl": 476038, "lhs_unique": false, "lhs_tokens": [["tag"], ["uom"], ["segments"], ["sic"], ["cityba"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["ddate", "uom", "segments", "sic", "cityba", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 902902, "distinct_rhs": 9, "lhs_distinct_ratio": 0.90291, "rhs_distinct_ratio": 9e-06, "redundancy": 97089, "redundancy_wl": 170188, "lhs_unique": false, "lhs_tokens": [["ddate"], ["uom"], ["segments"], ["sic"], ["cityba"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["tag", "uom", "sic", "stprba", "afs", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 286525, "distinct_rhs": 9, "lhs_distinct_ratio": 0.286528, "rhs_distinct_ratio": 9e-06, "redundancy": 713466, "redundancy_wl": 850162, "lhs_unique": false, "lhs_tokens": [["tag"], ["uom"], ["sic"], ["stprba"], ["afs"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["tag", "uom", "sic", "cityba", "afs", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 332943, "distinct_rhs": 9, "lhs_distinct_ratio": 0.332946, "rhs_distinct_ratio": 9e-06, "redundancy": 667048, "redundancy_wl": 813417, "lhs_unique": false, "lhs_tokens": [["tag"], ["uom"], ["sic"], ["cityba"], ["afs"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["ddate", "segments", "sic", "stprba", "form", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 859279, "distinct_rhs": 9, "lhs_distinct_ratio": 0.859287, "rhs_distinct_ratio": 9e-06, "redundancy": 140712, "redundancy_wl": 225728, "lhs_unique": false, "lhs_tokens": [["ddate"], ["segments"], ["sic"], ["stprba"], ["form"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["uom", "segments", "sic", "stprba", "form", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 675417, "distinct_rhs": 9, "lhs_distinct_ratio": 0.675423, "rhs_distinct_ratio": 9e-06, "redundancy": 324574, "redundancy_wl": 508373, "lhs_unique": false, "lhs_tokens": [["uom"], ["segments"], ["sic"], ["stprba"], ["form"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["ddate", "segments", "sic", "cityba", "form", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 911891, "distinct_rhs": 9, "lhs_distinct_ratio": 0.911899, "rhs_distinct_ratio": 9e-06, "redundancy": 88100, "redundancy_wl": 155016, "lhs_unique": false, "lhs_tokens": [["ddate"], ["segments"], ["sic"], ["cityba"], ["form"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["uom", "segments", "sic", "cityba", "form", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 731873, "distinct_rhs": 9, "lhs_distinct_ratio": 0.73188, "rhs_distinct_ratio": 9e-06, "redundancy": 268118, "redundancy_wl": 453903, "lhs_unique": false, "lhs_tokens": [["uom"], ["segments"], ["sic"], ["cityba"], ["form"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["uom", "sic", "stprba", "afs", "form", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 307542, "distinct_rhs": 9, "lhs_distinct_ratio": 0.307545, "rhs_distinct_ratio": 9e-06, "redundancy": 692449, "redundancy_wl": 833688, "lhs_unique": false, "lhs_tokens": [["uom"], ["sic"], ["stprba"], ["afs"], ["form"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["uom", "sic", "cityba", "afs", "form", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 347682, "distinct_rhs": 9, "lhs_distinct_ratio": 0.347685, "rhs_distinct_ratio": 9e-06, "redundancy": 652309, "redundancy_wl": 801027, "lhs_unique": false, "lhs_tokens": [["uom"], ["sic"], ["cityba"], ["afs"], ["form"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["ddate", "segments", "sic", "stprba", "period", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 848788, "distinct_rhs": 9, "lhs_distinct_ratio": 0.848796, "rhs_distinct_ratio": 9e-06, "redundancy": 151203, "redundancy_wl": 241427, "lhs_unique": false, "lhs_tokens": [["ddate"], ["segments"], ["sic"], ["stprba"], ["period"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["uom", "segments", "sic", "stprba", "period", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 668880, "distinct_rhs": 9, "lhs_distinct_ratio": 0.668886, "rhs_distinct_ratio": 9e-06, "redundancy": 331111, "redundancy_wl": 515602, "lhs_unique": false, "lhs_tokens": [["uom"], ["segments"], ["sic"], ["stprba"], ["period"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["ddate", "segments", "sic", "cityba", "period", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 905981, "distinct_rhs": 9, "lhs_distinct_ratio": 0.905989, "rhs_distinct_ratio": 9e-06, "redundancy": 94010, "redundancy_wl": 164974, "lhs_unique": false, "lhs_tokens": [["ddate"], ["segments"], ["sic"], ["cityba"], ["period"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["uom", "segments", "sic", "cityba", "period", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 727154, "distinct_rhs": 9, "lhs_distinct_ratio": 0.727161, "rhs_distinct_ratio": 9e-06, "redundancy": 272837, "redundancy_wl": 459499, "lhs_unique": false, "lhs_tokens": [["uom"], ["segments"], ["sic"], ["cityba"], ["period"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["uom", "sic", "stprba", "afs", "period", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 302054, "distinct_rhs": 9, "lhs_distinct_ratio": 0.302057, "rhs_distinct_ratio": 9e-06, "redundancy": 697937, "redundancy_wl": 837882, "lhs_unique": false, "lhs_tokens": [["uom"], ["sic"], ["stprba"], ["afs"], ["period"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["uom", "sic", "cityba", "afs", "period", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 343892, "distinct_rhs": 9, "lhs_distinct_ratio": 0.343895, "rhs_distinct_ratio": 9e-06, "redundancy": 656099, "redundancy_wl": 803998, "lhs_unique": false, "lhs_tokens": [["uom"], ["sic"], ["cityba"], ["afs"], ["period"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["ddate", "segments", "sic", "stprba", "fy", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 852927, "distinct_rhs": 9, "lhs_distinct_ratio": 0.852935, "rhs_distinct_ratio": 9e-06, "redundancy": 147064, "redundancy_wl": 236138, "lhs_unique": false, "lhs_tokens": [["ddate"], ["segments"], ["sic"], ["stprba"], ["fy"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["uom", "segments", "sic", "stprba", "fy", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 665833, "distinct_rhs": 9, "lhs_distinct_ratio": 0.665839, "rhs_distinct_ratio": 9e-06, "redundancy": 334158, "redundancy_wl": 519353, "lhs_unique": false, "lhs_tokens": [["uom"], ["segments"], ["sic"], ["stprba"], ["fy"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["ddate", "segments", "sic", "cityba", "fy", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 907644, "distinct_rhs": 9, "lhs_distinct_ratio": 0.907652, "rhs_distinct_ratio": 9e-06, "redundancy": 92347, "redundancy_wl": 162437, "lhs_unique": false, "lhs_tokens": [["ddate"], ["segments"], ["sic"], ["cityba"], ["fy"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["uom", "segments", "sic", "cityba", "fy", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 725471, "distinct_rhs": 9, "lhs_distinct_ratio": 0.725478, "rhs_distinct_ratio": 9e-06, "redundancy": 274520, "redundancy_wl": 461803, "lhs_unique": false, "lhs_tokens": [["uom"], ["segments"], ["sic"], ["cityba"], ["fy"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["uom", "sic", "stprba", "afs", "fy", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 299702, "distinct_rhs": 9, "lhs_distinct_ratio": 0.299705, "rhs_distinct_ratio": 9e-06, "redundancy": 700289, "redundancy_wl": 839993, "lhs_unique": false, "lhs_tokens": [["uom"], ["sic"], ["stprba"], ["afs"], ["fy"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["uom", "sic", "cityba", "afs", "fy", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 342675, "distinct_rhs": 9, "lhs_distinct_ratio": 0.342678, "rhs_distinct_ratio": 9e-06, "redundancy": 657316, "redundancy_wl": 805106, "lhs_unique": false, "lhs_tokens": [["uom"], ["sic"], ["cityba"], ["afs"], ["fy"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["ddate", "segments", "sic", "stprba", "fp", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 859101, "distinct_rhs": 9, "lhs_distinct_ratio": 0.859109, "rhs_distinct_ratio": 9e-06, "redundancy": 140890, "redundancy_wl": 227574, "lhs_unique": false, "lhs_tokens": [["ddate"], ["segments"], ["sic"], ["stprba"], ["fp"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["uom", "segments", "sic", "stprba", "fp", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 677360, "distinct_rhs": 9, "lhs_distinct_ratio": 0.677366, "rhs_distinct_ratio": 9e-06, "redundancy": 322631, "redundancy_wl": 507209, "lhs_unique": false, "lhs_tokens": [["uom"], ["segments"], ["sic"], ["stprba"], ["fp"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["ddate", "segments", "sic", "cityba", "fp", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 909900, "distinct_rhs": 9, "lhs_distinct_ratio": 0.909908, "rhs_distinct_ratio": 9e-06, "redundancy": 90091, "redundancy_wl": 159180, "lhs_unique": false, "lhs_tokens": [["ddate"], ["segments"], ["sic"], ["cityba"], ["fp"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["uom", "segments", "sic", "cityba", "fp", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 730720, "distinct_rhs": 9, "lhs_distinct_ratio": 0.730727, "rhs_distinct_ratio": 9e-06, "redundancy": 269271, "redundancy_wl": 455393, "lhs_unique": false, "lhs_tokens": [["uom"], ["segments"], ["sic"], ["cityba"], ["fp"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["uom", "sic", "stprba", "afs", "fp", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 308906, "distinct_rhs": 9, "lhs_distinct_ratio": 0.308909, "rhs_distinct_ratio": 9e-06, "redundancy": 691085, "redundancy_wl": 832207, "lhs_unique": false, "lhs_tokens": [["uom"], ["sic"], ["stprba"], ["afs"], ["fp"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["uom", "sic", "cityba", "afs", "fp", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 346965, "distinct_rhs": 9, "lhs_distinct_ratio": 0.346968, "rhs_distinct_ratio": 9e-06, "redundancy": 653026, "redundancy_wl": 801126, "lhs_unique": false, "lhs_tokens": [["uom"], ["sic"], ["cityba"], ["afs"], ["fp"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["ddate", "segments", "sic", "stprba", "crdr", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 844022, "distinct_rhs": 9, "lhs_distinct_ratio": 0.84403, "rhs_distinct_ratio": 9e-06, "redundancy": 155969, "redundancy_wl": 249249, "lhs_unique": false, "lhs_tokens": [["ddate"], ["segments"], ["sic"], ["stprba"], ["crdr"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["uom", "segments", "sic", "stprba", "crdr", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 648384, "distinct_rhs": 9, "lhs_distinct_ratio": 0.64839, "rhs_distinct_ratio": 9e-06, "redundancy": 351607, "redundancy_wl": 537190, "lhs_unique": false, "lhs_tokens": [["uom"], ["segments"], ["sic"], ["stprba"], ["crdr"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["ddate", "segments", "sic", "cityba", "crdr", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 902104, "distinct_rhs": 9, "lhs_distinct_ratio": 0.902112, "rhs_distinct_ratio": 9e-06, "redundancy": 97887, "redundancy_wl": 171704, "lhs_unique": false, "lhs_tokens": [["ddate"], ["segments"], ["sic"], ["cityba"], ["crdr"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["uom", "segments", "sic", "cityba", "crdr", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 712932, "distinct_rhs": 9, "lhs_distinct_ratio": 0.712938, "rhs_distinct_ratio": 9e-06, "redundancy": 287059, "redundancy_wl": 476235, "lhs_unique": false, "lhs_tokens": [["uom"], ["segments"], ["sic"], ["cityba"], ["crdr"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["ddate", "sic", "stprba", "afs", "crdr", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 451247, "distinct_rhs": 9, "lhs_distinct_ratio": 0.451251, "rhs_distinct_ratio": 9e-06, "redundancy": 548744, "redundancy_wl": 683182, "lhs_unique": false, "lhs_tokens": [["ddate"], ["sic"], ["stprba"], ["afs"], ["crdr"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["uom", "sic", "stprba", "afs", "crdr", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 286205, "distinct_rhs": 9, "lhs_distinct_ratio": 0.286208, "rhs_distinct_ratio": 9e-06, "redundancy": 713786, "redundancy_wl": 850430, "lhs_unique": false, "lhs_tokens": [["uom"], ["sic"], ["stprba"], ["afs"], ["crdr"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["ddate", "sic", "cityba", "afs", "crdr", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 501488, "distinct_rhs": 9, "lhs_distinct_ratio": 0.501493, "rhs_distinct_ratio": 9e-06, "redundancy": 498503, "redundancy_wl": 630367, "lhs_unique": false, "lhs_tokens": [["ddate"], ["sic"], ["cityba"], ["afs"], ["crdr"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["uom", "sic", "cityba", "afs", "crdr", "tlabel"], "rhs": "datatype", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 332796, "distinct_rhs": 9, "lhs_distinct_ratio": 0.332799, "rhs_distinct_ratio": 9e-06, "redundancy": 667195, "redundancy_wl": 813534, "lhs_unique": false, "lhs_tokens": [["uom"], ["sic"], ["cityba"], ["afs"], ["crdr"], ["tlabel"]], "rhs_tokens": ["datatype"]},
+  {"lhs": ["tag", "ddate", "segments", "value", "sic", "afs"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 965457, "distinct_rhs": 2, "lhs_distinct_ratio": 0.965466, "rhs_distinct_ratio": 2e-06, "redundancy": 34534, "redundancy_wl": 58513, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["segments"], ["value"], ["sic"], ["afs"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["tag", "ddate", "segments", "value", "cityba", "afs"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 973126, "distinct_rhs": 2, "lhs_distinct_ratio": 0.973135, "rhs_distinct_ratio": 2e-06, "redundancy": 26865, "redundancy_wl": 48468, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["segments"], ["value"], ["cityba"], ["afs"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["tag", "ddate", "value", "sic", "afs", "form"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 822515, "distinct_rhs": 2, "lhs_distinct_ratio": 0.822522, "rhs_distinct_ratio": 2e-06, "redundancy": 177476, "redundancy_wl": 239487, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["value"], ["sic"], ["afs"], ["form"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["tag", "ddate", "value", "cityba", "afs", "form"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 847744, "distinct_rhs": 2, "lhs_distinct_ratio": 0.847752, "rhs_distinct_ratio": 2e-06, "redundancy": 152247, "redundancy_wl": 212514, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["value"], ["cityba"], ["afs"], ["form"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["tag", "ddate", "value", "sic", "afs", "period"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 815826, "distinct_rhs": 2, "lhs_distinct_ratio": 0.815833, "rhs_distinct_ratio": 2e-06, "redundancy": 184165, "redundancy_wl": 249329, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["value"], ["sic"], ["afs"], ["period"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["tag", "ddate", "value", "cityba", "afs", "period"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 841715, "distinct_rhs": 2, "lhs_distinct_ratio": 0.841723, "rhs_distinct_ratio": 2e-06, "redundancy": 158276, "redundancy_wl": 221732, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["value"], ["cityba"], ["afs"], ["period"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["tag", "ddate", "value", "sic", "afs", "fy"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 816917, "distinct_rhs": 2, "lhs_distinct_ratio": 0.816924, "rhs_distinct_ratio": 2e-06, "redundancy": 183074, "redundancy_wl": 247588, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["value"], ["sic"], ["afs"], ["fy"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["tag", "ddate", "value", "cityba", "afs", "fy"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 842531, "distinct_rhs": 2, "lhs_distinct_ratio": 0.842539, "rhs_distinct_ratio": 2e-06, "redundancy": 157460, "redundancy_wl": 220271, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["value"], ["cityba"], ["afs"], ["fy"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["tag", "ddate", "value", "sic", "afs", "fp"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 821635, "distinct_rhs": 2, "lhs_distinct_ratio": 0.821642, "rhs_distinct_ratio": 2e-06, "redundancy": 178356, "redundancy_wl": 242032, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["value"], ["sic"], ["afs"], ["fp"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["tag", "ddate", "value", "cityba", "afs", "fp"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 845691, "distinct_rhs": 2, "lhs_distinct_ratio": 0.845699, "rhs_distinct_ratio": 2e-06, "redundancy": 154300, "redundancy_wl": 216390, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["value"], ["cityba"], ["afs"], ["fp"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["tag", "segments", "value", "cityba", "afs", "fp"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 947204, "distinct_rhs": 2, "lhs_distinct_ratio": 0.947213, "rhs_distinct_ratio": 2e-06, "redundancy": 52787, "redundancy_wl": 92497, "lhs_unique": false, "lhs_tokens": [["tag"], ["segments"], ["value"], ["cityba"], ["afs"], ["fp"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["tag", "ddate", "value", "sic", "afs", "crdr"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 810176, "distinct_rhs": 2, "lhs_distinct_ratio": 0.810183, "rhs_distinct_ratio": 2e-06, "redundancy": 189815, "redundancy_wl": 257377, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["value"], ["sic"], ["afs"], ["crdr"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["tag", "ddate", "value", "cityba", "afs", "crdr"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 836257, "distinct_rhs": 2, "lhs_distinct_ratio": 0.836265, "rhs_distinct_ratio": 2e-06, "redundancy": 163734, "redundancy_wl": 229705, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["value"], ["cityba"], ["afs"], ["crdr"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["tag", "ddate", "value", "sic", "afs", "tlabel"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 815372, "distinct_rhs": 2, "lhs_distinct_ratio": 0.815379, "rhs_distinct_ratio": 2e-06, "redundancy": 184619, "redundancy_wl": 250592, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["value"], ["sic"], ["afs"], ["tlabel"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["tag", "ddate", "value", "cityba", "afs", "tlabel"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 839323, "distinct_rhs": 2, "lhs_distinct_ratio": 0.839331, "rhs_distinct_ratio": 2e-06, "redundancy": 160668, "redundancy_wl": 225520, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["value"], ["cityba"], ["afs"], ["tlabel"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["adsh", "version", "ddate", "qtrs", "value", "tlabel"], "rhs": "crdr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 891448, "distinct_rhs": 3, "lhs_distinct_ratio": 0.891456, "rhs_distinct_ratio": 3e-06, "redundancy": 108543, "redundancy_wl": 158631, "lhs_unique": false, "lhs_tokens": [["adsh"], ["version"], ["ddate"], ["qtrs"], ["value"], ["tlabel"]], "rhs_tokens": ["crdr"]},
+  {"lhs": ["version", "ddate", "qtrs", "value", "cik", "tlabel"], "rhs": "crdr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 879202, "distinct_rhs": 3, "lhs_distinct_ratio": 0.87921, "rhs_distinct_ratio": 3e-06, "redundancy": 120789, "redundancy_wl": 178439, "lhs_unique": false, "lhs_tokens": [["version"], ["ddate"], ["qtrs"], ["value"], ["cik"], ["tlabel"]], "rhs_tokens": ["crdr"]},
+  {"lhs": ["version", "qtrs", "segments", "value", "cik", "tlabel"], "rhs": "crdr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 962278, "distinct_rhs": 3, "lhs_distinct_ratio": 0.962287, "rhs_distinct_ratio": 3e-06, "redundancy": 37713, "redundancy_wl": 69079, "lhs_unique": false, "lhs_tokens": [["version"], ["qtrs"], ["segments"], ["value"], ["cik"], ["tlabel"]], "rhs_tokens": ["crdr"]},
+  {"lhs": ["version", "ddate", "qtrs", "value", "name", "tlabel"], "rhs": "crdr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 879367, "distinct_rhs": 3, "lhs_distinct_ratio": 0.879375, "rhs_distinct_ratio": 3e-06, "redundancy": 120624, "redundancy_wl": 178229, "lhs_unique": false, "lhs_tokens": [["version"], ["ddate"], ["qtrs"], ["value"], ["name"], ["tlabel"]], "rhs_tokens": ["crdr"]},
+  {"lhs": ["version", "qtrs", "segments", "value", "name", "tlabel"], "rhs": "crdr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 962486, "distinct_rhs": 3, "lhs_distinct_ratio": 0.962495, "rhs_distinct_ratio": 3e-06, "redundancy": 37505, "redundancy_wl": 68788, "lhs_unique": false, "lhs_tokens": [["version"], ["qtrs"], ["segments"], ["value"], ["name"], ["tlabel"]], "rhs_tokens": ["crdr"]},
+  {"lhs": ["version", "ddate", "qtrs", "value", "sic", "tlabel"], "rhs": "crdr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 817991, "distinct_rhs": 3, "lhs_distinct_ratio": 0.817998, "rhs_distinct_ratio": 3e-06, "redundancy": 182000, "redundancy_wl": 245542, "lhs_unique": false, "lhs_tokens": [["version"], ["ddate"], ["qtrs"], ["value"], ["sic"], ["tlabel"]], "rhs_tokens": ["crdr"]},
+  {"lhs": ["version", "qtrs", "segments", "value", "sic", "tlabel"], "rhs": "crdr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 939995, "distinct_rhs": 3, "lhs_distinct_ratio": 0.940003, "rhs_distinct_ratio": 3e-06, "redundancy": 59996, "redundancy_wl": 98271, "lhs_unique": false, "lhs_tokens": [["version"], ["qtrs"], ["segments"], ["value"], ["sic"], ["tlabel"]], "rhs_tokens": ["crdr"]},
+  {"lhs": ["version", "ddate", "qtrs", "value", "stprba", "tlabel"], "rhs": "crdr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 821162, "distinct_rhs": 3, "lhs_distinct_ratio": 0.821169, "rhs_distinct_ratio": 3e-06, "redundancy": 178829, "redundancy_wl": 242196, "lhs_unique": false, "lhs_tokens": [["version"], ["ddate"], ["qtrs"], ["value"], ["stprba"], ["tlabel"]], "rhs_tokens": ["crdr"]},
+  {"lhs": ["version", "ddate", "qtrs", "value", "cityba", "tlabel"], "rhs": "crdr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 844421, "distinct_rhs": 3, "lhs_distinct_ratio": 0.844429, "rhs_distinct_ratio": 3e-06, "redundancy": 155570, "redundancy_wl": 217151, "lhs_unique": false, "lhs_tokens": [["version"], ["ddate"], ["qtrs"], ["value"], ["cityba"], ["tlabel"]], "rhs_tokens": ["crdr"]},
+  {"lhs": ["version", "qtrs", "segments", "value", "cityba", "tlabel"], "rhs": "crdr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 948797, "distinct_rhs": 3, "lhs_distinct_ratio": 0.948806, "rhs_distinct_ratio": 3e-06, "redundancy": 51194, "redundancy_wl": 88209, "lhs_unique": false, "lhs_tokens": [["version"], ["qtrs"], ["segments"], ["value"], ["cityba"], ["tlabel"]], "rhs_tokens": ["crdr"]},
+  {"lhs": ["adsh", "ddate", "qtrs", "value", "custom", "tlabel"], "rhs": "crdr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 891448, "distinct_rhs": 3, "lhs_distinct_ratio": 0.891456, "rhs_distinct_ratio": 3e-06, "redundancy": 108543, "redundancy_wl": 158631, "lhs_unique": false, "lhs_tokens": [["adsh"], ["ddate"], ["qtrs"], ["value"], ["custom"], ["tlabel"]], "rhs_tokens": ["crdr"]},
+  {"lhs": ["adsh", "version", "ddate", "value", "iord", "tlabel"], "rhs": "crdr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 884805, "distinct_rhs": 3, "lhs_distinct_ratio": 0.884813, "rhs_distinct_ratio": 3e-06, "redundancy": 115186, "redundancy_wl": 168749, "lhs_unique": false, "lhs_tokens": [["adsh"], ["version"], ["ddate"], ["value"], ["iord"], ["tlabel"]], "rhs_tokens": ["crdr"]},
+  {"lhs": ["adsh", "version", "segments", "value", "iord", "tlabel"], "rhs": "crdr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 967516, "distinct_rhs": 3, "lhs_distinct_ratio": 0.967525, "rhs_distinct_ratio": 3e-06, "redundancy": 32475, "redundancy_wl": 61350, "lhs_unique": false, "lhs_tokens": [["adsh"], ["version"], ["segments"], ["value"], ["iord"], ["tlabel"]], "rhs_tokens": ["crdr"]},
+  {"lhs": ["adsh", "ddate", "segments", "value", "iord", "tlabel"], "rhs": "crdr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 995202, "distinct_rhs": 3, "lhs_distinct_ratio": 0.995211, "rhs_distinct_ratio": 3e-06, "redundancy": 4789, "redundancy_wl": 9578, "lhs_unique": false, "lhs_tokens": [["adsh"], ["ddate"], ["segments"], ["value"], ["iord"], ["tlabel"]], "rhs_tokens": ["crdr"]},
+  {"lhs": ["version", "ddate", "value", "cik", "iord", "tlabel"], "rhs": "crdr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 872530, "distinct_rhs": 3, "lhs_distinct_ratio": 0.872538, "rhs_distinct_ratio": 3e-06, "redundancy": 127461, "redundancy_wl": 188516, "lhs_unique": false, "lhs_tokens": [["version"], ["ddate"], ["value"], ["cik"], ["iord"], ["tlabel"]], "rhs_tokens": ["crdr"]},
+  {"lhs": ["version", "segments", "value", "cik", "iord", "tlabel"], "rhs": "crdr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 954000, "distinct_rhs": 3, "lhs_distinct_ratio": 0.954009, "rhs_distinct_ratio": 3e-06, "redundancy": 45991, "redundancy_wl": 83299, "lhs_unique": false, "lhs_tokens": [["version"], ["segments"], ["value"], ["cik"], ["iord"], ["tlabel"]], "rhs_tokens": ["crdr"]},
+  {"lhs": ["version", "ddate", "value", "name", "iord", "tlabel"], "rhs": "crdr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 872698, "distinct_rhs": 3, "lhs_distinct_ratio": 0.872706, "rhs_distinct_ratio": 3e-06, "redundancy": 127293, "redundancy_wl": 188300, "lhs_unique": false, "lhs_tokens": [["version"], ["ddate"], ["value"], ["name"], ["iord"], ["tlabel"]], "rhs_tokens": ["crdr"]},
+  {"lhs": ["version", "segments", "value", "name", "iord", "tlabel"], "rhs": "crdr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 954207, "distinct_rhs": 3, "lhs_distinct_ratio": 0.954216, "rhs_distinct_ratio": 3e-06, "redundancy": 45784, "redundancy_wl": 83026, "lhs_unique": false, "lhs_tokens": [["version"], ["segments"], ["value"], ["name"], ["iord"], ["tlabel"]], "rhs_tokens": ["crdr"]},
+  {"lhs": ["version", "segments", "value", "sic", "iord", "tlabel"], "rhs": "crdr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 929526, "distinct_rhs": 3, "lhs_distinct_ratio": 0.929534, "rhs_distinct_ratio": 3e-06, "redundancy": 70465, "redundancy_wl": 114467, "lhs_unique": false, "lhs_tokens": [["version"], ["segments"], ["value"], ["sic"], ["iord"], ["tlabel"]], "rhs_tokens": ["crdr"]},
+  {"lhs": ["version", "ddate", "value", "stprba", "iord", "tlabel"], "rhs": "crdr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 811574, "distinct_rhs": 3, "lhs_distinct_ratio": 0.811581, "rhs_distinct_ratio": 3e-06, "redundancy": 188417, "redundancy_wl": 254147, "lhs_unique": false, "lhs_tokens": [["version"], ["ddate"], ["value"], ["stprba"], ["iord"], ["tlabel"]], "rhs_tokens": ["crdr"]},
+  {"lhs": ["version", "ddate", "value", "cityba", "iord", "tlabel"], "rhs": "crdr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 836803, "distinct_rhs": 3, "lhs_distinct_ratio": 0.836811, "rhs_distinct_ratio": 3e-06, "redundancy": 163188, "redundancy_wl": 227771, "lhs_unique": false, "lhs_tokens": [["version"], ["ddate"], ["value"], ["cityba"], ["iord"], ["tlabel"]], "rhs_tokens": ["crdr"]},
+  {"lhs": ["version", "segments", "value", "cityba", "iord", "tlabel"], "rhs": "crdr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 939323, "distinct_rhs": 3, "lhs_distinct_ratio": 0.939331, "rhs_distinct_ratio": 3e-06, "redundancy": 60668, "redundancy_wl": 103592, "lhs_unique": false, "lhs_tokens": [["version"], ["segments"], ["value"], ["cityba"], ["iord"], ["tlabel"]], "rhs_tokens": ["crdr"]},
+  {"lhs": ["adsh", "ddate", "value", "custom", "iord", "tlabel"], "rhs": "crdr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 884805, "distinct_rhs": 3, "lhs_distinct_ratio": 0.884813, "rhs_distinct_ratio": 3e-06, "redundancy": 115186, "redundancy_wl": 168749, "lhs_unique": false, "lhs_tokens": [["adsh"], ["ddate"], ["value"], ["custom"], ["iord"], ["tlabel"]], "rhs_tokens": ["crdr"]},
+  {"lhs": ["adsh", "segments", "value", "custom", "iord", "tlabel"], "rhs": "crdr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 6, "distinct_lhs": 967516, "distinct_rhs": 3, "lhs_distinct_ratio": 0.967525, "rhs_distinct_ratio": 3e-06, "redundancy": 32475, "redundancy_wl": 61350, "lhs_unique": false, "lhs_tokens": [["adsh"], ["segments"], ["value"], ["custom"], ["iord"], ["tlabel"]], "rhs_tokens": ["crdr"]},
+  {"lhs": ["tag", "ddate", "qtrs", "uom", "segments", "sic", "stprba"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 7, "distinct_lhs": 884530, "distinct_rhs": 2, "lhs_distinct_ratio": 0.884538, "rhs_distinct_ratio": 2e-06, "redundancy": 115461, "redundancy_wl": 179399, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["qtrs"], ["uom"], ["segments"], ["sic"], ["stprba"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "ddate", "qtrs", "sic", "stprba", "form", "fy"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 7, "distinct_lhs": 479977, "distinct_rhs": 2, "lhs_distinct_ratio": 0.479981, "rhs_distinct_ratio": 2e-06, "redundancy": 520014, "redundancy_wl": 645405, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["qtrs"], ["sic"], ["stprba"], ["form"], ["fy"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "ddate", "qtrs", "sic", "afs", "form", "fy"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 7, "distinct_lhs": 382487, "distinct_rhs": 2, "lhs_distinct_ratio": 0.38249, "rhs_distinct_ratio": 2e-06, "redundancy": 617504, "redundancy_wl": 734744, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["qtrs"], ["sic"], ["afs"], ["form"], ["fy"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "qtrs", "segments", "sic", "form", "period", "fy"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 7, "distinct_lhs": 618815, "distinct_rhs": 2, "lhs_distinct_ratio": 0.618821, "rhs_distinct_ratio": 2e-06, "redundancy": 381176, "redundancy_wl": 524125, "lhs_unique": false, "lhs_tokens": [["tag"], ["qtrs"], ["segments"], ["sic"], ["form"], ["period"], ["fy"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "qtrs", "sic", "stprba", "form", "period", "fy"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 7, "distinct_lhs": 336105, "distinct_rhs": 2, "lhs_distinct_ratio": 0.336108, "rhs_distinct_ratio": 2e-06, "redundancy": 663886, "redundancy_wl": 802118, "lhs_unique": false, "lhs_tokens": [["tag"], ["qtrs"], ["sic"], ["stprba"], ["form"], ["period"], ["fy"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "qtrs", "sic", "afs", "form", "period", "fy"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 7, "distinct_lhs": 259805, "distinct_rhs": 2, "lhs_distinct_ratio": 0.259807, "rhs_distinct_ratio": 2e-06, "redundancy": 740186, "redundancy_wl": 857604, "lhs_unique": false, "lhs_tokens": [["tag"], ["qtrs"], ["sic"], ["afs"], ["form"], ["period"], ["fy"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "ddate", "qtrs", "segments", "sic", "stprba", "fp"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 7, "distinct_lhs": 894570, "distinct_rhs": 2, "lhs_distinct_ratio": 0.894578, "rhs_distinct_ratio": 2e-06, "redundancy": 105421, "redundancy_wl": 164276, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["qtrs"], ["segments"], ["sic"], ["stprba"], ["fp"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "ddate", "segments", "countryba", "afs", "form", "fp"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 7, "distinct_lhs": 575273, "distinct_rhs": 2, "lhs_distinct_ratio": 0.575278, "rhs_distinct_ratio": 2e-06, "redundancy": 424718, "redundancy_wl": 497595, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["segments"], ["countryba"], ["afs"], ["form"], ["fp"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "ddate", "segments", "stprba", "cityba", "form", "crdr"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 7, "distinct_lhs": 815354, "distinct_rhs": 2, "lhs_distinct_ratio": 0.815361, "rhs_distinct_ratio": 2e-06, "redundancy": 184637, "redundancy_wl": 274653, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["segments"], ["stprba"], ["cityba"], ["form"], ["crdr"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "ddate", "qtrs", "segments", "sic", "countryba", "tlabel"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 7, "distinct_lhs": 770212, "distinct_rhs": 2, "lhs_distinct_ratio": 0.770219, "rhs_distinct_ratio": 2e-06, "redundancy": 229779, "redundancy_wl": 312367, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["qtrs"], ["segments"], ["sic"], ["countryba"], ["tlabel"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "ddate", "qtrs", "segments", "sic", "stprba", "tlabel"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 7, "distinct_lhs": 889458, "distinct_rhs": 2, "lhs_distinct_ratio": 0.889466, "rhs_distinct_ratio": 2e-06, "redundancy": 110533, "redundancy_wl": 173418, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["qtrs"], ["segments"], ["sic"], ["stprba"], ["tlabel"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "ddate", "segments", "countryba", "afs", "form", "tlabel"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 7, "distinct_lhs": 568094, "distinct_rhs": 2, "lhs_distinct_ratio": 0.568099, "rhs_distinct_ratio": 2e-06, "redundancy": 431897, "redundancy_wl": 503164, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["segments"], ["countryba"], ["afs"], ["form"], ["tlabel"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["ddate", "segments", "value", "sic", "stprba", "period", "tlabel"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 7, "distinct_lhs": 975992, "distinct_rhs": 2, "lhs_distinct_ratio": 0.976001, "rhs_distinct_ratio": 2e-06, "redundancy": 23999, "redundancy_wl": 43883, "lhs_unique": false, "lhs_tokens": [["ddate"], ["segments"], ["value"], ["sic"], ["stprba"], ["period"], ["tlabel"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["qtrs", "segments", "value", "sic", "stprba", "period", "tlabel"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 7, "distinct_lhs": 952991, "distinct_rhs": 2, "lhs_distinct_ratio": 0.953, "rhs_distinct_ratio": 2e-06, "redundancy": 47000, "redundancy_wl": 83322, "lhs_unique": false, "lhs_tokens": [["qtrs"], ["segments"], ["value"], ["sic"], ["stprba"], ["period"], ["tlabel"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["ddate", "segments", "value", "sic", "cityba", "period", "tlabel"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 7, "distinct_lhs": 979093, "distinct_rhs": 2, "lhs_distinct_ratio": 0.979102, "rhs_distinct_ratio": 2e-06, "redundancy": 20898, "redundancy_wl": 39240, "lhs_unique": false, "lhs_tokens": [["ddate"], ["segments"], ["value"], ["sic"], ["cityba"], ["period"], ["tlabel"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["qtrs", "segments", "value", "sic", "cityba", "period", "tlabel"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 7, "distinct_lhs": 956670, "distinct_rhs": 2, "lhs_distinct_ratio": 0.956679, "rhs_distinct_ratio": 2e-06, "redundancy": 43321, "redundancy_wl": 78678, "lhs_unique": false, "lhs_tokens": [["qtrs"], ["segments"], ["value"], ["sic"], ["cityba"], ["period"], ["tlabel"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["segments", "value", "sic", "stprba", "period", "crdr", "tlabel"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 7, "distinct_lhs": 944586, "distinct_rhs": 2, "lhs_distinct_ratio": 0.944595, "rhs_distinct_ratio": 2e-06, "redundancy": 55405, "redundancy_wl": 97512, "lhs_unique": false, "lhs_tokens": [["segments"], ["value"], ["sic"], ["stprba"], ["period"], ["crdr"], ["tlabel"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["segments", "value", "sic", "cityba", "period", "crdr", "tlabel"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 7, "distinct_lhs": 948672, "distinct_rhs": 2, "lhs_distinct_ratio": 0.948681, "rhs_distinct_ratio": 2e-06, "redundancy": 51319, "redundancy_wl": 92418, "lhs_unique": false, "lhs_tokens": [["segments"], ["value"], ["sic"], ["cityba"], ["period"], ["crdr"], ["tlabel"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "segments", "value", "cityba", "afs", "period", "fy"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 7, "distinct_lhs": 949376, "distinct_rhs": 2, "lhs_distinct_ratio": 0.949385, "rhs_distinct_ratio": 2e-06, "redundancy": 50615, "redundancy_wl": 89324, "lhs_unique": false, "lhs_tokens": [["tag"], ["segments"], ["value"], ["cityba"], ["afs"], ["period"], ["fy"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["tag", "segments", "value", "sic", "stprba", "afs", "fp"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 7, "distinct_lhs": 949001, "distinct_rhs": 2, "lhs_distinct_ratio": 0.94901, "rhs_distinct_ratio": 2e-06, "redundancy": 50990, "redundancy_wl": 90088, "lhs_unique": false, "lhs_tokens": [["tag"], ["segments"], ["value"], ["sic"], ["stprba"], ["afs"], ["fp"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["tag", "segments", "value", "cityba", "afs", "fy", "tlabel"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 7, "distinct_lhs": 945724, "distinct_rhs": 2, "lhs_distinct_ratio": 0.945733, "rhs_distinct_ratio": 2e-06, "redundancy": 54267, "redundancy_wl": 94641, "lhs_unique": false, "lhs_tokens": [["tag"], ["segments"], ["value"], ["cityba"], ["afs"], ["fy"], ["tlabel"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["qtrs", "segments", "value", "cik", "form", "period", "tlabel"], "rhs": "crdr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 7, "distinct_lhs": 970248, "distinct_rhs": 3, "lhs_distinct_ratio": 0.970257, "rhs_distinct_ratio": 3e-06, "redundancy": 29743, "redundancy_wl": 56058, "lhs_unique": false, "lhs_tokens": [["qtrs"], ["segments"], ["value"], ["cik"], ["form"], ["period"], ["tlabel"]], "rhs_tokens": ["crdr"]},
+  {"lhs": ["qtrs", "segments", "value", "name", "form", "period", "tlabel"], "rhs": "crdr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 7, "distinct_lhs": 970369, "distinct_rhs": 3, "lhs_distinct_ratio": 0.970378, "rhs_distinct_ratio": 3e-06, "redundancy": 29622, "redundancy_wl": 55829, "lhs_unique": false, "lhs_tokens": [["qtrs"], ["segments"], ["value"], ["name"], ["form"], ["period"], ["tlabel"]], "rhs_tokens": ["crdr"]},
+  {"lhs": ["tag", "ddate", "uom", "segments", "countryba", "afs", "form", "fy"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 8, "distinct_lhs": 571242, "distinct_rhs": 2, "lhs_distinct_ratio": 0.571247, "rhs_distinct_ratio": 2e-06, "redundancy": 428749, "redundancy_wl": 498897, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["uom"], ["segments"], ["countryba"], ["afs"], ["form"], ["fy"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "ddate", "uom", "segments", "countryba", "stprba", "afs", "tlabel"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 8, "distinct_lhs": 690635, "distinct_rhs": 2, "lhs_distinct_ratio": 0.690641, "rhs_distinct_ratio": 2e-06, "redundancy": 309356, "redundancy_wl": 410395, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["uom"], ["segments"], ["countryba"], ["stprba"], ["afs"], ["tlabel"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["ddate", "qtrs", "segments", "value", "cityba", "form", "period", "tlabel"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 8, "distinct_lhs": 985441, "distinct_rhs": 2, "lhs_distinct_ratio": 0.98545, "rhs_distinct_ratio": 2e-06, "redundancy": 14550, "redundancy_wl": 25463, "lhs_unique": false, "lhs_tokens": [["ddate"], ["qtrs"], ["segments"], ["value"], ["cityba"], ["form"], ["period"], ["tlabel"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["ddate", "segments", "value", "cityba", "afs", "form", "period", "tlabel"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 8, "distinct_lhs": 983581, "distinct_rhs": 2, "lhs_distinct_ratio": 0.98359, "rhs_distinct_ratio": 2e-06, "redundancy": 16410, "redundancy_wl": 29812, "lhs_unique": false, "lhs_tokens": [["ddate"], ["segments"], ["value"], ["cityba"], ["afs"], ["form"], ["period"], ["tlabel"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "ddate", "uom", "segments", "countryba", "afs", "crdr", "tlabel"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 8, "distinct_lhs": 541612, "distinct_rhs": 2, "lhs_distinct_ratio": 0.541617, "rhs_distinct_ratio": 2e-06, "redundancy": 458379, "redundancy_wl": 529296, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["uom"], ["segments"], ["countryba"], ["afs"], ["crdr"], ["tlabel"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["tag", "segments", "value", "sic", "stprba", "afs", "period", "fy"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 8, "distinct_lhs": 951011, "distinct_rhs": 2, "lhs_distinct_ratio": 0.95102, "rhs_distinct_ratio": 2e-06, "redundancy": 48980, "redundancy_wl": 87151, "lhs_unique": false, "lhs_tokens": [["tag"], ["segments"], ["value"], ["sic"], ["stprba"], ["afs"], ["period"], ["fy"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["tag", "segments", "value", "sic", "stprba", "afs", "fy", "tlabel"], "rhs": "iord", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 8, "distinct_lhs": 947676, "distinct_rhs": 2, "lhs_distinct_ratio": 0.947685, "rhs_distinct_ratio": 2e-06, "redundancy": 52315, "redundancy_wl": 92106, "lhs_unique": false, "lhs_tokens": [["tag"], ["segments"], ["value"], ["sic"], ["stprba"], ["afs"], ["fy"], ["tlabel"]], "rhs_tokens": ["iord"]},
+  {"lhs": ["ddate", "qtrs", "value", "cik", "form", "period", "custom", "tlabel"], "rhs": "crdr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 8, "distinct_lhs": 886736, "distinct_rhs": 3, "lhs_distinct_ratio": 0.886744, "rhs_distinct_ratio": 3e-06, "redundancy": 113255, "redundancy_wl": 166252, "lhs_unique": false, "lhs_tokens": [["ddate"], ["qtrs"], ["value"], ["cik"], ["form"], ["period"], ["custom"], ["tlabel"]], "rhs_tokens": ["crdr"]},
+  {"lhs": ["ddate", "qtrs", "value", "name", "form", "period", "custom", "tlabel"], "rhs": "crdr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 8, "distinct_lhs": 886850, "distinct_rhs": 3, "lhs_distinct_ratio": 0.886858, "rhs_distinct_ratio": 3e-06, "redundancy": 113141, "redundancy_wl": 166098, "lhs_unique": false, "lhs_tokens": [["ddate"], ["qtrs"], ["value"], ["name"], ["form"], ["period"], ["custom"], ["tlabel"]], "rhs_tokens": ["crdr"]},
+  {"lhs": ["ddate", "segments", "value", "cik", "form", "period", "iord", "tlabel"], "rhs": "crdr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 8, "distinct_lhs": 991012, "distinct_rhs": 3, "lhs_distinct_ratio": 0.991021, "rhs_distinct_ratio": 3e-06, "redundancy": 8979, "redundancy_wl": 17471, "lhs_unique": false, "lhs_tokens": [["ddate"], ["segments"], ["value"], ["cik"], ["form"], ["period"], ["iord"], ["tlabel"]], "rhs_tokens": ["crdr"]},
+  {"lhs": ["ddate", "segments", "value", "name", "form", "period", "iord", "tlabel"], "rhs": "crdr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 8, "distinct_lhs": 991113, "distinct_rhs": 3, "lhs_distinct_ratio": 0.991122, "rhs_distinct_ratio": 3e-06, "redundancy": 8878, "redundancy_wl": 17269, "lhs_unique": false, "lhs_tokens": [["ddate"], ["segments"], ["value"], ["name"], ["form"], ["period"], ["iord"], ["tlabel"]], "rhs_tokens": ["crdr"]},
+  {"lhs": ["ddate", "value", "cik", "form", "period", "custom", "iord", "tlabel"], "rhs": "crdr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 8, "distinct_lhs": 880083, "distinct_rhs": 3, "lhs_distinct_ratio": 0.880091, "rhs_distinct_ratio": 3e-06, "redundancy": 119908, "redundancy_wl": 176341, "lhs_unique": false, "lhs_tokens": [["ddate"], ["value"], ["cik"], ["form"], ["period"], ["custom"], ["iord"], ["tlabel"]], "rhs_tokens": ["crdr"]},
+  {"lhs": ["segments", "value", "cik", "form", "period", "custom", "iord", "tlabel"], "rhs": "crdr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 8, "distinct_lhs": 962773, "distinct_rhs": 3, "lhs_distinct_ratio": 0.962782, "rhs_distinct_ratio": 3e-06, "redundancy": 37218, "redundancy_wl": 69404, "lhs_unique": false, "lhs_tokens": [["segments"], ["value"], ["cik"], ["form"], ["period"], ["custom"], ["iord"], ["tlabel"]], "rhs_tokens": ["crdr"]},
+  {"lhs": ["ddate", "value", "name", "form", "period", "custom", "iord", "tlabel"], "rhs": "crdr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 8, "distinct_lhs": 880197, "distinct_rhs": 3, "lhs_distinct_ratio": 0.880205, "rhs_distinct_ratio": 3e-06, "redundancy": 119794, "redundancy_wl": 176187, "lhs_unique": false, "lhs_tokens": [["ddate"], ["value"], ["name"], ["form"], ["period"], ["custom"], ["iord"], ["tlabel"]], "rhs_tokens": ["crdr"]},
+  {"lhs": ["segments", "value", "name", "form", "period", "custom", "iord", "tlabel"], "rhs": "crdr", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 8, "distinct_lhs": 962902, "distinct_rhs": 3, "lhs_distinct_ratio": 0.962911, "rhs_distinct_ratio": 3e-06, "redundancy": 37089, "redundancy_wl": 69176, "lhs_unique": false, "lhs_tokens": [["segments"], ["value"], ["name"], ["form"], ["period"], ["custom"], ["iord"], ["tlabel"]], "rhs_tokens": ["crdr"]},
+  {"lhs": ["tag", "ddate", "uom", "segments", "countryba", "stprba", "afs", "fp", "crdr"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 9, "distinct_lhs": 713693, "distinct_rhs": 2, "lhs_distinct_ratio": 0.713699, "rhs_distinct_ratio": 2e-06, "redundancy": 286298, "redundancy_wl": 383867, "lhs_unique": false, "lhs_tokens": [["tag"], ["ddate"], ["uom"], ["segments"], ["countryba"], ["stprba"], ["afs"], ["fp"], ["crdr"]], "rhs_tokens": ["custom"]},
+  {"lhs": ["ddate", "qtrs", "segments", "value", "countryba", "stprba", "form", "period", "tlabel"], "rhs": "custom", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 9, "distinct_lhs": 974420, "distinct_rhs": 2, "lhs_distinct_ratio": 0.974429, "rhs_distinct_ratio": 2e-06, "redundancy": 25571, "redundancy_wl": 40738, "lhs_unique": false, "lhs_tokens": [["ddate"], ["qtrs"], ["segments"], ["value"], ["countryba"], ["stprba"], ["form"], ["period"], ["tlabel"]], "rhs_tokens": ["custom"]}
+ ]
+}

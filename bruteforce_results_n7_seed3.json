@@ -1,0 +1,2690 @@
+{
+ "stats": {
+  "FN/iconf/changed_but_valid": 31,
+  "FN/iconf/est_refines_truth": 258,
+  "FN/iconf/fmax_regret=+0": 391,
+  "FN/iconf/fmax_regret=+1": 225,
+  "FN/iconf/fmax_regret=+2": 17,
+  "FN/iconf/fmax_regret=-1": 22,
+  "FN/iconf/invalid_wrt_truth": 573,
+  "FN/iconf/kmax_regret>0": 0,
+  "FN/iconf/lossy": 0,
+  "FN/iconf/not3nf_wrt_truth": 287,
+  "FN/iconf/over>0": 0,
+  "FN/iconf/struct_changed": 604,
+  "FN/iconf/total": 655,
+  "FN/iconf/truth_refines_est": 242,
+  "FN/iconf/uloc>0": 419,
+  "FN/iconf/ustr>0": 388,
+  "FN/iconf/valid_fmax_regret=+0": 82,
+  "FN/synthesis/changed_but_valid": 29,
+  "FN/synthesis/est_refines_truth": 266,
+  "FN/synthesis/fmax_regret=+0": 391,
+  "FN/synthesis/fmax_regret=+1": 225,
+  "FN/synthesis/fmax_regret=+2": 17,
+  "FN/synthesis/fmax_regret=-1": 22,
+  "FN/synthesis/invalid_wrt_truth": 573,
+  "FN/synthesis/kmax_regret>0": 0,
+  "FN/synthesis/lossy": 0,
+  "FN/synthesis/not3nf_wrt_truth": 287,
+  "FN/synthesis/over>0": 0,
+  "FN/synthesis/struct_changed": 602,
+  "FN/synthesis/total": 655,
+  "FN/synthesis/truth_refines_est": 244,
+  "FN/synthesis/uloc>0": 419,
+  "FN/synthesis/ustr>0": 388,
+  "FN/synthesis/valid_fmax_regret=+0": 82,
+  "FP/iconf/changed_but_valid": 423,
+  "FP/iconf/est_refines_truth": 626,
+  "FP/iconf/fmax_regret=+0": 1678,
+  "FP/iconf/fmax_regret=+1": 94,
+  "FP/iconf/fmax_regret=-1": 28,
+  "FP/iconf/invalid_wrt_truth": 1310,
+  "FP/iconf/kmax_regret>0": 0,
+  "FP/iconf/lossless_without_suff": 141,
+  "FP/iconf/lossy": 1126,
+  "FP/iconf/not3nf_wrt_truth": 140,
+  "FP/iconf/over>0": 1800,
+  "FP/iconf/struct_changed": 1733,
+  "FP/iconf/suff_cond_holds": 533,
+  "FP/iconf/total": 1800,
+  "FP/iconf/truth_refines_est": 522,
+  "FP/iconf/uloc>0": 0,
+  "FP/iconf/ustr>0": 488,
+  "FP/iconf/valid_fmax_regret=+0": 490,
+  "FP/synthesis/changed_but_valid": 404,
+  "FP/synthesis/est_refines_truth": 633,
+  "FP/synthesis/fmax_regret=+0": 1658,
+  "FP/synthesis/fmax_regret=+1": 117,
+  "FP/synthesis/fmax_regret=-1": 25,
+  "FP/synthesis/invalid_wrt_truth": 1323,
+  "FP/synthesis/kmax_regret>0": 1,
+  "FP/synthesis/lossless_without_suff": 148,
+  "FP/synthesis/lossy": 1131,
+  "FP/synthesis/not3nf_wrt_truth": 181,
+  "FP/synthesis/over>0": 1800,
+  "FP/synthesis/struct_changed": 1727,
+  "FP/synthesis/suff_cond_holds": 521,
+  "FP/synthesis/total": 1800,
+  "FP/synthesis/truth_refines_est": 518,
+  "FP/synthesis/uloc>0": 0,
+  "FP/synthesis/ustr>0": 504,
+  "FP/synthesis/valid_fmax_regret=+0": 477
+ },
+ "robust_check": {},
+ "worst_fmax_regret": {
+  "FP/synthesis": 1,
+  "FP/iconf": 1,
+  "FN/synthesis": 2,
+  "FN/iconf": 2
+ },
+ "key_count_ratio_range": [
+  0.2,
+  7.0
+ ],
+ "examples": {
+  "key_ratio_extreme": [
+   {
+    "R": 7,
+    "truth": [
+     "A->C",
+     "A->E",
+     "C->D",
+     "G->A",
+     "G->F",
+     "BC->G"
+    ],
+    "error": "FN A->C",
+    "ratio": 0.3333333333333333,
+    "keys_true": 3
+   },
+   {
+    "R": 7,
+    "truth": [
+     "B->G",
+     "D->B",
+     "AE->D",
+     "CF->D",
+     "CG->A"
+    ],
+    "error": "FP EG->C",
+    "ratio": 5.0,
+    "keys_true": 1
+   },
+   {
+    "R": 7,
+    "truth": [
+     "B->E",
+     "E->B",
+     "E->C",
+     "G->F",
+     "AD->E",
+     "AE->G",
+     "CG->E"
+    ],
+    "error": "FP CF->A",
+    "ratio": 7.0,
+    "keys_true": 1
+   }
+  ],
+  "FP_lossy/synthesis": [
+   {
+    "R": 7,
+    "truth": [
+     "CE->G",
+     "AEG->F",
+     "BCD->E"
+    ],
+    "error": [
+     "CE->D"
+    ],
+    "D_true": [
+     [
+      2,
+      4,
+      6
+     ],
+     [
+      0,
+      4,
+      5,
+      6
+     ],
+     [
+      1,
+      2,
+      3,
+      4
+     ],
+     [
+      0,
+      1,
+      2,
+      3
+     ]
+    ],
+    "D_est": [
+     [
+      2,
+      4,
+      6
+     ],
+     [
+      0,
+      4,
+      5,
+      6
+     ],
+     [
+      1,
+      2,
+      3,
+      4
+     ],
+     [
+      0,
+      1,
+      2,
+      4
+     ]
+    ],
+    "lossless": false,
+    "over": 1,
+    "u_loc": 0,
+    "u_str": 0,
+    "nf3": true,
+    "valid": false
+   },
+   {
+    "R": 7,
+    "truth": [
+     "CE->G",
+     "AEG->F",
+     "BCD->E"
+    ],
+    "error": [
+     "C->A"
+    ],
+    "D_true": [
+     [
+      2,
+      4,
+      6
+     ],
+     [
+      0,
+      4,
+      5,
+      6
+     ],
+     [
+      1,
+      2,
+      3,
+      4
+     ],
+     [
+      0,
+      1,
+      2,
+      3
+     ]
+    ],
+    "D_est": [
+     [
+      0,
+      2
+     ],
+     [
+      2,
+      4,
+      6
+     ],
+     [
+      0,
+      4,
+      5,
+      6
+     ],
+     [
+      1,
+      2,
+      3,
+      4
+     ]
+    ],
+    "lossless": false,
+    "over": 1,
+    "u_loc": 0,
+    "u_str": 0,
+    "nf3": true,
+    "valid": false
+   },
+   {
+    "R": 7,
+    "truth": [
+     "CE->G",
+     "AEG->F",
+     "BCD->E"
+    ],
+    "error": [
+     "A->C"
+    ],
+    "D_true": [
+     [
+      2,
+      4,
+      6
+     ],
+     [
+      0,
+      4,
+      5,
+      6
+     ],
+     [
+      1,
+      2,
+      3,
+      4
+     ],
+     [
+      0,
+      1,
+      2,
+      3
+     ]
+    ],
+    "D_est": [
+     [
+      0,
+      2
+     ],
+     [
+      0,
+      4,
+      5
+     ],
+     [
+      2,
+      4,
+      6
+     ],
+     [
+      1,
+      2,
+      3,
+      4
+     ],
+     [
+      0,
+      1,
+      3
+     ]
+    ],
+    "lossless": false,
+    "over": 2,
+    "u_loc": 0,
+    "u_str": 3,
+    "nf3": true,
+    "valid": false
+   }
+  ],
+  "FP_est_not_refines/synthesis": [
+   {
+    "R": 7,
+    "truth": [
+     "CE->G",
+     "AEG->F",
+     "BCD->E"
+    ],
+    "error": [
+     "CE->D"
+    ],
+    "D_true": [
+     [
+      2,
+      4,
+      6
+     ],
+     [
+      0,
+      4,
+      5,
+      6
+     ],
+     [
+      1,
+      2,
+      3,
+      4
+     ],
+     [
+      0,
+      1,
+      2,
+      3
+     ]
+    ],
+    "D_est": [
+     [
+      2,
+      4,
+      6
+     ],
+     [
+      0,
+      4,
+      5,
+      6
+     ],
+     [
+      1,
+      2,
+      3,
+      4
+     ],
+     [
+      0,
+      1,
+      2,
+      4
+     ]
+    ],
+    "lossless": false,
+    "over": 1,
+    "u_loc": 0,
+    "u_str": 0,
+    "nf3": true,
+    "valid": false
+   },
+   {
+    "R": 7,
+    "truth": [
+     "CE->G",
+     "AEG->F",
+     "BCD->E"
+    ],
+    "error": [
+     "AF->C"
+    ],
+    "D_true": [
+     [
+      2,
+      4,
+      6
+     ],
+     [
+      0,
+      4,
+      5,
+      6
+     ],
+     [
+      1,
+      2,
+      3,
+      4
+     ],
+     [
+      0,
+      1,
+      2,
+      3
+     ]
+    ],
+    "D_est": [
+     [
+      0,
+      2,
+      5
+     ],
+     [
+      2,
+      4,
+      6
+     ],
+     [
+      0,
+      4,
+      5,
+      6
+     ],
+     [
+      1,
+      2,
+      3,
+      4
+     ],
+     [
+      0,
+      1,
+      3,
+      5
+     ]
+    ],
+    "lossless": false,
+    "over": 2,
+    "u_loc": 0,
+    "u_str": 0,
+    "nf3": true,
+    "valid": false
+   },
+   {
+    "R": 7,
+    "truth": [
+     "CE->G",
+     "AEG->F",
+     "BCD->E"
+    ],
+    "error": [
+     "AG->B"
+    ],
+    "D_true": [
+     [
+      2,
+      4,
+      6
+     ],
+     [
+      0,
+      4,
+      5,
+      6
+     ],
+     [
+      1,
+      2,
+      3,
+      4
+     ],
+     [
+      0,
+      1,
+      2,
+      3
+     ]
+    ],
+    "D_est": [
+     [
+      0,
+      1,
+      6
+     ],
+     [
+      2,
+      4,
+      6
+     ],
+     [
+      0,
+      4,
+      5,
+      6
+     ],
+     [
+      1,
+      2,
+      3,
+      4
+     ],
+     [
+      0,
+      2,
+      3,
+      6
+     ]
+    ],
+    "lossless": false,
+    "over": 1,
+    "u_loc": 0,
+    "u_str": 0,
+    "nf3": true,
+    "valid": false
+   }
+  ],
+  "FP_lossy/iconf": [
+   {
+    "R": 7,
+    "truth": [
+     "CE->G",
+     "AEG->F",
+     "BCD->E"
+    ],
+    "error": [
+     "CE->D"
+    ],
+    "D_true": [
+     [
+      2,
+      4,
+      6
+     ],
+     [
+      0,
+      4,
+      5,
+      6
+     ],
+     [
+      1,
+      2,
+      3,
+      4
+     ],
+     [
+      0,
+      1,
+      2,
+      3
+     ]
+    ],
+    "D_est": [
+     [
+      1,
+      2,
+      3,
+      4
+     ],
+     [
+      2,
+      4,
+      6
+     ],
+     [
+      0,
+      4,
+      5,
+      6
+     ],
+     [
+      0,
+      1,
+      2,
+      4
+     ]
+    ],
+    "lossless": false,
+    "over": 1,
+    "u_loc": 0,
+    "u_str": 0,
+    "nf3": true,
+    "valid": false
+   },
+   {
+    "R": 7,
+    "truth": [
+     "CE->G",
+     "AEG->F",
+     "BCD->E"
+    ],
+    "error": [
+     "C->A"
+    ],
+    "D_true": [
+     [
+      2,
+      4,
+      6
+     ],
+     [
+      0,
+      4,
+      5,
+      6
+     ],
+     [
+      1,
+      2,
+      3,
+      4
+     ],
+     [
+      0,
+      1,
+      2,
+      3
+     ]
+    ],
+    "D_est": [
+     [
+      0,
+      2
+     ],
+     [
+      2,
+      4,
+      6
+     ],
+     [
+      0,
+      4,
+      5,
+      6
+     ],
+     [
+      1,
+      2,
+      3,
+      4
+     ]
+    ],
+    "lossless": false,
+    "over": 1,
+    "u_loc": 0,
+    "u_str": 0,
+    "nf3": true,
+    "valid": false
+   },
+   {
+    "R": 7,
+    "truth": [
+     "CE->G",
+     "AEG->F",
+     "BCD->E"
+    ],
+    "error": [
+     "A->C"
+    ],
+    "D_true": [
+     [
+      2,
+      4,
+      6
+     ],
+     [
+      0,
+      4,
+      5,
+      6
+     ],
+     [
+      1,
+      2,
+      3,
+      4
+     ],
+     [
+      0,
+      1,
+      2,
+      3
+     ]
+    ],
+    "D_est": [
+     [
+      0,
+      2
+     ],
+     [
+      0,
+      4,
+      5
+     ],
+     [
+      2,
+      4,
+      6
+     ],
+     [
+      1,
+      2,
+      3,
+      4
+     ],
+     [
+      0,
+      1,
+      3
+     ]
+    ],
+    "lossless": false,
+    "over": 2,
+    "u_loc": 0,
+    "u_str": 3,
+    "nf3": true,
+    "valid": false
+   }
+  ],
+  "FP_est_not_refines/iconf": [
+   {
+    "R": 7,
+    "truth": [
+     "CE->G",
+     "AEG->F",
+     "BCD->E"
+    ],
+    "error": [
+     "CE->D"
+    ],
+    "D_true": [
+     [
+      2,
+      4,
+      6
+     ],
+     [
+      0,
+      4,
+      5,
+      6
+     ],
+     [
+      1,
+      2,
+      3,
+      4
+     ],
+     [
+      0,
+      1,
+      2,
+      3
+     ]
+    ],
+    "D_est": [
+     [
+      1,
+      2,
+      3,
+      4
+     ],
+     [
+      2,
+      4,
+      6
+     ],
+     [
+      0,
+      4,
+      5,
+      6
+     ],
+     [
+      0,
+      1,
+      2,
+      4
+     ]
+    ],
+    "lossless": false,
+    "over": 1,
+    "u_loc": 0,
+    "u_str": 0,
+    "nf3": true,
+    "valid": false
+   },
+   {
+    "R": 7,
+    "truth": [
+     "CE->G",
+     "AEG->F",
+     "BCD->E"
+    ],
+    "error": [
+     "AF->C"
+    ],
+    "D_true": [
+     [
+      2,
+      4,
+      6
+     ],
+     [
+      0,
+      4,
+      5,
+      6
+     ],
+     [
+      1,
+      2,
+      3,
+      4
+     ],
+     [
+      0,
+      1,
+      2,
+      3
+     ]
+    ],
+    "D_est": [
+     [
+      0,
+      4,
+      5,
+      6
+     ],
+     [
+      0,
+      2,
+      5
+     ],
+     [
+      2,
+      4,
+      6
+     ],
+     [
+      1,
+      2,
+      3,
+      4
+     ],
+     [
+      0,
+      1,
+      3,
+      5
+     ]
+    ],
+    "lossless": false,
+    "over": 2,
+    "u_loc": 0,
+    "u_str": 0,
+    "nf3": true,
+    "valid": false
+   },
+   {
+    "R": 7,
+    "truth": [
+     "CE->G",
+     "AEG->F",
+     "BCD->E"
+    ],
+    "error": [
+     "AG->B"
+    ],
+    "D_true": [
+     [
+      2,
+      4,
+      6
+     ],
+     [
+      0,
+      4,
+      5,
+      6
+     ],
+     [
+      1,
+      2,
+      3,
+      4
+     ],
+     [
+      0,
+      1,
+      2,
+      3
+     ]
+    ],
+    "D_est": [
+     [
+      0,
+      1,
+      6
+     ],
+     [
+      2,
+      4,
+      6
+     ],
+     [
+      0,
+      4,
+      5,
+      6
+     ],
+     [
+      1,
+      2,
+      3,
+      4
+     ],
+     [
+      0,
+      2,
+      3,
+      6
+     ]
+    ],
+    "lossless": false,
+    "over": 1,
+    "u_loc": 0,
+    "u_str": 0,
+    "nf3": true,
+    "valid": false
+   }
+  ],
+  "FN_truth_not_refines/synthesis": [
+   {
+    "R": 7,
+    "truth": [
+     "CE->G",
+     "AEG->F",
+     "BCD->E"
+    ],
+    "error": [
+     "CE->G"
+    ],
+    "D_true": [
+     [
+      2,
+      4,
+      6
+     ],
+     [
+      0,
+      4,
+      5,
+      6
+     ],
+     [
+      1,
+      2,
+      3,
+      4
+     ],
+     [
+      0,
+      1,
+      2,
+      3
+     ]
+    ],
+    "D_est": [
+     [
+      0,
+      4,
+      5,
+      6
+     ],
+     [
+      1,
+      2,
+      3,
+      4
+     ],
+     [
+      0,
+      1,
+      2,
+      3,
+      6
+     ]
+    ],
+    "lossless": true,
+    "over": 0,
+    "u_loc": 1,
+    "u_str": 2,
+    "nf3": false,
+    "valid": false
+   },
+   {
+    "R": 7,
+    "truth": [
+     "CE->G",
+     "AEG->F",
+     "BCD->E"
+    ],
+    "error": [
+     "AEG->F"
+    ],
+    "D_true": [
+     [
+      2,
+      4,
+      6
+     ],
+     [
+      0,
+      4,
+      5,
+      6
+     ],
+     [
+      1,
+      2,
+      3,
+      4
+     ],
+     [
+      0,
+      1,
+      2,
+      3
+     ]
+    ],
+    "D_est": [
+     [
+      2,
+      4,
+      6
+     ],
+     [
+      1,
+      2,
+      3,
+      4
+     ],
+     [
+      0,
+      1,
+      2,
+      3,
+      5
+     ]
+    ],
+    "lossless": true,
+    "over": 0,
+    "u_loc": 1,
+    "u_str": 2,
+    "nf3": true,
+    "valid": false
+   },
+   {
+    "R": 7,
+    "truth": [
+     "D->A",
+     "E->C",
+     "E->F",
+     "CD->F",
+     "ABG->E"
+    ],
+    "error": [
+     "E->C"
+    ],
+    "D_true": [
+     [
+      0,
+      3
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      2,
+      3,
+      5
+     ],
+     [
+      0,
+      1,
+      4,
+      6
+     ],
+     [
+      1,
+      3,
+      6
+     ]
+    ],
+    "D_est": [
+     [
+      0,
+      3
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      2,
+      3,
+      5
+     ],
+     [
+      0,
+      1,
+      4,
+      6
+     ],
+     [
+      1,
+      2,
+      3,
+      6
+     ]
+    ],
+    "lossless": true,
+    "over": 0,
+    "u_loc": 1,
+    "u_str": 2,
+    "nf3": true,
+    "valid": false
+   }
+  ],
+  "FN_fmax_regret/synthesis": [
+   {
+    "R": 7,
+    "truth": [
+     "CE->G",
+     "AEG->F",
+     "BCD->E"
+    ],
+    "error": [
+     "CE->G"
+    ],
+    "D_true": [
+     [
+      2,
+      4,
+      6
+     ],
+     [
+      0,
+      4,
+      5,
+      6
+     ],
+     [
+      1,
+      2,
+      3,
+      4
+     ],
+     [
+      0,
+      1,
+      2,
+      3
+     ]
+    ],
+    "D_est": [
+     [
+      0,
+      4,
+      5,
+      6
+     ],
+     [
+      1,
+      2,
+      3,
+      4
+     ],
+     [
+      0,
+      1,
+      2,
+      3,
+      6
+     ]
+    ],
+    "lossless": true,
+    "over": 0,
+    "u_loc": 1,
+    "u_str": 2,
+    "nf3": false,
+    "valid": false,
+    "regret": 1
+   },
+   {
+    "R": 7,
+    "truth": [
+     "CE->G",
+     "AEG->F",
+     "BCD->E"
+    ],
+    "error": [
+     "BCD->E"
+    ],
+    "D_true": [
+     [
+      2,
+      4,
+      6
+     ],
+     [
+      0,
+      4,
+      5,
+      6
+     ],
+     [
+      1,
+      2,
+      3,
+      4
+     ],
+     [
+      0,
+      1,
+      2,
+      3
+     ]
+    ],
+    "D_est": [
+     [
+      2,
+      4,
+      6
+     ],
+     [
+      0,
+      4,
+      5,
+      6
+     ],
+     [
+      0,
+      1,
+      2,
+      3,
+      4
+     ]
+    ],
+    "lossless": true,
+    "over": 0,
+    "u_loc": 1,
+    "u_str": 0,
+    "nf3": false,
+    "valid": false,
+    "regret": 1
+   },
+   {
+    "R": 7,
+    "truth": [
+     "D->A",
+     "E->C",
+     "E->F",
+     "CD->F",
+     "ABG->E"
+    ],
+    "error": [
+     "D->A"
+    ],
+    "D_true": [
+     [
+      0,
+      3
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      2,
+      3,
+      5
+     ],
+     [
+      0,
+      1,
+      4,
+      6
+     ],
+     [
+      1,
+      3,
+      6
+     ]
+    ],
+    "D_est": [
+     [
+      2,
+      4
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      2,
+      3,
+      5
+     ],
+     [
+      0,
+      1,
+      4,
+      6
+     ],
+     [
+      0,
+      1,
+      3,
+      6
+     ]
+    ],
+    "lossless": true,
+    "over": 0,
+    "u_loc": 1,
+    "u_str": 0,
+    "nf3": false,
+    "valid": false,
+    "regret": 1
+   }
+  ],
+  "FN_truth_not_refines/iconf": [
+   {
+    "R": 7,
+    "truth": [
+     "CE->G",
+     "AEG->F",
+     "BCD->E"
+    ],
+    "error": [
+     "CE->G"
+    ],
+    "D_true": [
+     [
+      2,
+      4,
+      6
+     ],
+     [
+      0,
+      4,
+      5,
+      6
+     ],
+     [
+      1,
+      2,
+      3,
+      4
+     ],
+     [
+      0,
+      1,
+      2,
+      3
+     ]
+    ],
+    "D_est": [
+     [
+      0,
+      4,
+      5,
+      6
+     ],
+     [
+      1,
+      2,
+      3,
+      4
+     ],
+     [
+      0,
+      1,
+      2,
+      3,
+      6
+     ]
+    ],
+    "lossless": true,
+    "over": 0,
+    "u_loc": 1,
+    "u_str": 2,
+    "nf3": false,
+    "valid": false
+   },
+   {
+    "R": 7,
+    "truth": [
+     "CE->G",
+     "AEG->F",
+     "BCD->E"
+    ],
+    "error": [
+     "AEG->F"
+    ],
+    "D_true": [
+     [
+      2,
+      4,
+      6
+     ],
+     [
+      0,
+      4,
+      5,
+      6
+     ],
+     [
+      1,
+      2,
+      3,
+      4
+     ],
+     [
+      0,
+      1,
+      2,
+      3
+     ]
+    ],
+    "D_est": [
+     [
+      2,
+      4,
+      6
+     ],
+     [
+      1,
+      2,
+      3,
+      4
+     ],
+     [
+      0,
+      1,
+      2,
+      3,
+      5
+     ]
+    ],
+    "lossless": true,
+    "over": 0,
+    "u_loc": 1,
+    "u_str": 2,
+    "nf3": true,
+    "valid": false
+   },
+   {
+    "R": 7,
+    "truth": [
+     "D->A",
+     "E->C",
+     "E->F",
+     "CD->F",
+     "ABG->E"
+    ],
+    "error": [
+     "E->C"
+    ],
+    "D_true": [
+     [
+      0,
+      3
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      2,
+      3,
+      5
+     ],
+     [
+      0,
+      1,
+      4,
+      6
+     ],
+     [
+      1,
+      3,
+      6
+     ]
+    ],
+    "D_est": [
+     [
+      0,
+      3
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      2,
+      3,
+      5
+     ],
+     [
+      0,
+      1,
+      4,
+      6
+     ],
+     [
+      1,
+      2,
+      3,
+      6
+     ]
+    ],
+    "lossless": true,
+    "over": 0,
+    "u_loc": 1,
+    "u_str": 2,
+    "nf3": true,
+    "valid": false
+   }
+  ],
+  "FN_fmax_regret/iconf": [
+   {
+    "R": 7,
+    "truth": [
+     "CE->G",
+     "AEG->F",
+     "BCD->E"
+    ],
+    "error": [
+     "CE->G"
+    ],
+    "D_true": [
+     [
+      2,
+      4,
+      6
+     ],
+     [
+      0,
+      4,
+      5,
+      6
+     ],
+     [
+      1,
+      2,
+      3,
+      4
+     ],
+     [
+      0,
+      1,
+      2,
+      3
+     ]
+    ],
+    "D_est": [
+     [
+      0,
+      4,
+      5,
+      6
+     ],
+     [
+      1,
+      2,
+      3,
+      4
+     ],
+     [
+      0,
+      1,
+      2,
+      3,
+      6
+     ]
+    ],
+    "lossless": true,
+    "over": 0,
+    "u_loc": 1,
+    "u_str": 2,
+    "nf3": false,
+    "valid": false,
+    "regret": 1
+   },
+   {
+    "R": 7,
+    "truth": [
+     "CE->G",
+     "AEG->F",
+     "BCD->E"
+    ],
+    "error": [
+     "BCD->E"
+    ],
+    "D_true": [
+     [
+      2,
+      4,
+      6
+     ],
+     [
+      0,
+      4,
+      5,
+      6
+     ],
+     [
+      1,
+      2,
+      3,
+      4
+     ],
+     [
+      0,
+      1,
+      2,
+      3
+     ]
+    ],
+    "D_est": [
+     [
+      2,
+      4,
+      6
+     ],
+     [
+      0,
+      4,
+      5,
+      6
+     ],
+     [
+      0,
+      1,
+      2,
+      3,
+      4
+     ]
+    ],
+    "lossless": true,
+    "over": 0,
+    "u_loc": 1,
+    "u_str": 0,
+    "nf3": false,
+    "valid": false,
+    "regret": 1
+   },
+   {
+    "R": 7,
+    "truth": [
+     "D->A",
+     "E->C",
+     "E->F",
+     "CD->F",
+     "ABG->E"
+    ],
+    "error": [
+     "D->A"
+    ],
+    "D_true": [
+     [
+      0,
+      3
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      2,
+      3,
+      5
+     ],
+     [
+      0,
+      1,
+      4,
+      6
+     ],
+     [
+      1,
+      3,
+      6
+     ]
+    ],
+    "D_est": [
+     [
+      2,
+      4
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      2,
+      3,
+      5
+     ],
+     [
+      0,
+      1,
+      4,
+      6
+     ],
+     [
+      0,
+      1,
+      3,
+      6
+     ]
+    ],
+    "lossless": true,
+    "over": 0,
+    "u_loc": 1,
+    "u_str": 0,
+    "nf3": false,
+    "valid": false,
+    "regret": 1
+   }
+  ],
+  "FN_local_only/synthesis": [
+   {
+    "R": 7,
+    "truth": [
+     "CE->G",
+     "AEG->F",
+     "BCD->E"
+    ],
+    "error": [
+     "BCD->E"
+    ],
+    "D_true": [
+     [
+      2,
+      4,
+      6
+     ],
+     [
+      0,
+      4,
+      5,
+      6
+     ],
+     [
+      1,
+      2,
+      3,
+      4
+     ],
+     [
+      0,
+      1,
+      2,
+      3
+     ]
+    ],
+    "D_est": [
+     [
+      2,
+      4,
+      6
+     ],
+     [
+      0,
+      4,
+      5,
+      6
+     ],
+     [
+      0,
+      1,
+      2,
+      3,
+      4
+     ]
+    ],
+    "lossless": true,
+    "over": 0,
+    "u_loc": 1,
+    "u_str": 0,
+    "nf3": false,
+    "valid": false
+   },
+   {
+    "R": 7,
+    "truth": [
+     "D->A",
+     "E->C",
+     "E->F",
+     "CD->F",
+     "ABG->E"
+    ],
+    "error": [
+     "D->A"
+    ],
+    "D_true": [
+     [
+      0,
+      3
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      2,
+      3,
+      5
+     ],
+     [
+      0,
+      1,
+      4,
+      6
+     ],
+     [
+      1,
+      3,
+      6
+     ]
+    ],
+    "D_est": [
+     [
+      2,
+      4
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      2,
+      3,
+      5
+     ],
+     [
+      0,
+      1,
+      4,
+      6
+     ],
+     [
+      0,
+      1,
+      3,
+      6
+     ]
+    ],
+    "lossless": true,
+    "over": 0,
+    "u_loc": 1,
+    "u_str": 0,
+    "nf3": false,
+    "valid": false
+   },
+   {
+    "R": 7,
+    "truth": [
+     "A->B",
+     "A->C",
+     "A->D",
+     "B->E",
+     "FG->B"
+    ],
+    "error": [
+     "A->C"
+    ],
+    "D_true": [
+     [
+      0,
+      1
+     ],
+     [
+      0,
+      2
+     ],
+     [
+      0,
+      3
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      1,
+      5,
+      6
+     ],
+     [
+      0,
+      5,
+      6
+     ]
+    ],
+    "D_est": [
+     [
+      0,
+      1
+     ],
+     [
+      0,
+      3
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      1,
+      5,
+      6
+     ],
+     [
+      0,
+      2,
+      5,
+      6
+     ]
+    ],
+    "lossless": true,
+    "over": 0,
+    "u_loc": 1,
+    "u_str": 0,
+    "nf3": false,
+    "valid": false
+   }
+  ],
+  "FN_local_only/iconf": [
+   {
+    "R": 7,
+    "truth": [
+     "CE->G",
+     "AEG->F",
+     "BCD->E"
+    ],
+    "error": [
+     "BCD->E"
+    ],
+    "D_true": [
+     [
+      2,
+      4,
+      6
+     ],
+     [
+      0,
+      4,
+      5,
+      6
+     ],
+     [
+      1,
+      2,
+      3,
+      4
+     ],
+     [
+      0,
+      1,
+      2,
+      3
+     ]
+    ],
+    "D_est": [
+     [
+      2,
+      4,
+      6
+     ],
+     [
+      0,
+      4,
+      5,
+      6
+     ],
+     [
+      0,
+      1,
+      2,
+      3,
+      4
+     ]
+    ],
+    "lossless": true,
+    "over": 0,
+    "u_loc": 1,
+    "u_str": 0,
+    "nf3": false,
+    "valid": false
+   },
+   {
+    "R": 7,
+    "truth": [
+     "D->A",
+     "E->C",
+     "E->F",
+     "CD->F",
+     "ABG->E"
+    ],
+    "error": [
+     "D->A"
+    ],
+    "D_true": [
+     [
+      0,
+      3
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      2,
+      3,
+      5
+     ],
+     [
+      0,
+      1,
+      4,
+      6
+     ],
+     [
+      1,
+      3,
+      6
+     ]
+    ],
+    "D_est": [
+     [
+      2,
+      4
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      2,
+      3,
+      5
+     ],
+     [
+      0,
+      1,
+      4,
+      6
+     ],
+     [
+      0,
+      1,
+      3,
+      6
+     ]
+    ],
+    "lossless": true,
+    "over": 0,
+    "u_loc": 1,
+    "u_str": 0,
+    "nf3": false,
+    "valid": false
+   },
+   {
+    "R": 7,
+    "truth": [
+     "A->B",
+     "A->C",
+     "A->D",
+     "B->E",
+     "FG->B"
+    ],
+    "error": [
+     "A->C"
+    ],
+    "D_true": [
+     [
+      0,
+      1
+     ],
+     [
+      0,
+      2
+     ],
+     [
+      0,
+      3
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      1,
+      5,
+      6
+     ],
+     [
+      0,
+      5,
+      6
+     ]
+    ],
+    "D_est": [
+     [
+      0,
+      1
+     ],
+     [
+      0,
+      3
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      1,
+      5,
+      6
+     ],
+     [
+      0,
+      2,
+      5,
+      6
+     ]
+    ],
+    "lossless": true,
+    "over": 0,
+    "u_loc": 1,
+    "u_str": 0,
+    "nf3": false,
+    "valid": false
+   }
+  ],
+  "FP_fmax_regret/synthesis": [
+   {
+    "R": 7,
+    "truth": [
+     "D->A",
+     "E->C",
+     "E->F",
+     "CD->F",
+     "ABG->E"
+    ],
+    "error": [
+     "F->B"
+    ],
+    "D_true": [
+     [
+      0,
+      3
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      2,
+      3,
+      5
+     ],
+     [
+      0,
+      1,
+      4,
+      6
+     ],
+     [
+      1,
+      3,
+      6
+     ]
+    ],
+    "D_est": [
+     [
+      0,
+      3
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      2,
+      3,
+      5
+     ],
+     [
+      0,
+      1,
+      5,
+      6
+     ],
+     [
+      0,
+      4,
+      5,
+      6
+     ],
+     [
+      3,
+      5,
+      6
+     ]
+    ],
+    "lossless": false,
+    "over": 2,
+    "u_loc": 0,
+    "u_str": 4,
+    "nf3": false,
+    "valid": false,
+    "regret": 1
+   },
+   {
+    "R": 7,
+    "truth": [
+     "D->A",
+     "E->C",
+     "E->F",
+     "CD->F",
+     "ABG->E"
+    ],
+    "error": [
+     "BF->E"
+    ],
+    "D_true": [
+     [
+      0,
+      3
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      2,
+      3,
+      5
+     ],
+     [
+      0,
+      1,
+      4,
+      6
+     ],
+     [
+      1,
+      3,
+      6
+     ]
+    ],
+    "D_est": [
+     [
+      0,
+      3
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      1,
+      4,
+      5
+     ],
+     [
+      2,
+      3,
+      5
+     ],
+     [
+      0,
+      1,
+      5,
+      6
+     ],
+     [
+      1,
+      3,
+      6
+     ]
+    ],
+    "lossless": false,
+    "over": 1,
+    "u_loc": 0,
+    "u_str": 4,
+    "nf3": false,
+    "valid": false,
+    "regret": 1
+   },
+   {
+    "R": 7,
+    "truth": [
+     "A->B",
+     "A->C",
+     "A->D",
+     "B->E",
+     "FG->B"
+    ],
+    "error": [
+     "CF->A"
+    ],
+    "D_true": [
+     [
+      0,
+      1
+     ],
+     [
+      0,
+      2
+     ],
+     [
+      0,
+      3
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      1,
+      5,
+      6
+     ],
+     [
+      0,
+      5,
+      6
+     ]
+    ],
+    "D_est": [
+     [
+      0,
+      1
+     ],
+     [
+      0,
+      3
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      0,
+      2,
+      5
+     ],
+     [
+      1,
+      5,
+      6
+     ],
+     [
+      2,
+      5,
+      6
+     ]
+    ],
+    "lossless": false,
+    "over": 1,
+    "u_loc": 0,
+    "u_str": 0,
+    "nf3": false,
+    "valid": false,
+    "regret": 1
+   }
+  ],
+  "FP_fmax_regret/iconf": [
+   {
+    "R": 7,
+    "truth": [
+     "D->A",
+     "E->C",
+     "E->F",
+     "CD->F",
+     "ABG->E"
+    ],
+    "error": [
+     "F->B"
+    ],
+    "D_true": [
+     [
+      0,
+      3
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      2,
+      3,
+      5
+     ],
+     [
+      0,
+      1,
+      4,
+      6
+     ],
+     [
+      1,
+      3,
+      6
+     ]
+    ],
+    "D_est": [
+     [
+      0,
+      1,
+      5,
+      6
+     ],
+     [
+      0,
+      4,
+      5,
+      6
+     ],
+     [
+      0,
+      3
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      2,
+      3,
+      5
+     ],
+     [
+      3,
+      5,
+      6
+     ]
+    ],
+    "lossless": false,
+    "over": 2,
+    "u_loc": 0,
+    "u_str": 4,
+    "nf3": false,
+    "valid": false,
+    "regret": 1
+   },
+   {
+    "R": 7,
+    "truth": [
+     "D->A",
+     "E->C",
+     "E->F",
+     "CD->F",
+     "ABG->E"
+    ],
+    "error": [
+     "BF->E"
+    ],
+    "D_true": [
+     [
+      0,
+      3
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      2,
+      3,
+      5
+     ],
+     [
+      0,
+      1,
+      4,
+      6
+     ],
+     [
+      1,
+      3,
+      6
+     ]
+    ],
+    "D_est": [
+     [
+      1,
+      4,
+      5
+     ],
+     [
+      0,
+      3
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      2,
+      3,
+      5
+     ],
+     [
+      0,
+      1,
+      5,
+      6
+     ],
+     [
+      1,
+      3,
+      6
+     ]
+    ],
+    "lossless": false,
+    "over": 1,
+    "u_loc": 0,
+    "u_str": 4,
+    "nf3": false,
+    "valid": false,
+    "regret": 1
+   },
+   {
+    "R": 7,
+    "truth": [
+     "A->B",
+     "A->C",
+     "A->D",
+     "B->E",
+     "FG->B"
+    ],
+    "error": [
+     "CF->A"
+    ],
+    "D_true": [
+     [
+      0,
+      1
+     ],
+     [
+      0,
+      2
+     ],
+     [
+      0,
+      3
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      1,
+      5,
+      6
+     ],
+     [
+      0,
+      5,
+      6
+     ]
+    ],
+    "D_est": [
+     [
+      0,
+      2,
+      5
+     ],
+     [
+      0,
+      1
+     ],
+     [
+      0,
+      3
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      1,
+      5,
+      6
+     ],
+     [
+      2,
+      5,
+      6
+     ]
+    ],
+    "lossless": false,
+    "over": 1,
+    "u_loc": 0,
+    "u_str": 0,
+    "nf3": false,
+    "valid": false,
+    "regret": 1
+   }
+  ]
+ },
+ "violations_of_proved_props": {}
+}

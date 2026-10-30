@@ -1,0 +1,586 @@
+{
+ "dataset": "fresh_abs_mb",
+ "family": "fresh",
+ "truth_kind": "documented (confirmatory)",
+ "source": "Publisher documentation saved under e3/truth/docs/fresh/ (sha256 in SHA256SUMS): TPC-DS v3.2.0; LDBC SNB specification (v2.2.5-SNAPSHOT, Appendix D for the Interactive v1 legacy data sets); GTFS Schedule Reference; FAA ardata.pdf (5/8/2025); ABS ASGS Edition 3 web pages; SEC Financial Statement Data Sets; College Scorecard Field of Study documentation (October 2026) and data dictionary; EPA AirData FileFormats (v3.0.0); 2024 ACS PUMS data dictionary and Census regions and divisions; City of Chicago portal metadata (ijzp-q8t2, c7ck-438e); USDA FoodData Central download field descriptions (October 2020)",
+ "rule": "Sigma* is the set of FDs that the publisher documentation implies among the attributes of each relation, projected and closed over the dropped columns, each with a verbatim quote; sure when the quoted text states it (declared key, foreign key to a declared key, an explicit one-to-one or nesting statement), unsure when it needs an inference the text does not spell out. Dependencies the documentation hints at but does not state are listed under undocumented_regularities and are not part of Sigma*. Written from the documentation alone, before any data file was opened.",
+ "instance": {
+  "generator": "public data fixed before download for the confirmatory evaluation, joined by fresh.py",
+  "rows": 368286,
+  "construction": "ABS ASGS Edition 3 (July 2021 - June 2026) Mesh Block allocation file MB_2021_AUST.xlsx converted to CSV with its header row (368,286 Mesh Blocks per the Mesh Blocks page); single table; dropped AUS_CODE_2021 and AUS_NAME_2021 (the single code AUS and its name, constant by the documentation).",
+  "cleaning": {
+   "records": 368286,
+   "records_after_deduplication": 368286,
+   "sampled_from": null,
+   "kept": 368286,
+   "repaired_for": "the sure FDs of Sigma*",
+   "removed_per_fd": {},
+   "missing_values": "empty and missing references become '?', kept as a value (null = null)"
+  }
+ },
+ "attributes": [
+  "MB_CODE_2021",
+  "MB_CATEGORY_2021",
+  "CHANGE_FLAG_2021",
+  "CHANGE_LABEL_2021",
+  "SA1_CODE_2021",
+  "SA2_CODE_2021",
+  "SA2_NAME_2021",
+  "SA3_CODE_2021",
+  "SA3_NAME_2021",
+  "SA4_CODE_2021",
+  "SA4_NAME_2021",
+  "GCCSA_CODE_2021",
+  "GCCSA_NAME_2021",
+  "STATE_CODE_2021",
+  "STATE_NAME_2021",
+  "AREA_ALBERS_SQKM",
+  "ASGS_LOCI_URI_2021"
+ ],
+ "dropped_constant_columns": [],
+ "distinct_values": {
+  "MB_CODE_2021": 368286,
+  "MB_CATEGORY_2021": 16,
+  "CHANGE_FLAG_2021": 2,
+  "CHANGE_LABEL_2021": 2,
+  "SA1_CODE_2021": 61845,
+  "SA2_CODE_2021": 2473,
+  "SA2_NAME_2021": 2473,
+  "SA3_CODE_2021": 359,
+  "SA3_NAME_2021": 359,
+  "SA4_CODE_2021": 108,
+  "SA4_NAME_2021": 108,
+  "GCCSA_CODE_2021": 35,
+  "GCCSA_NAME_2021": 35,
+  "STATE_CODE_2021": 10,
+  "STATE_NAME_2021": 10,
+  "AREA_ALBERS_SQKM": 45755,
+  "ASGS_LOCI_URI_2021": 368286
+ },
+ "truth": [
+  {
+   "lhs": [
+    "MB_CODE_2021"
+   ],
+   "rhs": [
+    "MB_CATEGORY_2021",
+    "CHANGE_FLAG_2021",
+    "CHANGE_LABEL_2021",
+    "AREA_ALBERS_SQKM",
+    "ASGS_LOCI_URI_2021"
+   ],
+   "sure": true,
+   "clause": "abs_allocation-files.html, Metadata for allocation files: \"MB_2021_AUST contains all Mesh Blocks within Australia and includes the following fields:\" and \"It also gives the area in square kilometres of the Mesh Block, based on Albers Equal Area Conic projection.\"; abs_mesh-blocks.html: \"Land use is recorded in the Mesh Block category attribute according to the criteria below.\"; abs_changes-previous-edition-asgs.html (https://www.abs.gov.au/statistics/standards/australian-statistical-geography-standard-asgs/edition-3-july-2021-june-2026/main-structure-and-greater-capital-city-statistical-areas/changes-previous-edition-asgs, retrieved 2026-10-27): \"In ASGS Edition 3, change flags have been included on all Main Structure and Greater Capital City Statistical boundaries as an attribute.\"",
+   "justification": "The file has one row per Mesh Block, identified by its code, and the category, change flag and label, area and LOCI URI are attributes of that Mesh Block.",
+   "audit": {
+    "verdicts": {
+     "MB_CATEGORY_2021": "TRUE",
+     "CHANGE_FLAG_2021": "TRUE",
+     "CHANGE_LABEL_2021": "TRUE",
+     "AREA_ALBERS_SQKM": "TRUE",
+     "ASGS_LOCI_URI_2021": "TRUE"
+    },
+    "quote": "\"For example MB_2021_AUST contains all Mesh Blocks within Australia and includes the following fields:\" and \"It also gives the area in square kilometres of the Mesh Block, based on Albers Equal Area Conic projection.\" (abs_allocation-files.html, Metadata for allocation files); \"The 11-digit Mesh Block code comprises: State and Territory identifier (1 digit), and a Mesh Block identifier (10 digits).\" and \"Land use is recorded in the Mesh Block category attribute according to the criteria below.\" (abs_mesh-blocks.html); \"In ASGS Edition 3, change flags have been included on all Main Structure and Greater Capital City Statistical boundaries as an attribute.\" (abs_changes-previous-edition-asgs.html, Identifying change, Change flag descriptions)",
+    "source": "abs_allocation-files.html, Metadata for allocation files; abs_mesh-blocks.html; abs_changes-previous-edition-asgs.html, Identifying change, Change flag descriptions"
+   }
+  },
+  {
+   "lhs": [
+    "MB_CODE_2021"
+   ],
+   "rhs": [
+    "SA1_CODE_2021"
+   ],
+   "sure": true,
+   "clause": "abs_statistical-area-level-1.html: \"Statistical Areas Level 1 (SA1s) are geographic areas built from whole Mesh Blocks.\"",
+   "justification": "SA1s are built from whole Mesh Blocks, so each Mesh Block lies in exactly one SA1.",
+   "audit": {
+    "verdicts": {
+     "SA1_CODE_2021": "TRUE"
+    },
+    "quote": "\"Statistical Areas Level 1 (SA1s) are geographic areas built from whole Mesh Blocks.\" and \"There are 61,845 SA1 regions covering the whole of Australia without gaps or overlaps.\" (abs_statistical-area-level-1.html)",
+    "source": "abs_statistical-area-level-1.html"
+   }
+  },
+  {
+   "lhs": [
+    "SA1_CODE_2021"
+   ],
+   "rhs": [
+    "SA2_CODE_2021"
+   ],
+   "sure": true,
+   "clause": "abs_statistical-area-level-1.html: \"Whole SA1s aggregate to form Statistical Areas Level 2 (SA2s).\"",
+   "justification": "Whole SA1s aggregate to SA2s, so each SA1 lies in exactly one SA2.",
+   "audit": {
+    "verdicts": {
+     "SA2_CODE_2021": "TRUE"
+    },
+    "quote": "\"Whole SA1s aggregate to form Statistical Areas Level 2 (SA2s).\" and \"SA1s are identified by an 11-digit fully hierarchical code, comprising the 1-digit State and Territory, and Statistical Areas Level 1-4 identifiers.\" (abs_statistical-area-level-1.html)",
+    "source": "abs_statistical-area-level-1.html"
+   }
+  },
+  {
+   "lhs": [
+    "SA2_CODE_2021"
+   ],
+   "rhs": [
+    "SA2_NAME_2021",
+    "SA3_CODE_2021"
+   ],
+   "sure": true,
+   "clause": "abs_statistical-area-level-2.html: \"Whole SA2s aggregate to form Statistical Areas Level 3 (SA3s).\" and \"An SA2 is identifiable by a 9-digit fully hierarchical code comprising the 1-digit State or Territory identifier, and Statistical Areas Level 2-4 identifiers.\"",
+   "justification": "The SA2 code identifies the SA2, which has one name and lies in exactly one SA3.",
+   "audit": {
+    "verdicts": {
+     "SA2_NAME_2021": "TRUE",
+     "SA3_CODE_2021": "TRUE"
+    },
+    "quote": "\"Whole SA2s aggregate to form Statistical Areas Level 3 (SA3s).\" and \"An SA2 is identifiable by a 9-digit fully hierarchical code comprising the 1-digit State or Territory identifier, and Statistical Areas Level 2-4 identifiers.\" (abs_statistical-area-level-2.html)",
+    "source": "abs_statistical-area-level-2.html"
+   }
+  },
+  {
+   "lhs": [
+    "SA2_NAME_2021"
+   ],
+   "rhs": [
+    "SA2_CODE_2021"
+   ],
+   "sure": true,
+   "clause": "abs_statistical-area-level-2.html, SA2 name criteria: \"unique, that is not shared by any other SA2 in Australia\"",
+   "justification": "SA2 names are unique in Australia, so the name identifies the SA2 and its code.",
+   "audit": {
+    "verdicts": {
+     "SA2_CODE_2021": "TRUE"
+    },
+    "quote": "SA2 name criteria: \"unique, that is not shared by any other SA2 in Australia\" (abs_statistical-area-level-2.html)",
+    "source": "abs_statistical-area-level-2.html, SA2 name criteria"
+   }
+  },
+  {
+   "lhs": [
+    "SA3_CODE_2021"
+   ],
+   "rhs": [
+    "SA3_NAME_2021",
+    "SA4_CODE_2021"
+   ],
+   "sure": true,
+   "clause": "abs_statistical-area-level-3.html: \"Whole SA3s aggregate to form Statistical Areas Level 4 (SA4s).\" and \"SA3s are identified by 5-digit hierarchical codes.\"",
+   "justification": "The SA3 code identifies the SA3, which has one name and lies in exactly one SA4.",
+   "audit": {
+    "verdicts": {
+     "SA3_NAME_2021": "TRUE",
+     "SA4_CODE_2021": "TRUE"
+    },
+    "quote": "\"Whole SA3s aggregate to form Statistical Areas Level 4 (SA4s).\" and \"SA3s are identified by 5-digit hierarchical codes. This comprises a 1-digit State or Territory identifier followed by a 2-digit SA4 identifier, unique within each State and Territory, and a 2-digit SA3 identifier, unique within each SA4.\" (abs_statistical-area-level-3.html)",
+    "source": "abs_statistical-area-level-3.html"
+   }
+  },
+  {
+   "lhs": [
+    "SA3_NAME_2021"
+   ],
+   "rhs": [
+    "SA3_CODE_2021"
+   ],
+   "sure": true,
+   "clause": "abs_statistical-area-level-3.html, SA3 name criteria: \"unique, that is not shared by any other SA3 in Australia\"",
+   "justification": "SA3 names are unique in Australia.",
+   "audit": {
+    "verdicts": {
+     "SA3_CODE_2021": "TRUE"
+    },
+    "quote": "SA3 name criteria: \"unique, that is not shared by any other SA3 in Australia\" (abs_statistical-area-level-3.html)",
+    "source": "abs_statistical-area-level-3.html, SA3 name criteria"
+   }
+  },
+  {
+   "lhs": [
+    "SA4_CODE_2021"
+   ],
+   "rhs": [
+    "SA4_NAME_2021",
+    "GCCSA_CODE_2021",
+    "STATE_CODE_2021"
+   ],
+   "sure": true,
+   "clause": "abs_statistical-area-level-4.html: \"Whole SA4s aggregate to Greater Capital City Statistical Areas and States and Territories.\" and \"SA4s are identified by a 3-digit hierarchical code.\"",
+   "justification": "The SA4 code identifies the SA4, which has one name and lies in exactly one GCCSA and one State or Territory.",
+   "audit": {
+    "verdicts": {
+     "SA4_NAME_2021": "TRUE",
+     "GCCSA_CODE_2021": "TRUE",
+     "STATE_CODE_2021": "TRUE"
+    },
+    "quote": "\"Whole SA4s aggregate to Greater Capital City Statistical Areas and States and Territories.\" and \"SA4s are identified by a 3-digit hierarchical code. This comprises a 1-digit State or Territory identifier, which precedes a 2-digit SA4 identifier, unique within each State and Territory.\" (abs_statistical-area-level-4.html); \"Greater Capital City Statistical Areas (GCCSAs) are geographic areas built from Statistical Areas Level 4 (SA4s).\" and \"There are 16 GCCSAs covering the whole of Australia without gaps or overlaps.\" (abs_greater-capital-city-statistical-areas.html)",
+    "source": "abs_statistical-area-level-4.html; abs_greater-capital-city-statistical-areas.html"
+   }
+  },
+  {
+   "lhs": [
+    "SA4_NAME_2021"
+   ],
+   "rhs": [
+    "SA4_CODE_2021"
+   ],
+   "sure": true,
+   "clause": "abs_statistical-area-level-4.html, SA4 name criteria: \"unique, that is not shared by any other SA4 in Australia\"",
+   "justification": "SA4 names are unique in Australia.",
+   "audit": {
+    "verdicts": {
+     "SA4_CODE_2021": "TRUE"
+    },
+    "quote": "SA4 name criteria: \"unique, that is not shared by any other SA4 in Australia\" (abs_statistical-area-level-4.html)",
+    "source": "abs_statistical-area-level-4.html, SA4 name criteria"
+   }
+  },
+  {
+   "lhs": [
+    "GCCSA_CODE_2021"
+   ],
+   "rhs": [
+    "GCCSA_NAME_2021",
+    "STATE_CODE_2021"
+   ],
+   "sure": true,
+   "clause": "abs_greater-capital-city-statistical-areas.html, GCCSA coding structure: \"A GCCSA is identified by a 5-character alphanumeric code. This comprises a 1-digit State or Territory identifier followed by a 4-character GCCSA identifier that is unique within each State and Territory.\"",
+   "justification": "The GCCSA code identifies the GCCSA (hence its name) and contains the identifier of the one State or Territory it belongs to.",
+   "audit": {
+    "verdicts": {
+     "GCCSA_NAME_2021": "TRUE",
+     "STATE_CODE_2021": "TRUE"
+    },
+    "quote": "\"A GCCSA is identified by a 5-character alphanumeric code. This comprises a 1-digit State or Territory identifier followed by a 4-character GCCSA identifier that is unique within each State and Territory.\" (abs_greater-capital-city-statistical-areas.html, GCCSA coding structure)",
+    "source": "abs_greater-capital-city-statistical-areas.html"
+   }
+  },
+  {
+   "lhs": [
+    "STATE_CODE_2021"
+   ],
+   "rhs": [
+    "STATE_NAME_2021"
+   ],
+   "sure": true,
+   "clause": "abs_australia-and-stateterritory.html: \"States and Territories are identified by unique one-digit codes as follows:\" (code list 1 New South Wales ... 9 Other Territories)",
+   "justification": "The published code list gives one name per state code.",
+   "audit": {
+    "verdicts": {
+     "STATE_NAME_2021": "TRUE"
+    },
+    "quote": "\"States and Territories are identified by unique one-digit codes as follows:\" with the table \"1 | New South Wales ... 9 | Other Territories\" (abs_australia-and-stateterritory.html)",
+    "source": "abs_australia-and-stateterritory.html"
+   }
+  },
+  {
+   "lhs": [
+    "STATE_NAME_2021"
+   ],
+   "rhs": [
+    "STATE_CODE_2021"
+   ],
+   "sure": true,
+   "clause": "abs_australia-and-stateterritory.html: \"States and Territories are identified by unique one-digit codes as follows:\" (nine distinct names, each with one code)",
+   "justification": "The code list pairs nine distinct names with nine codes one to one.",
+   "audit": {
+    "verdicts": {
+     "STATE_CODE_2021": "TRUE"
+    },
+    "quote": "\"States and Territories are identified by unique one-digit codes as follows:\" with the table \"1 | New South Wales ... 9 | Other Territories\" (abs_australia-and-stateterritory.html)",
+    "source": "abs_australia-and-stateterritory.html"
+   }
+  },
+  {
+   "lhs": [
+    "CHANGE_FLAG_2021"
+   ],
+   "rhs": [
+    "CHANGE_LABEL_2021"
+   ],
+   "sure": true,
+   "clause": "abs_changes-previous-edition-asgs.html (https://www.abs.gov.au/statistics/standards/australian-statistical-geography-standard-asgs/edition-3-july-2021-june-2026/main-structure-and-greater-capital-city-statistical-areas/changes-previous-edition-asgs, retrieved 2026-10-27), Change flag descriptions (table with columns CHANGE_FLAG_2021, CHANGE_LABEL_2021, Description): flags 0, 1, 2, 3 labelled \"No change\", \"New\", \"Code change\", \"Name change\"",
+   "justification": "The published table gives exactly one label per change flag.",
+   "audit": {
+    "verdicts": {
+     "CHANGE_LABEL_2021": "TRUE"
+    },
+    "quote": "Change flag descriptions table with columns \"CHANGE_FLAG_2021 | CHANGE_LABEL_2021 | Description\": \"0 | No change\", \"1 | New\", \"2 | Code change\", \"3 | Name change\" (abs_changes-previous-edition-asgs.html, Identifying change, Change flag descriptions)",
+    "source": "abs_changes-previous-edition-asgs.html, Identifying change, Change flag descriptions"
+   }
+  },
+  {
+   "lhs": [
+    "CHANGE_LABEL_2021"
+   ],
+   "rhs": [
+    "CHANGE_FLAG_2021"
+   ],
+   "sure": true,
+   "clause": "abs_changes-previous-edition-asgs.html (https://www.abs.gov.au/statistics/standards/australian-statistical-geography-standard-asgs/edition-3-july-2021-june-2026/main-structure-and-greater-capital-city-statistical-areas/changes-previous-edition-asgs, retrieved 2026-10-27), Change flag descriptions: flags 0, 1, 2, 3 labelled \"No change\", \"New\", \"Code change\", \"Name change\"",
+   "justification": "The four labels are distinct, so each label determines its flag.",
+   "audit": {
+    "verdicts": {
+     "CHANGE_FLAG_2021": "TRUE"
+    },
+    "quote": "Change flag descriptions table with columns \"CHANGE_FLAG_2021 | CHANGE_LABEL_2021 | Description\": \"0 | No change\", \"1 | New\", \"2 | Code change\", \"3 | Name change\" (abs_changes-previous-edition-asgs.html, Identifying change, Change flag descriptions)",
+    "source": "abs_changes-previous-edition-asgs.html, Identifying change, Change flag descriptions"
+   }
+  }
+ ],
+ "truth_counts": {
+  "fds": 14,
+  "single_rhs": 23,
+  "sure_single_rhs": 23
+ },
+ "random_columns": null,
+ "truth_fds_violated_by_data": [],
+ "gold_design": null,
+ "gold_design_note": "No normalized design is published; the 3NF designs of Sigma* are synthesized.",
+ "truth_design": {
+  "keys": [
+   [
+    "MB_CODE_2021"
+   ]
+  ],
+  "atomic_closure": 75,
+  "synthesis": [
+   [
+    "AREA_ALBERS_SQKM",
+    "MB_CODE_2021"
+   ],
+   [
+    "ASGS_LOCI_URI_2021",
+    "MB_CODE_2021"
+   ],
+   [
+    "CHANGE_FLAG_2021",
+    "CHANGE_LABEL_2021"
+   ],
+   [
+    "CHANGE_LABEL_2021",
+    "MB_CODE_2021"
+   ],
+   [
+    "GCCSA_CODE_2021",
+    "GCCSA_NAME_2021"
+   ],
+   [
+    "GCCSA_CODE_2021",
+    "SA4_NAME_2021"
+   ],
+   [
+    "GCCSA_CODE_2021",
+    "STATE_NAME_2021"
+   ],
+   [
+    "MB_CATEGORY_2021",
+    "MB_CODE_2021"
+   ],
+   [
+    "MB_CODE_2021",
+    "SA1_CODE_2021"
+   ],
+   [
+    "SA1_CODE_2021",
+    "SA2_NAME_2021"
+   ],
+   [
+    "SA2_CODE_2021",
+    "SA2_NAME_2021"
+   ],
+   [
+    "SA2_NAME_2021",
+    "SA3_NAME_2021"
+   ],
+   [
+    "SA3_CODE_2021",
+    "SA3_NAME_2021"
+   ],
+   [
+    "SA3_NAME_2021",
+    "SA4_NAME_2021"
+   ],
+   [
+    "SA4_CODE_2021",
+    "SA4_NAME_2021"
+   ],
+   [
+    "STATE_CODE_2021",
+    "STATE_NAME_2021"
+   ]
+  ],
+  "iconf": [
+   [
+    "AREA_ALBERS_SQKM",
+    "MB_CODE_2021"
+   ],
+   [
+    "ASGS_LOCI_URI_2021",
+    "MB_CODE_2021"
+   ],
+   [
+    "CHANGE_FLAG_2021",
+    "CHANGE_LABEL_2021"
+   ],
+   [
+    "CHANGE_LABEL_2021",
+    "MB_CODE_2021"
+   ],
+   [
+    "GCCSA_CODE_2021",
+    "GCCSA_NAME_2021"
+   ],
+   [
+    "GCCSA_CODE_2021",
+    "SA4_NAME_2021"
+   ],
+   [
+    "GCCSA_CODE_2021",
+    "STATE_NAME_2021"
+   ],
+   [
+    "MB_CATEGORY_2021",
+    "MB_CODE_2021"
+   ],
+   [
+    "MB_CODE_2021",
+    "SA1_CODE_2021"
+   ],
+   [
+    "SA1_CODE_2021",
+    "SA2_NAME_2021"
+   ],
+   [
+    "SA2_CODE_2021",
+    "SA2_NAME_2021"
+   ],
+   [
+    "SA2_NAME_2021",
+    "SA3_NAME_2021"
+   ],
+   [
+    "SA3_CODE_2021",
+    "SA3_NAME_2021"
+   ],
+   [
+    "SA3_NAME_2021",
+    "SA4_NAME_2021"
+   ],
+   [
+    "SA4_CODE_2021",
+    "SA4_NAME_2021"
+   ],
+   [
+    "STATE_CODE_2021",
+    "STATE_NAME_2021"
+   ]
+  ]
+ },
+ "mined": {
+  "algorithm": "fdmine.py: exact discovery of all minimal FDs in the style of HyFD (no HyFD binary was available); the complete set of minimal FDs is unique, so it equals HyFD's output",
+  "file": "mined/fresh_abs_mb-fds.txt",
+  "seconds": 5.2,
+  "count": 94,
+  "implied_by_truth": 75,
+  "accidental": 19,
+  "implied_by_sure_truth": 75
+ },
+ "fds": [
+  {"lhs": ["ASGS_LOCI_URI_2021"], "rhs": "MB_CODE_2021", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 368286, "distinct_rhs": 368286, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["asgs", "loci", "uri"]], "rhs_tokens": ["mb", "code"]},
+  {"lhs": ["MB_CODE_2021"], "rhs": "MB_CATEGORY_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 368286, "distinct_rhs": 16, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 4.3e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["mb", "code"]], "rhs_tokens": ["mb", "category"]},
+  {"lhs": ["ASGS_LOCI_URI_2021"], "rhs": "MB_CATEGORY_2021", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 368286, "distinct_rhs": 16, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 4.3e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["asgs", "loci", "uri"]], "rhs_tokens": ["mb", "category"]},
+  {"lhs": ["MB_CODE_2021"], "rhs": "CHANGE_FLAG_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 368286, "distinct_rhs": 2, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 5e-06, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["mb", "code"]], "rhs_tokens": ["change", "flag"]},
+  {"lhs": ["CHANGE_LABEL_2021"], "rhs": "CHANGE_FLAG_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 2, "distinct_rhs": 2, "lhs_distinct_ratio": 5e-06, "rhs_distinct_ratio": 5e-06, "redundancy": 368284, "redundancy_wl": 368286, "lhs_unique": false, "lhs_tokens": [["change", "label"]], "rhs_tokens": ["change", "flag"]},
+  {"lhs": ["ASGS_LOCI_URI_2021"], "rhs": "CHANGE_FLAG_2021", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 368286, "distinct_rhs": 2, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 5e-06, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["asgs", "loci", "uri"]], "rhs_tokens": ["change", "flag"]},
+  {"lhs": ["MB_CODE_2021"], "rhs": "CHANGE_LABEL_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 368286, "distinct_rhs": 2, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 5e-06, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["mb", "code"]], "rhs_tokens": ["change", "label"]},
+  {"lhs": ["CHANGE_FLAG_2021"], "rhs": "CHANGE_LABEL_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 2, "distinct_rhs": 2, "lhs_distinct_ratio": 5e-06, "rhs_distinct_ratio": 5e-06, "redundancy": 368284, "redundancy_wl": 368286, "lhs_unique": false, "lhs_tokens": [["change", "flag"]], "rhs_tokens": ["change", "label"]},
+  {"lhs": ["ASGS_LOCI_URI_2021"], "rhs": "CHANGE_LABEL_2021", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 368286, "distinct_rhs": 2, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 5e-06, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["asgs", "loci", "uri"]], "rhs_tokens": ["change", "label"]},
+  {"lhs": ["MB_CODE_2021"], "rhs": "SA1_CODE_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 368286, "distinct_rhs": 61845, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.167927, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["mb", "code"]], "rhs_tokens": ["sa", "code"]},
+  {"lhs": ["ASGS_LOCI_URI_2021"], "rhs": "SA1_CODE_2021", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 368286, "distinct_rhs": 61845, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.167927, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["asgs", "loci", "uri"]], "rhs_tokens": ["sa", "code"]},
+  {"lhs": ["MB_CODE_2021"], "rhs": "SA2_CODE_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 368286, "distinct_rhs": 2473, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.006715, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["mb", "code"]], "rhs_tokens": ["sa", "code"]},
+  {"lhs": ["SA1_CODE_2021"], "rhs": "SA2_CODE_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 61845, "distinct_rhs": 2473, "lhs_distinct_ratio": 0.167927, "rhs_distinct_ratio": 0.006715, "redundancy": 306441, "redundancy_wl": 366405, "lhs_unique": false, "lhs_tokens": [["sa", "code"]], "rhs_tokens": ["sa", "code"]},
+  {"lhs": ["SA2_NAME_2021"], "rhs": "SA2_CODE_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 2473, "distinct_rhs": 2473, "lhs_distinct_ratio": 0.006715, "rhs_distinct_ratio": 0.006715, "redundancy": 365813, "redundancy_wl": 368263, "lhs_unique": false, "lhs_tokens": [["sa", "name"]], "rhs_tokens": ["sa", "code"]},
+  {"lhs": ["ASGS_LOCI_URI_2021"], "rhs": "SA2_CODE_2021", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 368286, "distinct_rhs": 2473, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.006715, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["asgs", "loci", "uri"]], "rhs_tokens": ["sa", "code"]},
+  {"lhs": ["MB_CODE_2021"], "rhs": "SA2_NAME_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 368286, "distinct_rhs": 2473, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.006715, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["mb", "code"]], "rhs_tokens": ["sa", "name"]},
+  {"lhs": ["SA1_CODE_2021"], "rhs": "SA2_NAME_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 61845, "distinct_rhs": 2473, "lhs_distinct_ratio": 0.167927, "rhs_distinct_ratio": 0.006715, "redundancy": 306441, "redundancy_wl": 366405, "lhs_unique": false, "lhs_tokens": [["sa", "code"]], "rhs_tokens": ["sa", "name"]},
+  {"lhs": ["SA2_CODE_2021"], "rhs": "SA2_NAME_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 2473, "distinct_rhs": 2473, "lhs_distinct_ratio": 0.006715, "rhs_distinct_ratio": 0.006715, "redundancy": 365813, "redundancy_wl": 368263, "lhs_unique": false, "lhs_tokens": [["sa", "code"]], "rhs_tokens": ["sa", "name"]},
+  {"lhs": ["ASGS_LOCI_URI_2021"], "rhs": "SA2_NAME_2021", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 368286, "distinct_rhs": 2473, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.006715, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["asgs", "loci", "uri"]], "rhs_tokens": ["sa", "name"]},
+  {"lhs": ["MB_CODE_2021"], "rhs": "SA3_CODE_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 368286, "distinct_rhs": 359, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.000975, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["mb", "code"]], "rhs_tokens": ["sa", "code"]},
+  {"lhs": ["SA1_CODE_2021"], "rhs": "SA3_CODE_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 61845, "distinct_rhs": 359, "lhs_distinct_ratio": 0.167927, "rhs_distinct_ratio": 0.000975, "redundancy": 306441, "redundancy_wl": 366405, "lhs_unique": false, "lhs_tokens": [["sa", "code"]], "rhs_tokens": ["sa", "code"]},
+  {"lhs": ["SA2_CODE_2021"], "rhs": "SA3_CODE_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 2473, "distinct_rhs": 359, "lhs_distinct_ratio": 0.006715, "rhs_distinct_ratio": 0.000975, "redundancy": 365813, "redundancy_wl": 368263, "lhs_unique": false, "lhs_tokens": [["sa", "code"]], "rhs_tokens": ["sa", "code"]},
+  {"lhs": ["SA2_NAME_2021"], "rhs": "SA3_CODE_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 2473, "distinct_rhs": 359, "lhs_distinct_ratio": 0.006715, "rhs_distinct_ratio": 0.000975, "redundancy": 365813, "redundancy_wl": 368263, "lhs_unique": false, "lhs_tokens": [["sa", "name"]], "rhs_tokens": ["sa", "code"]},
+  {"lhs": ["SA3_NAME_2021"], "rhs": "SA3_CODE_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 359, "distinct_rhs": 359, "lhs_distinct_ratio": 0.000975, "rhs_distinct_ratio": 0.000975, "redundancy": 367927, "redundancy_wl": 368275, "lhs_unique": false, "lhs_tokens": [["sa", "name"]], "rhs_tokens": ["sa", "code"]},
+  {"lhs": ["ASGS_LOCI_URI_2021"], "rhs": "SA3_CODE_2021", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 368286, "distinct_rhs": 359, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.000975, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["asgs", "loci", "uri"]], "rhs_tokens": ["sa", "code"]},
+  {"lhs": ["MB_CODE_2021"], "rhs": "SA3_NAME_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 368286, "distinct_rhs": 359, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.000975, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["mb", "code"]], "rhs_tokens": ["sa", "name"]},
+  {"lhs": ["SA1_CODE_2021"], "rhs": "SA3_NAME_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 61845, "distinct_rhs": 359, "lhs_distinct_ratio": 0.167927, "rhs_distinct_ratio": 0.000975, "redundancy": 306441, "redundancy_wl": 366405, "lhs_unique": false, "lhs_tokens": [["sa", "code"]], "rhs_tokens": ["sa", "name"]},
+  {"lhs": ["SA2_CODE_2021"], "rhs": "SA3_NAME_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 2473, "distinct_rhs": 359, "lhs_distinct_ratio": 0.006715, "rhs_distinct_ratio": 0.000975, "redundancy": 365813, "redundancy_wl": 368263, "lhs_unique": false, "lhs_tokens": [["sa", "code"]], "rhs_tokens": ["sa", "name"]},
+  {"lhs": ["SA2_NAME_2021"], "rhs": "SA3_NAME_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 2473, "distinct_rhs": 359, "lhs_distinct_ratio": 0.006715, "rhs_distinct_ratio": 0.000975, "redundancy": 365813, "redundancy_wl": 368263, "lhs_unique": false, "lhs_tokens": [["sa", "name"]], "rhs_tokens": ["sa", "name"]},
+  {"lhs": ["SA3_CODE_2021"], "rhs": "SA3_NAME_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 359, "distinct_rhs": 359, "lhs_distinct_ratio": 0.000975, "rhs_distinct_ratio": 0.000975, "redundancy": 367927, "redundancy_wl": 368275, "lhs_unique": false, "lhs_tokens": [["sa", "code"]], "rhs_tokens": ["sa", "name"]},
+  {"lhs": ["ASGS_LOCI_URI_2021"], "rhs": "SA3_NAME_2021", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 368286, "distinct_rhs": 359, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.000975, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["asgs", "loci", "uri"]], "rhs_tokens": ["sa", "name"]},
+  {"lhs": ["MB_CODE_2021"], "rhs": "SA4_CODE_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 368286, "distinct_rhs": 108, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.000293, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["mb", "code"]], "rhs_tokens": ["sa", "code"]},
+  {"lhs": ["SA1_CODE_2021"], "rhs": "SA4_CODE_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 61845, "distinct_rhs": 108, "lhs_distinct_ratio": 0.167927, "rhs_distinct_ratio": 0.000293, "redundancy": 306441, "redundancy_wl": 366405, "lhs_unique": false, "lhs_tokens": [["sa", "code"]], "rhs_tokens": ["sa", "code"]},
+  {"lhs": ["SA2_CODE_2021"], "rhs": "SA4_CODE_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 2473, "distinct_rhs": 108, "lhs_distinct_ratio": 0.006715, "rhs_distinct_ratio": 0.000293, "redundancy": 365813, "redundancy_wl": 368263, "lhs_unique": false, "lhs_tokens": [["sa", "code"]], "rhs_tokens": ["sa", "code"]},
+  {"lhs": ["SA2_NAME_2021"], "rhs": "SA4_CODE_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 2473, "distinct_rhs": 108, "lhs_distinct_ratio": 0.006715, "rhs_distinct_ratio": 0.000293, "redundancy": 365813, "redundancy_wl": 368263, "lhs_unique": false, "lhs_tokens": [["sa", "name"]], "rhs_tokens": ["sa", "code"]},
+  {"lhs": ["SA3_CODE_2021"], "rhs": "SA4_CODE_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 359, "distinct_rhs": 108, "lhs_distinct_ratio": 0.000975, "rhs_distinct_ratio": 0.000293, "redundancy": 367927, "redundancy_wl": 368275, "lhs_unique": false, "lhs_tokens": [["sa", "code"]], "rhs_tokens": ["sa", "code"]},
+  {"lhs": ["SA3_NAME_2021"], "rhs": "SA4_CODE_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 359, "distinct_rhs": 108, "lhs_distinct_ratio": 0.000975, "rhs_distinct_ratio": 0.000293, "redundancy": 367927, "redundancy_wl": 368275, "lhs_unique": false, "lhs_tokens": [["sa", "name"]], "rhs_tokens": ["sa", "code"]},
+  {"lhs": ["SA4_NAME_2021"], "rhs": "SA4_CODE_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 108, "distinct_rhs": 108, "lhs_distinct_ratio": 0.000293, "rhs_distinct_ratio": 0.000293, "redundancy": 368178, "redundancy_wl": 368275, "lhs_unique": false, "lhs_tokens": [["sa", "name"]], "rhs_tokens": ["sa", "code"]},
+  {"lhs": ["ASGS_LOCI_URI_2021"], "rhs": "SA4_CODE_2021", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 368286, "distinct_rhs": 108, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.000293, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["asgs", "loci", "uri"]], "rhs_tokens": ["sa", "code"]},
+  {"lhs": ["MB_CODE_2021"], "rhs": "SA4_NAME_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 368286, "distinct_rhs": 108, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.000293, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["mb", "code"]], "rhs_tokens": ["sa", "name"]},
+  {"lhs": ["SA1_CODE_2021"], "rhs": "SA4_NAME_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 61845, "distinct_rhs": 108, "lhs_distinct_ratio": 0.167927, "rhs_distinct_ratio": 0.000293, "redundancy": 306441, "redundancy_wl": 366405, "lhs_unique": false, "lhs_tokens": [["sa", "code"]], "rhs_tokens": ["sa", "name"]},
+  {"lhs": ["SA2_CODE_2021"], "rhs": "SA4_NAME_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 2473, "distinct_rhs": 108, "lhs_distinct_ratio": 0.006715, "rhs_distinct_ratio": 0.000293, "redundancy": 365813, "redundancy_wl": 368263, "lhs_unique": false, "lhs_tokens": [["sa", "code"]], "rhs_tokens": ["sa", "name"]},
+  {"lhs": ["SA2_NAME_2021"], "rhs": "SA4_NAME_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 2473, "distinct_rhs": 108, "lhs_distinct_ratio": 0.006715, "rhs_distinct_ratio": 0.000293, "redundancy": 365813, "redundancy_wl": 368263, "lhs_unique": false, "lhs_tokens": [["sa", "name"]], "rhs_tokens": ["sa", "name"]},
+  {"lhs": ["SA3_CODE_2021"], "rhs": "SA4_NAME_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 359, "distinct_rhs": 108, "lhs_distinct_ratio": 0.000975, "rhs_distinct_ratio": 0.000293, "redundancy": 367927, "redundancy_wl": 368275, "lhs_unique": false, "lhs_tokens": [["sa", "code"]], "rhs_tokens": ["sa", "name"]},
+  {"lhs": ["SA3_NAME_2021"], "rhs": "SA4_NAME_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 359, "distinct_rhs": 108, "lhs_distinct_ratio": 0.000975, "rhs_distinct_ratio": 0.000293, "redundancy": 367927, "redundancy_wl": 368275, "lhs_unique": false, "lhs_tokens": [["sa", "name"]], "rhs_tokens": ["sa", "name"]},
+  {"lhs": ["SA4_CODE_2021"], "rhs": "SA4_NAME_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 108, "distinct_rhs": 108, "lhs_distinct_ratio": 0.000293, "rhs_distinct_ratio": 0.000293, "redundancy": 368178, "redundancy_wl": 368275, "lhs_unique": false, "lhs_tokens": [["sa", "code"]], "rhs_tokens": ["sa", "name"]},
+  {"lhs": ["ASGS_LOCI_URI_2021"], "rhs": "SA4_NAME_2021", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 368286, "distinct_rhs": 108, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.000293, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["asgs", "loci", "uri"]], "rhs_tokens": ["sa", "name"]},
+  {"lhs": ["MB_CODE_2021"], "rhs": "GCCSA_CODE_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 368286, "distinct_rhs": 35, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 9.5e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["mb", "code"]], "rhs_tokens": ["gccsa", "code"]},
+  {"lhs": ["SA1_CODE_2021"], "rhs": "GCCSA_CODE_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 61845, "distinct_rhs": 35, "lhs_distinct_ratio": 0.167927, "rhs_distinct_ratio": 9.5e-05, "redundancy": 306441, "redundancy_wl": 366405, "lhs_unique": false, "lhs_tokens": [["sa", "code"]], "rhs_tokens": ["gccsa", "code"]},
+  {"lhs": ["SA2_CODE_2021"], "rhs": "GCCSA_CODE_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 2473, "distinct_rhs": 35, "lhs_distinct_ratio": 0.006715, "rhs_distinct_ratio": 9.5e-05, "redundancy": 365813, "redundancy_wl": 368263, "lhs_unique": false, "lhs_tokens": [["sa", "code"]], "rhs_tokens": ["gccsa", "code"]},
+  {"lhs": ["SA2_NAME_2021"], "rhs": "GCCSA_CODE_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 2473, "distinct_rhs": 35, "lhs_distinct_ratio": 0.006715, "rhs_distinct_ratio": 9.5e-05, "redundancy": 365813, "redundancy_wl": 368263, "lhs_unique": false, "lhs_tokens": [["sa", "name"]], "rhs_tokens": ["gccsa", "code"]},
+  {"lhs": ["SA3_CODE_2021"], "rhs": "GCCSA_CODE_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 359, "distinct_rhs": 35, "lhs_distinct_ratio": 0.000975, "rhs_distinct_ratio": 9.5e-05, "redundancy": 367927, "redundancy_wl": 368275, "lhs_unique": false, "lhs_tokens": [["sa", "code"]], "rhs_tokens": ["gccsa", "code"]},
+  {"lhs": ["SA3_NAME_2021"], "rhs": "GCCSA_CODE_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 359, "distinct_rhs": 35, "lhs_distinct_ratio": 0.000975, "rhs_distinct_ratio": 9.5e-05, "redundancy": 367927, "redundancy_wl": 368275, "lhs_unique": false, "lhs_tokens": [["sa", "name"]], "rhs_tokens": ["gccsa", "code"]},
+  {"lhs": ["SA4_CODE_2021"], "rhs": "GCCSA_CODE_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 108, "distinct_rhs": 35, "lhs_distinct_ratio": 0.000293, "rhs_distinct_ratio": 9.5e-05, "redundancy": 368178, "redundancy_wl": 368275, "lhs_unique": false, "lhs_tokens": [["sa", "code"]], "rhs_tokens": ["gccsa", "code"]},
+  {"lhs": ["SA4_NAME_2021"], "rhs": "GCCSA_CODE_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 108, "distinct_rhs": 35, "lhs_distinct_ratio": 0.000293, "rhs_distinct_ratio": 9.5e-05, "redundancy": 368178, "redundancy_wl": 368275, "lhs_unique": false, "lhs_tokens": [["sa", "name"]], "rhs_tokens": ["gccsa", "code"]},
+  {"lhs": ["GCCSA_NAME_2021"], "rhs": "GCCSA_CODE_2021", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 35, "distinct_rhs": 35, "lhs_distinct_ratio": 9.5e-05, "rhs_distinct_ratio": 9.5e-05, "redundancy": 368251, "redundancy_wl": 368275, "lhs_unique": false, "lhs_tokens": [["gccsa", "name"]], "rhs_tokens": ["gccsa", "code"]},
+  {"lhs": ["ASGS_LOCI_URI_2021"], "rhs": "GCCSA_CODE_2021", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 368286, "distinct_rhs": 35, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 9.5e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["asgs", "loci", "uri"]], "rhs_tokens": ["gccsa", "code"]},
+  {"lhs": ["MB_CODE_2021"], "rhs": "GCCSA_NAME_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 368286, "distinct_rhs": 35, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 9.5e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["mb", "code"]], "rhs_tokens": ["gccsa", "name"]},
+  {"lhs": ["SA1_CODE_2021"], "rhs": "GCCSA_NAME_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 61845, "distinct_rhs": 35, "lhs_distinct_ratio": 0.167927, "rhs_distinct_ratio": 9.5e-05, "redundancy": 306441, "redundancy_wl": 366405, "lhs_unique": false, "lhs_tokens": [["sa", "code"]], "rhs_tokens": ["gccsa", "name"]},
+  {"lhs": ["SA2_CODE_2021"], "rhs": "GCCSA_NAME_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 2473, "distinct_rhs": 35, "lhs_distinct_ratio": 0.006715, "rhs_distinct_ratio": 9.5e-05, "redundancy": 365813, "redundancy_wl": 368263, "lhs_unique": false, "lhs_tokens": [["sa", "code"]], "rhs_tokens": ["gccsa", "name"]},
+  {"lhs": ["SA2_NAME_2021"], "rhs": "GCCSA_NAME_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 2473, "distinct_rhs": 35, "lhs_distinct_ratio": 0.006715, "rhs_distinct_ratio": 9.5e-05, "redundancy": 365813, "redundancy_wl": 368263, "lhs_unique": false, "lhs_tokens": [["sa", "name"]], "rhs_tokens": ["gccsa", "name"]},
+  {"lhs": ["SA3_CODE_2021"], "rhs": "GCCSA_NAME_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 359, "distinct_rhs": 35, "lhs_distinct_ratio": 0.000975, "rhs_distinct_ratio": 9.5e-05, "redundancy": 367927, "redundancy_wl": 368275, "lhs_unique": false, "lhs_tokens": [["sa", "code"]], "rhs_tokens": ["gccsa", "name"]},
+  {"lhs": ["SA3_NAME_2021"], "rhs": "GCCSA_NAME_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 359, "distinct_rhs": 35, "lhs_distinct_ratio": 0.000975, "rhs_distinct_ratio": 9.5e-05, "redundancy": 367927, "redundancy_wl": 368275, "lhs_unique": false, "lhs_tokens": [["sa", "name"]], "rhs_tokens": ["gccsa", "name"]},
+  {"lhs": ["SA4_CODE_2021"], "rhs": "GCCSA_NAME_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 108, "distinct_rhs": 35, "lhs_distinct_ratio": 0.000293, "rhs_distinct_ratio": 9.5e-05, "redundancy": 368178, "redundancy_wl": 368275, "lhs_unique": false, "lhs_tokens": [["sa", "code"]], "rhs_tokens": ["gccsa", "name"]},
+  {"lhs": ["SA4_NAME_2021"], "rhs": "GCCSA_NAME_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 108, "distinct_rhs": 35, "lhs_distinct_ratio": 0.000293, "rhs_distinct_ratio": 9.5e-05, "redundancy": 368178, "redundancy_wl": 368275, "lhs_unique": false, "lhs_tokens": [["sa", "name"]], "rhs_tokens": ["gccsa", "name"]},
+  {"lhs": ["GCCSA_CODE_2021"], "rhs": "GCCSA_NAME_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 35, "distinct_rhs": 35, "lhs_distinct_ratio": 9.5e-05, "rhs_distinct_ratio": 9.5e-05, "redundancy": 368251, "redundancy_wl": 368275, "lhs_unique": false, "lhs_tokens": [["gccsa", "code"]], "rhs_tokens": ["gccsa", "name"]},
+  {"lhs": ["ASGS_LOCI_URI_2021"], "rhs": "GCCSA_NAME_2021", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 368286, "distinct_rhs": 35, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 9.5e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["asgs", "loci", "uri"]], "rhs_tokens": ["gccsa", "name"]},
+  {"lhs": ["MB_CODE_2021"], "rhs": "STATE_CODE_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 368286, "distinct_rhs": 10, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 2.7e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["mb", "code"]], "rhs_tokens": ["state", "code"]},
+  {"lhs": ["SA1_CODE_2021"], "rhs": "STATE_CODE_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 61845, "distinct_rhs": 10, "lhs_distinct_ratio": 0.167927, "rhs_distinct_ratio": 2.7e-05, "redundancy": 306441, "redundancy_wl": 366405, "lhs_unique": false, "lhs_tokens": [["sa", "code"]], "rhs_tokens": ["state", "code"]},
+  {"lhs": ["SA2_CODE_2021"], "rhs": "STATE_CODE_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 2473, "distinct_rhs": 10, "lhs_distinct_ratio": 0.006715, "rhs_distinct_ratio": 2.7e-05, "redundancy": 365813, "redundancy_wl": 368263, "lhs_unique": false, "lhs_tokens": [["sa", "code"]], "rhs_tokens": ["state", "code"]},
+  {"lhs": ["SA2_NAME_2021"], "rhs": "STATE_CODE_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 2473, "distinct_rhs": 10, "lhs_distinct_ratio": 0.006715, "rhs_distinct_ratio": 2.7e-05, "redundancy": 365813, "redundancy_wl": 368263, "lhs_unique": false, "lhs_tokens": [["sa", "name"]], "rhs_tokens": ["state", "code"]},
+  {"lhs": ["SA3_CODE_2021"], "rhs": "STATE_CODE_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 359, "distinct_rhs": 10, "lhs_distinct_ratio": 0.000975, "rhs_distinct_ratio": 2.7e-05, "redundancy": 367927, "redundancy_wl": 368275, "lhs_unique": false, "lhs_tokens": [["sa", "code"]], "rhs_tokens": ["state", "code"]},
+  {"lhs": ["SA3_NAME_2021"], "rhs": "STATE_CODE_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 359, "distinct_rhs": 10, "lhs_distinct_ratio": 0.000975, "rhs_distinct_ratio": 2.7e-05, "redundancy": 367927, "redundancy_wl": 368275, "lhs_unique": false, "lhs_tokens": [["sa", "name"]], "rhs_tokens": ["state", "code"]},
+  {"lhs": ["SA4_CODE_2021"], "rhs": "STATE_CODE_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 108, "distinct_rhs": 10, "lhs_distinct_ratio": 0.000293, "rhs_distinct_ratio": 2.7e-05, "redundancy": 368178, "redundancy_wl": 368275, "lhs_unique": false, "lhs_tokens": [["sa", "code"]], "rhs_tokens": ["state", "code"]},
+  {"lhs": ["SA4_NAME_2021"], "rhs": "STATE_CODE_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 108, "distinct_rhs": 10, "lhs_distinct_ratio": 0.000293, "rhs_distinct_ratio": 2.7e-05, "redundancy": 368178, "redundancy_wl": 368275, "lhs_unique": false, "lhs_tokens": [["sa", "name"]], "rhs_tokens": ["state", "code"]},
+  {"lhs": ["GCCSA_CODE_2021"], "rhs": "STATE_CODE_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 35, "distinct_rhs": 10, "lhs_distinct_ratio": 9.5e-05, "rhs_distinct_ratio": 2.7e-05, "redundancy": 368251, "redundancy_wl": 368275, "lhs_unique": false, "lhs_tokens": [["gccsa", "code"]], "rhs_tokens": ["state", "code"]},
+  {"lhs": ["GCCSA_NAME_2021"], "rhs": "STATE_CODE_2021", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 35, "distinct_rhs": 10, "lhs_distinct_ratio": 9.5e-05, "rhs_distinct_ratio": 2.7e-05, "redundancy": 368251, "redundancy_wl": 368275, "lhs_unique": false, "lhs_tokens": [["gccsa", "name"]], "rhs_tokens": ["state", "code"]},
+  {"lhs": ["STATE_NAME_2021"], "rhs": "STATE_CODE_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 10, "distinct_rhs": 10, "lhs_distinct_ratio": 2.7e-05, "rhs_distinct_ratio": 2.7e-05, "redundancy": 368276, "redundancy_wl": 368285, "lhs_unique": false, "lhs_tokens": [["state", "name"]], "rhs_tokens": ["state", "code"]},
+  {"lhs": ["ASGS_LOCI_URI_2021"], "rhs": "STATE_CODE_2021", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 368286, "distinct_rhs": 10, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 2.7e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["asgs", "loci", "uri"]], "rhs_tokens": ["state", "code"]},
+  {"lhs": ["MB_CODE_2021"], "rhs": "STATE_NAME_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 368286, "distinct_rhs": 10, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 2.7e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["mb", "code"]], "rhs_tokens": ["state", "name"]},
+  {"lhs": ["SA1_CODE_2021"], "rhs": "STATE_NAME_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 61845, "distinct_rhs": 10, "lhs_distinct_ratio": 0.167927, "rhs_distinct_ratio": 2.7e-05, "redundancy": 306441, "redundancy_wl": 366405, "lhs_unique": false, "lhs_tokens": [["sa", "code"]], "rhs_tokens": ["state", "name"]},
+  {"lhs": ["SA2_CODE_2021"], "rhs": "STATE_NAME_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 2473, "distinct_rhs": 10, "lhs_distinct_ratio": 0.006715, "rhs_distinct_ratio": 2.7e-05, "redundancy": 365813, "redundancy_wl": 368263, "lhs_unique": false, "lhs_tokens": [["sa", "code"]], "rhs_tokens": ["state", "name"]},
+  {"lhs": ["SA2_NAME_2021"], "rhs": "STATE_NAME_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 2473, "distinct_rhs": 10, "lhs_distinct_ratio": 0.006715, "rhs_distinct_ratio": 2.7e-05, "redundancy": 365813, "redundancy_wl": 368263, "lhs_unique": false, "lhs_tokens": [["sa", "name"]], "rhs_tokens": ["state", "name"]},
+  {"lhs": ["SA3_CODE_2021"], "rhs": "STATE_NAME_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 359, "distinct_rhs": 10, "lhs_distinct_ratio": 0.000975, "rhs_distinct_ratio": 2.7e-05, "redundancy": 367927, "redundancy_wl": 368275, "lhs_unique": false, "lhs_tokens": [["sa", "code"]], "rhs_tokens": ["state", "name"]},
+  {"lhs": ["SA3_NAME_2021"], "rhs": "STATE_NAME_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 359, "distinct_rhs": 10, "lhs_distinct_ratio": 0.000975, "rhs_distinct_ratio": 2.7e-05, "redundancy": 367927, "redundancy_wl": 368275, "lhs_unique": false, "lhs_tokens": [["sa", "name"]], "rhs_tokens": ["state", "name"]},
+  {"lhs": ["SA4_CODE_2021"], "rhs": "STATE_NAME_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 108, "distinct_rhs": 10, "lhs_distinct_ratio": 0.000293, "rhs_distinct_ratio": 2.7e-05, "redundancy": 368178, "redundancy_wl": 368275, "lhs_unique": false, "lhs_tokens": [["sa", "code"]], "rhs_tokens": ["state", "name"]},
+  {"lhs": ["SA4_NAME_2021"], "rhs": "STATE_NAME_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 108, "distinct_rhs": 10, "lhs_distinct_ratio": 0.000293, "rhs_distinct_ratio": 2.7e-05, "redundancy": 368178, "redundancy_wl": 368275, "lhs_unique": false, "lhs_tokens": [["sa", "name"]], "rhs_tokens": ["state", "name"]},
+  {"lhs": ["GCCSA_CODE_2021"], "rhs": "STATE_NAME_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 35, "distinct_rhs": 10, "lhs_distinct_ratio": 9.5e-05, "rhs_distinct_ratio": 2.7e-05, "redundancy": 368251, "redundancy_wl": 368275, "lhs_unique": false, "lhs_tokens": [["gccsa", "code"]], "rhs_tokens": ["state", "name"]},
+  {"lhs": ["GCCSA_NAME_2021"], "rhs": "STATE_NAME_2021", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 35, "distinct_rhs": 10, "lhs_distinct_ratio": 9.5e-05, "rhs_distinct_ratio": 2.7e-05, "redundancy": 368251, "redundancy_wl": 368275, "lhs_unique": false, "lhs_tokens": [["gccsa", "name"]], "rhs_tokens": ["state", "name"]},
+  {"lhs": ["STATE_CODE_2021"], "rhs": "STATE_NAME_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 10, "distinct_rhs": 10, "lhs_distinct_ratio": 2.7e-05, "rhs_distinct_ratio": 2.7e-05, "redundancy": 368276, "redundancy_wl": 368285, "lhs_unique": false, "lhs_tokens": [["state", "code"]], "rhs_tokens": ["state", "name"]},
+  {"lhs": ["ASGS_LOCI_URI_2021"], "rhs": "STATE_NAME_2021", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 368286, "distinct_rhs": 10, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 2.7e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["asgs", "loci", "uri"]], "rhs_tokens": ["state", "name"]},
+  {"lhs": ["MB_CODE_2021"], "rhs": "AREA_ALBERS_SQKM", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 368286, "distinct_rhs": 45755, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.124238, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["mb", "code"]], "rhs_tokens": ["area", "albers", "sqkm"]},
+  {"lhs": ["ASGS_LOCI_URI_2021"], "rhs": "AREA_ALBERS_SQKM", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 368286, "distinct_rhs": 45755, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.124238, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["asgs", "loci", "uri"]], "rhs_tokens": ["area", "albers", "sqkm"]},
+  {"lhs": ["MB_CODE_2021"], "rhs": "ASGS_LOCI_URI_2021", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 368286, "distinct_rhs": 368286, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["mb", "code"]], "rhs_tokens": ["asgs", "loci", "uri"]}
+ ]
+}

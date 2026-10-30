@@ -1,0 +1,28 @@
+{
+ "full/fresh_seats": {
+  "cover_price_py": 44,
+  "cover_orders": 35,
+  "cover_atoms": 35,
+  "cover_runs": null,
+  "cover_ub": 35,
+  "cover_lb": 35,
+  "lb_exact": true,
+  "cuts_exact": true,
+  "atoms": 333,
+  "tight": true,
+  "secs": 52.6
+ },
+ "full/fresh_chembl": {
+  "cover_price_py": 45,
+  "cover_orders": 45,
+  "cover_atoms": 45,
+  "cover_runs": null,
+  "cover_ub": 45,
+  "cover_lb": 43,
+  "lb_exact": true,
+  "cuts_exact": false,
+  "atoms": 228,
+  "tight": false,
+  "secs": 67.7
+ }
+}

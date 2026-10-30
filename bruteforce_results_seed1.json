@@ -1,0 +1,2136 @@
+{
+ "stats": {
+  "FN/iconf/changed_but_valid": 284,
+  "FN/iconf/est_refines_truth": 1414,
+  "FN/iconf/fmax_regret=+0": 1927,
+  "FN/iconf/fmax_regret=+1": 824,
+  "FN/iconf/fmax_regret=+2": 13,
+  "FN/iconf/fmax_regret=-1": 185,
+  "FN/iconf/fmax_regret=-2": 9,
+  "FN/iconf/invalid_wrt_truth": 2013,
+  "FN/iconf/kmax_regret>0": 2,
+  "FN/iconf/lossy": 0,
+  "FN/iconf/not3nf_wrt_truth": 908,
+  "FN/iconf/over>0": 0,
+  "FN/iconf/struct_changed": 2297,
+  "FN/iconf/total": 2958,
+  "FN/iconf/truth_refines_est": 1398,
+  "FN/iconf/uloc>0": 2159,
+  "FN/iconf/ustr>0": 1319,
+  "FN/iconf/valid_fmax_regret=+0": 890,
+  "FN/iconf/valid_fmax_regret=+1": 55,
+  "FN/synthesis/changed_but_valid": 190,
+  "FN/synthesis/est_refines_truth": 1525,
+  "FN/synthesis/fmax_regret=+0": 1977,
+  "FN/synthesis/fmax_regret=+1": 753,
+  "FN/synthesis/fmax_regret=+2": 13,
+  "FN/synthesis/fmax_regret=-1": 206,
+  "FN/synthesis/fmax_regret=-2": 9,
+  "FN/synthesis/invalid_wrt_truth": 2011,
+  "FN/synthesis/kmax_regret>0": 0,
+  "FN/synthesis/lossy": 0,
+  "FN/synthesis/not3nf_wrt_truth": 911,
+  "FN/synthesis/over>0": 0,
+  "FN/synthesis/struct_changed": 2201,
+  "FN/synthesis/total": 2958,
+  "FN/synthesis/truth_refines_est": 1497,
+  "FN/synthesis/uloc>0": 2161,
+  "FN/synthesis/ustr>0": 1316,
+  "FN/synthesis/valid_fmax_regret=+0": 946,
+  "FN/synthesis/valid_fmax_regret=-1": 1,
+  "FP/iconf/changed_but_valid": 1936,
+  "FP/iconf/est_refines_truth": 4924,
+  "FP/iconf/fmax_regret=+0": 9278,
+  "FP/iconf/fmax_regret=+1": 647,
+  "FP/iconf/fmax_regret=-1": 764,
+  "FP/iconf/fmax_regret=-2": 48,
+  "FP/iconf/invalid_wrt_truth": 7323,
+  "FP/iconf/kmax_regret>0": 3,
+  "FP/iconf/lossless_without_suff": 1517,
+  "FP/iconf/lossy": 5458,
+  "FP/iconf/not3nf_wrt_truth": 908,
+  "FP/iconf/over>0": 10737,
+  "FP/iconf/struct_changed": 9259,
+  "FP/iconf/suff_cond_holds": 3762,
+  "FP/iconf/total": 10737,
+  "FP/iconf/truth_refines_est": 3558,
+  "FP/iconf/uloc>0": 0,
+  "FP/iconf/ustr>0": 4453,
+  "FP/iconf/valid_fmax_regret=+0": 3381,
+  "FP/iconf/valid_fmax_regret=+1": 33,
+  "FP/synthesis/changed_but_valid": 1774,
+  "FP/synthesis/est_refines_truth": 5087,
+  "FP/synthesis/fmax_regret=+0": 9213,
+  "FP/synthesis/fmax_regret=+1": 711,
+  "FP/synthesis/fmax_regret=-1": 766,
+  "FP/synthesis/fmax_regret=-2": 47,
+  "FP/synthesis/invalid_wrt_truth": 7369,
+  "FP/synthesis/kmax_regret>0": 1,
+  "FP/synthesis/lossless_without_suff": 1462,
+  "FP/synthesis/lossy": 5490,
+  "FP/synthesis/not3nf_wrt_truth": 1120,
+  "FP/synthesis/over>0": 10737,
+  "FP/synthesis/struct_changed": 9143,
+  "FP/synthesis/suff_cond_holds": 3785,
+  "FP/synthesis/total": 10737,
+  "FP/synthesis/truth_refines_est": 3673,
+  "FP/synthesis/uloc>0": 0,
+  "FP/synthesis/ustr>0": 4452,
+  "FP/synthesis/valid_fmax_regret=+0": 3364,
+  "FP/synthesis/valid_fmax_regret=+1": 2,
+  "FP/synthesis/valid_fmax_regret=-1": 2
+ },
+ "robust_check": {
+  "boxes": 1980,
+  "lossy": 0,
+  "not_dp": 0,
+  "not_3nf": 1257
+ },
+ "worst_fmax_regret": {
+  "FP/synthesis": 1,
+  "FP/iconf": 1,
+  "FN/synthesis": 2,
+  "FN/iconf": 2
+ },
+ "key_count_ratio_range": [
+  0.25,
+  6.0
+ ],
+ "examples": {
+  "FP_lossy/synthesis": [
+   {
+    "R": 4,
+    "truth": [
+     "C->A",
+     "C->B",
+     "C->D"
+    ],
+    "error": [
+     "BD->A"
+    ],
+    "D_true": [
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      3
+     ]
+    ],
+    "D_est": [
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      0,
+      1,
+      3
+     ]
+    ],
+    "lossless": false,
+    "over": 1,
+    "u_loc": 0,
+    "u_str": 1,
+    "nf3": true,
+    "valid": false
+   },
+   {
+    "R": 4,
+    "truth": [
+     "C->A",
+     "C->B",
+     "C->D"
+    ],
+    "error": [
+     "A->B"
+    ],
+    "D_true": [
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      3
+     ]
+    ],
+    "D_est": [
+     [
+      0,
+      1
+     ],
+     [
+      0,
+      2
+     ],
+     [
+      2,
+      3
+     ]
+    ],
+    "lossless": false,
+    "over": 1,
+    "u_loc": 0,
+    "u_str": 1,
+    "nf3": true,
+    "valid": false
+   },
+   {
+    "R": 4,
+    "truth": [
+     "C->A",
+     "C->B",
+     "C->D"
+    ],
+    "error": [
+     "BD->C"
+    ],
+    "D_true": [
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      3
+     ]
+    ],
+    "D_est": [
+     [
+      0,
+      1,
+      3
+     ],
+     [
+      1,
+      2,
+      3
+     ]
+    ],
+    "lossless": false,
+    "over": 2,
+    "u_loc": 0,
+    "u_str": 1,
+    "nf3": true,
+    "valid": false
+   }
+  ],
+  "FP_est_not_refines/synthesis": [
+   {
+    "R": 4,
+    "truth": [
+     "C->A",
+     "C->B",
+     "C->D"
+    ],
+    "error": [
+     "BD->A"
+    ],
+    "D_true": [
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      3
+     ]
+    ],
+    "D_est": [
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      0,
+      1,
+      3
+     ]
+    ],
+    "lossless": false,
+    "over": 1,
+    "u_loc": 0,
+    "u_str": 1,
+    "nf3": true,
+    "valid": false
+   },
+   {
+    "R": 4,
+    "truth": [
+     "C->A",
+     "C->B",
+     "C->D"
+    ],
+    "error": [
+     "A->B"
+    ],
+    "D_true": [
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      3
+     ]
+    ],
+    "D_est": [
+     [
+      0,
+      1
+     ],
+     [
+      0,
+      2
+     ],
+     [
+      2,
+      3
+     ]
+    ],
+    "lossless": false,
+    "over": 1,
+    "u_loc": 0,
+    "u_str": 1,
+    "nf3": true,
+    "valid": false
+   },
+   {
+    "R": 4,
+    "truth": [
+     "C->A",
+     "C->B",
+     "C->D"
+    ],
+    "error": [
+     "BD->C"
+    ],
+    "D_true": [
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      3
+     ]
+    ],
+    "D_est": [
+     [
+      0,
+      1,
+      3
+     ],
+     [
+      1,
+      2,
+      3
+     ]
+    ],
+    "lossless": false,
+    "over": 2,
+    "u_loc": 0,
+    "u_str": 1,
+    "nf3": true,
+    "valid": false
+   }
+  ],
+  "FP_lossy/iconf": [
+   {
+    "R": 4,
+    "truth": [
+     "C->A",
+     "C->B",
+     "C->D"
+    ],
+    "error": [
+     "BD->A"
+    ],
+    "D_true": [
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      3
+     ]
+    ],
+    "D_est": [
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      0,
+      1,
+      3
+     ]
+    ],
+    "lossless": false,
+    "over": 1,
+    "u_loc": 0,
+    "u_str": 1,
+    "nf3": true,
+    "valid": false
+   },
+   {
+    "R": 4,
+    "truth": [
+     "C->A",
+     "C->B",
+     "C->D"
+    ],
+    "error": [
+     "A->B"
+    ],
+    "D_true": [
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      3
+     ]
+    ],
+    "D_est": [
+     [
+      0,
+      1
+     ],
+     [
+      0,
+      2
+     ],
+     [
+      2,
+      3
+     ]
+    ],
+    "lossless": false,
+    "over": 1,
+    "u_loc": 0,
+    "u_str": 1,
+    "nf3": true,
+    "valid": false
+   },
+   {
+    "R": 4,
+    "truth": [
+     "C->A",
+     "C->B",
+     "C->D"
+    ],
+    "error": [
+     "BD->C"
+    ],
+    "D_true": [
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      3
+     ]
+    ],
+    "D_est": [
+     [
+      1,
+      2,
+      3
+     ],
+     [
+      0,
+      1,
+      3
+     ]
+    ],
+    "lossless": false,
+    "over": 2,
+    "u_loc": 0,
+    "u_str": 1,
+    "nf3": true,
+    "valid": false
+   }
+  ],
+  "FP_est_not_refines/iconf": [
+   {
+    "R": 4,
+    "truth": [
+     "C->A",
+     "C->B",
+     "C->D"
+    ],
+    "error": [
+     "BD->A"
+    ],
+    "D_true": [
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      3
+     ]
+    ],
+    "D_est": [
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      0,
+      1,
+      3
+     ]
+    ],
+    "lossless": false,
+    "over": 1,
+    "u_loc": 0,
+    "u_str": 1,
+    "nf3": true,
+    "valid": false
+   },
+   {
+    "R": 4,
+    "truth": [
+     "C->A",
+     "C->B",
+     "C->D"
+    ],
+    "error": [
+     "A->B"
+    ],
+    "D_true": [
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      3
+     ]
+    ],
+    "D_est": [
+     [
+      0,
+      1
+     ],
+     [
+      0,
+      2
+     ],
+     [
+      2,
+      3
+     ]
+    ],
+    "lossless": false,
+    "over": 1,
+    "u_loc": 0,
+    "u_str": 1,
+    "nf3": true,
+    "valid": false
+   },
+   {
+    "R": 4,
+    "truth": [
+     "C->A",
+     "C->B",
+     "C->D"
+    ],
+    "error": [
+     "BD->C"
+    ],
+    "D_true": [
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      3
+     ]
+    ],
+    "D_est": [
+     [
+      1,
+      2,
+      3
+     ],
+     [
+      0,
+      1,
+      3
+     ]
+    ],
+    "lossless": false,
+    "over": 2,
+    "u_loc": 0,
+    "u_str": 1,
+    "nf3": true,
+    "valid": false
+   }
+  ],
+  "key_ratio_extreme": [
+   {
+    "R": 4,
+    "truth": [
+     "A->D",
+     "B->D",
+     "D->B",
+     "D->C"
+    ],
+    "error": "FP C->A",
+    "ratio": 4.0,
+    "keys_true": 1
+   },
+   {
+    "R": 5,
+    "truth": [
+     "B->A",
+     "C->E",
+     "D->E",
+     "E->B",
+     "E->C"
+    ],
+    "error": "FP A->D",
+    "ratio": 5.0,
+    "keys_true": 1
+   },
+   {
+    "R": 5,
+    "truth": [
+     "A->B",
+     "D->E",
+     "E->A",
+     "BC->E",
+     "CE->D"
+    ],
+    "error": "FP C->B",
+    "ratio": 0.25,
+    "keys_true": 4
+   }
+  ],
+  "FN_local_only/synthesis": [
+   {
+    "R": 4,
+    "truth": [
+     "C->A",
+     "C->B",
+     "C->D"
+    ],
+    "error": [
+     "C->A"
+    ],
+    "D_true": [
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      3
+     ]
+    ],
+    "D_est": [
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      0,
+      2
+     ]
+    ],
+    "lossless": true,
+    "over": 0,
+    "u_loc": 1,
+    "u_str": 0,
+    "nf3": true,
+    "valid": true
+   },
+   {
+    "R": 4,
+    "truth": [
+     "C->A",
+     "C->B",
+     "C->D"
+    ],
+    "error": [
+     "C->B"
+    ],
+    "D_true": [
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      3
+     ]
+    ],
+    "D_est": [
+     [
+      0,
+      2
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      1,
+      2
+     ]
+    ],
+    "lossless": true,
+    "over": 0,
+    "u_loc": 1,
+    "u_str": 0,
+    "nf3": true,
+    "valid": true
+   },
+   {
+    "R": 4,
+    "truth": [
+     "C->A",
+     "C->B",
+     "C->D"
+    ],
+    "error": [
+     "C->D"
+    ],
+    "D_true": [
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      3
+     ]
+    ],
+    "D_est": [
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      3
+     ]
+    ],
+    "lossless": true,
+    "over": 0,
+    "u_loc": 1,
+    "u_str": 0,
+    "nf3": true,
+    "valid": true
+   }
+  ],
+  "FN_local_only/iconf": [
+   {
+    "R": 4,
+    "truth": [
+     "C->A",
+     "C->B",
+     "C->D"
+    ],
+    "error": [
+     "C->A"
+    ],
+    "D_true": [
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      3
+     ]
+    ],
+    "D_est": [
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      0,
+      2
+     ]
+    ],
+    "lossless": true,
+    "over": 0,
+    "u_loc": 1,
+    "u_str": 0,
+    "nf3": true,
+    "valid": true
+   },
+   {
+    "R": 4,
+    "truth": [
+     "C->A",
+     "C->B",
+     "C->D"
+    ],
+    "error": [
+     "C->B"
+    ],
+    "D_true": [
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      3
+     ]
+    ],
+    "D_est": [
+     [
+      0,
+      2
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      1,
+      2
+     ]
+    ],
+    "lossless": true,
+    "over": 0,
+    "u_loc": 1,
+    "u_str": 0,
+    "nf3": true,
+    "valid": true
+   },
+   {
+    "R": 4,
+    "truth": [
+     "C->A",
+     "C->B",
+     "C->D"
+    ],
+    "error": [
+     "C->D"
+    ],
+    "D_true": [
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      3
+     ]
+    ],
+    "D_est": [
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      3
+     ]
+    ],
+    "lossless": true,
+    "over": 0,
+    "u_loc": 1,
+    "u_str": 0,
+    "nf3": true,
+    "valid": true
+   }
+  ],
+  "FP_fmax_regret/synthesis": [
+   {
+    "R": 4,
+    "truth": [
+     "C->D",
+     "BC->A"
+    ],
+    "error": [
+     "BD->C"
+    ],
+    "D_true": [
+     [
+      2,
+      3
+     ],
+     [
+      0,
+      1,
+      2
+     ]
+    ],
+    "D_est": [
+     [
+      0,
+      1,
+      3
+     ],
+     [
+      1,
+      2,
+      3
+     ]
+    ],
+    "lossless": false,
+    "over": 2,
+    "u_loc": 0,
+    "u_str": 1,
+    "nf3": false,
+    "valid": false,
+    "regret": 1
+   },
+   {
+    "R": 4,
+    "truth": [
+     "B->A",
+     "B->D",
+     "CD->A"
+    ],
+    "error": [
+     "CD->B"
+    ],
+    "D_true": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      0,
+      2,
+      3
+     ],
+     [
+      1,
+      2
+     ]
+    ],
+    "D_est": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      2,
+      3
+     ]
+    ],
+    "lossless": true,
+    "over": 1,
+    "u_loc": 0,
+    "u_str": 1,
+    "nf3": false,
+    "valid": false,
+    "regret": 1
+   },
+   {
+    "R": 4,
+    "truth": [
+     "B->A",
+     "B->D",
+     "CD->A"
+    ],
+    "error": [
+     "A->B"
+    ],
+    "D_true": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      0,
+      2,
+      3
+     ],
+     [
+      1,
+      2
+     ]
+    ],
+    "D_est": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      2,
+      3
+     ]
+    ],
+    "lossless": true,
+    "over": 2,
+    "u_loc": 0,
+    "u_str": 1,
+    "nf3": false,
+    "valid": false,
+    "regret": 1
+   }
+  ],
+  "FP_fmax_regret/iconf": [
+   {
+    "R": 4,
+    "truth": [
+     "C->D",
+     "BC->A"
+    ],
+    "error": [
+     "BD->C"
+    ],
+    "D_true": [
+     [
+      2,
+      3
+     ],
+     [
+      0,
+      1,
+      2
+     ]
+    ],
+    "D_est": [
+     [
+      1,
+      2,
+      3
+     ],
+     [
+      0,
+      1,
+      3
+     ]
+    ],
+    "lossless": false,
+    "over": 2,
+    "u_loc": 0,
+    "u_str": 1,
+    "nf3": false,
+    "valid": false,
+    "regret": 1
+   },
+   {
+    "R": 4,
+    "truth": [
+     "B->A",
+     "B->D",
+     "CD->A"
+    ],
+    "error": [
+     "CD->B"
+    ],
+    "D_true": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      0,
+      2,
+      3
+     ],
+     [
+      1,
+      2
+     ]
+    ],
+    "D_est": [
+     [
+      1,
+      2,
+      3
+     ],
+     [
+      0,
+      1
+     ]
+    ],
+    "lossless": true,
+    "over": 1,
+    "u_loc": 0,
+    "u_str": 1,
+    "nf3": false,
+    "valid": false,
+    "regret": 1
+   },
+   {
+    "R": 4,
+    "truth": [
+     "B->A",
+     "B->D",
+     "CD->A"
+    ],
+    "error": [
+     "A->B"
+    ],
+    "D_true": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      0,
+      2,
+      3
+     ],
+     [
+      1,
+      2
+     ]
+    ],
+    "D_est": [
+     [
+      1,
+      2,
+      3
+     ],
+     [
+      0,
+      1
+     ]
+    ],
+    "lossless": true,
+    "over": 2,
+    "u_loc": 0,
+    "u_str": 1,
+    "nf3": false,
+    "valid": false,
+    "regret": 1
+   }
+  ],
+  "FN_fmax_regret/synthesis": [
+   {
+    "R": 4,
+    "truth": [
+     "C->D",
+     "BC->A"
+    ],
+    "error": [
+     "C->D"
+    ],
+    "D_true": [
+     [
+      2,
+      3
+     ],
+     [
+      0,
+      1,
+      2
+     ]
+    ],
+    "D_est": [
+     [
+      0,
+      1,
+      2
+     ],
+     [
+      1,
+      2,
+      3
+     ]
+    ],
+    "lossless": true,
+    "over": 0,
+    "u_loc": 1,
+    "u_str": 0,
+    "nf3": false,
+    "valid": false,
+    "regret": 1
+   },
+   {
+    "R": 4,
+    "truth": [
+     "B->A",
+     "B->D",
+     "CD->A"
+    ],
+    "error": [
+     "B->D"
+    ],
+    "D_true": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      0,
+      2,
+      3
+     ],
+     [
+      1,
+      2
+     ]
+    ],
+    "D_est": [
+     [
+      0,
+      1
+     ],
+     [
+      0,
+      2,
+      3
+     ],
+     [
+      1,
+      2,
+      3
+     ]
+    ],
+    "lossless": true,
+    "over": 0,
+    "u_loc": 1,
+    "u_str": 0,
+    "nf3": false,
+    "valid": false,
+    "regret": 1
+   },
+   {
+    "R": 4,
+    "truth": [
+     "D->C",
+     "BC->A"
+    ],
+    "error": [
+     "D->C"
+    ],
+    "D_true": [
+     [
+      2,
+      3
+     ],
+     [
+      0,
+      1,
+      2
+     ],
+     [
+      1,
+      3
+     ]
+    ],
+    "D_est": [
+     [
+      0,
+      1,
+      2
+     ],
+     [
+      1,
+      2,
+      3
+     ]
+    ],
+    "lossless": true,
+    "over": 0,
+    "u_loc": 1,
+    "u_str": 0,
+    "nf3": false,
+    "valid": false,
+    "regret": 1
+   }
+  ],
+  "FN_fmax_regret/iconf": [
+   {
+    "R": 4,
+    "truth": [
+     "C->D",
+     "BC->A"
+    ],
+    "error": [
+     "C->D"
+    ],
+    "D_true": [
+     [
+      2,
+      3
+     ],
+     [
+      0,
+      1,
+      2
+     ]
+    ],
+    "D_est": [
+     [
+      0,
+      1,
+      2
+     ],
+     [
+      1,
+      2,
+      3
+     ]
+    ],
+    "lossless": true,
+    "over": 0,
+    "u_loc": 1,
+    "u_str": 0,
+    "nf3": false,
+    "valid": false,
+    "regret": 1
+   },
+   {
+    "R": 4,
+    "truth": [
+     "B->A",
+     "B->D",
+     "CD->A"
+    ],
+    "error": [
+     "B->D"
+    ],
+    "D_true": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      0,
+      2,
+      3
+     ],
+     [
+      1,
+      2
+     ]
+    ],
+    "D_est": [
+     [
+      0,
+      1
+     ],
+     [
+      0,
+      2,
+      3
+     ],
+     [
+      1,
+      2,
+      3
+     ]
+    ],
+    "lossless": true,
+    "over": 0,
+    "u_loc": 1,
+    "u_str": 0,
+    "nf3": false,
+    "valid": false,
+    "regret": 1
+   },
+   {
+    "R": 4,
+    "truth": [
+     "D->C",
+     "BC->A"
+    ],
+    "error": [
+     "D->C"
+    ],
+    "D_true": [
+     [
+      2,
+      3
+     ],
+     [
+      0,
+      1,
+      2
+     ],
+     [
+      1,
+      3
+     ]
+    ],
+    "D_est": [
+     [
+      0,
+      1,
+      2
+     ],
+     [
+      1,
+      2,
+      3
+     ]
+    ],
+    "lossless": true,
+    "over": 0,
+    "u_loc": 1,
+    "u_str": 0,
+    "nf3": false,
+    "valid": false,
+    "regret": 1
+   }
+  ],
+  "FN_truth_not_refines/synthesis": [
+   {
+    "R": 4,
+    "truth": [
+     "AC->D",
+     "CD->B",
+     "ABD->C"
+    ],
+    "error": [
+     "ABD->C"
+    ],
+    "D_true": [
+     [
+      0,
+      1,
+      2,
+      3
+     ]
+    ],
+    "D_est": [
+     [
+      0,
+      2,
+      3
+     ],
+     [
+      1,
+      2,
+      3
+     ]
+    ],
+    "lossless": true,
+    "over": 0,
+    "u_loc": 0,
+    "u_str": 1,
+    "nf3": true,
+    "valid": false
+   },
+   {
+    "R": 4,
+    "truth": [
+     "AC->B",
+     "BC->D",
+     "BD->A",
+     "BD->C"
+    ],
+    "error": [
+     "AC->B"
+    ],
+    "D_true": [
+     [
+      0,
+      1,
+      2
+     ],
+     [
+      1,
+      2,
+      3
+     ],
+     [
+      0,
+      1,
+      3
+     ]
+    ],
+    "D_est": [
+     [
+      1,
+      2,
+      3
+     ],
+     [
+      0,
+      1,
+      3
+     ]
+    ],
+    "lossless": true,
+    "over": 0,
+    "u_loc": 0,
+    "u_str": 2,
+    "nf3": true,
+    "valid": false
+   },
+   {
+    "R": 4,
+    "truth": [
+     "AC->B",
+     "BC->D",
+     "BD->A",
+     "BD->C"
+    ],
+    "error": [
+     "BD->A"
+    ],
+    "D_true": [
+     [
+      0,
+      1,
+      2
+     ],
+     [
+      1,
+      2,
+      3
+     ],
+     [
+      0,
+      1,
+      3
+     ]
+    ],
+    "D_est": [
+     [
+      0,
+      1,
+      2
+     ],
+     [
+      1,
+      2,
+      3
+     ]
+    ],
+    "lossless": true,
+    "over": 0,
+    "u_loc": 1,
+    "u_str": 0,
+    "nf3": true,
+    "valid": true
+   }
+  ],
+  "FN_truth_not_refines/iconf": [
+   {
+    "R": 4,
+    "truth": [
+     "AC->D",
+     "CD->B",
+     "ABD->C"
+    ],
+    "error": [
+     "ABD->C"
+    ],
+    "D_true": [
+     [
+      0,
+      1,
+      2,
+      3
+     ]
+    ],
+    "D_est": [
+     [
+      0,
+      2,
+      3
+     ],
+     [
+      1,
+      2,
+      3
+     ]
+    ],
+    "lossless": true,
+    "over": 0,
+    "u_loc": 0,
+    "u_str": 1,
+    "nf3": true,
+    "valid": false
+   },
+   {
+    "R": 4,
+    "truth": [
+     "AC->B",
+     "BC->D",
+     "BD->A",
+     "BD->C"
+    ],
+    "error": [
+     "AC->B"
+    ],
+    "D_true": [
+     [
+      0,
+      1,
+      2
+     ],
+     [
+      1,
+      2,
+      3
+     ],
+     [
+      0,
+      1,
+      3
+     ]
+    ],
+    "D_est": [
+     [
+      1,
+      2,
+      3
+     ],
+     [
+      0,
+      1,
+      3
+     ]
+    ],
+    "lossless": true,
+    "over": 0,
+    "u_loc": 0,
+    "u_str": 2,
+    "nf3": true,
+    "valid": false
+   },
+   {
+    "R": 4,
+    "truth": [
+     "AC->B",
+     "BC->D",
+     "BD->A",
+     "BD->C"
+    ],
+    "error": [
+     "BD->A"
+    ],
+    "D_true": [
+     [
+      0,
+      1,
+      2
+     ],
+     [
+      1,
+      2,
+      3
+     ],
+     [
+      0,
+      1,
+      3
+     ]
+    ],
+    "D_est": [
+     [
+      1,
+      2,
+      3
+     ],
+     [
+      0,
+      1,
+      2
+     ]
+    ],
+    "lossless": true,
+    "over": 0,
+    "u_loc": 1,
+    "u_str": 0,
+    "nf3": true,
+    "valid": true
+   }
+  ],
+  "FP_valid_regret/iconf": [
+   {
+    "truth": [
+     "A->D",
+     "BC->D",
+     "CD->A",
+     "CD->B"
+    ],
+    "error": [
+     "AD->C"
+    ],
+    "D_true": [
+     [
+      0,
+      1,
+      2
+     ],
+     [
+      1,
+      2,
+      3
+     ],
+     [
+      0,
+      3
+     ]
+    ],
+    "D_est": [
+     [
+      1,
+      2,
+      3
+     ],
+     [
+      0,
+      2,
+      3
+     ],
+     [
+      0,
+      1
+     ]
+    ],
+    "regret": 1
+   },
+   {
+    "truth": [
+     "A->D",
+     "BC->D",
+     "CD->A",
+     "CD->B"
+    ],
+    "error": [
+     "A->B"
+    ],
+    "D_true": [
+     [
+      0,
+      1,
+      2
+     ],
+     [
+      1,
+      2,
+      3
+     ],
+     [
+      0,
+      3
+     ]
+    ],
+    "D_est": [
+     [
+      0,
+      2,
+      3
+     ],
+     [
+      1,
+      2,
+      3
+     ],
+     [
+      0,
+      1
+     ]
+    ],
+    "regret": 1
+   },
+   {
+    "truth": [
+     "A->D",
+     "BC->D",
+     "CD->A",
+     "CD->B"
+    ],
+    "error": [
+     "AD->B"
+    ],
+    "D_true": [
+     [
+      0,
+      1,
+      2
+     ],
+     [
+      1,
+      2,
+      3
+     ],
+     [
+      0,
+      3
+     ]
+    ],
+    "D_est": [
+     [
+      0,
+      2,
+      3
+     ],
+     [
+      1,
+      2,
+      3
+     ],
+     [
+      0,
+      1
+     ]
+    ],
+    "regret": 1
+   }
+  ],
+  "FN_valid_regret/iconf": [
+   {
+    "truth": [
+     "A->D",
+     "BC->D",
+     "CD->A",
+     "CD->B"
+    ],
+    "error": [
+     "A->D"
+    ],
+    "D_true": [
+     [
+      0,
+      1,
+      2
+     ],
+     [
+      1,
+      2,
+      3
+     ],
+     [
+      0,
+      3
+     ]
+    ],
+    "D_est": [
+     [
+      1,
+      2,
+      3
+     ],
+     [
+      0,
+      2,
+      3
+     ]
+    ],
+    "regret": 1
+   },
+   {
+    "truth": [
+     "A->D",
+     "BC->D",
+     "CD->A",
+     "CD->B"
+    ],
+    "error": [
+     "BC->D"
+    ],
+    "D_true": [
+     [
+      0,
+      1,
+      2
+     ],
+     [
+      1,
+      2,
+      3
+     ],
+     [
+      0,
+      3
+     ]
+    ],
+    "D_est": [
+     [
+      0,
+      2,
+      3
+     ],
+     [
+      1,
+      2,
+      3
+     ]
+    ],
+    "regret": 1
+   },
+   {
+    "truth": [
+     "A->D",
+     "BC->D",
+     "CD->A",
+     "CD->B"
+    ],
+    "error": [
+     "CD->B"
+    ],
+    "D_true": [
+     [
+      0,
+      1,
+      2
+     ],
+     [
+      1,
+      2,
+      3
+     ],
+     [
+      0,
+      3
+     ]
+    ],
+    "D_est": [
+     [
+      0,
+      2,
+      3
+     ],
+     [
+      1,
+      2,
+      3
+     ]
+    ],
+    "regret": 1
+   }
+  ],
+  "FP_valid_regret/synthesis": [
+   {
+    "truth": [
+     "A->B",
+     "BC->D",
+     "CD->A"
+    ],
+    "error": [
+     "D->C"
+    ],
+    "D_true": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      2,
+      3
+     ],
+     [
+      0,
+      2,
+      3
+     ]
+    ],
+    "D_est": [
+     [
+      0,
+      1,
+      2
+     ],
+     [
+      1,
+      2,
+      3
+     ]
+    ],
+    "regret": 1
+   },
+   {
+    "truth": [
+     "C->A",
+     "C->B",
+     "AB->E",
+     "DE->C"
+    ],
+    "error": [
+     "C->D"
+    ],
+    "D_true": [
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      0,
+      1,
+      4
+     ],
+     [
+      2,
+      3,
+      4
+     ]
+    ],
+    "D_est": [
+     [
+      2,
+      4
+     ],
+     [
+      0,
+      1,
+      4
+     ],
+     [
+      0,
+      3,
+      4
+     ],
+     [
+      1,
+      3,
+      4
+     ],
+     [
+      0,
+      1,
+      2,
+      3
+     ]
+    ],
+    "regret": 1
+   }
+  ]
+ },
+ "violations_of_proved_props": {}
+}

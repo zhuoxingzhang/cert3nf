@@ -1,0 +1,112 @@
+== truth full: 105 runs over 35 relations
+  relation                   cand  true price | v5 q  ratio cert | v5s q  cert | v5n q  cert
+  food                          78    31    37 |   79   2.14 yes  |   76 yes  |  152 yes 
+  fresh_abs_mb                  78    59    32 |   53   1.66 yes  |   82 yes  |  156 yes 
+  fresh_auctionmark           4243    36    43 |   47   1.09 yes  |   45 yes  |  114 yes 
+  fresh_chembl                 385   204    54 |  238   4.41 yes  |  381 yes  |  674 yes 
+  fresh_chicago_crimes         314    21    36 |   55   1.53 yes  |   60 yes  |  115 yes 
+  fresh_eia860                1097    14    35 |   51   1.46 yes  |   51 yes  |  100 yes 
+  fresh_epa_aqs               1895    25    60 |  449   7.48 yes  |  409 yes  |  202 yes 
+  fresh_faa                    695    14    39 |   50   1.28 yes  |   52 yes  |   98 yes 
+  fresh_fhrs                  1488    25    33 |  154   4.67 yes  |  169 yes  |   70 yes 
+  fresh_geonames              2900    12    43 |   85   1.98 yes  |   84 yes  |  144 yes 
+  fresh_ghcn                   351    13    28 |   37   1.32 yes  |   43 yes  |   80 yes 
+  fresh_gtfs_at               1170    23    50 |   68   1.36 yes  |  103 yes  |  167 yes 
+  fresh_ldbc_comment          1784    26    40 |   63   1.57 yes  |   65 yes  |  208 yes 
+  fresh_ldbc_study            1249    39    46 |   79   1.72 yes  |   88 yes  |  212 yes 
+  fresh_musicbrainz             85    71    40 |   71   1.77 yes  |  105 yes  |  170 yes 
+  fresh_pluto                 1572   202   112 |  322   2.88 yes  |  449 yes  |  488 yes 
+  fresh_pums_ca               2056   820   279 |  616   2.21 yes  | 1000 NO   | 1000 NO  
+  fresh_scorecard_fos         5169    64    65 |  103   1.58 yes  |  297 yes  |  161 yes 
+  fresh_seats                 4640   292   123 |  124   1.01 yes  |  135 yes  |  345 yes 
+  fresh_sec_fsds               428    16    35 |   44   1.26 yes  |   69 yes  |  103 yes 
+  fresh_simplewiki             139    36    46 |  122   2.65 yes  |  137 yes  |  121 yes 
+  fresh_stats19               1670    42    41 |  108   2.63 yes  |  104 yes  |   79 yes 
+  fresh_tatp                   909    28    41 |  188   4.59 yes  |   60 yes  |   81 yes 
+  fresh_usda_sr                161    69    45 |  144   3.20 yes  |  165 yes  |  154 yes 
+  hospital                     145    54    34 |  112   3.29 yes  |  144 yes  |  121 yes 
+  pricepaid                     34    13    17 |   34   2.00 yes  |   35 yes  |   55 yes 
+  ssb_customer                  24    12    16 |   28   1.75 yes  |   28 yes  |   25 yes 
+  ssb_date                     209   205    28 |   27   0.96 yes  |   76 yes  |  154 yes 
+  ssb_lineorder               3814    13    54 |   70   1.30 yes  |  108 yes  |   86 yes 
+  ssb_part                      86     3    11 |   14   1.27 yes  |   13 yes  |   20 yes 
+  ssb_supplier                  21    11    14 |   21   1.50 yes  |   24 yes  |   22 yes 
+  tpcds_core                    48    23    19 |   26   1.37 yes  |   36 yes  |   78 yes 
+  tpch_lineitem_orders       36883    10    51 |   72   1.41 yes  |   54 yes  |   96 yes 
+  tpch_orders_customer         484    44    35 |   56   1.60 yes  |   52 yes  |  151 yes 
+  tpch_partsupp_part_supplier  2405    25    40 |   53   1.32 yes  |   54 yes  |  108 yes 
+  U1 all: n 35, median ratio 1.60, upper quartile 2.42, above 3x 6 -> holds
+  U1 dev: n 23, median ratio 1.57, upper quartile 1.88, above 3x 3
+  U1 conf: n 12, median ratio 2.31, upper quartile 3.26, above 3x 3
+  U2 consistency: 57 certified budgeted runs compared, 0 differ -> holds
+  U3 not certified within 1000: [('v5s', 'fresh_pums_ca'), ('v5n', 'fresh_pums_ca')]
+  B	price<=B	v5<=B	v5s<=B	v5n<=B   (share of relations)
+  25	0.14	0.06	0.06	0.09
+  50	0.77	0.29	0.20	0.09
+  75	0.91	0.57	0.46	0.14
+  100	0.91	0.66	0.60	0.37
+  125	0.97	0.80	0.71	0.54
+  150	0.97	0.83	0.80	0.57
+  200	0.97	0.89	0.86	0.80
+  250	0.97	0.91	0.86	0.89
+  300	1.00	0.91	0.89	0.89
+  400	1.00	0.94	0.91	0.91
+  500	1.00	0.97	0.97	0.94
+  750	1.00	1.00	0.97	0.97
+  1000	1.00	1.00	0.97	0.97
+== truth sure: 105 runs over 35 relations
+  relation                   cand  true price | v5 q  ratio cert | v5s q  cert | v5n q  cert
+  food                          78     7    11 |   26   2.36 yes  |   25 yes  |   49 yes 
+  fresh_abs_mb                  78    59    32 |   39   1.22 yes  |   47 yes  |  156 yes 
+  fresh_auctionmark           4243    15    47 |   58   1.23 yes  |   58 yes  |  125 yes 
+  fresh_chembl                 385    43    29 |   75   2.59 yes  |   58 yes  |  156 yes 
+  fresh_chicago_crimes         314    13    26 |   43   1.65 yes  |   39 yes  |   74 yes 
+  fresh_eia860                1097    14    35 |   49   1.40 yes  |   49 yes  |  100 yes 
+  fresh_epa_aqs               1895    13    59 |  438   7.42 yes  |  431 yes  |  194 yes 
+  fresh_faa                    695    14    39 |   48   1.23 yes  |   52 yes  |   98 yes 
+  fresh_fhrs                  1488    25    33 |  131   3.97 yes  |  167 yes  |   70 yes 
+  fresh_geonames              2900    12    43 |   78   1.81 yes  |   80 yes  |  144 yes 
+  fresh_ghcn                   351    13    28 |   41   1.46 yes  |   41 yes  |   80 yes 
+  fresh_gtfs_at               1170    23    50 |   82   1.64 yes  |  103 yes  |  167 yes 
+  fresh_ldbc_comment          1784    26    40 |   63   1.57 yes  |   65 yes  |  208 yes 
+  fresh_ldbc_study            1249    39    46 |   76   1.65 yes  |   88 yes  |  212 yes 
+  fresh_musicbrainz             85    61    38 |   46   1.21 yes  |   70 yes  |  137 yes 
+  fresh_pluto                 1572    46    44 |  292   6.64 yes  |  283 yes  |  111 yes 
+  fresh_pums_ca               2056     8    27 |   29   1.07 yes  |   34 yes  |   61 yes 
+  fresh_scorecard_fos         5169    33    69 |  200   2.90 yes  |  220 yes  |  152 yes 
+  fresh_seats                 4640    19    40 |   69   1.73 yes  |   62 yes  |  122 yes 
+  fresh_sec_fsds               428    15    41 |   69   1.68 yes  |   82 yes  |  109 yes 
+  fresh_simplewiki             139    30    45 |  140   3.11 yes  |  149 yes  |   80 yes 
+  fresh_stats19               1670    42    41 |   98   2.39 yes  |  116 yes  |   79 yes 
+  fresh_tatp                   909    28    41 |   76   1.85 yes  |   63 yes  |   81 yes 
+  fresh_usda_sr                161    25    33 |   57   1.73 yes  |   58 yes  |  125 yes 
+  hospital                     145    22    33 |   91   2.76 yes  |   81 yes  |   99 yes 
+  pricepaid                     34     4     9 |   17   1.89 yes  |   11 yes  |   26 yes 
+  ssb_customer                  24    10    15 |   23   1.53 yes  |   13 yes  |   21 yes 
+  ssb_date                     209   113    47 |   71   1.51 yes  |   73 yes  |  118 yes 
+  ssb_lineorder               3814     5    33 |   38   1.15 yes  |   48 yes  |   48 yes 
+  ssb_part                      86     3    11 |   14   1.27 yes  |   13 yes  |   20 yes 
+  ssb_supplier                  21     9    13 |   23   1.77 yes  |   12 yes  |   20 yes 
+  tpcds_core                    48    13    28 |   72   2.57 yes  |   66 yes  |   80 yes 
+  tpch_lineitem_orders       36883    10    51 |   75   1.47 yes  |   77 yes  |   96 yes 
+  tpch_orders_customer         484    44    35 |   62   1.77 yes  |   52 yes  |  151 yes 
+  tpch_partsupp_part_supplier  2405    25    40 |   53   1.32 yes  |   54 yes  |  108 yes 
+  U1 all: n 35, median ratio 1.68, upper quartile 2.38, above 3x 4 -> holds
+  U1 dev: n 23, median ratio 1.65, upper quartile 1.83, above 3x 1
+  U1 conf: n 12, median ratio 1.83, upper quartile 2.72, above 3x 3
+  U2 consistency: 76 certified budgeted runs compared, 0 differ -> holds
+  U3 not certified within 1000: none
+  B	price<=B	v5<=B	v5s<=B	v5n<=B   (share of relations)
+  25	0.14	0.11	0.14	0.09
+  50	0.91	0.37	0.31	0.17
+  75	1.00	0.69	0.66	0.26
+  100	1.00	0.86	0.80	0.51
+  125	1.00	0.86	0.86	0.71
+  150	1.00	0.91	0.89	0.77
+  200	1.00	0.94	0.91	0.94
+  250	1.00	0.94	0.94	1.00
+  300	1.00	0.97	0.97	1.00
+  400	1.00	0.97	0.97	1.00
+  500	1.00	1.00	1.00	1.00
+  750	1.00	1.00	1.00	1.00
+  1000	1.00	1.00	1.00	1.00

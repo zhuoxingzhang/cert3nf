@@ -1,0 +1,733 @@
+{
+ "dataset": "hospital",
+ "family": "documented",
+ "truth_kind": "documented rules",
+ "source": "prior work (its Meaningful FD sets), with its data",
+ "rule": "Sigma* is the FD set of documented rules that prior work lists for the data set (sure); the FDs added by its variant, whose status prior work marks as doubtful, are unsure. The data are cleaned by the greedy subset repair of documented.py until the base set holds, so the sure FDs hold on the instance by construction.",
+ "instance": {
+  "generator": "real data of prior work, prepared by real.py",
+  "rows": 1000,
+  "construction": "prior-work FD set 'hospital' with the additions of 'hospital-all' as unsure",
+  "cleaning": {
+   "records_after_deduplication": 1000,
+   "kept": 1000,
+   "repaired_for": "hospital",
+   "removed_per_fd": {}
+  }
+ },
+ "attributes": [
+  "ProviderNumber",
+  "HospitalName",
+  "Address1",
+  "City",
+  "State",
+  "ZipCode",
+  "CountyName",
+  "PhoneNumber",
+  "HospitalOwner",
+  "EmergencyService",
+  "Condition",
+  "MeasureCode",
+  "MeasureName",
+  "Score",
+  "Sample",
+  "Stateavg"
+ ],
+ "dropped_constant_columns": [
+  "Address2",
+  "Address3",
+  "HospitalType"
+ ],
+ "distinct_values": {
+  "ProviderNumber": 45,
+  "HospitalName": 45,
+  "Address1": 45,
+  "City": 39,
+  "State": 2,
+  "ZipCode": 44,
+  "CountyName": 33,
+  "PhoneNumber": 45,
+  "HospitalOwner": 8,
+  "EmergencyService": 2,
+  "Condition": 5,
+  "MeasureCode": 28,
+  "MeasureName": 28,
+  "Score": 57,
+  "Sample": 309,
+  "Stateavg": 48
+ },
+ "truth": [
+  {
+   "lhs": [
+    "ZipCode"
+   ],
+   "rhs": [
+    "City",
+    "State"
+   ],
+   "sure": true,
+   "clause": "HoloClean (Rekatsinas et al., PVLDB 10(11), 2017), denial constraints of the hospital data",
+   "justification": "A zip code lies in one city and state."
+  },
+  {
+   "lhs": [
+    "PhoneNumber"
+   ],
+   "rhs": [
+    "ZipCode",
+    "City",
+    "State"
+   ],
+   "sure": true,
+   "clause": "HoloClean (Rekatsinas et al., PVLDB 10(11), 2017), denial constraints of the hospital data",
+   "justification": "A phone number belongs to one hospital location."
+  },
+  {
+   "lhs": [
+    "ProviderNumber",
+    "MeasureCode"
+   ],
+   "rhs": [
+    "Stateavg"
+   ],
+   "sure": true,
+   "clause": "HoloClean (Rekatsinas et al., PVLDB 10(11), 2017), denial constraints; prior work (key of the measurement)",
+   "justification": "A hospital has one score, sample and state average per measure."
+  },
+  {
+   "lhs": [
+    "MeasureCode"
+   ],
+   "rhs": [
+    "MeasureName",
+    "Condition"
+   ],
+   "sure": true,
+   "clause": "HoloClean (Rekatsinas et al., PVLDB 10(11), 2017), denial constraints of the hospital data",
+   "justification": "A measure code has one name and condition."
+  },
+  {
+   "lhs": [
+    "State",
+    "MeasureCode"
+   ],
+   "rhs": [
+    "Stateavg"
+   ],
+   "sure": true,
+   "clause": "HoloClean (Rekatsinas et al., PVLDB 10(11), 2017), denial constraints of the hospital data",
+   "justification": "The state average of a measure is one value per state."
+  },
+  {
+   "lhs": [
+    "ProviderNumber"
+   ],
+   "rhs": [
+    "HospitalName",
+    "Address1",
+    "City",
+    "State",
+    "ZipCode",
+    "CountyName",
+    "PhoneNumber",
+    "HospitalOwner",
+    "EmergencyService"
+   ],
+   "sure": true,
+   "clause": "prior work (key of the hospital)",
+   "justification": "The provider number identifies the hospital."
+  },
+  {
+   "lhs": [
+    "ProviderNumber",
+    "MeasureCode"
+   ],
+   "rhs": [
+    "Score",
+    "Sample"
+   ],
+   "sure": true,
+   "clause": "HoloClean (Rekatsinas et al., PVLDB 10(11), 2017), denial constraints; prior work (key of the measurement)",
+   "justification": "A hospital has one score, sample and state average per measure."
+  },
+  {
+   "lhs": [
+    "Address1",
+    "City",
+    "State"
+   ],
+   "rhs": [
+    "ZipCode"
+   ],
+   "sure": true,
+   "clause": "prior work (address rule c3 of food)",
+   "justification": "An address in a city and state has one zip code."
+  },
+  {
+   "lhs": [
+    "HospitalName"
+   ],
+   "rhs": [
+    "ZipCode",
+    "PhoneNumber",
+    "Address1",
+    "HospitalOwner",
+    "ProviderNumber",
+    "City"
+   ],
+   "sure": false,
+   "clause": "prior work variant hospital-all: the other published constraint lists of the hospital data (HoloClean repository, QCRI gold, Raha, Martin et al. PVLDB 2025) that hold on its clean version",
+   "justification": "Published as a constraint of the hospital data; doubtful as a rule of the domain."
+  },
+  {
+   "lhs": [
+    "MeasureName"
+   ],
+   "rhs": [
+    "MeasureCode",
+    "Condition"
+   ],
+   "sure": false,
+   "clause": "prior work variant hospital-all: the other published constraint lists of the hospital data (HoloClean repository, QCRI gold, Raha, Martin et al. PVLDB 2025) that hold on its clean version",
+   "justification": "Published as a constraint of the hospital data; doubtful as a rule of the domain."
+  },
+  {
+   "lhs": [
+    "City"
+   ],
+   "rhs": [
+    "CountyName"
+   ],
+   "sure": false,
+   "clause": "prior work variant hospital-all: the other published constraint lists of the hospital data (HoloClean repository, QCRI gold, Raha, Martin et al. PVLDB 2025) that hold on its clean version",
+   "justification": "Published as a constraint of the hospital data; doubtful as a rule of the domain."
+  },
+  {
+   "lhs": [
+    "ZipCode"
+   ],
+   "rhs": [
+    "CountyName"
+   ],
+   "sure": false,
+   "clause": "prior work variant hospital-all: the other published constraint lists of the hospital data (HoloClean repository, QCRI gold, Raha, Martin et al. PVLDB 2025) that hold on its clean version",
+   "justification": "Published as a constraint of the hospital data; doubtful as a rule of the domain."
+  },
+  {
+   "lhs": [
+    "CountyName"
+   ],
+   "rhs": [
+    "State"
+   ],
+   "sure": false,
+   "clause": "prior work variant hospital-all: the other published constraint lists of the hospital data (HoloClean repository, QCRI gold, Raha, Martin et al. PVLDB 2025) that hold on its clean version",
+   "justification": "Published as a constraint of the hospital data; doubtful as a rule of the domain."
+  },
+  {
+   "lhs": [
+    "PhoneNumber"
+   ],
+   "rhs": [
+    "CountyName"
+   ],
+   "sure": false,
+   "clause": "prior work variant hospital-all: the other published constraint lists of the hospital data (HoloClean repository, QCRI gold, Raha, Martin et al. PVLDB 2025) that hold on its clean version",
+   "justification": "Published as a constraint of the hospital data; doubtful as a rule of the domain."
+  },
+  {
+   "lhs": [
+    "PhoneNumber",
+    "HospitalOwner"
+   ],
+   "rhs": [
+    "HospitalName",
+    "ProviderNumber"
+   ],
+   "sure": false,
+   "clause": "prior work variant hospital-all: the other published constraint lists of the hospital data (HoloClean repository, QCRI gold, Raha, Martin et al. PVLDB 2025) that hold on its clean version",
+   "justification": "Published as a constraint of the hospital data; doubtful as a rule of the domain."
+  },
+  {
+   "lhs": [
+    "HospitalName",
+    "CountyName"
+   ],
+   "rhs": [
+    "HospitalOwner",
+    "City",
+    "ZipCode",
+    "ProviderNumber",
+    "PhoneNumber"
+   ],
+   "sure": false,
+   "clause": "prior work variant hospital-all: the other published constraint lists of the hospital data (HoloClean repository, QCRI gold, Raha, Martin et al. PVLDB 2025) that hold on its clean version",
+   "justification": "Published as a constraint of the hospital data; doubtful as a rule of the domain."
+  },
+  {
+   "lhs": [
+    "HospitalName",
+    "City"
+   ],
+   "rhs": [
+    "ZipCode",
+    "ProviderNumber",
+    "PhoneNumber"
+   ],
+   "sure": false,
+   "clause": "prior work variant hospital-all: the other published constraint lists of the hospital data (HoloClean repository, QCRI gold, Raha, Martin et al. PVLDB 2025) that hold on its clean version",
+   "justification": "Published as a constraint of the hospital data; doubtful as a rule of the domain."
+  }
+ ],
+ "truth_counts": {
+  "fds": 17,
+  "single_rhs": 43,
+  "sure_single_rhs": 21
+ },
+ "random_columns": null,
+ "truth_fds_violated_by_data": [],
+ "gold_design": null,
+ "gold_design_note": "No normalized design is published for this data; truth_design gives the 3NF designs of Sigma*.",
+ "truth_design": {
+  "keys": [
+   [
+    "HospitalOwner",
+    "MeasureName",
+    "PhoneNumber"
+   ],
+   [
+    "MeasureName",
+    "ProviderNumber"
+   ],
+   [
+    "HospitalName",
+    "MeasureName"
+   ],
+   [
+    "HospitalOwner",
+    "MeasureCode",
+    "PhoneNumber"
+   ],
+   [
+    "MeasureCode",
+    "ProviderNumber"
+   ],
+   [
+    "HospitalName",
+    "MeasureCode"
+   ]
+  ],
+  "atomic_closure": 63,
+  "synthesis": [
+   [
+    "Address1",
+    "City",
+    "ZipCode"
+   ],
+   [
+    "Address1",
+    "HospitalOwner",
+    "PhoneNumber"
+   ],
+   [
+    "City",
+    "CountyName"
+   ],
+   [
+    "Condition",
+    "MeasureName"
+   ],
+   [
+    "CountyName",
+    "State"
+   ],
+   [
+    "EmergencyService",
+    "HospitalOwner",
+    "PhoneNumber"
+   ],
+   [
+    "HospitalName",
+    "HospitalOwner",
+    "PhoneNumber"
+   ],
+   [
+    "HospitalOwner",
+    "MeasureName",
+    "PhoneNumber",
+    "Sample"
+   ],
+   [
+    "HospitalOwner",
+    "MeasureName",
+    "PhoneNumber",
+    "Score"
+   ],
+   [
+    "HospitalOwner",
+    "PhoneNumber",
+    "ProviderNumber"
+   ],
+   [
+    "MeasureCode",
+    "MeasureName"
+   ],
+   [
+    "MeasureName",
+    "State",
+    "Stateavg"
+   ],
+   [
+    "PhoneNumber",
+    "ZipCode"
+   ]
+  ],
+  "iconf": [
+   [
+    "Address1",
+    "City",
+    "ZipCode"
+   ],
+   [
+    "Address1",
+    "HospitalOwner",
+    "PhoneNumber"
+   ],
+   [
+    "City",
+    "CountyName"
+   ],
+   [
+    "Condition",
+    "MeasureName"
+   ],
+   [
+    "CountyName",
+    "State"
+   ],
+   [
+    "EmergencyService",
+    "HospitalOwner",
+    "PhoneNumber"
+   ],
+   [
+    "HospitalName",
+    "HospitalOwner",
+    "PhoneNumber"
+   ],
+   [
+    "HospitalOwner",
+    "MeasureName",
+    "PhoneNumber",
+    "Sample"
+   ],
+   [
+    "HospitalOwner",
+    "MeasureName",
+    "PhoneNumber",
+    "Score"
+   ],
+   [
+    "HospitalOwner",
+    "PhoneNumber",
+    "ProviderNumber"
+   ],
+   [
+    "MeasureCode",
+    "MeasureName"
+   ],
+   [
+    "MeasureName",
+    "State",
+    "Stateavg"
+   ],
+   [
+    "PhoneNumber",
+    "ZipCode"
+   ]
+  ]
+ },
+ "mined": {
+  "algorithm": "fdmine.py: exact discovery of all minimal FDs in the style of HyFD (no HyFD binary was available); the complete set of minimal FDs is unique, so it equals HyFD's output",
+  "file": "mined/hospital-fds.txt",
+  "seconds": 0.0,
+  "count": 145,
+  "implied_by_truth": 54,
+  "accidental": 91,
+  "implied_by_sure_truth": 22
+ },
+ "truth_design_sure_only": {
+  "keys": [
+   [
+    "MeasureCode",
+    "ProviderNumber"
+   ]
+  ],
+  "atomic_closure": 23,
+  "synthesis": [
+   [
+    "Address1",
+    "City",
+    "State",
+    "ZipCode"
+   ],
+   [
+    "Address1",
+    "ProviderNumber"
+   ],
+   [
+    "Condition",
+    "MeasureCode"
+   ],
+   [
+    "CountyName",
+    "ProviderNumber"
+   ],
+   [
+    "EmergencyService",
+    "ProviderNumber"
+   ],
+   [
+    "HospitalName",
+    "ProviderNumber"
+   ],
+   [
+    "HospitalOwner",
+    "ProviderNumber"
+   ],
+   [
+    "MeasureCode",
+    "MeasureName"
+   ],
+   [
+    "MeasureCode",
+    "ProviderNumber",
+    "Sample"
+   ],
+   [
+    "MeasureCode",
+    "ProviderNumber",
+    "Score"
+   ],
+   [
+    "MeasureCode",
+    "State",
+    "Stateavg"
+   ],
+   [
+    "PhoneNumber",
+    "ProviderNumber"
+   ],
+   [
+    "PhoneNumber",
+    "ZipCode"
+   ]
+  ],
+  "iconf": [
+   [
+    "Address1",
+    "City",
+    "State",
+    "ZipCode"
+   ],
+   [
+    "Address1",
+    "ProviderNumber"
+   ],
+   [
+    "Condition",
+    "MeasureCode"
+   ],
+   [
+    "CountyName",
+    "ProviderNumber"
+   ],
+   [
+    "EmergencyService",
+    "ProviderNumber"
+   ],
+   [
+    "HospitalName",
+    "ProviderNumber"
+   ],
+   [
+    "HospitalOwner",
+    "ProviderNumber"
+   ],
+   [
+    "MeasureCode",
+    "MeasureName"
+   ],
+   [
+    "MeasureCode",
+    "ProviderNumber",
+    "Sample"
+   ],
+   [
+    "MeasureCode",
+    "ProviderNumber",
+    "Score"
+   ],
+   [
+    "MeasureCode",
+    "State",
+    "Stateavg"
+   ],
+   [
+    "PhoneNumber",
+    "ProviderNumber"
+   ],
+   [
+    "PhoneNumber",
+    "ZipCode"
+   ]
+  ]
+ },
+ "fds": [
+  {"lhs": ["HospitalName"], "rhs": "ProviderNumber", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 45, "distinct_rhs": 45, "lhs_distinct_ratio": 0.045, "rhs_distinct_ratio": 0.045, "redundancy": 955, "redundancy_wl": 999, "lhs_unique": false, "lhs_tokens": [["hospital", "name"]], "rhs_tokens": ["provider", "number"]},
+  {"lhs": ["Address1"], "rhs": "ProviderNumber", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 45, "distinct_rhs": 45, "lhs_distinct_ratio": 0.045, "rhs_distinct_ratio": 0.045, "redundancy": 955, "redundancy_wl": 999, "lhs_unique": false, "lhs_tokens": [["address"]], "rhs_tokens": ["provider", "number"]},
+  {"lhs": ["PhoneNumber"], "rhs": "ProviderNumber", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 45, "distinct_rhs": 45, "lhs_distinct_ratio": 0.045, "rhs_distinct_ratio": 0.045, "redundancy": 955, "redundancy_wl": 999, "lhs_unique": false, "lhs_tokens": [["phone", "number"]], "rhs_tokens": ["provider", "number"]},
+  {"lhs": ["ProviderNumber"], "rhs": "HospitalName", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 45, "distinct_rhs": 45, "lhs_distinct_ratio": 0.045, "rhs_distinct_ratio": 0.045, "redundancy": 955, "redundancy_wl": 999, "lhs_unique": false, "lhs_tokens": [["provider", "number"]], "rhs_tokens": ["hospital", "name"]},
+  {"lhs": ["Address1"], "rhs": "HospitalName", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 45, "distinct_rhs": 45, "lhs_distinct_ratio": 0.045, "rhs_distinct_ratio": 0.045, "redundancy": 955, "redundancy_wl": 999, "lhs_unique": false, "lhs_tokens": [["address"]], "rhs_tokens": ["hospital", "name"]},
+  {"lhs": ["PhoneNumber"], "rhs": "HospitalName", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 45, "distinct_rhs": 45, "lhs_distinct_ratio": 0.045, "rhs_distinct_ratio": 0.045, "redundancy": 955, "redundancy_wl": 999, "lhs_unique": false, "lhs_tokens": [["phone", "number"]], "rhs_tokens": ["hospital", "name"]},
+  {"lhs": ["ProviderNumber"], "rhs": "Address1", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 45, "distinct_rhs": 45, "lhs_distinct_ratio": 0.045, "rhs_distinct_ratio": 0.045, "redundancy": 955, "redundancy_wl": 999, "lhs_unique": false, "lhs_tokens": [["provider", "number"]], "rhs_tokens": ["address"]},
+  {"lhs": ["HospitalName"], "rhs": "Address1", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 45, "distinct_rhs": 45, "lhs_distinct_ratio": 0.045, "rhs_distinct_ratio": 0.045, "redundancy": 955, "redundancy_wl": 999, "lhs_unique": false, "lhs_tokens": [["hospital", "name"]], "rhs_tokens": ["address"]},
+  {"lhs": ["PhoneNumber"], "rhs": "Address1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 45, "distinct_rhs": 45, "lhs_distinct_ratio": 0.045, "rhs_distinct_ratio": 0.045, "redundancy": 955, "redundancy_wl": 999, "lhs_unique": false, "lhs_tokens": [["phone", "number"]], "rhs_tokens": ["address"]},
+  {"lhs": ["ProviderNumber"], "rhs": "City", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 45, "distinct_rhs": 39, "lhs_distinct_ratio": 0.045, "rhs_distinct_ratio": 0.039, "redundancy": 955, "redundancy_wl": 999, "lhs_unique": false, "lhs_tokens": [["provider", "number"]], "rhs_tokens": ["city"]},
+  {"lhs": ["HospitalName"], "rhs": "City", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 45, "distinct_rhs": 39, "lhs_distinct_ratio": 0.045, "rhs_distinct_ratio": 0.039, "redundancy": 955, "redundancy_wl": 999, "lhs_unique": false, "lhs_tokens": [["hospital", "name"]], "rhs_tokens": ["city"]},
+  {"lhs": ["Address1"], "rhs": "City", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 45, "distinct_rhs": 39, "lhs_distinct_ratio": 0.045, "rhs_distinct_ratio": 0.039, "redundancy": 955, "redundancy_wl": 999, "lhs_unique": false, "lhs_tokens": [["address"]], "rhs_tokens": ["city"]},
+  {"lhs": ["ZipCode"], "rhs": "City", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 44, "distinct_rhs": 39, "lhs_distinct_ratio": 0.044, "rhs_distinct_ratio": 0.039, "redundancy": 956, "redundancy_wl": 999, "lhs_unique": false, "lhs_tokens": [["zip", "code"]], "rhs_tokens": ["city"]},
+  {"lhs": ["PhoneNumber"], "rhs": "City", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 45, "distinct_rhs": 39, "lhs_distinct_ratio": 0.045, "rhs_distinct_ratio": 0.039, "redundancy": 955, "redundancy_wl": 999, "lhs_unique": false, "lhs_tokens": [["phone", "number"]], "rhs_tokens": ["city"]},
+  {"lhs": ["ProviderNumber"], "rhs": "State", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 45, "distinct_rhs": 2, "lhs_distinct_ratio": 0.045, "rhs_distinct_ratio": 0.002, "redundancy": 955, "redundancy_wl": 999, "lhs_unique": false, "lhs_tokens": [["provider", "number"]], "rhs_tokens": ["state"]},
+  {"lhs": ["HospitalName"], "rhs": "State", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 45, "distinct_rhs": 2, "lhs_distinct_ratio": 0.045, "rhs_distinct_ratio": 0.002, "redundancy": 955, "redundancy_wl": 999, "lhs_unique": false, "lhs_tokens": [["hospital", "name"]], "rhs_tokens": ["state"]},
+  {"lhs": ["Address1"], "rhs": "State", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 45, "distinct_rhs": 2, "lhs_distinct_ratio": 0.045, "rhs_distinct_ratio": 0.002, "redundancy": 955, "redundancy_wl": 999, "lhs_unique": false, "lhs_tokens": [["address"]], "rhs_tokens": ["state"]},
+  {"lhs": ["City"], "rhs": "State", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 39, "distinct_rhs": 2, "lhs_distinct_ratio": 0.039, "rhs_distinct_ratio": 0.002, "redundancy": 961, "redundancy_wl": 999, "lhs_unique": false, "lhs_tokens": [["city"]], "rhs_tokens": ["state"]},
+  {"lhs": ["ZipCode"], "rhs": "State", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 44, "distinct_rhs": 2, "lhs_distinct_ratio": 0.044, "rhs_distinct_ratio": 0.002, "redundancy": 956, "redundancy_wl": 999, "lhs_unique": false, "lhs_tokens": [["zip", "code"]], "rhs_tokens": ["state"]},
+  {"lhs": ["CountyName"], "rhs": "State", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 33, "distinct_rhs": 2, "lhs_distinct_ratio": 0.033, "rhs_distinct_ratio": 0.002, "redundancy": 967, "redundancy_wl": 1000, "lhs_unique": false, "lhs_tokens": [["county", "name"]], "rhs_tokens": ["state"]},
+  {"lhs": ["PhoneNumber"], "rhs": "State", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 45, "distinct_rhs": 2, "lhs_distinct_ratio": 0.045, "rhs_distinct_ratio": 0.002, "redundancy": 955, "redundancy_wl": 999, "lhs_unique": false, "lhs_tokens": [["phone", "number"]], "rhs_tokens": ["state"]},
+  {"lhs": ["Stateavg"], "rhs": "State", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 48, "distinct_rhs": 2, "lhs_distinct_ratio": 0.048, "rhs_distinct_ratio": 0.002, "redundancy": 952, "redundancy_wl": 980, "lhs_unique": false, "lhs_tokens": [["stateavg"]], "rhs_tokens": ["state"]},
+  {"lhs": ["ProviderNumber"], "rhs": "ZipCode", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 45, "distinct_rhs": 44, "lhs_distinct_ratio": 0.045, "rhs_distinct_ratio": 0.044, "redundancy": 955, "redundancy_wl": 999, "lhs_unique": false, "lhs_tokens": [["provider", "number"]], "rhs_tokens": ["zip", "code"]},
+  {"lhs": ["HospitalName"], "rhs": "ZipCode", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 45, "distinct_rhs": 44, "lhs_distinct_ratio": 0.045, "rhs_distinct_ratio": 0.044, "redundancy": 955, "redundancy_wl": 999, "lhs_unique": false, "lhs_tokens": [["hospital", "name"]], "rhs_tokens": ["zip", "code"]},
+  {"lhs": ["Address1"], "rhs": "ZipCode", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 45, "distinct_rhs": 44, "lhs_distinct_ratio": 0.045, "rhs_distinct_ratio": 0.044, "redundancy": 955, "redundancy_wl": 999, "lhs_unique": false, "lhs_tokens": [["address"]], "rhs_tokens": ["zip", "code"]},
+  {"lhs": ["PhoneNumber"], "rhs": "ZipCode", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 45, "distinct_rhs": 44, "lhs_distinct_ratio": 0.045, "rhs_distinct_ratio": 0.044, "redundancy": 955, "redundancy_wl": 999, "lhs_unique": false, "lhs_tokens": [["phone", "number"]], "rhs_tokens": ["zip", "code"]},
+  {"lhs": ["ProviderNumber"], "rhs": "CountyName", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 45, "distinct_rhs": 33, "lhs_distinct_ratio": 0.045, "rhs_distinct_ratio": 0.033, "redundancy": 955, "redundancy_wl": 999, "lhs_unique": false, "lhs_tokens": [["provider", "number"]], "rhs_tokens": ["county", "name"]},
+  {"lhs": ["HospitalName"], "rhs": "CountyName", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 45, "distinct_rhs": 33, "lhs_distinct_ratio": 0.045, "rhs_distinct_ratio": 0.033, "redundancy": 955, "redundancy_wl": 999, "lhs_unique": false, "lhs_tokens": [["hospital", "name"]], "rhs_tokens": ["county", "name"]},
+  {"lhs": ["Address1"], "rhs": "CountyName", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 45, "distinct_rhs": 33, "lhs_distinct_ratio": 0.045, "rhs_distinct_ratio": 0.033, "redundancy": 955, "redundancy_wl": 999, "lhs_unique": false, "lhs_tokens": [["address"]], "rhs_tokens": ["county", "name"]},
+  {"lhs": ["City"], "rhs": "CountyName", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 39, "distinct_rhs": 33, "lhs_distinct_ratio": 0.039, "rhs_distinct_ratio": 0.033, "redundancy": 961, "redundancy_wl": 999, "lhs_unique": false, "lhs_tokens": [["city"]], "rhs_tokens": ["county", "name"]},
+  {"lhs": ["ZipCode"], "rhs": "CountyName", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 44, "distinct_rhs": 33, "lhs_distinct_ratio": 0.044, "rhs_distinct_ratio": 0.033, "redundancy": 956, "redundancy_wl": 999, "lhs_unique": false, "lhs_tokens": [["zip", "code"]], "rhs_tokens": ["county", "name"]},
+  {"lhs": ["PhoneNumber"], "rhs": "CountyName", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 45, "distinct_rhs": 33, "lhs_distinct_ratio": 0.045, "rhs_distinct_ratio": 0.033, "redundancy": 955, "redundancy_wl": 999, "lhs_unique": false, "lhs_tokens": [["phone", "number"]], "rhs_tokens": ["county", "name"]},
+  {"lhs": ["ProviderNumber"], "rhs": "PhoneNumber", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 45, "distinct_rhs": 45, "lhs_distinct_ratio": 0.045, "rhs_distinct_ratio": 0.045, "redundancy": 955, "redundancy_wl": 999, "lhs_unique": false, "lhs_tokens": [["provider", "number"]], "rhs_tokens": ["phone", "number"]},
+  {"lhs": ["HospitalName"], "rhs": "PhoneNumber", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 45, "distinct_rhs": 45, "lhs_distinct_ratio": 0.045, "rhs_distinct_ratio": 0.045, "redundancy": 955, "redundancy_wl": 999, "lhs_unique": false, "lhs_tokens": [["hospital", "name"]], "rhs_tokens": ["phone", "number"]},
+  {"lhs": ["Address1"], "rhs": "PhoneNumber", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 45, "distinct_rhs": 45, "lhs_distinct_ratio": 0.045, "rhs_distinct_ratio": 0.045, "redundancy": 955, "redundancy_wl": 999, "lhs_unique": false, "lhs_tokens": [["address"]], "rhs_tokens": ["phone", "number"]},
+  {"lhs": ["ProviderNumber"], "rhs": "HospitalOwner", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 45, "distinct_rhs": 8, "lhs_distinct_ratio": 0.045, "rhs_distinct_ratio": 0.008, "redundancy": 955, "redundancy_wl": 999, "lhs_unique": false, "lhs_tokens": [["provider", "number"]], "rhs_tokens": ["hospital", "owner"]},
+  {"lhs": ["HospitalName"], "rhs": "HospitalOwner", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 45, "distinct_rhs": 8, "lhs_distinct_ratio": 0.045, "rhs_distinct_ratio": 0.008, "redundancy": 955, "redundancy_wl": 999, "lhs_unique": false, "lhs_tokens": [["hospital", "name"]], "rhs_tokens": ["hospital", "owner"]},
+  {"lhs": ["Address1"], "rhs": "HospitalOwner", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 45, "distinct_rhs": 8, "lhs_distinct_ratio": 0.045, "rhs_distinct_ratio": 0.008, "redundancy": 955, "redundancy_wl": 999, "lhs_unique": false, "lhs_tokens": [["address"]], "rhs_tokens": ["hospital", "owner"]},
+  {"lhs": ["PhoneNumber"], "rhs": "HospitalOwner", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 45, "distinct_rhs": 8, "lhs_distinct_ratio": 0.045, "rhs_distinct_ratio": 0.008, "redundancy": 955, "redundancy_wl": 999, "lhs_unique": false, "lhs_tokens": [["phone", "number"]], "rhs_tokens": ["hospital", "owner"]},
+  {"lhs": ["ProviderNumber"], "rhs": "EmergencyService", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 45, "distinct_rhs": 2, "lhs_distinct_ratio": 0.045, "rhs_distinct_ratio": 0.002, "redundancy": 955, "redundancy_wl": 999, "lhs_unique": false, "lhs_tokens": [["provider", "number"]], "rhs_tokens": ["emergency", "service"]},
+  {"lhs": ["HospitalName"], "rhs": "EmergencyService", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 45, "distinct_rhs": 2, "lhs_distinct_ratio": 0.045, "rhs_distinct_ratio": 0.002, "redundancy": 955, "redundancy_wl": 999, "lhs_unique": false, "lhs_tokens": [["hospital", "name"]], "rhs_tokens": ["emergency", "service"]},
+  {"lhs": ["Address1"], "rhs": "EmergencyService", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 45, "distinct_rhs": 2, "lhs_distinct_ratio": 0.045, "rhs_distinct_ratio": 0.002, "redundancy": 955, "redundancy_wl": 999, "lhs_unique": false, "lhs_tokens": [["address"]], "rhs_tokens": ["emergency", "service"]},
+  {"lhs": ["City"], "rhs": "EmergencyService", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 39, "distinct_rhs": 2, "lhs_distinct_ratio": 0.039, "rhs_distinct_ratio": 0.002, "redundancy": 961, "redundancy_wl": 999, "lhs_unique": false, "lhs_tokens": [["city"]], "rhs_tokens": ["emergency", "service"]},
+  {"lhs": ["ZipCode"], "rhs": "EmergencyService", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 44, "distinct_rhs": 2, "lhs_distinct_ratio": 0.044, "rhs_distinct_ratio": 0.002, "redundancy": 956, "redundancy_wl": 999, "lhs_unique": false, "lhs_tokens": [["zip", "code"]], "rhs_tokens": ["emergency", "service"]},
+  {"lhs": ["CountyName"], "rhs": "EmergencyService", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 33, "distinct_rhs": 2, "lhs_distinct_ratio": 0.033, "rhs_distinct_ratio": 0.002, "redundancy": 967, "redundancy_wl": 1000, "lhs_unique": false, "lhs_tokens": [["county", "name"]], "rhs_tokens": ["emergency", "service"]},
+  {"lhs": ["PhoneNumber"], "rhs": "EmergencyService", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 45, "distinct_rhs": 2, "lhs_distinct_ratio": 0.045, "rhs_distinct_ratio": 0.002, "redundancy": 955, "redundancy_wl": 999, "lhs_unique": false, "lhs_tokens": [["phone", "number"]], "rhs_tokens": ["emergency", "service"]},
+  {"lhs": ["MeasureCode"], "rhs": "Condition", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 28, "distinct_rhs": 5, "lhs_distinct_ratio": 0.028, "rhs_distinct_ratio": 0.005, "redundancy": 972, "redundancy_wl": 1000, "lhs_unique": false, "lhs_tokens": [["measure", "code"]], "rhs_tokens": ["condition"]},
+  {"lhs": ["MeasureName"], "rhs": "Condition", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 28, "distinct_rhs": 5, "lhs_distinct_ratio": 0.028, "rhs_distinct_ratio": 0.005, "redundancy": 972, "redundancy_wl": 1000, "lhs_unique": false, "lhs_tokens": [["measure", "name"]], "rhs_tokens": ["condition"]},
+  {"lhs": ["Stateavg"], "rhs": "Condition", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 48, "distinct_rhs": 5, "lhs_distinct_ratio": 0.048, "rhs_distinct_ratio": 0.005, "redundancy": 952, "redundancy_wl": 980, "lhs_unique": false, "lhs_tokens": [["stateavg"]], "rhs_tokens": ["condition"]},
+  {"lhs": ["MeasureName"], "rhs": "MeasureCode", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 28, "distinct_rhs": 28, "lhs_distinct_ratio": 0.028, "rhs_distinct_ratio": 0.028, "redundancy": 972, "redundancy_wl": 1000, "lhs_unique": false, "lhs_tokens": [["measure", "name"]], "rhs_tokens": ["measure", "code"]},
+  {"lhs": ["Stateavg"], "rhs": "MeasureCode", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 48, "distinct_rhs": 28, "lhs_distinct_ratio": 0.048, "rhs_distinct_ratio": 0.028, "redundancy": 952, "redundancy_wl": 980, "lhs_unique": false, "lhs_tokens": [["stateavg"]], "rhs_tokens": ["measure", "code"]},
+  {"lhs": ["MeasureCode"], "rhs": "MeasureName", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 28, "distinct_rhs": 28, "lhs_distinct_ratio": 0.028, "rhs_distinct_ratio": 0.028, "redundancy": 972, "redundancy_wl": 1000, "lhs_unique": false, "lhs_tokens": [["measure", "code"]], "rhs_tokens": ["measure", "name"]},
+  {"lhs": ["Stateavg"], "rhs": "MeasureName", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 48, "distinct_rhs": 28, "lhs_distinct_ratio": 0.048, "rhs_distinct_ratio": 0.028, "redundancy": 952, "redundancy_wl": 980, "lhs_unique": false, "lhs_tokens": [["stateavg"]], "rhs_tokens": ["measure", "name"]},
+  {"lhs": ["ZipCode", "HospitalOwner"], "rhs": "ProviderNumber", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 45, "distinct_rhs": 45, "lhs_distinct_ratio": 0.045, "rhs_distinct_ratio": 0.045, "redundancy": 955, "redundancy_wl": 999, "lhs_unique": false, "lhs_tokens": [["zip", "code"], ["hospital", "owner"]], "rhs_tokens": ["provider", "number"]},
+  {"lhs": ["ZipCode", "Sample"], "rhs": "ProviderNumber", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 783, "distinct_rhs": 45, "lhs_distinct_ratio": 0.783, "rhs_distinct_ratio": 0.045, "redundancy": 217, "redundancy_wl": 320, "lhs_unique": false, "lhs_tokens": [["zip", "code"], ["sample"]], "rhs_tokens": ["provider", "number"]},
+  {"lhs": ["ZipCode", "HospitalOwner"], "rhs": "HospitalName", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 45, "distinct_rhs": 45, "lhs_distinct_ratio": 0.045, "rhs_distinct_ratio": 0.045, "redundancy": 955, "redundancy_wl": 999, "lhs_unique": false, "lhs_tokens": [["zip", "code"], ["hospital", "owner"]], "rhs_tokens": ["hospital", "name"]},
+  {"lhs": ["ZipCode", "Sample"], "rhs": "HospitalName", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 783, "distinct_rhs": 45, "lhs_distinct_ratio": 0.783, "rhs_distinct_ratio": 0.045, "redundancy": 217, "redundancy_wl": 320, "lhs_unique": false, "lhs_tokens": [["zip", "code"], ["sample"]], "rhs_tokens": ["hospital", "name"]},
+  {"lhs": ["ZipCode", "HospitalOwner"], "rhs": "Address1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 45, "distinct_rhs": 45, "lhs_distinct_ratio": 0.045, "rhs_distinct_ratio": 0.045, "redundancy": 955, "redundancy_wl": 999, "lhs_unique": false, "lhs_tokens": [["zip", "code"], ["hospital", "owner"]], "rhs_tokens": ["address"]},
+  {"lhs": ["ZipCode", "Sample"], "rhs": "Address1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 783, "distinct_rhs": 45, "lhs_distinct_ratio": 0.783, "rhs_distinct_ratio": 0.045, "redundancy": 217, "redundancy_wl": 320, "lhs_unique": false, "lhs_tokens": [["zip", "code"], ["sample"]], "rhs_tokens": ["address"]},
+  {"lhs": ["ZipCode", "HospitalOwner"], "rhs": "PhoneNumber", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 45, "distinct_rhs": 45, "lhs_distinct_ratio": 0.045, "rhs_distinct_ratio": 0.045, "redundancy": 955, "redundancy_wl": 999, "lhs_unique": false, "lhs_tokens": [["zip", "code"], ["hospital", "owner"]], "rhs_tokens": ["phone", "number"]},
+  {"lhs": ["ZipCode", "Sample"], "rhs": "PhoneNumber", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 783, "distinct_rhs": 45, "lhs_distinct_ratio": 0.783, "rhs_distinct_ratio": 0.045, "redundancy": 217, "redundancy_wl": 320, "lhs_unique": false, "lhs_tokens": [["zip", "code"], ["sample"]], "rhs_tokens": ["phone", "number"]},
+  {"lhs": ["ZipCode", "Sample"], "rhs": "HospitalOwner", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 783, "distinct_rhs": 8, "lhs_distinct_ratio": 0.783, "rhs_distinct_ratio": 0.008, "redundancy": 217, "redundancy_wl": 320, "lhs_unique": false, "lhs_tokens": [["zip", "code"], ["sample"]], "rhs_tokens": ["hospital", "owner"]},
+  {"lhs": ["ProviderNumber", "MeasureCode"], "rhs": "Score", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 2, "distinct_lhs": 1000, "distinct_rhs": 57, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.057, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["provider", "number"], ["measure", "code"]], "rhs_tokens": ["score"]},
+  {"lhs": ["HospitalName", "MeasureCode"], "rhs": "Score", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 1000, "distinct_rhs": 57, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.057, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["hospital", "name"], ["measure", "code"]], "rhs_tokens": ["score"]},
+  {"lhs": ["Address1", "MeasureCode"], "rhs": "Score", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 1000, "distinct_rhs": 57, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.057, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["address"], ["measure", "code"]], "rhs_tokens": ["score"]},
+  {"lhs": ["PhoneNumber", "MeasureCode"], "rhs": "Score", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 1000, "distinct_rhs": 57, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.057, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["phone", "number"], ["measure", "code"]], "rhs_tokens": ["score"]},
+  {"lhs": ["ProviderNumber", "MeasureName"], "rhs": "Score", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 1000, "distinct_rhs": 57, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.057, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["provider", "number"], ["measure", "name"]], "rhs_tokens": ["score"]},
+  {"lhs": ["HospitalName", "MeasureName"], "rhs": "Score", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 1000, "distinct_rhs": 57, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.057, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["hospital", "name"], ["measure", "name"]], "rhs_tokens": ["score"]},
+  {"lhs": ["Address1", "MeasureName"], "rhs": "Score", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 1000, "distinct_rhs": 57, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.057, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["address"], ["measure", "name"]], "rhs_tokens": ["score"]},
+  {"lhs": ["PhoneNumber", "MeasureName"], "rhs": "Score", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 1000, "distinct_rhs": 57, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.057, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["phone", "number"], ["measure", "name"]], "rhs_tokens": ["score"]},
+  {"lhs": ["ProviderNumber", "Stateavg"], "rhs": "Score", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 1000, "distinct_rhs": 57, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.057, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["provider", "number"], ["stateavg"]], "rhs_tokens": ["score"]},
+  {"lhs": ["HospitalName", "Stateavg"], "rhs": "Score", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 1000, "distinct_rhs": 57, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.057, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["hospital", "name"], ["stateavg"]], "rhs_tokens": ["score"]},
+  {"lhs": ["Address1", "Stateavg"], "rhs": "Score", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 1000, "distinct_rhs": 57, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.057, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["address"], ["stateavg"]], "rhs_tokens": ["score"]},
+  {"lhs": ["PhoneNumber", "Stateavg"], "rhs": "Score", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 1000, "distinct_rhs": 57, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.057, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["phone", "number"], ["stateavg"]], "rhs_tokens": ["score"]},
+  {"lhs": ["ProviderNumber", "MeasureCode"], "rhs": "Sample", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 2, "distinct_lhs": 1000, "distinct_rhs": 309, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.309, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["provider", "number"], ["measure", "code"]], "rhs_tokens": ["sample"]},
+  {"lhs": ["HospitalName", "MeasureCode"], "rhs": "Sample", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 1000, "distinct_rhs": 309, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.309, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["hospital", "name"], ["measure", "code"]], "rhs_tokens": ["sample"]},
+  {"lhs": ["Address1", "MeasureCode"], "rhs": "Sample", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 1000, "distinct_rhs": 309, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.309, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["address"], ["measure", "code"]], "rhs_tokens": ["sample"]},
+  {"lhs": ["PhoneNumber", "MeasureCode"], "rhs": "Sample", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 1000, "distinct_rhs": 309, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.309, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["phone", "number"], ["measure", "code"]], "rhs_tokens": ["sample"]},
+  {"lhs": ["ProviderNumber", "MeasureName"], "rhs": "Sample", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 1000, "distinct_rhs": 309, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.309, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["provider", "number"], ["measure", "name"]], "rhs_tokens": ["sample"]},
+  {"lhs": ["HospitalName", "MeasureName"], "rhs": "Sample", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 1000, "distinct_rhs": 309, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.309, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["hospital", "name"], ["measure", "name"]], "rhs_tokens": ["sample"]},
+  {"lhs": ["Address1", "MeasureName"], "rhs": "Sample", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 1000, "distinct_rhs": 309, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.309, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["address"], ["measure", "name"]], "rhs_tokens": ["sample"]},
+  {"lhs": ["PhoneNumber", "MeasureName"], "rhs": "Sample", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 1000, "distinct_rhs": 309, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.309, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["phone", "number"], ["measure", "name"]], "rhs_tokens": ["sample"]},
+  {"lhs": ["ProviderNumber", "Stateavg"], "rhs": "Sample", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 1000, "distinct_rhs": 309, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.309, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["provider", "number"], ["stateavg"]], "rhs_tokens": ["sample"]},
+  {"lhs": ["HospitalName", "Stateavg"], "rhs": "Sample", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 1000, "distinct_rhs": 309, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.309, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["hospital", "name"], ["stateavg"]], "rhs_tokens": ["sample"]},
+  {"lhs": ["Address1", "Stateavg"], "rhs": "Sample", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 1000, "distinct_rhs": 309, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.309, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["address"], ["stateavg"]], "rhs_tokens": ["sample"]},
+  {"lhs": ["PhoneNumber", "Stateavg"], "rhs": "Sample", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 1000, "distinct_rhs": 309, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.309, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["phone", "number"], ["stateavg"]], "rhs_tokens": ["sample"]},
+  {"lhs": ["ProviderNumber", "MeasureCode"], "rhs": "Stateavg", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 2, "distinct_lhs": 1000, "distinct_rhs": 48, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.048, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["provider", "number"], ["measure", "code"]], "rhs_tokens": ["stateavg"]},
+  {"lhs": ["HospitalName", "MeasureCode"], "rhs": "Stateavg", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 1000, "distinct_rhs": 48, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.048, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["hospital", "name"], ["measure", "code"]], "rhs_tokens": ["stateavg"]},
+  {"lhs": ["Address1", "MeasureCode"], "rhs": "Stateavg", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 1000, "distinct_rhs": 48, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.048, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["address"], ["measure", "code"]], "rhs_tokens": ["stateavg"]},
+  {"lhs": ["City", "MeasureCode"], "rhs": "Stateavg", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 878, "distinct_rhs": 48, "lhs_distinct_ratio": 0.878, "rhs_distinct_ratio": 0.048, "redundancy": 122, "redundancy_wl": 214, "lhs_unique": false, "lhs_tokens": [["city"], ["measure", "code"]], "rhs_tokens": ["stateavg"]},
+  {"lhs": ["State", "MeasureCode"], "rhs": "Stateavg", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 2, "distinct_lhs": 48, "distinct_rhs": 48, "lhs_distinct_ratio": 0.048, "rhs_distinct_ratio": 0.048, "redundancy": 952, "redundancy_wl": 980, "lhs_unique": false, "lhs_tokens": [["state"], ["measure", "code"]], "rhs_tokens": ["stateavg"]},
+  {"lhs": ["ZipCode", "MeasureCode"], "rhs": "Stateavg", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 2, "distinct_lhs": 975, "distinct_rhs": 48, "lhs_distinct_ratio": 0.975, "rhs_distinct_ratio": 0.048, "redundancy": 25, "redundancy_wl": 50, "lhs_unique": false, "lhs_tokens": [["zip", "code"], ["measure", "code"]], "rhs_tokens": ["stateavg"]},
+  {"lhs": ["CountyName", "MeasureCode"], "rhs": "Stateavg", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 752, "distinct_rhs": 48, "lhs_distinct_ratio": 0.752, "rhs_distinct_ratio": 0.048, "redundancy": 248, "redundancy_wl": 441, "lhs_unique": false, "lhs_tokens": [["county", "name"], ["measure", "code"]], "rhs_tokens": ["stateavg"]},
+  {"lhs": ["PhoneNumber", "MeasureCode"], "rhs": "Stateavg", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 2, "distinct_lhs": 1000, "distinct_rhs": 48, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.048, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["phone", "number"], ["measure", "code"]], "rhs_tokens": ["stateavg"]},
+  {"lhs": ["ProviderNumber", "MeasureName"], "rhs": "Stateavg", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 1000, "distinct_rhs": 48, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.048, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["provider", "number"], ["measure", "name"]], "rhs_tokens": ["stateavg"]},
+  {"lhs": ["HospitalName", "MeasureName"], "rhs": "Stateavg", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 1000, "distinct_rhs": 48, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.048, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["hospital", "name"], ["measure", "name"]], "rhs_tokens": ["stateavg"]},
+  {"lhs": ["Address1", "MeasureName"], "rhs": "Stateavg", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 1000, "distinct_rhs": 48, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.048, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["address"], ["measure", "name"]], "rhs_tokens": ["stateavg"]},
+  {"lhs": ["City", "MeasureName"], "rhs": "Stateavg", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 878, "distinct_rhs": 48, "lhs_distinct_ratio": 0.878, "rhs_distinct_ratio": 0.048, "redundancy": 122, "redundancy_wl": 214, "lhs_unique": false, "lhs_tokens": [["city"], ["measure", "name"]], "rhs_tokens": ["stateavg"]},
+  {"lhs": ["State", "MeasureName"], "rhs": "Stateavg", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 48, "distinct_rhs": 48, "lhs_distinct_ratio": 0.048, "rhs_distinct_ratio": 0.048, "redundancy": 952, "redundancy_wl": 980, "lhs_unique": false, "lhs_tokens": [["state"], ["measure", "name"]], "rhs_tokens": ["stateavg"]},
+  {"lhs": ["ZipCode", "MeasureName"], "rhs": "Stateavg", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 975, "distinct_rhs": 48, "lhs_distinct_ratio": 0.975, "rhs_distinct_ratio": 0.048, "redundancy": 25, "redundancy_wl": 50, "lhs_unique": false, "lhs_tokens": [["zip", "code"], ["measure", "name"]], "rhs_tokens": ["stateavg"]},
+  {"lhs": ["CountyName", "MeasureName"], "rhs": "Stateavg", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 752, "distinct_rhs": 48, "lhs_distinct_ratio": 0.752, "rhs_distinct_ratio": 0.048, "redundancy": 248, "redundancy_wl": 441, "lhs_unique": false, "lhs_tokens": [["county", "name"], ["measure", "name"]], "rhs_tokens": ["stateavg"]},
+  {"lhs": ["PhoneNumber", "MeasureName"], "rhs": "Stateavg", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 1000, "distinct_rhs": 48, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.048, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["phone", "number"], ["measure", "name"]], "rhs_tokens": ["stateavg"]},
+  {"lhs": ["HospitalOwner", "MeasureCode", "Sample"], "rhs": "State", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 900, "distinct_rhs": 2, "lhs_distinct_ratio": 0.9, "rhs_distinct_ratio": 0.002, "redundancy": 100, "redundancy_wl": 155, "lhs_unique": false, "lhs_tokens": [["hospital", "owner"], ["measure", "code"], ["sample"]], "rhs_tokens": ["state"]},
+  {"lhs": ["HospitalOwner", "MeasureName", "Sample"], "rhs": "State", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 900, "distinct_rhs": 2, "lhs_distinct_ratio": 0.9, "rhs_distinct_ratio": 0.002, "redundancy": 100, "redundancy_wl": 155, "lhs_unique": false, "lhs_tokens": [["hospital", "owner"], ["measure", "name"], ["sample"]], "rhs_tokens": ["state"]},
+  {"lhs": ["ZipCode", "HospitalOwner", "MeasureCode"], "rhs": "Score", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 1000, "distinct_rhs": 57, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.057, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["zip", "code"], ["hospital", "owner"], ["measure", "code"]], "rhs_tokens": ["score"]},
+  {"lhs": ["ZipCode", "HospitalOwner", "MeasureName"], "rhs": "Score", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 1000, "distinct_rhs": 57, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.057, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["zip", "code"], ["hospital", "owner"], ["measure", "name"]], "rhs_tokens": ["score"]},
+  {"lhs": ["ZipCode", "MeasureCode", "Sample"], "rhs": "Score", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 1000, "distinct_rhs": 57, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.057, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["zip", "code"], ["measure", "code"], ["sample"]], "rhs_tokens": ["score"]},
+  {"lhs": ["ZipCode", "MeasureName", "Sample"], "rhs": "Score", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 1000, "distinct_rhs": 57, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.057, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["zip", "code"], ["measure", "name"], ["sample"]], "rhs_tokens": ["score"]},
+  {"lhs": ["ZipCode", "HospitalOwner", "Stateavg"], "rhs": "Score", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 1000, "distinct_rhs": 57, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.057, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["zip", "code"], ["hospital", "owner"], ["stateavg"]], "rhs_tokens": ["score"]},
+  {"lhs": ["ZipCode", "Sample", "Stateavg"], "rhs": "Score", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 1000, "distinct_rhs": 57, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.057, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["zip", "code"], ["sample"], ["stateavg"]], "rhs_tokens": ["score"]},
+  {"lhs": ["ZipCode", "HospitalOwner", "MeasureCode"], "rhs": "Sample", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 1000, "distinct_rhs": 309, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.309, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["zip", "code"], ["hospital", "owner"], ["measure", "code"]], "rhs_tokens": ["sample"]},
+  {"lhs": ["ZipCode", "HospitalOwner", "MeasureName"], "rhs": "Sample", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 1000, "distinct_rhs": 309, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.309, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["zip", "code"], ["hospital", "owner"], ["measure", "name"]], "rhs_tokens": ["sample"]},
+  {"lhs": ["ZipCode", "HospitalOwner", "Stateavg"], "rhs": "Sample", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 1000, "distinct_rhs": 309, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.309, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["zip", "code"], ["hospital", "owner"], ["stateavg"]], "rhs_tokens": ["sample"]},
+  {"lhs": ["HospitalOwner", "MeasureCode", "Sample"], "rhs": "Stateavg", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 900, "distinct_rhs": 48, "lhs_distinct_ratio": 0.9, "rhs_distinct_ratio": 0.048, "redundancy": 100, "redundancy_wl": 155, "lhs_unique": false, "lhs_tokens": [["hospital", "owner"], ["measure", "code"], ["sample"]], "rhs_tokens": ["stateavg"]},
+  {"lhs": ["HospitalOwner", "MeasureName", "Sample"], "rhs": "Stateavg", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 900, "distinct_rhs": 48, "lhs_distinct_ratio": 0.9, "rhs_distinct_ratio": 0.048, "redundancy": 100, "redundancy_wl": 155, "lhs_unique": false, "lhs_tokens": [["hospital", "owner"], ["measure", "name"], ["sample"]], "rhs_tokens": ["stateavg"]},
+  {"lhs": ["City", "HospitalOwner", "MeasureCode", "Sample"], "rhs": "ProviderNumber", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 1000, "distinct_rhs": 45, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.045, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["city"], ["hospital", "owner"], ["measure", "code"], ["sample"]], "rhs_tokens": ["provider", "number"]},
+  {"lhs": ["City", "HospitalOwner", "MeasureName", "Sample"], "rhs": "ProviderNumber", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 1000, "distinct_rhs": 45, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.045, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["city"], ["hospital", "owner"], ["measure", "name"], ["sample"]], "rhs_tokens": ["provider", "number"]},
+  {"lhs": ["City", "HospitalOwner", "Score", "Sample"], "rhs": "ProviderNumber", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 831, "distinct_rhs": 45, "lhs_distinct_ratio": 0.831, "rhs_distinct_ratio": 0.045, "redundancy": 169, "redundancy_wl": 235, "lhs_unique": false, "lhs_tokens": [["city"], ["hospital", "owner"], ["score"], ["sample"]], "rhs_tokens": ["provider", "number"]},
+  {"lhs": ["City", "HospitalOwner", "Sample", "Stateavg"], "rhs": "ProviderNumber", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 1000, "distinct_rhs": 45, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.045, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["city"], ["hospital", "owner"], ["sample"], ["stateavg"]], "rhs_tokens": ["provider", "number"]},
+  {"lhs": ["City", "HospitalOwner", "MeasureCode", "Sample"], "rhs": "HospitalName", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 1000, "distinct_rhs": 45, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.045, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["city"], ["hospital", "owner"], ["measure", "code"], ["sample"]], "rhs_tokens": ["hospital", "name"]},
+  {"lhs": ["City", "HospitalOwner", "MeasureName", "Sample"], "rhs": "HospitalName", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 1000, "distinct_rhs": 45, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.045, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["city"], ["hospital", "owner"], ["measure", "name"], ["sample"]], "rhs_tokens": ["hospital", "name"]},
+  {"lhs": ["City", "HospitalOwner", "Score", "Sample"], "rhs": "HospitalName", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 831, "distinct_rhs": 45, "lhs_distinct_ratio": 0.831, "rhs_distinct_ratio": 0.045, "redundancy": 169, "redundancy_wl": 235, "lhs_unique": false, "lhs_tokens": [["city"], ["hospital", "owner"], ["score"], ["sample"]], "rhs_tokens": ["hospital", "name"]},
+  {"lhs": ["City", "HospitalOwner", "Sample", "Stateavg"], "rhs": "HospitalName", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 1000, "distinct_rhs": 45, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.045, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["city"], ["hospital", "owner"], ["sample"], ["stateavg"]], "rhs_tokens": ["hospital", "name"]},
+  {"lhs": ["City", "HospitalOwner", "MeasureCode", "Sample"], "rhs": "Address1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 1000, "distinct_rhs": 45, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.045, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["city"], ["hospital", "owner"], ["measure", "code"], ["sample"]], "rhs_tokens": ["address"]},
+  {"lhs": ["City", "HospitalOwner", "MeasureName", "Sample"], "rhs": "Address1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 1000, "distinct_rhs": 45, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.045, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["city"], ["hospital", "owner"], ["measure", "name"], ["sample"]], "rhs_tokens": ["address"]},
+  {"lhs": ["City", "HospitalOwner", "Score", "Sample"], "rhs": "Address1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 831, "distinct_rhs": 45, "lhs_distinct_ratio": 0.831, "rhs_distinct_ratio": 0.045, "redundancy": 169, "redundancy_wl": 235, "lhs_unique": false, "lhs_tokens": [["city"], ["hospital", "owner"], ["score"], ["sample"]], "rhs_tokens": ["address"]},
+  {"lhs": ["City", "HospitalOwner", "Sample", "Stateavg"], "rhs": "Address1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 1000, "distinct_rhs": 45, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.045, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["city"], ["hospital", "owner"], ["sample"], ["stateavg"]], "rhs_tokens": ["address"]},
+  {"lhs": ["HospitalOwner", "EmergencyService", "Score", "Sample"], "rhs": "State", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 767, "distinct_rhs": 2, "lhs_distinct_ratio": 0.767, "rhs_distinct_ratio": 0.002, "redundancy": 233, "redundancy_wl": 308, "lhs_unique": false, "lhs_tokens": [["hospital", "owner"], ["emergency", "service"], ["score"], ["sample"]], "rhs_tokens": ["state"]},
+  {"lhs": ["HospitalOwner", "Condition", "Score", "Sample"], "rhs": "State", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 793, "distinct_rhs": 2, "lhs_distinct_ratio": 0.793, "rhs_distinct_ratio": 0.002, "redundancy": 207, "redundancy_wl": 273, "lhs_unique": false, "lhs_tokens": [["hospital", "owner"], ["condition"], ["score"], ["sample"]], "rhs_tokens": ["state"]},
+  {"lhs": ["EmergencyService", "Condition", "Score", "Sample"], "rhs": "State", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 752, "distinct_rhs": 2, "lhs_distinct_ratio": 0.752, "rhs_distinct_ratio": 0.002, "redundancy": 248, "redundancy_wl": 310, "lhs_unique": false, "lhs_tokens": [["emergency", "service"], ["condition"], ["score"], ["sample"]], "rhs_tokens": ["state"]},
+  {"lhs": ["EmergencyService", "MeasureCode", "Score", "Sample"], "rhs": "State", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 860, "distinct_rhs": 2, "lhs_distinct_ratio": 0.86, "rhs_distinct_ratio": 0.002, "redundancy": 140, "redundancy_wl": 196, "lhs_unique": false, "lhs_tokens": [["emergency", "service"], ["measure", "code"], ["score"], ["sample"]], "rhs_tokens": ["state"]},
+  {"lhs": ["EmergencyService", "MeasureName", "Score", "Sample"], "rhs": "State", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 860, "distinct_rhs": 2, "lhs_distinct_ratio": 0.86, "rhs_distinct_ratio": 0.002, "redundancy": 140, "redundancy_wl": 196, "lhs_unique": false, "lhs_tokens": [["emergency", "service"], ["measure", "name"], ["score"], ["sample"]], "rhs_tokens": ["state"]},
+  {"lhs": ["City", "HospitalOwner", "MeasureCode", "Sample"], "rhs": "ZipCode", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 1000, "distinct_rhs": 44, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.044, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["city"], ["hospital", "owner"], ["measure", "code"], ["sample"]], "rhs_tokens": ["zip", "code"]},
+  {"lhs": ["City", "HospitalOwner", "MeasureName", "Sample"], "rhs": "ZipCode", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 1000, "distinct_rhs": 44, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.044, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["city"], ["hospital", "owner"], ["measure", "name"], ["sample"]], "rhs_tokens": ["zip", "code"]},
+  {"lhs": ["City", "HospitalOwner", "Score", "Sample"], "rhs": "ZipCode", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 831, "distinct_rhs": 44, "lhs_distinct_ratio": 0.831, "rhs_distinct_ratio": 0.044, "redundancy": 169, "redundancy_wl": 235, "lhs_unique": false, "lhs_tokens": [["city"], ["hospital", "owner"], ["score"], ["sample"]], "rhs_tokens": ["zip", "code"]},
+  {"lhs": ["City", "HospitalOwner", "Sample", "Stateavg"], "rhs": "ZipCode", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 1000, "distinct_rhs": 44, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.044, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["city"], ["hospital", "owner"], ["sample"], ["stateavg"]], "rhs_tokens": ["zip", "code"]},
+  {"lhs": ["City", "HospitalOwner", "MeasureCode", "Sample"], "rhs": "PhoneNumber", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 1000, "distinct_rhs": 45, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.045, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["city"], ["hospital", "owner"], ["measure", "code"], ["sample"]], "rhs_tokens": ["phone", "number"]},
+  {"lhs": ["City", "HospitalOwner", "MeasureName", "Sample"], "rhs": "PhoneNumber", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 1000, "distinct_rhs": 45, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.045, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["city"], ["hospital", "owner"], ["measure", "name"], ["sample"]], "rhs_tokens": ["phone", "number"]},
+  {"lhs": ["City", "HospitalOwner", "Score", "Sample"], "rhs": "PhoneNumber", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 831, "distinct_rhs": 45, "lhs_distinct_ratio": 0.831, "rhs_distinct_ratio": 0.045, "redundancy": 169, "redundancy_wl": 235, "lhs_unique": false, "lhs_tokens": [["city"], ["hospital", "owner"], ["score"], ["sample"]], "rhs_tokens": ["phone", "number"]},
+  {"lhs": ["City", "HospitalOwner", "Sample", "Stateavg"], "rhs": "PhoneNumber", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 1000, "distinct_rhs": 45, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.045, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["city"], ["hospital", "owner"], ["sample"], ["stateavg"]], "rhs_tokens": ["phone", "number"]},
+  {"lhs": ["City", "HospitalOwner", "MeasureCode", "Sample"], "rhs": "Score", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 1000, "distinct_rhs": 57, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.057, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["city"], ["hospital", "owner"], ["measure", "code"], ["sample"]], "rhs_tokens": ["score"]},
+  {"lhs": ["City", "HospitalOwner", "MeasureName", "Sample"], "rhs": "Score", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 1000, "distinct_rhs": 57, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.057, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["city"], ["hospital", "owner"], ["measure", "name"], ["sample"]], "rhs_tokens": ["score"]},
+  {"lhs": ["City", "HospitalOwner", "Sample", "Stateavg"], "rhs": "Score", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 1000, "distinct_rhs": 57, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.057, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["city"], ["hospital", "owner"], ["sample"], ["stateavg"]], "rhs_tokens": ["score"]},
+  {"lhs": ["EmergencyService", "MeasureCode", "Score", "Sample"], "rhs": "Stateavg", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 860, "distinct_rhs": 48, "lhs_distinct_ratio": 0.86, "rhs_distinct_ratio": 0.048, "redundancy": 140, "redundancy_wl": 196, "lhs_unique": false, "lhs_tokens": [["emergency", "service"], ["measure", "code"], ["score"], ["sample"]], "rhs_tokens": ["stateavg"]},
+  {"lhs": ["EmergencyService", "MeasureName", "Score", "Sample"], "rhs": "Stateavg", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 860, "distinct_rhs": 48, "lhs_distinct_ratio": 0.86, "rhs_distinct_ratio": 0.048, "redundancy": 140, "redundancy_wl": 196, "lhs_unique": false, "lhs_tokens": [["emergency", "service"], ["measure", "name"], ["score"], ["sample"]], "rhs_tokens": ["stateavg"]}
+ ]
+}

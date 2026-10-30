@@ -1,0 +1,13 @@
+v5   fresh_chembl                 run says certified True ; checker: maximal sets     9 unrefuted     0, candidates open     0 of    399 (yes 228, no 10) -> certified True , premises wrong yes 0 no 0
+v5s  fresh_chembl                 run says certified True ; checker: maximal sets     9 unrefuted     0, candidates open     0 of    399 (yes 321, no 11) -> certified True , premises wrong yes 0 no 0
+v5n  fresh_chembl                 run says certified True ; checker: maximal sets     9 unrefuted     0, candidates open     0 of    399 (yes 712, no 12) -> certified True , premises wrong yes 0 no 0
+v5   fresh_fhrs                   run says certified True ; checker: maximal sets    26 unrefuted     0, candidates open     0 of   2229 (yes 364, no 54) -> certified True , premises wrong yes 0 no 0
+v5s  fresh_fhrs                   run says certified True ; checker: maximal sets    26 unrefuted     0, candidates open     0 of   2229 (yes 399, no 52) -> certified True , premises wrong yes 0 no 0
+v5n  fresh_fhrs                   run says certified True ; checker: maximal sets    26 unrefuted     0, candidates open     0 of   2229 (yes 576, no 27) -> certified True , premises wrong yes 0 no 0
+v5   fresh_ghcn                   run says certified True ; checker: maximal sets    17 unrefuted     0, candidates open     0 of    402 (yes 83, no 24) -> certified True , premises wrong yes 0 no 0
+v5s  fresh_ghcn                   run says certified True ; checker: maximal sets    17 unrefuted     0, candidates open     0 of    402 (yes 107, no 17) -> certified True , premises wrong yes 0 no 0
+v5n  fresh_ghcn                   run says certified True ; checker: maximal sets    17 unrefuted     0, candidates open     0 of    402 (yes 267, no 18) -> certified True , premises wrong yes 0 no 0
+v5   fresh_simplewiki             run says certified True ; checker: maximal sets    27 unrefuted     0, candidates open     0 of    157 (yes 104, no 52) -> certified True , premises wrong yes 0 no 0
+v5s  fresh_simplewiki             run says certified True ; checker: maximal sets    27 unrefuted     0, candidates open     0 of    157 (yes 126, no 74) -> certified True , premises wrong yes 0 no 0
+v5n  fresh_simplewiki             run says certified True ; checker: maximal sets    27 unrefuted     0, candidates open     0 of    157 (yes 234, no 82) -> certified True , premises wrong yes 0 no 0
+disagreements or unsound: 0

@@ -1,0 +1,885 @@
+{
+ "dataset": "fresh_musicbrainz",
+ "family": "fresh2",
+ "truth_kind": "documented (confirmatory, batch 2)",
+ "source": "twelve relations of the second confirmatory batch, specified from publisher documentation (e3/truth/docs/fresh2/) by three subagents that never saw data, mined FDs or model answers; parts A (benchmarks), B (ChEMBL, MusicBrainz, PLUTO, FHRS), C (GeoNames, EIA-860, STATS19, GHCN)",
+ "rule": "part A: Sigma* is the set of FDs that the publisher documentation implies among the attributes of each relation, projected and closed over the dropped columns, each with a verbatim quote; sure when the quoted text states it (declared key, unique constraint, foreign key to a declared key, an explicit one-to-one statement), unsure when it needs an inference the text does not spell out. Dependencies the documentation hints at but does not state are listed under undocumented_regularities and are not part of Sigma*. For the three BenchBase benchmarks the DDL at the pinned commit is the specification of the generated data (scale factor 1); a dependency that the H-Store project page states and the DDL neither declares nor contradicts is ambiguous and is recorded with sure: false, quoting both. Written from the documentation alone, before any data file was opened. | part B: Sigma* is the set of FDs that the publisher documentation implies among the attributes of each relation, projected and closed over the dropped columns, each with a verbatim quote; sure when the quoted text states it (declared key, unique constraint on a NOT NULL column, foreign key to a declared key, an explicit one-to-one or containment statement), unsure when it needs an inference the text does not spell out, when two documents conflict, or when a unique index covers a nullable column. Dependencies the documentation hints at but does not state, and documented non-dependencies, are listed under undocumented_regularities and are not part of Sigma*. Written from the documentation alone, before any data file was opened. | part C: Sigma* is the set of FDs that the publisher documentation implies among the attributes of each relation, projected and closed over the dropped columns, each with a verbatim quote; sure when the quoted text states it (declared key, foreign key to a declared key, an explicit one-to-one or nesting statement), unsure when it needs an inference the text does not spell out. Dependencies the documentation hints at but does not state are listed under undocumented_regularities and are not part of Sigma*. Written from the documentation alone, before any data file was opened.",
+ "instance": {
+  "generator": "public data fixed before download for the second confirmatory evaluation, converted by unpack_fresh2.py and joined by fresh.py",
+  "rows": 1000000,
+  "construction": "MusicBrainz full export 20261024-102842 (musicbrainz_fullexport_LATEST: '20261024-102842'; mbdump.tar.bz2, sha256 in musicbrainz_fullexport_20261024_SHA256SUMS), schema sequence 31 (Default.pm: 'sub ACTIVE_SCHEMA_SEQUENCE { 31 }'; DDL pinned to musicbrainz-server commit bade3a567e20ec69323ac7850fca9d0ee113f87d): the unpack step extracts the PostgreSQL COPY files mbdump/<table> for the ten tables and writes musicbrainz/<table>.tsv (tab-separated, \\N for NULL converted to empty, UTF-8) with the column names of CreateTables.sql in DDL order as header; root release_country left-joined to release on release = release.id, release_group on release.release_group, release_group_primary_type on release_group.type, artist_credit on release.artist_credit, release_status on release.status, release_packaging on release.packaging, language on release.language, script on release.script, and area on release_country.country = area.id (country references country_area.area, a subset of area.id); shared column names are prefixed by their table (release_gid, release_group_gid, release_artist_credit, release_group_artist_credit, release_group_type, *_name); dropped: release.name and release_group.name (free text), release.barcode, release.comment, release_group.comment, quality, edits_pending, last_updated, artist_credit.ref_count, created and gid, the parent, child_order, description and gid columns of the lookup tables, language.iso_code_1, iso_code_2b, iso_code_2t and frequency, script.iso_number and frequency, and all area columns but name; release_country has several million rows, which the loader samples to 1,000,000.",
+  "cleaning": {
+   "records": 13349078,
+   "records_after_deduplication": 13349078,
+   "sampled_from": 13349078,
+   "kept": 1000000,
+   "repaired_for": "the sure FDs of Sigma*",
+   "removed_per_fd": {},
+   "missing_values": "empty and missing references become '?', kept as a value (null = null)"
+  }
+ },
+ "attributes": [
+  "release",
+  "country",
+  "date_year",
+  "date_month",
+  "date_day",
+  "release_gid",
+  "release_artist_credit",
+  "release_group",
+  "status",
+  "packaging",
+  "language",
+  "script",
+  "release_group_gid",
+  "release_group_artist_credit",
+  "release_group_type",
+  "release_group_primary_type_name",
+  "artist_credit_name",
+  "artist_count",
+  "release_status_name",
+  "release_packaging_name",
+  "language_name",
+  "iso_code_3",
+  "script_name",
+  "iso_code",
+  "area_name"
+ ],
+ "dropped_constant_columns": [],
+ "distinct_values": {
+  "release": 435094,
+  "country": 258,
+  "date_year": 141,
+  "date_month": 13,
+  "date_day": 32,
+  "release_gid": 435094,
+  "release_artist_credit": 238330,
+  "release_group": 413173,
+  "status": 8,
+  "packaging": 25,
+  "language": 224,
+  "script": 41,
+  "release_group_gid": 413173,
+  "release_group_artist_credit": 236891,
+  "release_group_type": 6,
+  "release_group_primary_type_name": 6,
+  "artist_credit_name": 230521,
+  "artist_count": 27,
+  "release_status_name": 8,
+  "release_packaging_name": 25,
+  "language_name": 224,
+  "iso_code_3": 223,
+  "script_name": 41,
+  "iso_code": 41,
+  "area_name": 258
+ },
+ "truth": [
+  {
+   "lhs": [
+    "release",
+    "country"
+   ],
+   "rhs": [
+    "date_year",
+    "date_month",
+    "date_day"
+   ],
+   "sure": true,
+   "clause": "e3/truth/docs/fresh2/musicbrainz_CreatePrimaryKeys.sql, table release_country: \"ALTER TABLE release_country ADD CONSTRAINT release_country_pkey PRIMARY KEY (release, country);\"; e3/truth/docs/fresh2/musicbrainz_CreateTables.sql, table release_country: \"release INTEGER NOT NULL,  -- PK, references release.id\", \"country INTEGER NOT NULL,  -- PK, references country_area.area\"",
+   "justification": "(release, country) is the declared composite primary key of release_country, the root table, and the three date parts are its other columns.",
+   "audit": {
+    "verdicts": {
+     "date_year": "TRUE",
+     "date_month": "TRUE",
+     "date_day": "TRUE"
+    },
+    "quote": "\"ALTER TABLE release_country ADD CONSTRAINT release_country_pkey PRIMARY KEY (release, country);\" + \"release INTEGER NOT NULL, -- PK, references release.id country INTEGER NOT NULL, -- PK, references country_area.area\"",
+    "source": "e3/truth/docs/fresh2/musicbrainz_CreatePrimaryKeys.sql, table release_country + e3/truth/docs/fresh2/musicbrainz_CreateTables.sql, table release_country"
+   }
+  },
+  {
+   "lhs": [
+    "release"
+   ],
+   "rhs": [
+    "release_gid",
+    "release_artist_credit",
+    "release_group",
+    "status",
+    "packaging",
+    "language",
+    "script"
+   ],
+   "sure": true,
+   "clause": "e3/truth/docs/fresh2/musicbrainz_CreateFKConstraints.sql, table release_country: \"ADD CONSTRAINT release_country_fk_release FOREIGN KEY (release) REFERENCES release(id);\"; e3/truth/docs/fresh2/musicbrainz_CreatePrimaryKeys.sql, table release: \"ALTER TABLE release ADD CONSTRAINT release_pkey PRIMARY KEY (id);\"",
+   "justification": "release is a foreign key to the declared primary key of release, so it determines the columns of the one release row (gid, artist_credit, release_group, status, packaging, language, script).",
+   "audit": {
+    "verdicts": {
+     "release_gid": "TRUE",
+     "release_artist_credit": "TRUE",
+     "release_group": "TRUE",
+     "status": "TRUE",
+     "packaging": "TRUE",
+     "language": "TRUE",
+     "script": "TRUE"
+    },
+    "quote": "\"ALTER TABLE release_country ADD CONSTRAINT release_country_fk_release FOREIGN KEY (release) REFERENCES release(id);\" + \"ALTER TABLE release ADD CONSTRAINT release_pkey PRIMARY KEY (id);\"",
+    "source": "e3/truth/docs/fresh2/musicbrainz_CreateFKConstraints.sql, table release_country + e3/truth/docs/fresh2/musicbrainz_CreatePrimaryKeys.sql, table release"
+   }
+  },
+  {
+   "lhs": [
+    "release_gid"
+   ],
+   "rhs": [
+    "release"
+   ],
+   "sure": true,
+   "clause": "e3/truth/docs/fresh2/musicbrainz_CreateIndexes.sql, table release: \"CREATE UNIQUE INDEX release_idx_gid ON release (gid);\"; e3/truth/docs/fresh2/musicbrainz_CreateTables.sql, table release: \"gid                 UUID NOT NULL,\"",
+   "justification": "gid is NOT NULL and covered by a unique index, so it is an alternate key of release and determines id, hence every release column.",
+   "audit": {
+    "verdicts": {
+     "release": "TRUE"
+    },
+    "quote": "\"CREATE UNIQUE INDEX release_idx_gid ON release (gid);\" + \"id SERIAL, gid UUID NOT NULL, name VARCHAR NOT NULL, artist_credit INTEGER NOT NULL, -- references artist_credit.id release_group INTEGER NOT NULL, -- references release_group.id\"",
+    "source": "e3/truth/docs/fresh2/musicbrainz_CreateIndexes.sql, table release + e3/truth/docs/fresh2/musicbrainz_CreateTables.sql, table release"
+   }
+  },
+  {
+   "lhs": [
+    "release_group"
+   ],
+   "rhs": [
+    "release_group_gid",
+    "release_group_artist_credit",
+    "release_group_type"
+   ],
+   "sure": true,
+   "clause": "e3/truth/docs/fresh2/musicbrainz_CreateFKConstraints.sql, table release: \"ADD CONSTRAINT release_fk_release_group FOREIGN KEY (release_group) REFERENCES release_group(id);\"; e3/truth/docs/fresh2/musicbrainz_CreatePrimaryKeys.sql, table release_group: \"ALTER TABLE release_group ADD CONSTRAINT release_group_pkey PRIMARY KEY (id);\"",
+   "justification": "release.release_group is a foreign key to the declared primary key of release_group, so it determines the columns of the one release-group row (gid, artist_credit, type).",
+   "audit": {
+    "verdicts": {
+     "release_group_gid": "TRUE",
+     "release_group_artist_credit": "TRUE",
+     "release_group_type": "TRUE"
+    },
+    "quote": "\"ALTER TABLE release ADD CONSTRAINT release_fk_release_group FOREIGN KEY (release_group) REFERENCES release_group(id);\" + \"ALTER TABLE release_group ADD CONSTRAINT release_group_pkey PRIMARY KEY (id);\"",
+    "source": "e3/truth/docs/fresh2/musicbrainz_CreateFKConstraints.sql, table release + e3/truth/docs/fresh2/musicbrainz_CreatePrimaryKeys.sql, table release_group"
+   }
+  },
+  {
+   "lhs": [
+    "release_group_gid"
+   ],
+   "rhs": [
+    "release_group"
+   ],
+   "sure": true,
+   "clause": "e3/truth/docs/fresh2/musicbrainz_CreateIndexes.sql, table release_group: \"CREATE UNIQUE INDEX release_group_idx_gid ON release_group (gid);\"; e3/truth/docs/fresh2/musicbrainz_CreateTables.sql, table release_group: \"gid                 UUID NOT NULL,\"",
+   "justification": "gid is NOT NULL and covered by a unique index, so it is an alternate key of release_group and determines its id.",
+   "audit": {
+    "verdicts": {
+     "release_group": "TRUE"
+    },
+    "quote": "\"CREATE UNIQUE INDEX release_group_idx_gid ON release_group (gid);\" + \"gid UUID NOT NULL, name VARCHAR NOT NULL, artist_credit INTEGER NOT NULL, -- references artist_credit.id type INTEGER, -- references release_group_primary_type.id\"",
+    "source": "e3/truth/docs/fresh2/musicbrainz_CreateIndexes.sql, table release_group + e3/truth/docs/fresh2/musicbrainz_CreateTables.sql, table release_group"
+   }
+  },
+  {
+   "lhs": [
+    "release_group_type"
+   ],
+   "rhs": [
+    "release_group_primary_type_name"
+   ],
+   "sure": true,
+   "clause": "e3/truth/docs/fresh2/musicbrainz_CreateFKConstraints.sql, table release_group: \"ADD CONSTRAINT release_group_fk_type FOREIGN KEY (type) REFERENCES release_group_primary_type(id);\"; e3/truth/docs/fresh2/musicbrainz_CreatePrimaryKeys.sql, table release_group_primary_type: \"ALTER TABLE release_group_primary_type ADD CONSTRAINT release_group_primary_type_pkey PRIMARY KEY (id);\"; e3/truth/docs/fresh2/musicbrainz_CreateTables.sql, table release_group_primary_type: \"name                VARCHAR(255) NOT NULL,\"",
+   "justification": "release_group.type is a (nullable) foreign key to the declared primary key of release_group_primary_type, whose row carries the name (third step of the chain (release, country) -> release -> release_group -> type -> name); a null type keeps '?' on both sides.",
+   "audit": {
+    "verdicts": {
+     "release_group_primary_type_name": "TRUE"
+    },
+    "quote": "\"ALTER TABLE release_group ADD CONSTRAINT release_group_fk_type FOREIGN KEY (type) REFERENCES release_group_primary_type(id);\" + \"ALTER TABLE release_group_primary_type ADD CONSTRAINT release_group_primary_type_pkey PRIMARY KEY (id);\"",
+    "source": "e3/truth/docs/fresh2/musicbrainz_CreateFKConstraints.sql, table release_group + e3/truth/docs/fresh2/musicbrainz_CreatePrimaryKeys.sql, table release_group_primary_type"
+   }
+  },
+  {
+   "lhs": [
+    "release_artist_credit"
+   ],
+   "rhs": [
+    "artist_credit_name",
+    "artist_count"
+   ],
+   "sure": true,
+   "clause": "e3/truth/docs/fresh2/musicbrainz_CreateFKConstraints.sql, table release: \"ADD CONSTRAINT release_fk_artist_credit FOREIGN KEY (artist_credit) REFERENCES artist_credit(id);\"; e3/truth/docs/fresh2/musicbrainz_CreatePrimaryKeys.sql, table artist_credit: \"ALTER TABLE artist_credit ADD CONSTRAINT artist_credit_pkey PRIMARY KEY (id);\"; e3/truth/docs/fresh2/musicbrainz_CreateTables.sql, table artist_credit: \"name                VARCHAR NOT NULL,\", \"artist_count        SMALLINT NOT NULL,\"",
+   "justification": "release.artist_credit is a foreign key to the declared primary key of artist_credit, whose row carries the credit name and the artist count; release_group.artist_credit is a separate foreign key to the same table and the DDL does not require the two to be equal, so release_group_artist_credit determines nothing here.",
+   "audit": {
+    "verdicts": {
+     "artist_credit_name": "TRUE",
+     "artist_count": "TRUE"
+    },
+    "quote": "\"ALTER TABLE release ADD CONSTRAINT release_fk_artist_credit FOREIGN KEY (artist_credit) REFERENCES artist_credit(id);\" + \"ALTER TABLE artist_credit ADD CONSTRAINT artist_credit_pkey PRIMARY KEY (id);\" + \"name VARCHAR NOT NULL, artist_count SMALLINT NOT NULL,\"",
+    "source": "e3/truth/docs/fresh2/musicbrainz_CreateFKConstraints.sql, table release + e3/truth/docs/fresh2/musicbrainz_CreatePrimaryKeys.sql, table artist_credit + e3/truth/docs/fresh2/musicbrainz_CreateTables.sql, table artist_credit"
+   }
+  },
+  {
+   "lhs": [
+    "status"
+   ],
+   "rhs": [
+    "release_status_name"
+   ],
+   "sure": true,
+   "clause": "e3/truth/docs/fresh2/musicbrainz_CreateFKConstraints.sql, table release: \"ADD CONSTRAINT release_fk_status FOREIGN KEY (status) REFERENCES release_status(id);\"; e3/truth/docs/fresh2/musicbrainz_CreatePrimaryKeys.sql, table release_status: \"ALTER TABLE release_status ADD CONSTRAINT release_status_pkey PRIMARY KEY (id);\"",
+   "justification": "release.status is a (nullable) foreign key to the declared primary key of release_status, whose row carries the name.",
+   "audit": {
+    "verdicts": {
+     "release_status_name": "TRUE"
+    },
+    "quote": "\"ALTER TABLE release ADD CONSTRAINT release_fk_status FOREIGN KEY (status) REFERENCES release_status(id);\" + \"ALTER TABLE release_status ADD CONSTRAINT release_status_pkey PRIMARY KEY (id);\"",
+    "source": "e3/truth/docs/fresh2/musicbrainz_CreateFKConstraints.sql, table release + e3/truth/docs/fresh2/musicbrainz_CreatePrimaryKeys.sql, table release_status"
+   }
+  },
+  {
+   "lhs": [
+    "packaging"
+   ],
+   "rhs": [
+    "release_packaging_name"
+   ],
+   "sure": true,
+   "clause": "e3/truth/docs/fresh2/musicbrainz_CreateFKConstraints.sql, table release: \"ADD CONSTRAINT release_fk_packaging FOREIGN KEY (packaging) REFERENCES release_packaging(id);\"; e3/truth/docs/fresh2/musicbrainz_CreatePrimaryKeys.sql, table release_packaging: \"ALTER TABLE release_packaging ADD CONSTRAINT release_packaging_pkey PRIMARY KEY (id);\"",
+   "justification": "release.packaging is a (nullable) foreign key to the declared primary key of release_packaging, whose row carries the name.",
+   "audit": {
+    "verdicts": {
+     "release_packaging_name": "TRUE"
+    },
+    "quote": "\"ALTER TABLE release ADD CONSTRAINT release_fk_packaging FOREIGN KEY (packaging) REFERENCES release_packaging(id);\" + \"ALTER TABLE release_packaging ADD CONSTRAINT release_packaging_pkey PRIMARY KEY (id);\"",
+    "source": "e3/truth/docs/fresh2/musicbrainz_CreateFKConstraints.sql, table release + e3/truth/docs/fresh2/musicbrainz_CreatePrimaryKeys.sql, table release_packaging"
+   }
+  },
+  {
+   "lhs": [
+    "language"
+   ],
+   "rhs": [
+    "language_name",
+    "iso_code_3"
+   ],
+   "sure": true,
+   "clause": "e3/truth/docs/fresh2/musicbrainz_CreateFKConstraints.sql, table release: \"ADD CONSTRAINT release_fk_language FOREIGN KEY (language) REFERENCES language(id);\"; e3/truth/docs/fresh2/musicbrainz_CreatePrimaryKeys.sql, table language: \"ALTER TABLE language ADD CONSTRAINT language_pkey PRIMARY KEY (id);\"",
+   "justification": "release.language is a (nullable) foreign key to the declared primary key of language, whose row carries the name and the ISO 639-3 code.",
+   "audit": {
+    "verdicts": {
+     "language_name": "TRUE",
+     "iso_code_3": "TRUE"
+    },
+    "quote": "\"ALTER TABLE release ADD CONSTRAINT release_fk_language FOREIGN KEY (language) REFERENCES language(id);\" + \"ALTER TABLE language ADD CONSTRAINT language_pkey PRIMARY KEY (id);\"",
+    "source": "e3/truth/docs/fresh2/musicbrainz_CreateFKConstraints.sql, table release + e3/truth/docs/fresh2/musicbrainz_CreatePrimaryKeys.sql, table language"
+   }
+  },
+  {
+   "lhs": [
+    "iso_code_3"
+   ],
+   "rhs": [
+    "language"
+   ],
+   "sure": false,
+   "clause": "e3/truth/docs/fresh2/musicbrainz_CreateIndexes.sql, table language: \"CREATE UNIQUE INDEX language_idx_iso_code_3 ON language (iso_code_3);\"; e3/truth/docs/fresh2/musicbrainz_CreateTables.sql, table language: \"iso_code_3          CHAR(3)  -- ISO 639-3\"",
+   "justification": "iso_code_3 is covered by a unique index but is nullable (no NOT NULL in CreateTables.sql), so it is unique only among non-null values: several languages without an ISO 639-3 code share the empty value and determine different ids; unsure for that reason.",
+   "audit": {
+    "verdicts": {
+     "language": "UNDETERMINED"
+    },
+    "quote": "\"CREATE UNIQUE INDEX language_idx_iso_code_3 ON language (iso_code_3);\" + \"iso_code_3 CHAR(3) -- ISO 639-3\"",
+    "source": "e3/truth/docs/fresh2/musicbrainz_CreateIndexes.sql, table language + e3/truth/docs/fresh2/musicbrainz_CreateTables.sql, table language"
+   }
+  },
+  {
+   "lhs": [
+    "script"
+   ],
+   "rhs": [
+    "script_name",
+    "iso_code"
+   ],
+   "sure": true,
+   "clause": "e3/truth/docs/fresh2/musicbrainz_CreateFKConstraints.sql, table release: \"ADD CONSTRAINT release_fk_script FOREIGN KEY (script) REFERENCES script(id);\"; e3/truth/docs/fresh2/musicbrainz_CreatePrimaryKeys.sql, table script: \"ALTER TABLE script ADD CONSTRAINT script_pkey PRIMARY KEY (id);\"",
+   "justification": "release.script is a (nullable) foreign key to the declared primary key of script, whose row carries the name and the ISO 15924 code.",
+   "audit": {
+    "verdicts": {
+     "script_name": "TRUE",
+     "iso_code": "TRUE"
+    },
+    "quote": "\"ALTER TABLE release ADD CONSTRAINT release_fk_script FOREIGN KEY (script) REFERENCES script(id);\" + \"ALTER TABLE script ADD CONSTRAINT script_pkey PRIMARY KEY (id);\"",
+    "source": "e3/truth/docs/fresh2/musicbrainz_CreateFKConstraints.sql, table release + e3/truth/docs/fresh2/musicbrainz_CreatePrimaryKeys.sql, table script"
+   }
+  },
+  {
+   "lhs": [
+    "iso_code"
+   ],
+   "rhs": [
+    "script"
+   ],
+   "sure": true,
+   "clause": "e3/truth/docs/fresh2/musicbrainz_CreateIndexes.sql, table script: \"CREATE UNIQUE INDEX script_idx_iso_code ON script (iso_code);\"; e3/truth/docs/fresh2/musicbrainz_CreateTables.sql, table script: \"iso_code            CHAR(4) NOT NULL, -- ISO 15924\"",
+   "justification": "iso_code is NOT NULL and covered by a unique index, so it is an alternate key of script and determines its id (and, through it, script_name); rows whose release has no script keep '?' on both sides.",
+   "audit": {
+    "verdicts": {
+     "script": "TRUE"
+    },
+    "quote": "\"CREATE UNIQUE INDEX script_idx_iso_code ON script (iso_code);\" + \"iso_code CHAR(4) NOT NULL, -- ISO 15924\"",
+    "source": "e3/truth/docs/fresh2/musicbrainz_CreateIndexes.sql, table script + e3/truth/docs/fresh2/musicbrainz_CreateTables.sql, table script"
+   }
+  },
+  {
+   "lhs": [
+    "country"
+   ],
+   "rhs": [
+    "area_name"
+   ],
+   "sure": true,
+   "clause": "e3/truth/docs/fresh2/musicbrainz_CreateFKConstraints.sql, table release_country: \"ADD CONSTRAINT release_country_fk_country FOREIGN KEY (country) REFERENCES country_area(area);\"; e3/truth/docs/fresh2/musicbrainz_CreatePrimaryKeys.sql, table country_area: \"ALTER TABLE country_area ADD CONSTRAINT country_area_pkey PRIMARY KEY (area);\"; e3/truth/docs/fresh2/musicbrainz_CreateFKConstraints.sql, table country_area: \"ADD CONSTRAINT country_area_fk_area FOREIGN KEY (area) REFERENCES area(id);\"; e3/truth/docs/fresh2/musicbrainz_CreatePrimaryKeys.sql, table area: \"ALTER TABLE area ADD CONSTRAINT area_pkey PRIMARY KEY (id);\"",
+   "justification": "country references the primary key of country_area, which is itself a foreign key to the declared primary key of area, so country identifies one area row and determines its name; the join goes to area directly on id.",
+   "audit": {
+    "verdicts": {
+     "area_name": "TRUE"
+    },
+    "quote": "\"ALTER TABLE release_country ADD CONSTRAINT release_country_fk_country FOREIGN KEY (country) REFERENCES country_area(area);\" + \"ALTER TABLE country_area ADD CONSTRAINT country_area_pkey PRIMARY KEY (area);\" + \"ALTER TABLE country_area ADD CONSTRAINT country_area_fk_area FOREIGN KEY (area) REFERENCES area(id);\" + \"ALTER TABLE area ADD CONSTRAINT area_pkey PRIMARY KEY (id);\" + \"Areas that can be used for filling in the Release country field of releases are listed, by ID, in the country_area table.\"",
+    "source": "e3/truth/docs/fresh2/musicbrainz_CreateFKConstraints.sql, table release_country + e3/truth/docs/fresh2/musicbrainz_CreatePrimaryKeys.sql, table country_area + e3/truth/docs/fresh2/musicbrainz_CreateFKConstraints.sql, table country_area + e3/truth/docs/fresh2/musicbrainz_CreatePrimaryKeys.sql, table area + e3/truth/docs/fresh2/musicbrainz_Schema.html, section Primary entities / Area"
+   }
+  }
+ ],
+ "truth_counts": {
+  "fds": 14,
+  "single_rhs": 27,
+  "sure_single_rhs": 26
+ },
+ "random_columns": null,
+ "truth_fds_violated_by_data": [
+  {
+   "fd": "iso_code_3 -> language",
+   "sure": false,
+   "g3": 1e-06
+  }
+ ],
+ "gold_design": null,
+ "gold_design_note": "No normalized design is published; the 3NF designs of Sigma* are synthesized.",
+ "truth_design": {
+  "keys": [
+   [
+    "country",
+    "release_gid"
+   ],
+   [
+    "country",
+    "release"
+   ]
+  ],
+  "atomic_closure": 66,
+  "synthesis": [
+   [
+    "area_name",
+    "country"
+   ],
+   [
+    "artist_count",
+    "release_artist_credit"
+   ],
+   [
+    "artist_credit_name",
+    "release_artist_credit"
+   ],
+   [
+    "country",
+    "date_day",
+    "release_gid"
+   ],
+   [
+    "country",
+    "date_month",
+    "release_gid"
+   ],
+   [
+    "country",
+    "date_year",
+    "release_gid"
+   ],
+   [
+    "iso_code",
+    "release_gid"
+   ],
+   [
+    "iso_code",
+    "script"
+   ],
+   [
+    "iso_code",
+    "script_name"
+   ],
+   [
+    "iso_code_3",
+    "language"
+   ],
+   [
+    "iso_code_3",
+    "language_name"
+   ],
+   [
+    "iso_code_3",
+    "release_gid"
+   ],
+   [
+    "packaging",
+    "release_gid"
+   ],
+   [
+    "packaging",
+    "release_packaging_name"
+   ],
+   [
+    "release",
+    "release_gid"
+   ],
+   [
+    "release_artist_credit",
+    "release_gid"
+   ],
+   [
+    "release_gid",
+    "release_group_gid"
+   ],
+   [
+    "release_gid",
+    "status"
+   ],
+   [
+    "release_group",
+    "release_group_gid"
+   ],
+   [
+    "release_group_artist_credit",
+    "release_group_gid"
+   ],
+   [
+    "release_group_gid",
+    "release_group_type"
+   ],
+   [
+    "release_group_primary_type_name",
+    "release_group_type"
+   ],
+   [
+    "release_status_name",
+    "status"
+   ]
+  ],
+  "iconf": [
+   [
+    "area_name",
+    "country"
+   ],
+   [
+    "artist_count",
+    "release_artist_credit"
+   ],
+   [
+    "artist_credit_name",
+    "release_artist_credit"
+   ],
+   [
+    "country",
+    "date_day",
+    "release_gid"
+   ],
+   [
+    "country",
+    "date_month",
+    "release_gid"
+   ],
+   [
+    "country",
+    "date_year",
+    "release_gid"
+   ],
+   [
+    "iso_code",
+    "release_gid"
+   ],
+   [
+    "iso_code",
+    "script"
+   ],
+   [
+    "iso_code",
+    "script_name"
+   ],
+   [
+    "iso_code_3",
+    "language"
+   ],
+   [
+    "iso_code_3",
+    "language_name"
+   ],
+   [
+    "iso_code_3",
+    "release_gid"
+   ],
+   [
+    "packaging",
+    "release_gid"
+   ],
+   [
+    "packaging",
+    "release_packaging_name"
+   ],
+   [
+    "release",
+    "release_gid"
+   ],
+   [
+    "release_artist_credit",
+    "release_gid"
+   ],
+   [
+    "release_gid",
+    "release_group_gid"
+   ],
+   [
+    "release_gid",
+    "status"
+   ],
+   [
+    "release_group",
+    "release_group_gid"
+   ],
+   [
+    "release_group_artist_credit",
+    "release_group_gid"
+   ],
+   [
+    "release_group_gid",
+    "release_group_type"
+   ],
+   [
+    "release_group_primary_type_name",
+    "release_group_type"
+   ],
+   [
+    "release_status_name",
+    "status"
+   ]
+  ]
+ },
+ "mined": {
+  "algorithm": "fdmine.py: exact discovery of all minimal FDs in the style of HyFD (no HyFD binary was available); the complete set of minimal FDs is unique, so it equals HyFD's output",
+  "file": "mined/fresh_musicbrainz-fds.txt",
+  "seconds": 23.9,
+  "count": 88,
+  "implied_by_truth": 74,
+  "accidental": 14,
+  "implied_by_sure_truth": 64
+ },
+ "truth_design_sure_only": {
+  "keys": [
+   [
+    "country",
+    "release_gid"
+   ],
+   [
+    "country",
+    "release"
+   ]
+  ],
+  "atomic_closure": 64,
+  "synthesis": [
+   [
+    "area_name",
+    "country"
+   ],
+   [
+    "artist_count",
+    "release_artist_credit"
+   ],
+   [
+    "artist_credit_name",
+    "release_artist_credit"
+   ],
+   [
+    "country",
+    "date_day",
+    "release_gid"
+   ],
+   [
+    "country",
+    "date_month",
+    "release_gid"
+   ],
+   [
+    "country",
+    "date_year",
+    "release_gid"
+   ],
+   [
+    "iso_code",
+    "release_gid"
+   ],
+   [
+    "iso_code",
+    "script"
+   ],
+   [
+    "iso_code",
+    "script_name"
+   ],
+   [
+    "iso_code_3",
+    "language"
+   ],
+   [
+    "language",
+    "language_name"
+   ],
+   [
+    "language",
+    "release_gid"
+   ],
+   [
+    "packaging",
+    "release_gid"
+   ],
+   [
+    "packaging",
+    "release_packaging_name"
+   ],
+   [
+    "release",
+    "release_gid"
+   ],
+   [
+    "release_artist_credit",
+    "release_gid"
+   ],
+   [
+    "release_gid",
+    "release_group_gid"
+   ],
+   [
+    "release_gid",
+    "status"
+   ],
+   [
+    "release_group",
+    "release_group_gid"
+   ],
+   [
+    "release_group_artist_credit",
+    "release_group_gid"
+   ],
+   [
+    "release_group_gid",
+    "release_group_type"
+   ],
+   [
+    "release_group_primary_type_name",
+    "release_group_type"
+   ],
+   [
+    "release_status_name",
+    "status"
+   ]
+  ],
+  "iconf": [
+   [
+    "area_name",
+    "country"
+   ],
+   [
+    "artist_count",
+    "release_artist_credit"
+   ],
+   [
+    "artist_credit_name",
+    "release_artist_credit"
+   ],
+   [
+    "country",
+    "date_day",
+    "release_gid"
+   ],
+   [
+    "country",
+    "date_month",
+    "release_gid"
+   ],
+   [
+    "country",
+    "date_year",
+    "release_gid"
+   ],
+   [
+    "iso_code",
+    "release_gid"
+   ],
+   [
+    "iso_code",
+    "script"
+   ],
+   [
+    "iso_code",
+    "script_name"
+   ],
+   [
+    "iso_code_3",
+    "language"
+   ],
+   [
+    "language",
+    "language_name"
+   ],
+   [
+    "language",
+    "release_gid"
+   ],
+   [
+    "packaging",
+    "release_gid"
+   ],
+   [
+    "packaging",
+    "release_packaging_name"
+   ],
+   [
+    "release",
+    "release_gid"
+   ],
+   [
+    "release_artist_credit",
+    "release_gid"
+   ],
+   [
+    "release_gid",
+    "release_group_gid"
+   ],
+   [
+    "release_gid",
+    "status"
+   ],
+   [
+    "release_group",
+    "release_group_gid"
+   ],
+   [
+    "release_group_artist_credit",
+    "release_group_gid"
+   ],
+   [
+    "release_group_gid",
+    "release_group_type"
+   ],
+   [
+    "release_group_primary_type_name",
+    "release_group_type"
+   ],
+   [
+    "release_status_name",
+    "status"
+   ]
+  ]
+ },
+ "fds": [
+  {"lhs": ["release_gid"], "rhs": "release", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 435094, "distinct_rhs": 435094, "lhs_distinct_ratio": 0.435094, "rhs_distinct_ratio": 0.435094, "redundancy": 564906, "redundancy_wl": 610072, "lhs_unique": false, "lhs_tokens": [["release", "gid"]], "rhs_tokens": ["release"]},
+  {"lhs": ["area_name"], "rhs": "country", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 258, "distinct_rhs": 258, "lhs_distinct_ratio": 0.000258, "rhs_distinct_ratio": 0.000258, "redundancy": 999742, "redundancy_wl": 999998, "lhs_unique": false, "lhs_tokens": [["area", "name"]], "rhs_tokens": ["country"]},
+  {"lhs": ["release"], "rhs": "release_gid", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 435094, "distinct_rhs": 435094, "lhs_distinct_ratio": 0.435094, "rhs_distinct_ratio": 0.435094, "redundancy": 564906, "redundancy_wl": 610072, "lhs_unique": false, "lhs_tokens": [["release"]], "rhs_tokens": ["release", "gid"]},
+  {"lhs": ["release"], "rhs": "release_artist_credit", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 435094, "distinct_rhs": 238330, "lhs_distinct_ratio": 0.435094, "rhs_distinct_ratio": 0.23833, "redundancy": 564906, "redundancy_wl": 610072, "lhs_unique": false, "lhs_tokens": [["release"]], "rhs_tokens": ["release", "artist", "credit"]},
+  {"lhs": ["release_gid"], "rhs": "release_artist_credit", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 435094, "distinct_rhs": 238330, "lhs_distinct_ratio": 0.435094, "rhs_distinct_ratio": 0.23833, "redundancy": 564906, "redundancy_wl": 610072, "lhs_unique": false, "lhs_tokens": [["release", "gid"]], "rhs_tokens": ["release", "artist", "credit"]},
+  {"lhs": ["release"], "rhs": "release_group", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 435094, "distinct_rhs": 413173, "lhs_distinct_ratio": 0.435094, "rhs_distinct_ratio": 0.413173, "redundancy": 564906, "redundancy_wl": 610072, "lhs_unique": false, "lhs_tokens": [["release"]], "rhs_tokens": ["release", "group"]},
+  {"lhs": ["release_gid"], "rhs": "release_group", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 435094, "distinct_rhs": 413173, "lhs_distinct_ratio": 0.435094, "rhs_distinct_ratio": 0.413173, "redundancy": 564906, "redundancy_wl": 610072, "lhs_unique": false, "lhs_tokens": [["release", "gid"]], "rhs_tokens": ["release", "group"]},
+  {"lhs": ["release_group_gid"], "rhs": "release_group", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 413173, "distinct_rhs": 413173, "lhs_distinct_ratio": 0.413173, "rhs_distinct_ratio": 0.413173, "redundancy": 586827, "redundancy_wl": 639810, "lhs_unique": false, "lhs_tokens": [["release", "group", "gid"]], "rhs_tokens": ["release", "group"]},
+  {"lhs": ["release"], "rhs": "status", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 435094, "distinct_rhs": 8, "lhs_distinct_ratio": 0.435094, "rhs_distinct_ratio": 8e-06, "redundancy": 564906, "redundancy_wl": 610072, "lhs_unique": false, "lhs_tokens": [["release"]], "rhs_tokens": ["status"]},
+  {"lhs": ["release_gid"], "rhs": "status", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 435094, "distinct_rhs": 8, "lhs_distinct_ratio": 0.435094, "rhs_distinct_ratio": 8e-06, "redundancy": 564906, "redundancy_wl": 610072, "lhs_unique": false, "lhs_tokens": [["release", "gid"]], "rhs_tokens": ["status"]},
+  {"lhs": ["release_status_name"], "rhs": "status", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 8, "distinct_rhs": 8, "lhs_distinct_ratio": 8e-06, "rhs_distinct_ratio": 8e-06, "redundancy": 999992, "redundancy_wl": 1000000, "lhs_unique": false, "lhs_tokens": [["release", "status", "name"]], "rhs_tokens": ["status"]},
+  {"lhs": ["release"], "rhs": "packaging", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 435094, "distinct_rhs": 25, "lhs_distinct_ratio": 0.435094, "rhs_distinct_ratio": 2.5e-05, "redundancy": 564906, "redundancy_wl": 610072, "lhs_unique": false, "lhs_tokens": [["release"]], "rhs_tokens": ["packaging"]},
+  {"lhs": ["release_gid"], "rhs": "packaging", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 435094, "distinct_rhs": 25, "lhs_distinct_ratio": 0.435094, "rhs_distinct_ratio": 2.5e-05, "redundancy": 564906, "redundancy_wl": 610072, "lhs_unique": false, "lhs_tokens": [["release", "gid"]], "rhs_tokens": ["packaging"]},
+  {"lhs": ["release_packaging_name"], "rhs": "packaging", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 25, "distinct_rhs": 25, "lhs_distinct_ratio": 2.5e-05, "rhs_distinct_ratio": 2.5e-05, "redundancy": 999975, "redundancy_wl": 1000000, "lhs_unique": false, "lhs_tokens": [["release", "packaging", "name"]], "rhs_tokens": ["packaging"]},
+  {"lhs": ["release"], "rhs": "language", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 435094, "distinct_rhs": 224, "lhs_distinct_ratio": 0.435094, "rhs_distinct_ratio": 0.000224, "redundancy": 564906, "redundancy_wl": 610072, "lhs_unique": false, "lhs_tokens": [["release"]], "rhs_tokens": ["language"]},
+  {"lhs": ["release_gid"], "rhs": "language", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 435094, "distinct_rhs": 224, "lhs_distinct_ratio": 0.435094, "rhs_distinct_ratio": 0.000224, "redundancy": 564906, "redundancy_wl": 610072, "lhs_unique": false, "lhs_tokens": [["release", "gid"]], "rhs_tokens": ["language"]},
+  {"lhs": ["language_name"], "rhs": "language", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 224, "distinct_rhs": 224, "lhs_distinct_ratio": 0.000224, "rhs_distinct_ratio": 0.000224, "redundancy": 999776, "redundancy_wl": 999950, "lhs_unique": false, "lhs_tokens": [["language", "name"]], "rhs_tokens": ["language"]},
+  {"lhs": ["release"], "rhs": "script", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 435094, "distinct_rhs": 41, "lhs_distinct_ratio": 0.435094, "rhs_distinct_ratio": 4.1e-05, "redundancy": 564906, "redundancy_wl": 610072, "lhs_unique": false, "lhs_tokens": [["release"]], "rhs_tokens": ["script"]},
+  {"lhs": ["release_gid"], "rhs": "script", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 435094, "distinct_rhs": 41, "lhs_distinct_ratio": 0.435094, "rhs_distinct_ratio": 4.1e-05, "redundancy": 564906, "redundancy_wl": 610072, "lhs_unique": false, "lhs_tokens": [["release", "gid"]], "rhs_tokens": ["script"]},
+  {"lhs": ["script_name"], "rhs": "script", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 41, "distinct_rhs": 41, "lhs_distinct_ratio": 4.1e-05, "rhs_distinct_ratio": 4.1e-05, "redundancy": 999959, "redundancy_wl": 999991, "lhs_unique": false, "lhs_tokens": [["script", "name"]], "rhs_tokens": ["script"]},
+  {"lhs": ["iso_code"], "rhs": "script", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 41, "distinct_rhs": 41, "lhs_distinct_ratio": 4.1e-05, "rhs_distinct_ratio": 4.1e-05, "redundancy": 999959, "redundancy_wl": 999991, "lhs_unique": false, "lhs_tokens": [["iso", "code"]], "rhs_tokens": ["script"]},
+  {"lhs": ["release"], "rhs": "release_group_gid", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 435094, "distinct_rhs": 413173, "lhs_distinct_ratio": 0.435094, "rhs_distinct_ratio": 0.413173, "redundancy": 564906, "redundancy_wl": 610072, "lhs_unique": false, "lhs_tokens": [["release"]], "rhs_tokens": ["release", "group", "gid"]},
+  {"lhs": ["release_gid"], "rhs": "release_group_gid", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 435094, "distinct_rhs": 413173, "lhs_distinct_ratio": 0.435094, "rhs_distinct_ratio": 0.413173, "redundancy": 564906, "redundancy_wl": 610072, "lhs_unique": false, "lhs_tokens": [["release", "gid"]], "rhs_tokens": ["release", "group", "gid"]},
+  {"lhs": ["release_group"], "rhs": "release_group_gid", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 413173, "distinct_rhs": 413173, "lhs_distinct_ratio": 0.413173, "rhs_distinct_ratio": 0.413173, "redundancy": 586827, "redundancy_wl": 639810, "lhs_unique": false, "lhs_tokens": [["release", "group"]], "rhs_tokens": ["release", "group", "gid"]},
+  {"lhs": ["release"], "rhs": "release_group_artist_credit", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 435094, "distinct_rhs": 236891, "lhs_distinct_ratio": 0.435094, "rhs_distinct_ratio": 0.236891, "redundancy": 564906, "redundancy_wl": 610072, "lhs_unique": false, "lhs_tokens": [["release"]], "rhs_tokens": ["release", "group", "artist", "credit"]},
+  {"lhs": ["release_gid"], "rhs": "release_group_artist_credit", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 435094, "distinct_rhs": 236891, "lhs_distinct_ratio": 0.435094, "rhs_distinct_ratio": 0.236891, "redundancy": 564906, "redundancy_wl": 610072, "lhs_unique": false, "lhs_tokens": [["release", "gid"]], "rhs_tokens": ["release", "group", "artist", "credit"]},
+  {"lhs": ["release_group"], "rhs": "release_group_artist_credit", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 413173, "distinct_rhs": 236891, "lhs_distinct_ratio": 0.413173, "rhs_distinct_ratio": 0.236891, "redundancy": 586827, "redundancy_wl": 639810, "lhs_unique": false, "lhs_tokens": [["release", "group"]], "rhs_tokens": ["release", "group", "artist", "credit"]},
+  {"lhs": ["release_group_gid"], "rhs": "release_group_artist_credit", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 413173, "distinct_rhs": 236891, "lhs_distinct_ratio": 0.413173, "rhs_distinct_ratio": 0.236891, "redundancy": 586827, "redundancy_wl": 639810, "lhs_unique": false, "lhs_tokens": [["release", "group", "gid"]], "rhs_tokens": ["release", "group", "artist", "credit"]},
+  {"lhs": ["release"], "rhs": "release_group_type", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 435094, "distinct_rhs": 6, "lhs_distinct_ratio": 0.435094, "rhs_distinct_ratio": 6e-06, "redundancy": 564906, "redundancy_wl": 610072, "lhs_unique": false, "lhs_tokens": [["release"]], "rhs_tokens": ["release", "group", "type"]},
+  {"lhs": ["release_gid"], "rhs": "release_group_type", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 435094, "distinct_rhs": 6, "lhs_distinct_ratio": 0.435094, "rhs_distinct_ratio": 6e-06, "redundancy": 564906, "redundancy_wl": 610072, "lhs_unique": false, "lhs_tokens": [["release", "gid"]], "rhs_tokens": ["release", "group", "type"]},
+  {"lhs": ["release_group"], "rhs": "release_group_type", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 413173, "distinct_rhs": 6, "lhs_distinct_ratio": 0.413173, "rhs_distinct_ratio": 6e-06, "redundancy": 586827, "redundancy_wl": 639810, "lhs_unique": false, "lhs_tokens": [["release", "group"]], "rhs_tokens": ["release", "group", "type"]},
+  {"lhs": ["release_group_gid"], "rhs": "release_group_type", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 413173, "distinct_rhs": 6, "lhs_distinct_ratio": 0.413173, "rhs_distinct_ratio": 6e-06, "redundancy": 586827, "redundancy_wl": 639810, "lhs_unique": false, "lhs_tokens": [["release", "group", "gid"]], "rhs_tokens": ["release", "group", "type"]},
+  {"lhs": ["release_group_primary_type_name"], "rhs": "release_group_type", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 6, "distinct_rhs": 6, "lhs_distinct_ratio": 6e-06, "rhs_distinct_ratio": 6e-06, "redundancy": 999994, "redundancy_wl": 1000000, "lhs_unique": false, "lhs_tokens": [["release", "group", "primary", "type", "name"]], "rhs_tokens": ["release", "group", "type"]},
+  {"lhs": ["release"], "rhs": "release_group_primary_type_name", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 435094, "distinct_rhs": 6, "lhs_distinct_ratio": 0.435094, "rhs_distinct_ratio": 6e-06, "redundancy": 564906, "redundancy_wl": 610072, "lhs_unique": false, "lhs_tokens": [["release"]], "rhs_tokens": ["release", "group", "primary", "type", "name"]},
+  {"lhs": ["release_gid"], "rhs": "release_group_primary_type_name", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 435094, "distinct_rhs": 6, "lhs_distinct_ratio": 0.435094, "rhs_distinct_ratio": 6e-06, "redundancy": 564906, "redundancy_wl": 610072, "lhs_unique": false, "lhs_tokens": [["release", "gid"]], "rhs_tokens": ["release", "group", "primary", "type", "name"]},
+  {"lhs": ["release_group"], "rhs": "release_group_primary_type_name", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 413173, "distinct_rhs": 6, "lhs_distinct_ratio": 0.413173, "rhs_distinct_ratio": 6e-06, "redundancy": 586827, "redundancy_wl": 639810, "lhs_unique": false, "lhs_tokens": [["release", "group"]], "rhs_tokens": ["release", "group", "primary", "type", "name"]},
+  {"lhs": ["release_group_gid"], "rhs": "release_group_primary_type_name", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 413173, "distinct_rhs": 6, "lhs_distinct_ratio": 0.413173, "rhs_distinct_ratio": 6e-06, "redundancy": 586827, "redundancy_wl": 639810, "lhs_unique": false, "lhs_tokens": [["release", "group", "gid"]], "rhs_tokens": ["release", "group", "primary", "type", "name"]},
+  {"lhs": ["release_group_type"], "rhs": "release_group_primary_type_name", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 6, "distinct_rhs": 6, "lhs_distinct_ratio": 6e-06, "rhs_distinct_ratio": 6e-06, "redundancy": 999994, "redundancy_wl": 1000000, "lhs_unique": false, "lhs_tokens": [["release", "group", "type"]], "rhs_tokens": ["release", "group", "primary", "type", "name"]},
+  {"lhs": ["release"], "rhs": "artist_credit_name", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 435094, "distinct_rhs": 230521, "lhs_distinct_ratio": 0.435094, "rhs_distinct_ratio": 0.230521, "redundancy": 564906, "redundancy_wl": 610072, "lhs_unique": false, "lhs_tokens": [["release"]], "rhs_tokens": ["artist", "credit", "name"]},
+  {"lhs": ["release_gid"], "rhs": "artist_credit_name", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 435094, "distinct_rhs": 230521, "lhs_distinct_ratio": 0.435094, "rhs_distinct_ratio": 0.230521, "redundancy": 564906, "redundancy_wl": 610072, "lhs_unique": false, "lhs_tokens": [["release", "gid"]], "rhs_tokens": ["artist", "credit", "name"]},
+  {"lhs": ["release_artist_credit"], "rhs": "artist_credit_name", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 238330, "distinct_rhs": 230521, "lhs_distinct_ratio": 0.23833, "rhs_distinct_ratio": 0.230521, "redundancy": 761670, "redundancy_wl": 827664, "lhs_unique": false, "lhs_tokens": [["release", "artist", "credit"]], "rhs_tokens": ["artist", "credit", "name"]},
+  {"lhs": ["release"], "rhs": "artist_count", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 435094, "distinct_rhs": 27, "lhs_distinct_ratio": 0.435094, "rhs_distinct_ratio": 2.7e-05, "redundancy": 564906, "redundancy_wl": 610072, "lhs_unique": false, "lhs_tokens": [["release"]], "rhs_tokens": ["artist", "count"]},
+  {"lhs": ["release_gid"], "rhs": "artist_count", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 435094, "distinct_rhs": 27, "lhs_distinct_ratio": 0.435094, "rhs_distinct_ratio": 2.7e-05, "redundancy": 564906, "redundancy_wl": 610072, "lhs_unique": false, "lhs_tokens": [["release", "gid"]], "rhs_tokens": ["artist", "count"]},
+  {"lhs": ["release_artist_credit"], "rhs": "artist_count", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 238330, "distinct_rhs": 27, "lhs_distinct_ratio": 0.23833, "rhs_distinct_ratio": 2.7e-05, "redundancy": 761670, "redundancy_wl": 827664, "lhs_unique": false, "lhs_tokens": [["release", "artist", "credit"]], "rhs_tokens": ["artist", "count"]},
+  {"lhs": ["release"], "rhs": "release_status_name", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 435094, "distinct_rhs": 8, "lhs_distinct_ratio": 0.435094, "rhs_distinct_ratio": 8e-06, "redundancy": 564906, "redundancy_wl": 610072, "lhs_unique": false, "lhs_tokens": [["release"]], "rhs_tokens": ["release", "status", "name"]},
+  {"lhs": ["release_gid"], "rhs": "release_status_name", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 435094, "distinct_rhs": 8, "lhs_distinct_ratio": 0.435094, "rhs_distinct_ratio": 8e-06, "redundancy": 564906, "redundancy_wl": 610072, "lhs_unique": false, "lhs_tokens": [["release", "gid"]], "rhs_tokens": ["release", "status", "name"]},
+  {"lhs": ["status"], "rhs": "release_status_name", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 8, "distinct_rhs": 8, "lhs_distinct_ratio": 8e-06, "rhs_distinct_ratio": 8e-06, "redundancy": 999992, "redundancy_wl": 1000000, "lhs_unique": false, "lhs_tokens": [["status"]], "rhs_tokens": ["release", "status", "name"]},
+  {"lhs": ["release"], "rhs": "release_packaging_name", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 435094, "distinct_rhs": 25, "lhs_distinct_ratio": 0.435094, "rhs_distinct_ratio": 2.5e-05, "redundancy": 564906, "redundancy_wl": 610072, "lhs_unique": false, "lhs_tokens": [["release"]], "rhs_tokens": ["release", "packaging", "name"]},
+  {"lhs": ["release_gid"], "rhs": "release_packaging_name", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 435094, "distinct_rhs": 25, "lhs_distinct_ratio": 0.435094, "rhs_distinct_ratio": 2.5e-05, "redundancy": 564906, "redundancy_wl": 610072, "lhs_unique": false, "lhs_tokens": [["release", "gid"]], "rhs_tokens": ["release", "packaging", "name"]},
+  {"lhs": ["packaging"], "rhs": "release_packaging_name", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 25, "distinct_rhs": 25, "lhs_distinct_ratio": 2.5e-05, "rhs_distinct_ratio": 2.5e-05, "redundancy": 999975, "redundancy_wl": 1000000, "lhs_unique": false, "lhs_tokens": [["packaging"]], "rhs_tokens": ["release", "packaging", "name"]},
+  {"lhs": ["release"], "rhs": "language_name", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 435094, "distinct_rhs": 224, "lhs_distinct_ratio": 0.435094, "rhs_distinct_ratio": 0.000224, "redundancy": 564906, "redundancy_wl": 610072, "lhs_unique": false, "lhs_tokens": [["release"]], "rhs_tokens": ["language", "name"]},
+  {"lhs": ["release_gid"], "rhs": "language_name", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 435094, "distinct_rhs": 224, "lhs_distinct_ratio": 0.435094, "rhs_distinct_ratio": 0.000224, "redundancy": 564906, "redundancy_wl": 610072, "lhs_unique": false, "lhs_tokens": [["release", "gid"]], "rhs_tokens": ["language", "name"]},
+  {"lhs": ["language"], "rhs": "language_name", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 224, "distinct_rhs": 224, "lhs_distinct_ratio": 0.000224, "rhs_distinct_ratio": 0.000224, "redundancy": 999776, "redundancy_wl": 999950, "lhs_unique": false, "lhs_tokens": [["language"]], "rhs_tokens": ["language", "name"]},
+  {"lhs": ["release"], "rhs": "iso_code_3", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 435094, "distinct_rhs": 223, "lhs_distinct_ratio": 0.435094, "rhs_distinct_ratio": 0.000223, "redundancy": 564906, "redundancy_wl": 610072, "lhs_unique": false, "lhs_tokens": [["release"]], "rhs_tokens": ["iso", "code"]},
+  {"lhs": ["release_gid"], "rhs": "iso_code_3", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 435094, "distinct_rhs": 223, "lhs_distinct_ratio": 0.435094, "rhs_distinct_ratio": 0.000223, "redundancy": 564906, "redundancy_wl": 610072, "lhs_unique": false, "lhs_tokens": [["release", "gid"]], "rhs_tokens": ["iso", "code"]},
+  {"lhs": ["language"], "rhs": "iso_code_3", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 224, "distinct_rhs": 223, "lhs_distinct_ratio": 0.000224, "rhs_distinct_ratio": 0.000223, "redundancy": 999776, "redundancy_wl": 999950, "lhs_unique": false, "lhs_tokens": [["language"]], "rhs_tokens": ["iso", "code"]},
+  {"lhs": ["language_name"], "rhs": "iso_code_3", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 224, "distinct_rhs": 223, "lhs_distinct_ratio": 0.000224, "rhs_distinct_ratio": 0.000223, "redundancy": 999776, "redundancy_wl": 999950, "lhs_unique": false, "lhs_tokens": [["language", "name"]], "rhs_tokens": ["iso", "code"]},
+  {"lhs": ["release"], "rhs": "script_name", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 435094, "distinct_rhs": 41, "lhs_distinct_ratio": 0.435094, "rhs_distinct_ratio": 4.1e-05, "redundancy": 564906, "redundancy_wl": 610072, "lhs_unique": false, "lhs_tokens": [["release"]], "rhs_tokens": ["script", "name"]},
+  {"lhs": ["release_gid"], "rhs": "script_name", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 435094, "distinct_rhs": 41, "lhs_distinct_ratio": 0.435094, "rhs_distinct_ratio": 4.1e-05, "redundancy": 564906, "redundancy_wl": 610072, "lhs_unique": false, "lhs_tokens": [["release", "gid"]], "rhs_tokens": ["script", "name"]},
+  {"lhs": ["script"], "rhs": "script_name", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 41, "distinct_rhs": 41, "lhs_distinct_ratio": 4.1e-05, "rhs_distinct_ratio": 4.1e-05, "redundancy": 999959, "redundancy_wl": 999991, "lhs_unique": false, "lhs_tokens": [["script"]], "rhs_tokens": ["script", "name"]},
+  {"lhs": ["iso_code"], "rhs": "script_name", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 41, "distinct_rhs": 41, "lhs_distinct_ratio": 4.1e-05, "rhs_distinct_ratio": 4.1e-05, "redundancy": 999959, "redundancy_wl": 999991, "lhs_unique": false, "lhs_tokens": [["iso", "code"]], "rhs_tokens": ["script", "name"]},
+  {"lhs": ["release"], "rhs": "iso_code", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 435094, "distinct_rhs": 41, "lhs_distinct_ratio": 0.435094, "rhs_distinct_ratio": 4.1e-05, "redundancy": 564906, "redundancy_wl": 610072, "lhs_unique": false, "lhs_tokens": [["release"]], "rhs_tokens": ["iso", "code"]},
+  {"lhs": ["release_gid"], "rhs": "iso_code", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 435094, "distinct_rhs": 41, "lhs_distinct_ratio": 0.435094, "rhs_distinct_ratio": 4.1e-05, "redundancy": 564906, "redundancy_wl": 610072, "lhs_unique": false, "lhs_tokens": [["release", "gid"]], "rhs_tokens": ["iso", "code"]},
+  {"lhs": ["script"], "rhs": "iso_code", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 41, "distinct_rhs": 41, "lhs_distinct_ratio": 4.1e-05, "rhs_distinct_ratio": 4.1e-05, "redundancy": 999959, "redundancy_wl": 999991, "lhs_unique": false, "lhs_tokens": [["script"]], "rhs_tokens": ["iso", "code"]},
+  {"lhs": ["script_name"], "rhs": "iso_code", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 41, "distinct_rhs": 41, "lhs_distinct_ratio": 4.1e-05, "rhs_distinct_ratio": 4.1e-05, "redundancy": 999959, "redundancy_wl": 999991, "lhs_unique": false, "lhs_tokens": [["script", "name"]], "rhs_tokens": ["iso", "code"]},
+  {"lhs": ["country"], "rhs": "area_name", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 258, "distinct_rhs": 258, "lhs_distinct_ratio": 0.000258, "rhs_distinct_ratio": 0.000258, "redundancy": 999742, "redundancy_wl": 999998, "lhs_unique": false, "lhs_tokens": [["country"]], "rhs_tokens": ["area", "name"]},
+  {"lhs": ["release", "country"], "rhs": "date_year", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 2, "distinct_lhs": 1000000, "distinct_rhs": 141, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.000141, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["release"], ["country"]], "rhs_tokens": ["date", "year"]},
+  {"lhs": ["country", "release_gid"], "rhs": "date_year", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 2, "distinct_lhs": 1000000, "distinct_rhs": 141, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.000141, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["country"], ["release", "gid"]], "rhs_tokens": ["date", "year"]},
+  {"lhs": ["release", "area_name"], "rhs": "date_year", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 1000000, "distinct_rhs": 141, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.000141, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["release"], ["area", "name"]], "rhs_tokens": ["date", "year"]},
+  {"lhs": ["release_gid", "area_name"], "rhs": "date_year", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 1000000, "distinct_rhs": 141, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.000141, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["release", "gid"], ["area", "name"]], "rhs_tokens": ["date", "year"]},
+  {"lhs": ["release", "country"], "rhs": "date_month", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 2, "distinct_lhs": 1000000, "distinct_rhs": 13, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.3e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["release"], ["country"]], "rhs_tokens": ["date", "month"]},
+  {"lhs": ["country", "release_gid"], "rhs": "date_month", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 2, "distinct_lhs": 1000000, "distinct_rhs": 13, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.3e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["country"], ["release", "gid"]], "rhs_tokens": ["date", "month"]},
+  {"lhs": ["release", "area_name"], "rhs": "date_month", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 1000000, "distinct_rhs": 13, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.3e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["release"], ["area", "name"]], "rhs_tokens": ["date", "month"]},
+  {"lhs": ["release_gid", "area_name"], "rhs": "date_month", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 1000000, "distinct_rhs": 13, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.3e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["release", "gid"], ["area", "name"]], "rhs_tokens": ["date", "month"]},
+  {"lhs": ["release", "country"], "rhs": "date_day", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 2, "distinct_lhs": 1000000, "distinct_rhs": 32, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 3.2e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["release"], ["country"]], "rhs_tokens": ["date", "day"]},
+  {"lhs": ["country", "release_gid"], "rhs": "date_day", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 2, "distinct_lhs": 1000000, "distinct_rhs": 32, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 3.2e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["country"], ["release", "gid"]], "rhs_tokens": ["date", "day"]},
+  {"lhs": ["release", "area_name"], "rhs": "date_day", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 1000000, "distinct_rhs": 32, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 3.2e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["release"], ["area", "name"]], "rhs_tokens": ["date", "day"]},
+  {"lhs": ["release_gid", "area_name"], "rhs": "date_day", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 1000000, "distinct_rhs": 32, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 3.2e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["release", "gid"], ["area", "name"]], "rhs_tokens": ["date", "day"]},
+  {"lhs": ["release_artist_credit", "iso_code_3"], "rhs": "language", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 256922, "distinct_rhs": 224, "lhs_distinct_ratio": 0.256922, "rhs_distinct_ratio": 0.000224, "redundancy": 743078, "redundancy_wl": 806612, "lhs_unique": false, "lhs_tokens": [["release", "artist", "credit"], ["iso", "code"]], "rhs_tokens": ["language"]},
+  {"lhs": ["release_group", "iso_code_3"], "rhs": "language", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 415345, "distinct_rhs": 224, "lhs_distinct_ratio": 0.415345, "rhs_distinct_ratio": 0.000224, "redundancy": 584655, "redundancy_wl": 636487, "lhs_unique": false, "lhs_tokens": [["release", "group"], ["iso", "code"]], "rhs_tokens": ["language"]},
+  {"lhs": ["release_group_gid", "iso_code_3"], "rhs": "language", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 415345, "distinct_rhs": 224, "lhs_distinct_ratio": 0.415345, "rhs_distinct_ratio": 0.000224, "redundancy": 584655, "redundancy_wl": 636487, "lhs_unique": false, "lhs_tokens": [["release", "group", "gid"], ["iso", "code"]], "rhs_tokens": ["language"]},
+  {"lhs": ["release_group_artist_credit", "iso_code_3"], "rhs": "language", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 255939, "distinct_rhs": 224, "lhs_distinct_ratio": 0.255939, "rhs_distinct_ratio": 0.000224, "redundancy": 744061, "redundancy_wl": 807878, "lhs_unique": false, "lhs_tokens": [["release", "group", "artist", "credit"], ["iso", "code"]], "rhs_tokens": ["language"]},
+  {"lhs": ["artist_credit_name", "iso_code_3"], "rhs": "language", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 251983, "distinct_rhs": 224, "lhs_distinct_ratio": 0.251983, "rhs_distinct_ratio": 0.000224, "redundancy": 748017, "redundancy_wl": 812808, "lhs_unique": false, "lhs_tokens": [["artist", "credit", "name"], ["iso", "code"]], "rhs_tokens": ["language"]},
+  {"lhs": ["release_artist_credit", "iso_code_3"], "rhs": "language_name", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 256922, "distinct_rhs": 224, "lhs_distinct_ratio": 0.256922, "rhs_distinct_ratio": 0.000224, "redundancy": 743078, "redundancy_wl": 806612, "lhs_unique": false, "lhs_tokens": [["release", "artist", "credit"], ["iso", "code"]], "rhs_tokens": ["language", "name"]},
+  {"lhs": ["release_group", "iso_code_3"], "rhs": "language_name", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 415345, "distinct_rhs": 224, "lhs_distinct_ratio": 0.415345, "rhs_distinct_ratio": 0.000224, "redundancy": 584655, "redundancy_wl": 636487, "lhs_unique": false, "lhs_tokens": [["release", "group"], ["iso", "code"]], "rhs_tokens": ["language", "name"]},
+  {"lhs": ["release_group_gid", "iso_code_3"], "rhs": "language_name", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 415345, "distinct_rhs": 224, "lhs_distinct_ratio": 0.415345, "rhs_distinct_ratio": 0.000224, "redundancy": 584655, "redundancy_wl": 636487, "lhs_unique": false, "lhs_tokens": [["release", "group", "gid"], ["iso", "code"]], "rhs_tokens": ["language", "name"]},
+  {"lhs": ["release_group_artist_credit", "iso_code_3"], "rhs": "language_name", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 255939, "distinct_rhs": 224, "lhs_distinct_ratio": 0.255939, "rhs_distinct_ratio": 0.000224, "redundancy": 744061, "redundancy_wl": 807878, "lhs_unique": false, "lhs_tokens": [["release", "group", "artist", "credit"], ["iso", "code"]], "rhs_tokens": ["language", "name"]},
+  {"lhs": ["artist_credit_name", "iso_code_3"], "rhs": "language_name", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 251983, "distinct_rhs": 224, "lhs_distinct_ratio": 0.251983, "rhs_distinct_ratio": 0.000224, "redundancy": 748017, "redundancy_wl": 812808, "lhs_unique": false, "lhs_tokens": [["artist", "credit", "name"], ["iso", "code"]], "rhs_tokens": ["language", "name"]}
+ ]
+}

@@ -1,0 +1,556 @@
+{
+ "dataset": "food",
+ "family": "documented",
+ "truth_kind": "documented rules",
+ "source": "prior work (its Meaningful FD sets), with its data",
+ "rule": "Sigma* is the FD set of documented rules that prior work lists for the data set (sure); the FDs added by its variant, whose status prior work marks as doubtful, are unsure. The data are cleaned by the greedy subset repair of documented.py until the base set holds, so the sure FDs hold on the instance by construction.",
+ "instance": {
+  "generator": "real data of prior work, prepared by real.py",
+  "rows": 312847,
+  "construction": "prior-work FD set 'food' with the additions of 'food+c1' as unsure",
+  "cleaning": {
+   "records_after_deduplication": 316963,
+   "kept": 312847,
+   "repaired_for": "food",
+   "removed_per_fd": {
+    "License,InspectionDate->Results": 1511,
+    "License->Zip": 1278,
+    "License->FacilityType": 830,
+    "Zip->City": 288,
+    "City,State,Address->Zip": 159,
+    "Zip->State": 50
+   }
+  }
+ },
+ "attributes": [
+  "InspectionID",
+  "DBAName",
+  "AKAName",
+  "License",
+  "FacilityType",
+  "Risk",
+  "Address",
+  "City",
+  "State",
+  "Zip",
+  "InspectionDate",
+  "InspectionType",
+  "Results",
+  "Violations",
+  "Latitude",
+  "Longitude",
+  "Location"
+ ],
+ "dropped_constant_columns": [],
+ "distinct_values": {
+  "InspectionID": 312847,
+  "DBAName": 34167,
+  "AKAName": 32456,
+  "License": 49070,
+  "FacilityType": 430,
+  "Risk": 5,
+  "Address": 20062,
+  "City": 71,
+  "State": 7,
+  "Zip": 138,
+  "InspectionDate": 4222,
+  "InspectionType": 98,
+  "Results": 7,
+  "Violations": 221549,
+  "Latitude": 18744,
+  "Longitude": 18744,
+  "Location": 18744
+ },
+ "truth": [
+  {
+   "lhs": [
+    "InspectionID"
+   ],
+   "rhs": [
+    "DBAName",
+    "AKAName",
+    "License",
+    "FacilityType",
+    "Risk",
+    "Address",
+    "City",
+    "State",
+    "Zip",
+    "InspectionDate",
+    "InspectionType",
+    "Results",
+    "Violations",
+    "Latitude",
+    "Longitude",
+    "Location"
+   ],
+   "sure": true,
+   "clause": "City of Chicago, Food Inspections (4ijn-s7e5)",
+   "justification": "InspectionID identifies the inspection record."
+  },
+  {
+   "lhs": [
+    "Zip"
+   ],
+   "rhs": [
+    "City",
+    "State"
+   ],
+   "sure": true,
+   "clause": "HoloClean (Rekatsinas et al., PVLDB 10(11), 2017), Fig. 1, c2",
+   "justification": "A zip code lies in one city and state."
+  },
+  {
+   "lhs": [
+    "City",
+    "State",
+    "Address"
+   ],
+   "rhs": [
+    "Zip"
+   ],
+   "sure": true,
+   "clause": "HoloClean (Rekatsinas et al., PVLDB 10(11), 2017), Fig. 1, c3",
+   "justification": "An address in a city and state has one zip code."
+  },
+  {
+   "lhs": [
+    "License"
+   ],
+   "rhs": [
+    "Zip",
+    "FacilityType"
+   ],
+   "sure": true,
+   "clause": "HoloClean (Rekatsinas et al., PVLDB 10(11), 2017), Sec. 6.1",
+   "justification": "Conflicting zip codes and facility types of one licensed establishment are errors."
+  },
+  {
+   "lhs": [
+    "License",
+    "InspectionDate"
+   ],
+   "rhs": [
+    "Results"
+   ],
+   "sure": true,
+   "clause": "HoloClean (Rekatsinas et al., PVLDB 10(11), 2017), Sec. 6.1",
+   "justification": "An establishment has one result per inspection date."
+  },
+  {
+   "lhs": [
+    "DBAName"
+   ],
+   "rhs": [
+    "Zip"
+   ],
+   "sure": false,
+   "clause": "HoloClean (Rekatsinas et al., PVLDB 10(11), 2017), Fig. 1, c1; prior work variant food+c1",
+   "justification": "Listed by HoloClean, but it fails for chains, whose outlets share the name and have many zip codes."
+  }
+ ],
+ "truth_counts": {
+  "fds": 6,
+  "single_rhs": 23,
+  "sure_single_rhs": 22
+ },
+ "random_columns": null,
+ "truth_fds_violated_by_data": [
+  {
+   "fd": "DBAName -> Zip",
+   "sure": false,
+   "g3": 0.115491
+  }
+ ],
+ "gold_design": null,
+ "gold_design_note": "No normalized design is published for this data; truth_design gives the 3NF designs of Sigma*.",
+ "truth_design": {
+  "keys": [
+   [
+    "InspectionID"
+   ]
+  ],
+  "atomic_closure": 27,
+  "synthesis": [
+   [
+    "AKAName",
+    "InspectionID"
+   ],
+   [
+    "Address",
+    "City",
+    "State",
+    "Zip"
+   ],
+   [
+    "Address",
+    "InspectionID"
+   ],
+   [
+    "DBAName",
+    "InspectionID"
+   ],
+   [
+    "DBAName",
+    "Zip"
+   ],
+   [
+    "FacilityType",
+    "License"
+   ],
+   [
+    "InspectionDate",
+    "InspectionID"
+   ],
+   [
+    "InspectionDate",
+    "License",
+    "Results"
+   ],
+   [
+    "InspectionID",
+    "InspectionType"
+   ],
+   [
+    "InspectionID",
+    "Latitude"
+   ],
+   [
+    "InspectionID",
+    "License"
+   ],
+   [
+    "InspectionID",
+    "Location"
+   ],
+   [
+    "InspectionID",
+    "Longitude"
+   ],
+   [
+    "InspectionID",
+    "Risk"
+   ],
+   [
+    "InspectionID",
+    "Violations"
+   ],
+   [
+    "License",
+    "Zip"
+   ]
+  ],
+  "iconf": [
+   [
+    "AKAName",
+    "InspectionID"
+   ],
+   [
+    "Address",
+    "City",
+    "State",
+    "Zip"
+   ],
+   [
+    "Address",
+    "InspectionID"
+   ],
+   [
+    "DBAName",
+    "InspectionID"
+   ],
+   [
+    "DBAName",
+    "Zip"
+   ],
+   [
+    "FacilityType",
+    "License"
+   ],
+   [
+    "InspectionDate",
+    "InspectionID"
+   ],
+   [
+    "InspectionDate",
+    "License",
+    "Results"
+   ],
+   [
+    "InspectionID",
+    "InspectionType"
+   ],
+   [
+    "InspectionID",
+    "Latitude"
+   ],
+   [
+    "InspectionID",
+    "License"
+   ],
+   [
+    "InspectionID",
+    "Location"
+   ],
+   [
+    "InspectionID",
+    "Longitude"
+   ],
+   [
+    "InspectionID",
+    "Risk"
+   ],
+   [
+    "InspectionID",
+    "Violations"
+   ],
+   [
+    "License",
+    "Zip"
+   ]
+  ]
+ },
+ "mined": {
+  "algorithm": "fdmine.py: exact discovery of all minimal FDs in the style of HyFD (no HyFD binary was available); the complete set of minimal FDs is unique, so it equals HyFD's output",
+  "file": "mined/food-fds.txt",
+  "seconds": 9.0,
+  "count": 94,
+  "implied_by_truth": 47,
+  "accidental": 47,
+  "implied_by_sure_truth": 23
+ },
+ "truth_design_sure_only": {
+  "keys": [
+   [
+    "InspectionID"
+   ]
+  ],
+  "atomic_closure": 24,
+  "synthesis": [
+   [
+    "AKAName",
+    "InspectionID"
+   ],
+   [
+    "Address",
+    "City",
+    "State",
+    "Zip"
+   ],
+   [
+    "Address",
+    "InspectionID"
+   ],
+   [
+    "DBAName",
+    "InspectionID"
+   ],
+   [
+    "FacilityType",
+    "License"
+   ],
+   [
+    "InspectionDate",
+    "InspectionID"
+   ],
+   [
+    "InspectionDate",
+    "License",
+    "Results"
+   ],
+   [
+    "InspectionID",
+    "InspectionType"
+   ],
+   [
+    "InspectionID",
+    "Latitude"
+   ],
+   [
+    "InspectionID",
+    "License"
+   ],
+   [
+    "InspectionID",
+    "Location"
+   ],
+   [
+    "InspectionID",
+    "Longitude"
+   ],
+   [
+    "InspectionID",
+    "Risk"
+   ],
+   [
+    "InspectionID",
+    "Violations"
+   ],
+   [
+    "License",
+    "Zip"
+   ]
+  ],
+  "iconf": [
+   [
+    "AKAName",
+    "InspectionID"
+   ],
+   [
+    "Address",
+    "City",
+    "State",
+    "Zip"
+   ],
+   [
+    "Address",
+    "InspectionID"
+   ],
+   [
+    "DBAName",
+    "InspectionID"
+   ],
+   [
+    "FacilityType",
+    "License"
+   ],
+   [
+    "InspectionDate",
+    "InspectionID"
+   ],
+   [
+    "InspectionDate",
+    "License",
+    "Results"
+   ],
+   [
+    "InspectionID",
+    "InspectionType"
+   ],
+   [
+    "InspectionID",
+    "Latitude"
+   ],
+   [
+    "InspectionID",
+    "License"
+   ],
+   [
+    "InspectionID",
+    "Location"
+   ],
+   [
+    "InspectionID",
+    "Longitude"
+   ],
+   [
+    "InspectionID",
+    "Risk"
+   ],
+   [
+    "InspectionID",
+    "Violations"
+   ],
+   [
+    "License",
+    "Zip"
+   ]
+  ]
+ },
+ "fds": [
+  {"lhs": ["InspectionID"], "rhs": "DBAName", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 312847, "distinct_rhs": 34167, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.109213, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["inspection", "id"]], "rhs_tokens": ["dbaname"]},
+  {"lhs": ["InspectionID"], "rhs": "AKAName", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 312847, "distinct_rhs": 32456, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.103744, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["inspection", "id"]], "rhs_tokens": ["akaname"]},
+  {"lhs": ["InspectionID"], "rhs": "License", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 312847, "distinct_rhs": 49070, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.15685, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["inspection", "id"]], "rhs_tokens": ["license"]},
+  {"lhs": ["InspectionID"], "rhs": "FacilityType", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 312847, "distinct_rhs": 430, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.001374, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["inspection", "id"]], "rhs_tokens": ["facility", "type"]},
+  {"lhs": ["License"], "rhs": "FacilityType", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 49070, "distinct_rhs": 430, "lhs_distinct_ratio": 0.15685, "rhs_distinct_ratio": 0.001374, "redundancy": 263777, "redundancy_wl": 300416, "lhs_unique": false, "lhs_tokens": [["license"]], "rhs_tokens": ["facility", "type"]},
+  {"lhs": ["InspectionID"], "rhs": "Risk", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 312847, "distinct_rhs": 5, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.6e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["inspection", "id"]], "rhs_tokens": ["risk"]},
+  {"lhs": ["InspectionID"], "rhs": "Address", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 312847, "distinct_rhs": 20062, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.064127, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["inspection", "id"]], "rhs_tokens": ["address"]},
+  {"lhs": ["InspectionID"], "rhs": "City", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 312847, "distinct_rhs": 71, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.000227, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["inspection", "id"]], "rhs_tokens": ["city"]},
+  {"lhs": ["License"], "rhs": "City", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 49070, "distinct_rhs": 71, "lhs_distinct_ratio": 0.15685, "rhs_distinct_ratio": 0.000227, "redundancy": 263777, "redundancy_wl": 300416, "lhs_unique": false, "lhs_tokens": [["license"]], "rhs_tokens": ["city"]},
+  {"lhs": ["Zip"], "rhs": "City", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 138, "distinct_rhs": 71, "lhs_distinct_ratio": 0.000441, "rhs_distinct_ratio": 0.000227, "redundancy": 312709, "redundancy_wl": 312805, "lhs_unique": false, "lhs_tokens": [["zip"]], "rhs_tokens": ["city"]},
+  {"lhs": ["InspectionID"], "rhs": "State", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 312847, "distinct_rhs": 7, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 2.2e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["inspection", "id"]], "rhs_tokens": ["state"]},
+  {"lhs": ["License"], "rhs": "State", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 49070, "distinct_rhs": 7, "lhs_distinct_ratio": 0.15685, "rhs_distinct_ratio": 2.2e-05, "redundancy": 263777, "redundancy_wl": 300416, "lhs_unique": false, "lhs_tokens": [["license"]], "rhs_tokens": ["state"]},
+  {"lhs": ["Address"], "rhs": "State", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 20062, "distinct_rhs": 7, "lhs_distinct_ratio": 0.064127, "rhs_distinct_ratio": 2.2e-05, "redundancy": 292785, "redundancy_wl": 310916, "lhs_unique": false, "lhs_tokens": [["address"]], "rhs_tokens": ["state"]},
+  {"lhs": ["City"], "rhs": "State", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 71, "distinct_rhs": 7, "lhs_distinct_ratio": 0.000227, "rhs_distinct_ratio": 2.2e-05, "redundancy": 312776, "redundancy_wl": 312812, "lhs_unique": false, "lhs_tokens": [["city"]], "rhs_tokens": ["state"]},
+  {"lhs": ["Zip"], "rhs": "State", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 138, "distinct_rhs": 7, "lhs_distinct_ratio": 0.000441, "rhs_distinct_ratio": 2.2e-05, "redundancy": 312709, "redundancy_wl": 312805, "lhs_unique": false, "lhs_tokens": [["zip"]], "rhs_tokens": ["state"]},
+  {"lhs": ["InspectionID"], "rhs": "Zip", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 312847, "distinct_rhs": 138, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.000441, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["inspection", "id"]], "rhs_tokens": ["zip"]},
+  {"lhs": ["License"], "rhs": "Zip", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 49070, "distinct_rhs": 138, "lhs_distinct_ratio": 0.15685, "rhs_distinct_ratio": 0.000441, "redundancy": 263777, "redundancy_wl": 300416, "lhs_unique": false, "lhs_tokens": [["license"]], "rhs_tokens": ["zip"]},
+  {"lhs": ["InspectionID"], "rhs": "InspectionDate", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 312847, "distinct_rhs": 4222, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.013495, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["inspection", "id"]], "rhs_tokens": ["inspection", "date"]},
+  {"lhs": ["InspectionID"], "rhs": "InspectionType", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 312847, "distinct_rhs": 98, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.000313, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["inspection", "id"]], "rhs_tokens": ["inspection", "type"]},
+  {"lhs": ["InspectionID"], "rhs": "Results", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 312847, "distinct_rhs": 7, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 2.2e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["inspection", "id"]], "rhs_tokens": ["results"]},
+  {"lhs": ["InspectionID"], "rhs": "Violations", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 312847, "distinct_rhs": 221549, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.70817, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["inspection", "id"]], "rhs_tokens": ["violations"]},
+  {"lhs": ["InspectionID"], "rhs": "Latitude", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 312847, "distinct_rhs": 18744, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.059914, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["inspection", "id"]], "rhs_tokens": ["latitude"]},
+  {"lhs": ["Address"], "rhs": "Latitude", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 20062, "distinct_rhs": 18744, "lhs_distinct_ratio": 0.064127, "rhs_distinct_ratio": 0.059914, "redundancy": 292785, "redundancy_wl": 310916, "lhs_unique": false, "lhs_tokens": [["address"]], "rhs_tokens": ["latitude"]},
+  {"lhs": ["Longitude"], "rhs": "Latitude", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 18744, "distinct_rhs": 18744, "lhs_distinct_ratio": 0.059914, "rhs_distinct_ratio": 0.059914, "redundancy": 294103, "redundancy_wl": 311294, "lhs_unique": false, "lhs_tokens": [["longitude"]], "rhs_tokens": ["latitude"]},
+  {"lhs": ["Location"], "rhs": "Latitude", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 18744, "distinct_rhs": 18744, "lhs_distinct_ratio": 0.059914, "rhs_distinct_ratio": 0.059914, "redundancy": 294103, "redundancy_wl": 311294, "lhs_unique": false, "lhs_tokens": [["location"]], "rhs_tokens": ["latitude"]},
+  {"lhs": ["InspectionID"], "rhs": "Longitude", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 312847, "distinct_rhs": 18744, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.059914, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["inspection", "id"]], "rhs_tokens": ["longitude"]},
+  {"lhs": ["Address"], "rhs": "Longitude", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 20062, "distinct_rhs": 18744, "lhs_distinct_ratio": 0.064127, "rhs_distinct_ratio": 0.059914, "redundancy": 292785, "redundancy_wl": 310916, "lhs_unique": false, "lhs_tokens": [["address"]], "rhs_tokens": ["longitude"]},
+  {"lhs": ["Latitude"], "rhs": "Longitude", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 18744, "distinct_rhs": 18744, "lhs_distinct_ratio": 0.059914, "rhs_distinct_ratio": 0.059914, "redundancy": 294103, "redundancy_wl": 311294, "lhs_unique": false, "lhs_tokens": [["latitude"]], "rhs_tokens": ["longitude"]},
+  {"lhs": ["Location"], "rhs": "Longitude", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 18744, "distinct_rhs": 18744, "lhs_distinct_ratio": 0.059914, "rhs_distinct_ratio": 0.059914, "redundancy": 294103, "redundancy_wl": 311294, "lhs_unique": false, "lhs_tokens": [["location"]], "rhs_tokens": ["longitude"]},
+  {"lhs": ["InspectionID"], "rhs": "Location", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 312847, "distinct_rhs": 18744, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.059914, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["inspection", "id"]], "rhs_tokens": ["location"]},
+  {"lhs": ["Address"], "rhs": "Location", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 20062, "distinct_rhs": 18744, "lhs_distinct_ratio": 0.064127, "rhs_distinct_ratio": 0.059914, "redundancy": 292785, "redundancy_wl": 310916, "lhs_unique": false, "lhs_tokens": [["address"]], "rhs_tokens": ["location"]},
+  {"lhs": ["Latitude"], "rhs": "Location", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 18744, "distinct_rhs": 18744, "lhs_distinct_ratio": 0.059914, "rhs_distinct_ratio": 0.059914, "redundancy": 294103, "redundancy_wl": 311294, "lhs_unique": false, "lhs_tokens": [["latitude"]], "rhs_tokens": ["location"]},
+  {"lhs": ["Longitude"], "rhs": "Location", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 18744, "distinct_rhs": 18744, "lhs_distinct_ratio": 0.059914, "rhs_distinct_ratio": 0.059914, "redundancy": 294103, "redundancy_wl": 311294, "lhs_unique": false, "lhs_tokens": [["longitude"]], "rhs_tokens": ["location"]},
+  {"lhs": ["DBAName", "FacilityType"], "rhs": "State", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 35652, "distinct_rhs": 7, "lhs_distinct_ratio": 0.11396, "rhs_distinct_ratio": 2.2e-05, "redundancy": 277195, "redundancy_wl": 306275, "lhs_unique": false, "lhs_tokens": [["dbaname"], ["facility", "type"]], "rhs_tokens": ["state"]},
+  {"lhs": ["DBAName", "InspectionDate"], "rhs": "State", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 294879, "distinct_rhs": 7, "lhs_distinct_ratio": 0.942566, "rhs_distinct_ratio": 2.2e-05, "redundancy": 17968, "redundancy_wl": 31745, "lhs_unique": false, "lhs_tokens": [["dbaname"], ["inspection", "date"]], "rhs_tokens": ["state"]},
+  {"lhs": ["AKAName", "InspectionDate"], "rhs": "State", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 293726, "distinct_rhs": 7, "lhs_distinct_ratio": 0.938881, "rhs_distinct_ratio": 2.2e-05, "redundancy": 19121, "redundancy_wl": 33920, "lhs_unique": false, "lhs_tokens": [["akaname"], ["inspection", "date"]], "rhs_tokens": ["state"]},
+  {"lhs": ["DBAName", "Latitude"], "rhs": "State", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 39644, "distinct_rhs": 7, "lhs_distinct_ratio": 0.12672, "rhs_distinct_ratio": 2.2e-05, "redundancy": 273203, "redundancy_wl": 305977, "lhs_unique": false, "lhs_tokens": [["dbaname"], ["latitude"]], "rhs_tokens": ["state"]},
+  {"lhs": ["DBAName", "Longitude"], "rhs": "State", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 39644, "distinct_rhs": 7, "lhs_distinct_ratio": 0.12672, "rhs_distinct_ratio": 2.2e-05, "redundancy": 273203, "redundancy_wl": 305977, "lhs_unique": false, "lhs_tokens": [["dbaname"], ["longitude"]], "rhs_tokens": ["state"]},
+  {"lhs": ["DBAName", "Location"], "rhs": "State", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 39644, "distinct_rhs": 7, "lhs_distinct_ratio": 0.12672, "rhs_distinct_ratio": 2.2e-05, "redundancy": 273203, "redundancy_wl": 305977, "lhs_unique": false, "lhs_tokens": [["dbaname"], ["location"]], "rhs_tokens": ["state"]},
+  {"lhs": ["Address", "City"], "rhs": "Zip", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 20064, "distinct_rhs": 138, "lhs_distinct_ratio": 0.064134, "rhs_distinct_ratio": 0.000441, "redundancy": 292783, "redundancy_wl": 310915, "lhs_unique": false, "lhs_tokens": [["address"], ["city"]], "rhs_tokens": ["zip"]},
+  {"lhs": ["License", "InspectionDate"], "rhs": "Results", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 2, "distinct_lhs": 312061, "distinct_rhs": 7, "lhs_distinct_ratio": 0.997488, "rhs_distinct_ratio": 2.2e-05, "redundancy": 786, "redundancy_wl": 1223, "lhs_unique": false, "lhs_tokens": [["license"], ["inspection", "date"]], "rhs_tokens": ["results"]},
+  {"lhs": ["DBAName", "Risk", "Address"], "rhs": "City", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 41276, "distinct_rhs": 71, "lhs_distinct_ratio": 0.131937, "rhs_distinct_ratio": 0.000227, "redundancy": 271571, "redundancy_wl": 305152, "lhs_unique": false, "lhs_tokens": [["dbaname"], ["risk"], ["address"]], "rhs_tokens": ["city"]},
+  {"lhs": ["DBAName", "Address", "InspectionDate"], "rhs": "City", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 299404, "distinct_rhs": 71, "lhs_distinct_ratio": 0.95703, "rhs_distinct_ratio": 0.000227, "redundancy": 13443, "redundancy_wl": 24083, "lhs_unique": false, "lhs_tokens": [["dbaname"], ["address"], ["inspection", "date"]], "rhs_tokens": ["city"]},
+  {"lhs": ["AKAName", "Address", "InspectionDate"], "rhs": "City", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 300206, "distinct_rhs": 71, "lhs_distinct_ratio": 0.959594, "rhs_distinct_ratio": 0.000227, "redundancy": 12641, "redundancy_wl": 23293, "lhs_unique": false, "lhs_tokens": [["akaname"], ["address"], ["inspection", "date"]], "rhs_tokens": ["city"]},
+  {"lhs": ["Address", "InspectionDate", "Results"], "rhs": "City", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 294491, "distinct_rhs": 71, "lhs_distinct_ratio": 0.941326, "rhs_distinct_ratio": 0.000227, "redundancy": 18356, "redundancy_wl": 31936, "lhs_unique": false, "lhs_tokens": [["address"], ["inspection", "date"], ["results"]], "rhs_tokens": ["city"]},
+  {"lhs": ["DBAName", "Address", "Violations"], "rhs": "City", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 258752, "distinct_rhs": 71, "lhs_distinct_ratio": 0.827088, "rhs_distinct_ratio": 0.000227, "redundancy": 54095, "redundancy_wl": 76655, "lhs_unique": false, "lhs_tokens": [["dbaname"], ["address"], ["violations"]], "rhs_tokens": ["city"]},
+  {"lhs": ["Address", "InspectionDate", "Violations"], "rhs": "City", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 302652, "distinct_rhs": 71, "lhs_distinct_ratio": 0.967412, "rhs_distinct_ratio": 0.000227, "redundancy": 10195, "redundancy_wl": 17700, "lhs_unique": false, "lhs_tokens": [["address"], ["inspection", "date"], ["violations"]], "rhs_tokens": ["city"]},
+  {"lhs": ["AKAName", "FacilityType", "InspectionType"], "rhs": "State", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 95642, "distinct_rhs": 7, "lhs_distinct_ratio": 0.305715, "rhs_distinct_ratio": 2.2e-05, "redundancy": 217205, "redundancy_wl": 266191, "lhs_unique": false, "lhs_tokens": [["akaname"], ["facility", "type"], ["inspection", "type"]], "rhs_tokens": ["state"]},
+  {"lhs": ["DBAName", "Risk", "InspectionType"], "rhs": "State", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 101539, "distinct_rhs": 7, "lhs_distinct_ratio": 0.324564, "rhs_distinct_ratio": 2.2e-05, "redundancy": 211308, "redundancy_wl": 261777, "lhs_unique": false, "lhs_tokens": [["dbaname"], ["risk"], ["inspection", "type"]], "rhs_tokens": ["state"]},
+  {"lhs": ["DBAName", "Risk", "Results"], "rhs": "State", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 98108, "distinct_rhs": 7, "lhs_distinct_ratio": 0.313597, "rhs_distinct_ratio": 2.2e-05, "redundancy": 214739, "redundancy_wl": 262046, "lhs_unique": false, "lhs_tokens": [["dbaname"], ["risk"], ["results"]], "rhs_tokens": ["state"]},
+  {"lhs": ["AKAName", "FacilityType", "Violations"], "rhs": "State", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 253566, "distinct_rhs": 7, "lhs_distinct_ratio": 0.810511, "rhs_distinct_ratio": 2.2e-05, "redundancy": 59281, "redundancy_wl": 79055, "lhs_unique": false, "lhs_tokens": [["akaname"], ["facility", "type"], ["violations"]], "rhs_tokens": ["state"]},
+  {"lhs": ["DBAName", "Risk", "Violations"], "rhs": "State", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 255576, "distinct_rhs": 7, "lhs_distinct_ratio": 0.816936, "rhs_distinct_ratio": 2.2e-05, "redundancy": 57271, "redundancy_wl": 77872, "lhs_unique": false, "lhs_tokens": [["dbaname"], ["risk"], ["violations"]], "rhs_tokens": ["state"]},
+  {"lhs": ["AKAName", "Risk", "Violations"], "rhs": "State", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 254036, "distinct_rhs": 7, "lhs_distinct_ratio": 0.812014, "rhs_distinct_ratio": 2.2e-05, "redundancy": 58811, "redundancy_wl": 78636, "lhs_unique": false, "lhs_tokens": [["akaname"], ["risk"], ["violations"]], "rhs_tokens": ["state"]},
+  {"lhs": ["FacilityType", "InspectionDate", "Violations"], "rhs": "State", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 245042, "distinct_rhs": 7, "lhs_distinct_ratio": 0.783265, "rhs_distinct_ratio": 2.2e-05, "redundancy": 67805, "redundancy_wl": 78613, "lhs_unique": false, "lhs_tokens": [["facility", "type"], ["inspection", "date"], ["violations"]], "rhs_tokens": ["state"]},
+  {"lhs": ["AKAName", "FacilityType", "Latitude"], "rhs": "State", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 40119, "distinct_rhs": 7, "lhs_distinct_ratio": 0.128238, "rhs_distinct_ratio": 2.2e-05, "redundancy": 272728, "redundancy_wl": 305566, "lhs_unique": false, "lhs_tokens": [["akaname"], ["facility", "type"], ["latitude"]], "rhs_tokens": ["state"]},
+  {"lhs": ["AKAName", "Results", "Latitude"], "rhs": "State", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 107201, "distinct_rhs": 7, "lhs_distinct_ratio": 0.342663, "rhs_distinct_ratio": 2.2e-05, "redundancy": 205646, "redundancy_wl": 258348, "lhs_unique": false, "lhs_tokens": [["akaname"], ["results"], ["latitude"]], "rhs_tokens": ["state"]},
+  {"lhs": ["AKAName", "Violations", "Latitude"], "rhs": "State", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 258403, "distinct_rhs": 7, "lhs_distinct_ratio": 0.825972, "rhs_distinct_ratio": 2.2e-05, "redundancy": 54444, "redundancy_wl": 77046, "lhs_unique": false, "lhs_tokens": [["akaname"], ["violations"], ["latitude"]], "rhs_tokens": ["state"]},
+  {"lhs": ["AKAName", "FacilityType", "Longitude"], "rhs": "State", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 40119, "distinct_rhs": 7, "lhs_distinct_ratio": 0.128238, "rhs_distinct_ratio": 2.2e-05, "redundancy": 272728, "redundancy_wl": 305566, "lhs_unique": false, "lhs_tokens": [["akaname"], ["facility", "type"], ["longitude"]], "rhs_tokens": ["state"]},
+  {"lhs": ["AKAName", "Results", "Longitude"], "rhs": "State", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 107201, "distinct_rhs": 7, "lhs_distinct_ratio": 0.342663, "rhs_distinct_ratio": 2.2e-05, "redundancy": 205646, "redundancy_wl": 258348, "lhs_unique": false, "lhs_tokens": [["akaname"], ["results"], ["longitude"]], "rhs_tokens": ["state"]},
+  {"lhs": ["AKAName", "Violations", "Longitude"], "rhs": "State", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 258403, "distinct_rhs": 7, "lhs_distinct_ratio": 0.825972, "rhs_distinct_ratio": 2.2e-05, "redundancy": 54444, "redundancy_wl": 77046, "lhs_unique": false, "lhs_tokens": [["akaname"], ["violations"], ["longitude"]], "rhs_tokens": ["state"]},
+  {"lhs": ["AKAName", "FacilityType", "Location"], "rhs": "State", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 40119, "distinct_rhs": 7, "lhs_distinct_ratio": 0.128238, "rhs_distinct_ratio": 2.2e-05, "redundancy": 272728, "redundancy_wl": 305566, "lhs_unique": false, "lhs_tokens": [["akaname"], ["facility", "type"], ["location"]], "rhs_tokens": ["state"]},
+  {"lhs": ["AKAName", "Results", "Location"], "rhs": "State", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 107201, "distinct_rhs": 7, "lhs_distinct_ratio": 0.342663, "rhs_distinct_ratio": 2.2e-05, "redundancy": 205646, "redundancy_wl": 258348, "lhs_unique": false, "lhs_tokens": [["akaname"], ["results"], ["location"]], "rhs_tokens": ["state"]},
+  {"lhs": ["AKAName", "Violations", "Location"], "rhs": "State", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 258403, "distinct_rhs": 7, "lhs_distinct_ratio": 0.825972, "rhs_distinct_ratio": 2.2e-05, "redundancy": 54444, "redundancy_wl": 77046, "lhs_unique": false, "lhs_tokens": [["akaname"], ["violations"], ["location"]], "rhs_tokens": ["state"]},
+  {"lhs": ["DBAName", "Risk", "Address"], "rhs": "Zip", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 41276, "distinct_rhs": 138, "lhs_distinct_ratio": 0.131937, "rhs_distinct_ratio": 0.000441, "redundancy": 271571, "redundancy_wl": 305152, "lhs_unique": false, "lhs_tokens": [["dbaname"], ["risk"], ["address"]], "rhs_tokens": ["zip"]},
+  {"lhs": ["DBAName", "Address", "InspectionDate"], "rhs": "Zip", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 299404, "distinct_rhs": 138, "lhs_distinct_ratio": 0.95703, "rhs_distinct_ratio": 0.000441, "redundancy": 13443, "redundancy_wl": 24083, "lhs_unique": false, "lhs_tokens": [["dbaname"], ["address"], ["inspection", "date"]], "rhs_tokens": ["zip"]},
+  {"lhs": ["AKAName", "Address", "InspectionDate"], "rhs": "Zip", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 300206, "distinct_rhs": 138, "lhs_distinct_ratio": 0.959594, "rhs_distinct_ratio": 0.000441, "redundancy": 12641, "redundancy_wl": 23293, "lhs_unique": false, "lhs_tokens": [["akaname"], ["address"], ["inspection", "date"]], "rhs_tokens": ["zip"]},
+  {"lhs": ["Address", "InspectionDate", "Results"], "rhs": "Zip", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 294491, "distinct_rhs": 138, "lhs_distinct_ratio": 0.941326, "rhs_distinct_ratio": 0.000441, "redundancy": 18356, "redundancy_wl": 31936, "lhs_unique": false, "lhs_tokens": [["address"], ["inspection", "date"], ["results"]], "rhs_tokens": ["zip"]},
+  {"lhs": ["DBAName", "Address", "Violations"], "rhs": "Zip", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 258752, "distinct_rhs": 138, "lhs_distinct_ratio": 0.827088, "rhs_distinct_ratio": 0.000441, "redundancy": 54095, "redundancy_wl": 76655, "lhs_unique": false, "lhs_tokens": [["dbaname"], ["address"], ["violations"]], "rhs_tokens": ["zip"]},
+  {"lhs": ["Address", "InspectionDate", "Violations"], "rhs": "Zip", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 302652, "distinct_rhs": 138, "lhs_distinct_ratio": 0.967412, "rhs_distinct_ratio": 0.000441, "redundancy": 10195, "redundancy_wl": 17700, "lhs_unique": false, "lhs_tokens": [["address"], ["inspection", "date"], ["violations"]], "rhs_tokens": ["zip"]},
+  {"lhs": ["DBAName", "Address", "InspectionType", "Results"], "rhs": "City", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 175993, "distinct_rhs": 71, "lhs_distinct_ratio": 0.562553, "rhs_distinct_ratio": 0.000227, "redundancy": 136854, "redundancy_wl": 194063, "lhs_unique": false, "lhs_tokens": [["dbaname"], ["address"], ["inspection", "type"], ["results"]], "rhs_tokens": ["city"]},
+  {"lhs": ["DBAName", "InspectionDate", "InspectionType", "Latitude"], "rhs": "City", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 303092, "distinct_rhs": 71, "lhs_distinct_ratio": 0.968819, "rhs_distinct_ratio": 0.000227, "redundancy": 9755, "redundancy_wl": 17323, "lhs_unique": false, "lhs_tokens": [["dbaname"], ["inspection", "date"], ["inspection", "type"], ["latitude"]], "rhs_tokens": ["city"]},
+  {"lhs": ["DBAName", "InspectionDate", "Results", "Latitude"], "rhs": "City", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 301947, "distinct_rhs": 71, "lhs_distinct_ratio": 0.965159, "rhs_distinct_ratio": 0.000227, "redundancy": 10900, "redundancy_wl": 19673, "lhs_unique": false, "lhs_tokens": [["dbaname"], ["inspection", "date"], ["results"], ["latitude"]], "rhs_tokens": ["city"]},
+  {"lhs": ["DBAName", "InspectionDate", "InspectionType", "Longitude"], "rhs": "City", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 303092, "distinct_rhs": 71, "lhs_distinct_ratio": 0.968819, "rhs_distinct_ratio": 0.000227, "redundancy": 9755, "redundancy_wl": 17323, "lhs_unique": false, "lhs_tokens": [["dbaname"], ["inspection", "date"], ["inspection", "type"], ["longitude"]], "rhs_tokens": ["city"]},
+  {"lhs": ["DBAName", "InspectionDate", "Results", "Longitude"], "rhs": "City", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 301947, "distinct_rhs": 71, "lhs_distinct_ratio": 0.965159, "rhs_distinct_ratio": 0.000227, "redundancy": 10900, "redundancy_wl": 19673, "lhs_unique": false, "lhs_tokens": [["dbaname"], ["inspection", "date"], ["results"], ["longitude"]], "rhs_tokens": ["city"]},
+  {"lhs": ["DBAName", "InspectionDate", "InspectionType", "Location"], "rhs": "City", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 303092, "distinct_rhs": 71, "lhs_distinct_ratio": 0.968819, "rhs_distinct_ratio": 0.000227, "redundancy": 9755, "redundancy_wl": 17323, "lhs_unique": false, "lhs_tokens": [["dbaname"], ["inspection", "date"], ["inspection", "type"], ["location"]], "rhs_tokens": ["city"]},
+  {"lhs": ["DBAName", "InspectionDate", "Results", "Location"], "rhs": "City", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 301947, "distinct_rhs": 71, "lhs_distinct_ratio": 0.965159, "rhs_distinct_ratio": 0.000227, "redundancy": 10900, "redundancy_wl": 19673, "lhs_unique": false, "lhs_tokens": [["dbaname"], ["inspection", "date"], ["results"], ["location"]], "rhs_tokens": ["city"]},
+  {"lhs": ["FacilityType", "Risk", "InspectionDate", "Latitude"], "rhs": "State", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 288027, "distinct_rhs": 7, "lhs_distinct_ratio": 0.920664, "rhs_distinct_ratio": 2.2e-05, "redundancy": 24820, "redundancy_wl": 44091, "lhs_unique": false, "lhs_tokens": [["facility", "type"], ["risk"], ["inspection", "date"], ["latitude"]], "rhs_tokens": ["state"]},
+  {"lhs": ["Risk", "InspectionDate", "Violations", "Latitude"], "rhs": "State", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 304173, "distinct_rhs": 7, "lhs_distinct_ratio": 0.972274, "rhs_distinct_ratio": 2.2e-05, "redundancy": 8674, "redundancy_wl": 15265, "lhs_unique": false, "lhs_tokens": [["risk"], ["inspection", "date"], ["violations"], ["latitude"]], "rhs_tokens": ["state"]},
+  {"lhs": ["InspectionDate", "Results", "Violations", "Latitude"], "rhs": "State", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 305311, "distinct_rhs": 7, "lhs_distinct_ratio": 0.975912, "rhs_distinct_ratio": 2.2e-05, "redundancy": 7536, "redundancy_wl": 13100, "lhs_unique": false, "lhs_tokens": [["inspection", "date"], ["results"], ["violations"], ["latitude"]], "rhs_tokens": ["state"]},
+  {"lhs": ["FacilityType", "Risk", "InspectionDate", "Longitude"], "rhs": "State", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 288027, "distinct_rhs": 7, "lhs_distinct_ratio": 0.920664, "rhs_distinct_ratio": 2.2e-05, "redundancy": 24820, "redundancy_wl": 44091, "lhs_unique": false, "lhs_tokens": [["facility", "type"], ["risk"], ["inspection", "date"], ["longitude"]], "rhs_tokens": ["state"]},
+  {"lhs": ["Risk", "InspectionDate", "Violations", "Longitude"], "rhs": "State", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 304173, "distinct_rhs": 7, "lhs_distinct_ratio": 0.972274, "rhs_distinct_ratio": 2.2e-05, "redundancy": 8674, "redundancy_wl": 15265, "lhs_unique": false, "lhs_tokens": [["risk"], ["inspection", "date"], ["violations"], ["longitude"]], "rhs_tokens": ["state"]},
+  {"lhs": ["InspectionDate", "Results", "Violations", "Longitude"], "rhs": "State", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 305311, "distinct_rhs": 7, "lhs_distinct_ratio": 0.975912, "rhs_distinct_ratio": 2.2e-05, "redundancy": 7536, "redundancy_wl": 13100, "lhs_unique": false, "lhs_tokens": [["inspection", "date"], ["results"], ["violations"], ["longitude"]], "rhs_tokens": ["state"]},
+  {"lhs": ["FacilityType", "Risk", "InspectionDate", "Location"], "rhs": "State", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 288027, "distinct_rhs": 7, "lhs_distinct_ratio": 0.920664, "rhs_distinct_ratio": 2.2e-05, "redundancy": 24820, "redundancy_wl": 44091, "lhs_unique": false, "lhs_tokens": [["facility", "type"], ["risk"], ["inspection", "date"], ["location"]], "rhs_tokens": ["state"]},
+  {"lhs": ["Risk", "InspectionDate", "Violations", "Location"], "rhs": "State", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 304173, "distinct_rhs": 7, "lhs_distinct_ratio": 0.972274, "rhs_distinct_ratio": 2.2e-05, "redundancy": 8674, "redundancy_wl": 15265, "lhs_unique": false, "lhs_tokens": [["risk"], ["inspection", "date"], ["violations"], ["location"]], "rhs_tokens": ["state"]},
+  {"lhs": ["InspectionDate", "Results", "Violations", "Location"], "rhs": "State", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 305311, "distinct_rhs": 7, "lhs_distinct_ratio": 0.975912, "rhs_distinct_ratio": 2.2e-05, "redundancy": 7536, "redundancy_wl": 13100, "lhs_unique": false, "lhs_tokens": [["inspection", "date"], ["results"], ["violations"], ["location"]], "rhs_tokens": ["state"]},
+  {"lhs": ["DBAName", "Address", "InspectionType", "Results"], "rhs": "Zip", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 175993, "distinct_rhs": 138, "lhs_distinct_ratio": 0.562553, "rhs_distinct_ratio": 0.000441, "redundancy": 136854, "redundancy_wl": 194063, "lhs_unique": false, "lhs_tokens": [["dbaname"], ["address"], ["inspection", "type"], ["results"]], "rhs_tokens": ["zip"]},
+  {"lhs": ["DBAName", "AKAName", "Risk", "InspectionDate", "InspectionType"], "rhs": "City", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 303469, "distinct_rhs": 71, "lhs_distinct_ratio": 0.970024, "rhs_distinct_ratio": 0.000227, "redundancy": 9378, "redundancy_wl": 16990, "lhs_unique": false, "lhs_tokens": [["dbaname"], ["akaname"], ["risk"], ["inspection", "date"], ["inspection", "type"]], "rhs_tokens": ["city"]},
+  {"lhs": ["DBAName", "AKAName", "Risk", "InspectionDate", "Results"], "rhs": "City", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 302530, "distinct_rhs": 71, "lhs_distinct_ratio": 0.967022, "rhs_distinct_ratio": 0.000227, "redundancy": 10317, "redundancy_wl": 18953, "lhs_unique": false, "lhs_tokens": [["dbaname"], ["akaname"], ["risk"], ["inspection", "date"], ["results"]], "rhs_tokens": ["city"]},
+  {"lhs": ["AKAName", "Risk", "InspectionDate", "InspectionType", "Latitude"], "rhs": "City", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 305328, "distinct_rhs": 71, "lhs_distinct_ratio": 0.975966, "rhs_distinct_ratio": 0.000227, "redundancy": 7519, "redundancy_wl": 13756, "lhs_unique": false, "lhs_tokens": [["akaname"], ["risk"], ["inspection", "date"], ["inspection", "type"], ["latitude"]], "rhs_tokens": ["city"]},
+  {"lhs": ["AKAName", "Risk", "InspectionDate", "Results", "Latitude"], "rhs": "City", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 304280, "distinct_rhs": 71, "lhs_distinct_ratio": 0.972616, "rhs_distinct_ratio": 0.000227, "redundancy": 8567, "redundancy_wl": 15838, "lhs_unique": false, "lhs_tokens": [["akaname"], ["risk"], ["inspection", "date"], ["results"], ["latitude"]], "rhs_tokens": ["city"]},
+  {"lhs": ["AKAName", "Risk", "InspectionDate", "InspectionType", "Longitude"], "rhs": "City", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 305328, "distinct_rhs": 71, "lhs_distinct_ratio": 0.975966, "rhs_distinct_ratio": 0.000227, "redundancy": 7519, "redundancy_wl": 13756, "lhs_unique": false, "lhs_tokens": [["akaname"], ["risk"], ["inspection", "date"], ["inspection", "type"], ["longitude"]], "rhs_tokens": ["city"]},
+  {"lhs": ["AKAName", "Risk", "InspectionDate", "Results", "Longitude"], "rhs": "City", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 304280, "distinct_rhs": 71, "lhs_distinct_ratio": 0.972616, "rhs_distinct_ratio": 0.000227, "redundancy": 8567, "redundancy_wl": 15838, "lhs_unique": false, "lhs_tokens": [["akaname"], ["risk"], ["inspection", "date"], ["results"], ["longitude"]], "rhs_tokens": ["city"]},
+  {"lhs": ["AKAName", "Risk", "InspectionDate", "InspectionType", "Location"], "rhs": "City", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 305328, "distinct_rhs": 71, "lhs_distinct_ratio": 0.975966, "rhs_distinct_ratio": 0.000227, "redundancy": 7519, "redundancy_wl": 13756, "lhs_unique": false, "lhs_tokens": [["akaname"], ["risk"], ["inspection", "date"], ["inspection", "type"], ["location"]], "rhs_tokens": ["city"]},
+  {"lhs": ["AKAName", "Risk", "InspectionDate", "Results", "Location"], "rhs": "City", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 304280, "distinct_rhs": 71, "lhs_distinct_ratio": 0.972616, "rhs_distinct_ratio": 0.000227, "redundancy": 8567, "redundancy_wl": 15838, "lhs_unique": false, "lhs_tokens": [["akaname"], ["risk"], ["inspection", "date"], ["results"], ["location"]], "rhs_tokens": ["city"]}
+ ]
+}

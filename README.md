@@ -4,6 +4,7 @@ Code for *Confirming What Matters: Certified Third Normal Form Synthesis from Un
 
 Python 3.11 with numpy (`pip install -r requirements.txt`).
 The LLM answers and the normalizer need vLLM and a GPU, and attribute exploration needs a C compiler.
+The repository includes the mined relations and the results behind every table and figure, so the tables and reports regenerate without rerunning anything.
 Raw data and LLM answers are not included; the scripts below download or recompute them.
 
 ## Layout
@@ -12,7 +13,7 @@ Raw data and LLM answers are not included; the scripts below download or recompu
 |---|---|
 | `sensitivity_bruteforce.py`, `baselines.py` | single errors on random schemata (Table 2) |
 | `e2/` | accidental FDs of TPC-H (Table 3) |
-| `e3/` | the relations: downloads, mined candidates, ground truth (`e3/truth/`) |
+| `e3/` | the relations: downloads, mined candidates (`e3/data/`), ground truth (`e3/truth/`) |
 | `confirm/v5.py` | Cert3NF and its ablations (Tables 4 and 7, Fig. 2) |
 | `confirm/v5tol.py` | tolerant mode for a designer who errs (Table 6) |
 | `confirm/v5tau.py` | tolerance θ for data that violate true FDs |
@@ -20,6 +21,7 @@ Raw data and LLM answers are not included; the scripts below download or recompu
 | `confirm/aexp.c`, `confirm/aexp.py` | attribute exploration |
 | `confirm/check_cert.py` | independent check of every certificate |
 | `confirm/scripts/` | tables and reports |
+| `confirm/v5_*/`, `confirm/v5tol_*/`, `confirm/paper_src/`, ... | results of the runs below |
 
 ## Reproduce
 
