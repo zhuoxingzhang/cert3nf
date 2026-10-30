@@ -1,0 +1,18 @@
+date	source	file	http	bytes	sha256	url
+2026-10-26T17:40:04Z	faa	ReleasableAircraft.zip	200	73006950	40b3a90b708906d52a629ec7d0b7b323390a0e6af839fc30ebc1f22d5aefcb9d	https://registry.faa.gov/database/ReleasableAircraft.zip
+2026-10-26T17:40:06Z	abs	MB_2021_AUST.xlsx	200	35322985	cbfe8b98ed17c3be994f5635bd5fd4cc721b6f798d14f583c41a32c6b6973884	https://www.abs.gov.au/statistics/standards/australian-statistical-geography-standard-asgs/edition-3-july-2021-june-2026/access-and-downloads/allocation-files/MB_2021_AUST.xlsx
+2026-10-26T17:40:11Z	scorecard	Most-Recent-Cohorts-Field-of-Study_10152026.zip	200	33857926	d42cd9ec5ffb4868e0f87f988fdbe10dc6c78adf427f9f6e5026a706d715be06	https://ed-public-download.scorecard.network/downloads/Most-Recent-Cohorts-Field-of-Study_10152026.zip
+2026-10-26T17:40:24Z	epa	daily_44201_2025.zip	200	4560934	0ba74dbf2f35882a9273468edf9a443274590fe71770b98aab3c427311ca069f	https://aqs.epa.gov/aqsweb/airdata/daily_44201_2025.zip
+2026-10-26T17:40:29Z	pums	csv_pca.zip	200	70114146	fa3e473e13b09bb6d9f915c7f5c58b8405a8e48d22c43f30d43055a8a6c52882	https://www2.census.gov/programs-surveys/acs/data/pums/2024/1-Year/csv_pca.zip
+2026-10-26T17:40:30Z	gtfs	gtfs.zip	200	26659136	cccabb9e4417f84b94c0f4a8a8062a395685f5f609e993bd4403dec627ac36c0	https://gtfs.at.govt.nz/gtfs.zip
+2026-10-26T17:41:45Z	chicago	crimes_2024.csv	200	74899719	b643864ad7f1456429874aed693061d84eef75dfe0df51bed59ef2f3480fb6ac	https://data.cityofchicago.org/resource/ijzp-q8t2.csv?$where=year=2024&$order=id&$limit=2000000
+2026-10-26T17:41:59Z	chicago	iucr.csv	200	28534	03156b0b45e8a751a6bf97dc68748648b55f476d752a2585a77c51680f89ccdc	https://data.cityofchicago.org/resource/c7ck-438e.csv?$order=iucr&$limit=50000
+2026-10-26T17:42:04Z	usda	FoodData_Central_sr_legacy_food_csv_2018-04.zip	200	6074592	b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0	https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip
+2026-10-26T17:42:08Z	ldbc	social_network-sf1-CsvCompositeMergeForeign-LongDateFormatter.tar.zst	200	211535038	0b2e240061e51098bc19e9d5ee535cc16d01da522c8aab3d6dfde6350cbe5bf6	https://datasets.ldbcouncil.org/snb-interactive-v1/social_network-sf1-CsvCompositeMergeForeign-LongDateFormatter.tar.zst
+tpcds-kit commit 5a3a81796992b725c2a8b216767e142609966752
+2026-10-26T17:44:43Z	sec	2026q3.zip	200	65148008	b6ebdc56b78526a6423f5b99f6e355afcb0510e7264324300ee5f0d3bd1bad21	https://www.sec.gov/files/dera/data/financial-statement-data-sets/2026q3.zip (browser download)
+2026-10-26T17:45:12Z	tpcds	sf1/customer_address.dat	gen	5502165	4768d6769226bd5fbc246da7c362df159e6f5817d51e42c796501c1abf98dede	dsdgen -scale 1 (tpcds-kit 5a3a817, gcc -std=gnu89)
+2026-10-26T17:45:12Z	tpcds	sf1/customer.dat	gen	13210282	3f703e31425b37174a1b1d245969a9e7b8477901c2902b403a51fb89d9516a6b	dsdgen -scale 1 (tpcds-kit 5a3a817, gcc -std=gnu89)
+2026-10-26T17:45:12Z	tpcds	sf1/customer_demographics.dat	gen	80660096	8cbef8c4c6279289fd7417d19ff9ab920f951d1609e753cf8733f1f23de6d622	dsdgen -scale 1 (tpcds-kit 5a3a817, gcc -std=gnu89)
+2026-10-26T17:45:12Z	tpcds	sf1/household_demographics.dat	gen	151653	c0c4f83c22fb7982abd78fcfcbdbba2919e6e0a1f628e7592532dac649afb6d2	dsdgen -scale 1 (tpcds-kit 5a3a817, gcc -std=gnu89)
+2026-10-26T17:45:12Z	tpcds	sf1/income_band.dat	gen	328	a337cf409fd50ea31298d706ba4c81d131c4de1c104f93f7700f5dc13b9e0b5f	dsdgen -scale 1 (tpcds-kit 5a3a817, gcc -std=gnu89)

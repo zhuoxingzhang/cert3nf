@@ -1,0 +1,2 @@
+numpy>=1.26
+# optional: vllm (LLM answers, normalizer), pandas and pyarrow (unpacking some raw data)

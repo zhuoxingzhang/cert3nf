@@ -1,0 +1,4069 @@
+{
+ "source": "Publisher documentation saved under e3/truth/docs/fresh/ (sha256 in SHA256SUMS): TPC-DS v3.2.0; LDBC SNB specification (v2.2.5-SNAPSHOT, Appendix D for the Interactive v1 legacy data sets); GTFS Schedule Reference; FAA ardata.pdf (5/8/2025); ABS ASGS Edition 3 web pages; SEC Financial Statement Data Sets; College Scorecard Field of Study documentation (October 2026) and data dictionary; EPA AirData FileFormats (v3.0.0); 2024 ACS PUMS data dictionary and Census regions and divisions; City of Chicago portal metadata (ijzp-q8t2, c7ck-438e); USDA FoodData Central download field descriptions (October 2020)",
+ "truth_kind": "documented (confirmatory)",
+ "rule": "Sigma* is the set of FDs that the publisher documentation implies among the attributes of each relation, projected and closed over the dropped columns, each with a verbatim quote; sure when the quoted text states it (declared key, foreign key to a declared key, an explicit one-to-one or nesting statement), unsure when it needs an inference the text does not spell out. Dependencies the documentation hints at but does not state are listed under undocumented_regularities and are not part of Sigma*. Written from the documentation alone, before any data file was opened.",
+ "datasets": {
+  "fresh_tpcds_customer": {
+   "attributes": [
+    "c_customer_sk",
+    "c_customer_id",
+    "c_first_name",
+    "c_last_name",
+    "c_birth_country",
+    "c_current_addr_sk",
+    "ca_city",
+    "ca_county",
+    "ca_state",
+    "ca_zip",
+    "ca_gmt_offset",
+    "c_current_cdemo_sk",
+    "cd_gender",
+    "cd_marital_status",
+    "cd_education_status",
+    "cd_purchase_estimate",
+    "cd_credit_rating",
+    "cd_dep_count",
+    "cd_dep_employed_count",
+    "cd_dep_college_count",
+    "c_current_hdemo_sk",
+    "hd_income_band_sk",
+    "hd_buy_potential",
+    "ib_lower_bound",
+    "ib_upper_bound"
+   ],
+   "key": [
+    "c_customer_sk"
+   ],
+   "spec": {
+    "tables": {
+     "customer": {
+      "file": "tpcds/sf1/customer.csv",
+      "delimiter": "|",
+      "encoding": "latin-1"
+     },
+     "customer_address": {
+      "file": "tpcds/sf1/customer_address.csv",
+      "delimiter": "|",
+      "encoding": "latin-1"
+     },
+     "customer_demographics": {
+      "file": "tpcds/sf1/customer_demographics.csv",
+      "delimiter": "|",
+      "encoding": "latin-1"
+     },
+     "household_demographics": {
+      "file": "tpcds/sf1/household_demographics.csv",
+      "delimiter": "|",
+      "encoding": "latin-1"
+     },
+     "income_band": {
+      "file": "tpcds/sf1/income_band.csv",
+      "delimiter": "|",
+      "encoding": "latin-1"
+     }
+    },
+    "root": "customer",
+    "joins": [
+     {
+      "left": [
+       "customer.c_current_addr_sk"
+      ],
+      "right": "customer_address",
+      "key": [
+       "ca_address_sk"
+      ]
+     },
+     {
+      "left": [
+       "customer.c_current_cdemo_sk"
+      ],
+      "right": "customer_demographics",
+      "key": [
+       "cd_demo_sk"
+      ]
+     },
+     {
+      "left": [
+       "customer.c_current_hdemo_sk"
+      ],
+      "right": "household_demographics",
+      "key": [
+       "hd_demo_sk"
+      ]
+     },
+     {
+      "left": [
+       "household_demographics.hd_income_band_sk"
+      ],
+      "right": "income_band",
+      "key": [
+       "ib_income_band_sk"
+      ]
+     }
+    ],
+    "attributes": [
+     "c_customer_sk",
+     "c_customer_id",
+     "c_first_name",
+     "c_last_name",
+     "c_birth_country",
+     "c_current_addr_sk",
+     "ca_city",
+     "ca_county",
+     "ca_state",
+     "ca_zip",
+     "ca_gmt_offset",
+     "c_current_cdemo_sk",
+     "cd_gender",
+     "cd_marital_status",
+     "cd_education_status",
+     "cd_purchase_estimate",
+     "cd_credit_rating",
+     "cd_dep_count",
+     "cd_dep_employed_count",
+     "cd_dep_college_count",
+     "c_current_hdemo_sk",
+     "hd_income_band_sk",
+     "hd_buy_potential",
+     "ib_lower_bound",
+     "ib_upper_bound"
+    ],
+    "columns": {
+     "customer.c_customer_sk": "c_customer_sk",
+     "customer.c_customer_id": "c_customer_id",
+     "customer.c_first_name": "c_first_name",
+     "customer.c_last_name": "c_last_name",
+     "customer.c_birth_country": "c_birth_country",
+     "customer.c_current_addr_sk": "c_current_addr_sk",
+     "customer_address.ca_city": "ca_city",
+     "customer_address.ca_county": "ca_county",
+     "customer_address.ca_state": "ca_state",
+     "customer_address.ca_zip": "ca_zip",
+     "customer_address.ca_gmt_offset": "ca_gmt_offset",
+     "customer.c_current_cdemo_sk": "c_current_cdemo_sk",
+     "customer_demographics.cd_gender": "cd_gender",
+     "customer_demographics.cd_marital_status": "cd_marital_status",
+     "customer_demographics.cd_education_status": "cd_education_status",
+     "customer_demographics.cd_purchase_estimate": "cd_purchase_estimate",
+     "customer_demographics.cd_credit_rating": "cd_credit_rating",
+     "customer_demographics.cd_dep_count": "cd_dep_count",
+     "customer_demographics.cd_dep_employed_count": "cd_dep_employed_count",
+     "customer_demographics.cd_dep_college_count": "cd_dep_college_count",
+     "customer.c_current_hdemo_sk": "c_current_hdemo_sk",
+     "household_demographics.hd_income_band_sk": "hd_income_band_sk",
+     "household_demographics.hd_buy_potential": "hd_buy_potential",
+     "income_band.ib_lower_bound": "ib_lower_bound",
+     "income_band.ib_upper_bound": "ib_upper_bound"
+    }
+   },
+   "truth": [
+    {
+     "lhs": [
+      "c_customer_sk"
+     ],
+     "rhs": [
+      "c_customer_id",
+      "c_first_name",
+      "c_last_name",
+      "c_birth_country",
+      "c_current_addr_sk",
+      "c_current_cdemo_sk",
+      "c_current_hdemo_sk"
+     ],
+     "sure": true,
+     "clause": "tpc-ds_v3.2.0.pdf, Clause 2.4.7, Table 2-14 (p. 32): \"Each row in this dimension table represents a customer.\" and \"c_customer_sk identifier N Y\"; tpc-ds_v3.2.0.pdf, Clause 2.2.1.2 (p. 22): \"Columns that are part of the table's primary key are indicated in the column called Primary Key\"",
+     "justification": "c_customer_sk is the declared primary key of customer, and the right-hand side are columns of customer.",
+     "audit": {
+      "verdicts": {
+       "c_customer_id": "TRUE",
+       "c_first_name": "TRUE",
+       "c_last_name": "TRUE",
+       "c_birth_country": "TRUE",
+       "c_current_addr_sk": "TRUE",
+       "c_current_cdemo_sk": "TRUE",
+       "c_current_hdemo_sk": "TRUE"
+      },
+      "quote": "c_customer_sk identifier N Y | A Primary Key is one or more columns that uniquely identifies a row.",
+      "source": "tpc-ds_v3.2.0.pdf, Clause 2.4.7, Table 2-14, p. 32; tpc-ds_v3.2.0.pdf, Clause 2.5.1.6, p. 36"
+     }
+    },
+    {
+     "lhs": [
+      "c_current_addr_sk"
+     ],
+     "rhs": [
+      "ca_city",
+      "ca_county",
+      "ca_state",
+      "ca_zip",
+      "ca_gmt_offset"
+     ],
+     "sure": true,
+     "clause": "tpc-ds_v3.2.0.pdf, Table 2-14 (p. 32): \"c_current_addr_sk identifier ca_addres_sk\"; Clause 2.4.8, Table 2-15 (p. 32): \"ca_address_sk identifier N Y\"; tpc-ds_v3.2.0.pdf, Clause 2.2.4 (p. 23): \"If the values in this column join with another column, the foreign columns name is listed in the Foreign Key field of the column definition.\"",
+     "justification": "c_current_addr_sk is a foreign key to the declared primary key ca_address_sk of customer_address, so it determines the columns of the one address row it references; the documented 'each customer can have more than one address' concerns the rows of customer_address, not the single current address of a customer row.",
+     "audit": {
+      "verdicts": {
+       "ca_city": "TRUE",
+       "ca_county": "TRUE",
+       "ca_state": "TRUE",
+       "ca_zip": "TRUE",
+       "ca_gmt_offset": "TRUE"
+      },
+      "quote": "c_current_addr_sk identifier ca_addres_sk | ca_address_sk identifier N Y | If the values in this column join with another column, the foreign columns name is listed in the Foreign Key field of the column definition.",
+      "source": "tpc-ds_v3.2.0.pdf, Clause 2.4.7, Table 2-14, p. 32; tpc-ds_v3.2.0.pdf, Clause 2.4.8, Table 2-15, pp. 32-33; tpc-ds_v3.2.0.pdf, Clause 2.2.4, p. 23"
+     }
+    },
+    {
+     "lhs": [
+      "c_current_cdemo_sk"
+     ],
+     "rhs": [
+      "cd_gender",
+      "cd_marital_status",
+      "cd_education_status",
+      "cd_purchase_estimate",
+      "cd_credit_rating",
+      "cd_dep_count",
+      "cd_dep_employed_count",
+      "cd_dep_college_count"
+     ],
+     "sure": true,
+     "clause": "tpc-ds_v3.2.0.pdf, Table 2-14 (p. 32): \"c_current_cdemo_sk identifier cd_demo_sk\"; Clause 2.4.9, Table 2-16 (p. 33): \"cd_demo_sk identifier N Y\"; tpc-ds_v3.2.0.pdf, Clause 2.2.4 (p. 23): \"If the values in this column join with another column, the foreign columns name is listed in the Foreign Key field of the column definition.\"",
+     "justification": "c_current_cdemo_sk is a foreign key to the declared primary key cd_demo_sk of customer_demographics.",
+     "audit": {
+      "verdicts": {
+       "cd_gender": "TRUE",
+       "cd_marital_status": "TRUE",
+       "cd_education_status": "TRUE",
+       "cd_purchase_estimate": "TRUE",
+       "cd_credit_rating": "TRUE",
+       "cd_dep_count": "TRUE",
+       "cd_dep_employed_count": "TRUE",
+       "cd_dep_college_count": "TRUE"
+      },
+      "quote": "c_current_cdemo_sk identifier cd_demo_sk | cd_demo_sk identifier N Y | If the values in this column join with another column, the foreign columns name is listed in the Foreign Key field of the column definition.",
+      "source": "tpc-ds_v3.2.0.pdf, Clause 2.4.7, Table 2-14, p. 32; tpc-ds_v3.2.0.pdf, Clause 2.4.9, Table 2-16, p. 33; tpc-ds_v3.2.0.pdf, Clause 2.2.4, p. 23"
+     }
+    },
+    {
+     "lhs": [
+      "cd_gender",
+      "cd_marital_status",
+      "cd_education_status",
+      "cd_purchase_estimate",
+      "cd_credit_rating",
+      "cd_dep_count",
+      "cd_dep_employed_count",
+      "cd_dep_college_count"
+     ],
+     "rhs": [
+      "c_current_cdemo_sk"
+     ],
+     "sure": true,
+     "clause": "tpc-ds_v3.2.0.pdf, Clause 2.4.9 (p. 33): \"The customer demographics table contains one row for each unique combination of customer demographic information.\"",
+     "justification": "The eight non-key columns of customer_demographics are its demographic information; one row per unique combination makes them a key of that table, so after the join they determine the referenced cd_demo_sk, which equals c_current_cdemo_sk.",
+     "audit": {
+      "verdicts": {
+       "c_current_cdemo_sk": "TRUE"
+      },
+      "quote": "The customer demographics table contains one row for each unique combination of customer demographic information.",
+      "source": "tpc-ds_v3.2.0.pdf, Clause 2.4.9, Table 2-16, p. 33"
+     }
+    },
+    {
+     "lhs": [
+      "c_current_hdemo_sk"
+     ],
+     "rhs": [
+      "hd_income_band_sk",
+      "hd_buy_potential"
+     ],
+     "sure": true,
+     "clause": "tpc-ds_v3.2.0.pdf, Table 2-14 (p. 32): \"c_current_hdemo_sk identifier hd_demo_sk\"; Clause 2.4.11, Table 2-18 (p. 34): \"hd_demo_sk identifier N Y\"; tpc-ds_v3.2.0.pdf, Clause 2.2.4 (p. 23): \"If the values in this column join with another column, the foreign columns name is listed in the Foreign Key field of the column definition.\"",
+     "justification": "c_current_hdemo_sk is a foreign key to the declared primary key hd_demo_sk of household_demographics.",
+     "audit": {
+      "verdicts": {
+       "hd_income_band_sk": "TRUE",
+       "hd_buy_potential": "TRUE"
+      },
+      "quote": "c_current_hdemo_sk identifier hd_demo_sk | hd_demo_sk identifier N Y | If the values in this column join with another column, the foreign columns name is listed in the Foreign Key field of the column definition.",
+      "source": "tpc-ds_v3.2.0.pdf, Clause 2.4.7, Table 2-14, p. 32; tpc-ds_v3.2.0.pdf, Clause 2.4.11, Table 2-18, p. 34; tpc-ds_v3.2.0.pdf, Clause 2.2.4, p. 23"
+     }
+    },
+    {
+     "lhs": [
+      "hd_income_band_sk"
+     ],
+     "rhs": [
+      "ib_lower_bound",
+      "ib_upper_bound"
+     ],
+     "sure": true,
+     "clause": "tpc-ds_v3.2.0.pdf, Table 2-18 (p. 34): \"hd_income_band_sk identifier ib_income_band_sk\"; Clause 2.4.13, Table 2-20 (p. 34): \"ib_income_band_sk identifier N Y\"; tpc-ds_v3.2.0.pdf, Clause 2.2.4 (p. 23): \"If the values in this column join with another column, the foreign columns name is listed in the Foreign Key field of the column definition.\"",
+     "justification": "hd_income_band_sk is a foreign key to the declared primary key of income_band.",
+     "audit": {
+      "verdicts": {
+       "ib_lower_bound": "TRUE",
+       "ib_upper_bound": "TRUE"
+      },
+      "quote": "hd_income_band_sk identifier ib_income_band_sk | ib_income_band_sk identifier N Y | If the values in this column join with another column, the foreign columns name is listed in the Foreign Key field of the column definition.",
+      "source": "tpc-ds_v3.2.0.pdf, Clause 2.4.11, Table 2-18, p. 34; tpc-ds_v3.2.0.pdf, Clause 2.4.13, Table 2-20, p. 34; tpc-ds_v3.2.0.pdf, Clause 2.2.4, p. 23"
+     }
+    },
+    {
+     "lhs": [
+      "c_customer_id"
+     ],
+     "rhs": [
+      "c_customer_sk"
+     ],
+     "sure": true,
+     "clause": "tpc-ds_v3.2.0.pdf, Clause 2.2.1.3 (p. 22): \"A business key is neither a primary key nor a foreign key in the context of the data warehouse schema. It is only used to differentiate new data from update data of the source tables during the data maintenance operations.\"; Clause 1.3.3 (p. 18): \"As dimension rows are updated, the previous values are overwritten and this information is lost.\" and \"Customer is an example of a Non-Historical dimension.\"",
+     "justification": "c_customer_id is the business key (B) of customer, and a non-historical dimension overwrites a row instead of adding one, so one row per business key follows; the specification never states that c_customer_id is unique, and it says a business key is not a key of the schema, hence unsure.",
+     "audit": {
+      "verdicts": {
+       "c_customer_sk": "TRUE"
+      },
+      "quote": "Historical: The history of the changes made to the dimension data is maintained by creating multiple rows for a single business key value. ... Non-Historical: The history of the changes made to the dimension data is not maintained. As dimension rows are updated, the previous values are overwritten and this information is lost. ... Customer is an example of a Non-Historical dimension. | It is only used to differentiate new data from update data of the source tables during the data maintenance operations. | LEFT OUTER JOIN customer ON (purc_customer_id = c_customer_id)",
+      "source": "tpc-ds_v3.2.0.pdf, Clause 1.3.3, p. 18; Clause 2.2.1.3, p. 22; Clause 5.3.11.1 (view ssv), p. 58"
+     }
+    }
+   ],
+   "undocumented_regularities": [
+    "ca_zip -> ca_city, ca_county, ca_state; ca_county -> ca_state; ca_state -> ca_gmt_offset (address geography; Table 2-15 states no dependency among address columns)",
+    "hd_income_band_sk <-> (ib_lower_bound, ib_upper_bound) and ib_lower_bound <-> ib_upper_bound (band bounds; only ib_income_band_sk is declared a key)",
+    "(c_first_name, c_last_name, c_birth_country) -> c_customer_sk (names are not declared unique)",
+    "Documented non-dependency: Clause 2.4.8 'each customer can have more than one address' (customer_address rows); the relation keeps only the current address, so it does not refute c_current_addr_sk being single-valued per customer."
+   ],
+   "construction": "TPC-DS v3.2.0 schema, data from dsdgen 2.10.0 (gregrahn/tpcds-kit) at scale factor 1 with the default seed: customer (root; 100,000 rows at 1GB per Table 3-2) left-joined to customer_address on c_current_addr_sk, customer_demographics on c_current_cdemo_sk, household_demographics on c_current_hdemo_sk and income_band on hd_income_band_sk; to stay within 25 columns the date keys, free-text and secondary columns were dropped (c_first_shipto_date_sk, c_first_sales_date_sk, c_salutation, c_preferred_cust_flag, c_birth_day, c_birth_month, c_birth_year, c_login, c_email_address, c_last_review_date_sk, ca_address_id, ca_street_number, ca_street_name, ca_street_type, ca_suite_number, ca_country, ca_location_type, hd_dep_count, hd_vehicle_count), the surrogate keys ca_address_sk, cd_demo_sk, hd_demo_sk and ib_income_band_sk are represented by the foreign-key columns that equal them, and all eight demographic columns are kept so that their documented key survives.",
+   "random_columns": null,
+   "gold_design": null,
+   "gold_design_note": "No normalized design is published; the 3NF designs of Sigma* are synthesized."
+  },
+  "fresh_ldbc_comment": {
+   "attributes": [
+    "comment_id",
+    "comment_creationDate",
+    "comment_locationIP",
+    "comment_browserUsed",
+    "comment_length",
+    "comment_replyOfPost",
+    "comment_replyOfComment",
+    "comment_creator",
+    "comment_country",
+    "person_firstName",
+    "person_lastName",
+    "person_gender",
+    "person_birthday",
+    "person_creationDate",
+    "person_locationIP",
+    "person_browserUsed",
+    "person_city",
+    "person_city_name",
+    "person_country",
+    "person_country_name",
+    "person_continent",
+    "person_continent_name",
+    "comment_country_name",
+    "comment_continent",
+    "comment_continent_name"
+   ],
+   "key": [
+    "comment_id"
+   ],
+   "spec": {
+    "tables": {
+     "comment": {
+      "file": "ldbc/social_network-sf1-CsvCompositeMergeForeign-LongDateFormatter/dynamic/comment_0_0.csv",
+      "delimiter": "|",
+      "encoding": "utf-8-sig"
+     },
+     "person": {
+      "file": "ldbc/social_network-sf1-CsvCompositeMergeForeign-LongDateFormatter/dynamic/person_0_0.csv",
+      "delimiter": "|",
+      "encoding": "utf-8-sig"
+     },
+     "person_city": {
+      "file": "ldbc/social_network-sf1-CsvCompositeMergeForeign-LongDateFormatter/static/place_0_0.csv",
+      "delimiter": "|",
+      "encoding": "utf-8-sig"
+     },
+     "person_country": {
+      "file": "ldbc/social_network-sf1-CsvCompositeMergeForeign-LongDateFormatter/static/place_0_0.csv",
+      "delimiter": "|",
+      "encoding": "utf-8-sig"
+     },
+     "person_continent": {
+      "file": "ldbc/social_network-sf1-CsvCompositeMergeForeign-LongDateFormatter/static/place_0_0.csv",
+      "delimiter": "|",
+      "encoding": "utf-8-sig"
+     },
+     "comment_country": {
+      "file": "ldbc/social_network-sf1-CsvCompositeMergeForeign-LongDateFormatter/static/place_0_0.csv",
+      "delimiter": "|",
+      "encoding": "utf-8-sig"
+     },
+     "comment_continent": {
+      "file": "ldbc/social_network-sf1-CsvCompositeMergeForeign-LongDateFormatter/static/place_0_0.csv",
+      "delimiter": "|",
+      "encoding": "utf-8-sig"
+     }
+    },
+    "root": "comment",
+    "joins": [
+     {
+      "left": [
+       "comment.creator"
+      ],
+      "right": "person",
+      "key": [
+       "id"
+      ]
+     },
+     {
+      "left": [
+       "person.place"
+      ],
+      "right": "person_city",
+      "key": [
+       "id"
+      ]
+     },
+     {
+      "left": [
+       "person_city.isPartOf"
+      ],
+      "right": "person_country",
+      "key": [
+       "id"
+      ]
+     },
+     {
+      "left": [
+       "person_country.isPartOf"
+      ],
+      "right": "person_continent",
+      "key": [
+       "id"
+      ]
+     },
+     {
+      "left": [
+       "comment.place"
+      ],
+      "right": "comment_country",
+      "key": [
+       "id"
+      ]
+     },
+     {
+      "left": [
+       "comment_country.isPartOf"
+      ],
+      "right": "comment_continent",
+      "key": [
+       "id"
+      ]
+     }
+    ],
+    "attributes": [
+     "comment_id",
+     "comment_creationDate",
+     "comment_locationIP",
+     "comment_browserUsed",
+     "comment_length",
+     "comment_replyOfPost",
+     "comment_replyOfComment",
+     "comment_creator",
+     "comment_country",
+     "person_firstName",
+     "person_lastName",
+     "person_gender",
+     "person_birthday",
+     "person_creationDate",
+     "person_locationIP",
+     "person_browserUsed",
+     "person_city",
+     "person_city_name",
+     "person_country",
+     "person_country_name",
+     "person_continent",
+     "person_continent_name",
+     "comment_country_name",
+     "comment_continent",
+     "comment_continent_name"
+    ],
+    "columns": {
+     "comment.id": "comment_id",
+     "comment.creationDate": "comment_creationDate",
+     "comment.locationIP": "comment_locationIP",
+     "comment.browserUsed": "comment_browserUsed",
+     "comment.length": "comment_length",
+     "comment.replyOfPost": "comment_replyOfPost",
+     "comment.replyOfComment": "comment_replyOfComment",
+     "comment.creator": "comment_creator",
+     "comment.place": "comment_country",
+     "person.firstName": "person_firstName",
+     "person.lastName": "person_lastName",
+     "person.gender": "person_gender",
+     "person.birthday": "person_birthday",
+     "person.creationDate": "person_creationDate",
+     "person.locationIP": "person_locationIP",
+     "person.browserUsed": "person_browserUsed",
+     "person.place": "person_city",
+     "person_city.name": "person_city_name",
+     "person_city.isPartOf": "person_country",
+     "person_country.name": "person_country_name",
+     "person_country.isPartOf": "person_continent",
+     "person_continent.name": "person_continent_name",
+     "comment_country.name": "comment_country_name",
+     "comment_country.isPartOf": "comment_continent",
+     "comment_continent.name": "comment_continent_name"
+    }
+   },
+   "truth": [
+    {
+     "lhs": [
+      "comment_id"
+     ],
+     "rhs": [
+      "comment_creationDate",
+      "comment_locationIP",
+      "comment_browserUsed",
+      "comment_length",
+      "comment_replyOfPost",
+      "comment_replyOfComment",
+      "comment_creator",
+      "comment_country"
+     ],
+     "sure": true,
+     "clause": "ldbc-snb-specification.pdf, Section 3.1, Table 3.1 (p. 19): \"All IDs within a single entity type (e.g. Person, Message) are unique\"; ldbc-snb-specification.pdf, Appendix D.1.2, Table D.7 (Files output by the CsvCompositeMergeForeign serializer, p. 162): \"comment_*.csv id | creationDate | locationIP | browserUsed | content | length | creator | place | replyOfPost | replyOfComment\"; ldbc-snb-specification.pdf, Table 3.10 (pp. 23-24): \"hasCreator Message[0..*] Person[1]\", \"isLocatedIn Message[0..*] Country[1]\" and \"replyOf Comment[0..*] Message[1]\"",
+     "justification": "Comment ids are unique, so the id determines every column of the comment row; the creator, the country (place) and the replied message are single-valued edges merged into that row.",
+     "audit": {
+      "verdicts": {
+       "comment_creationDate": "TRUE",
+       "comment_locationIP": "TRUE",
+       "comment_browserUsed": "TRUE",
+       "comment_length": "TRUE",
+       "comment_replyOfPost": "TRUE",
+       "comment_replyOfComment": "TRUE",
+       "comment_creator": "TRUE",
+       "comment_country": "TRUE"
+      },
+      "quote": "All IDs within a single entity type (e.g. Person, Message) are unique, but different entity types (e.g. a Forum and a Tag) might have the same ID. | comment_*.csv id | creationDate | locationIP | browserUsed | content | length | creator | place | replyOfPost | replyOfComment | hasCreator Message[0..*] Person[1] D A Message and its creator (Person) | isLocatedIn Message[0..*] Country[1] D A Message and the Country from which it was issued | replyOf Comment[0..*] Message[1] D A Comment and the Message it replies",
+      "source": "ldbc-snb-specification.pdf, Section 3.1, Table 3.1, p. 19; ldbc-snb-specification.pdf, Appendix D.1.2, Table D.7 (CsvCompositeMergeForeign), p. 162; ldbc-snb-specification.pdf, Section 3.2.2, Table 3.10, p. 23; ldbc-snb-specification.pdf, Section 3.2.2, Table 3.10, p. 24"
+     }
+    },
+    {
+     "lhs": [
+      "comment_creator"
+     ],
+     "rhs": [
+      "person_firstName",
+      "person_lastName",
+      "person_gender",
+      "person_birthday",
+      "person_creationDate",
+      "person_locationIP",
+      "person_browserUsed",
+      "person_city"
+     ],
+     "sure": true,
+     "clause": "ldbc-snb-specification.pdf, Section 3.1, Table 3.1 (p. 19): \"All IDs within a single entity type (e.g. Person, Message) are unique\"; ldbc-snb-specification.pdf, Appendix D.1.2, Table D.7 (Files output by the CsvCompositeMergeForeign serializer, p. 162): \"person_*.csv id | firstName | lastName | gender | birthday | creationDate | locationIP | browserUsed | place | language | email\"; ldbc-snb-specification.pdf, Section 3.2.2, Table 3.10 (p. 23): \"isLocatedIn Person[0..*] City[1]\"",
+     "justification": "The creator column holds a Person id, which is unique, so it determines the person row, including its single home city (place).",
+     "audit": {
+      "verdicts": {
+       "person_firstName": "TRUE",
+       "person_lastName": "TRUE",
+       "person_gender": "TRUE",
+       "person_birthday": "TRUE",
+       "person_creationDate": "TRUE",
+       "person_locationIP": "TRUE",
+       "person_browserUsed": "TRUE",
+       "person_city": "TRUE"
+      },
+      "quote": "All IDs within a single entity type (e.g. Person, Message) are unique, but different entity types (e.g. a Forum and a Tag) might have the same ID. | person_*.csv id | firstName | lastName | gender | birthday | creationDate | locationIP | browserUsed | place | language | email | isLocatedIn Person[0..*] City[1] D A Person and their home City",
+      "source": "ldbc-snb-specification.pdf, Section 3.1, Table 3.1, p. 19; ldbc-snb-specification.pdf, Appendix D.1.2, Table D.7 (CsvCompositeMergeForeign), p. 162; ldbc-snb-specification.pdf, Section 3.2.2, Table 3.10, p. 23"
+     }
+    },
+    {
+     "lhs": [
+      "person_city"
+     ],
+     "rhs": [
+      "person_city_name",
+      "person_country"
+     ],
+     "sure": true,
+     "clause": "ldbc-snb-specification.pdf, Section 3.1, Table 3.1 (p. 19): \"All IDs within a single entity type (e.g. Person, Message) are unique\"; ldbc-snb-specification.pdf, Appendix D.1.2, Table D.7 (Files output by the CsvCompositeMergeForeign serializer, p. 162): \"place_*.csv id | name | url | type | isPartOf\"; ldbc-snb-specification.pdf, Section 3.2.2, Table 3.10 (p. 23): \"isPartOf City[1..*] Country[1]\"",
+     "justification": "Place ids are unique, so the city id determines the name and the isPartOf column of its place row, and a city is part of exactly one country.",
+     "audit": {
+      "verdicts": {
+       "person_city_name": "TRUE",
+       "person_country": "TRUE"
+      },
+      "quote": "All IDs within a single entity type (e.g. Person, Message) are unique, but different entity types (e.g. a Forum and a Tag) might have the same ID. | all subclasses use the same id space, e.g. there cannot be a Comment and a Post with id 1 at the same time | place_*.csv id | name | url | type | isPartOf | isPartOf City[1..*] Country[1] D A City and the Country it is part of",
+      "source": "ldbc-snb-specification.pdf, Section 3.1, Table 3.1, p. 19; ldbc-snb-specification.pdf, Appendix D.1.2 (Inheritance), p. 160; ldbc-snb-specification.pdf, Appendix D.1.2, Table D.7 (CsvCompositeMergeForeign), p. 162; ldbc-snb-specification.pdf, Section 3.2.2, Table 3.10, p. 23"
+     }
+    },
+    {
+     "lhs": [
+      "person_country"
+     ],
+     "rhs": [
+      "person_country_name",
+      "person_continent"
+     ],
+     "sure": true,
+     "clause": "ldbc-snb-specification.pdf, Section 3.1, Table 3.1 (p. 19): \"All IDs within a single entity type (e.g. Person, Message) are unique\"; ldbc-snb-specification.pdf, Appendix D.1.2, Table D.7 (Files output by the CsvCompositeMergeForeign serializer, p. 162): \"place_*.csv id | name | url | type | isPartOf\"; ldbc-snb-specification.pdf, Section 3.2.2, Table 3.10 (p. 23): \"isPartOf Country[1..*] Continent[1]\"",
+     "justification": "The country id determines its place row, and a country is part of exactly one continent.",
+     "audit": {
+      "verdicts": {
+       "person_country_name": "TRUE",
+       "person_continent": "TRUE"
+      },
+      "quote": "All IDs within a single entity type (e.g. Person, Message) are unique, but different entity types (e.g. a Forum and a Tag) might have the same ID. | all subclasses use the same id space, e.g. there cannot be a Comment and a Post with id 1 at the same time | place_*.csv id | name | url | type | isPartOf | isPartOf Country[1..*] Continent[1] D A Country and the Continent it is part of",
+      "source": "ldbc-snb-specification.pdf, Section 3.1, Table 3.1, p. 19; ldbc-snb-specification.pdf, Appendix D.1.2 (Inheritance), p. 160; ldbc-snb-specification.pdf, Appendix D.1.2, Table D.7 (CsvCompositeMergeForeign), p. 162; ldbc-snb-specification.pdf, Section 3.2.2, Table 3.10, p. 23"
+     }
+    },
+    {
+     "lhs": [
+      "person_continent"
+     ],
+     "rhs": [
+      "person_continent_name"
+     ],
+     "sure": true,
+     "clause": "ldbc-snb-specification.pdf, Section 3.1, Table 3.1 (p. 19): \"All IDs within a single entity type (e.g. Person, Message) are unique\"; ldbc-snb-specification.pdf, Appendix D.1.2, Table D.7 (Files output by the CsvCompositeMergeForeign serializer, p. 162): \"place_*.csv id | name | url | type | isPartOf\"",
+     "justification": "The continent id determines its place row and so its name.",
+     "audit": {
+      "verdicts": {
+       "person_continent_name": "TRUE"
+      },
+      "quote": "All IDs within a single entity type (e.g. Person, Message) are unique, but different entity types (e.g. a Forum and a Tag) might have the same ID. | all subclasses use the same id space, e.g. there cannot be a Comment and a Post with id 1 at the same time | place_*.csv id | name | url | type | isPartOf",
+      "source": "ldbc-snb-specification.pdf, Section 3.1, Table 3.1, p. 19; ldbc-snb-specification.pdf, Appendix D.1.2 (Inheritance), p. 160; ldbc-snb-specification.pdf, Appendix D.1.2, Table D.7 (CsvCompositeMergeForeign), p. 162"
+     }
+    },
+    {
+     "lhs": [
+      "comment_country"
+     ],
+     "rhs": [
+      "comment_country_name",
+      "comment_continent"
+     ],
+     "sure": true,
+     "clause": "ldbc-snb-specification.pdf, Section 3.1, Table 3.1 (p. 19): \"All IDs within a single entity type (e.g. Person, Message) are unique\"; ldbc-snb-specification.pdf, Appendix D.1.2, Table D.7 (Files output by the CsvCompositeMergeForeign serializer, p. 162): \"place_*.csv id | name | url | type | isPartOf\"; ldbc-snb-specification.pdf, Section 3.2.2, Table 3.10 (p. 23): \"isPartOf Country[1..*] Continent[1]\"",
+     "justification": "The message country id determines its place row, and a country is part of exactly one continent.",
+     "audit": {
+      "verdicts": {
+       "comment_country_name": "TRUE",
+       "comment_continent": "TRUE"
+      },
+      "quote": "All IDs within a single entity type (e.g. Person, Message) are unique, but different entity types (e.g. a Forum and a Tag) might have the same ID. | all subclasses use the same id space, e.g. there cannot be a Comment and a Post with id 1 at the same time | place_*.csv id | name | url | type | isPartOf | isPartOf Country[1..*] Continent[1] D A Country and the Continent it is part of",
+      "source": "ldbc-snb-specification.pdf, Section 3.1, Table 3.1, p. 19; ldbc-snb-specification.pdf, Appendix D.1.2 (Inheritance), p. 160; ldbc-snb-specification.pdf, Appendix D.1.2, Table D.7 (CsvCompositeMergeForeign), p. 162; ldbc-snb-specification.pdf, Section 3.2.2, Table 3.10, p. 23"
+     }
+    },
+    {
+     "lhs": [
+      "comment_continent"
+     ],
+     "rhs": [
+      "comment_continent_name"
+     ],
+     "sure": true,
+     "clause": "ldbc-snb-specification.pdf, Section 3.1, Table 3.1 (p. 19): \"All IDs within a single entity type (e.g. Person, Message) are unique\"; ldbc-snb-specification.pdf, Appendix D.1.2, Table D.7 (Files output by the CsvCompositeMergeForeign serializer, p. 162): \"place_*.csv id | name | url | type | isPartOf\"",
+     "justification": "The continent id determines its place row and so its name.",
+     "audit": {
+      "verdicts": {
+       "comment_continent_name": "TRUE"
+      },
+      "quote": "All IDs within a single entity type (e.g. Person, Message) are unique, but different entity types (e.g. a Forum and a Tag) might have the same ID. | all subclasses use the same id space, e.g. there cannot be a Comment and a Post with id 1 at the same time | place_*.csv id | name | url | type | isPartOf",
+      "source": "ldbc-snb-specification.pdf, Section 3.1, Table 3.1, p. 19; ldbc-snb-specification.pdf, Appendix D.1.2 (Inheritance), p. 160; ldbc-snb-specification.pdf, Appendix D.1.2, Table D.7 (CsvCompositeMergeForeign), p. 162"
+     }
+    }
+   ],
+   "undocumented_regularities": [
+    "comment_locationIP, comment_browserUsed related to the creator's person_locationIP, person_browserUsed (Table 3.11: browsers and IP zones 'used to set the browsers used by the users' and 'to assign the IP addresses to users'; no rule ties a message to its creator's values)",
+    "comment_locationIP -> comment_country and person_locationIP -> person_country (Table 3.11: 'IP Zones Contains the set of IP ranges assigned to each country'; not stated as a rule on the data)",
+    "person_firstName, person_lastName correlated with person_country (Table 3.11 'Name by Country'), not a dependency",
+    "names of cities, countries and continents determine their ids (place names are not declared unique)",
+    "comment_country equal to or determined by person_country (no rule in the specification)",
+    "Documented non-dependency: hasCreator Message[0..*] Person[1] lets a person create many comments, so comment_creator does not determine comment_id."
+   ],
+   "construction": "LDBC SNB Interactive v1 SF1, CsvCompositeMergeForeign-LongDateFormatter (Hadoop Datagen, legacy data set of Appendix D; Table B.1 gives 2,581,736 comments at SF1 for the full network, sampled to 1,000,000 records): comment (root) left-joined to person on creator, and to the place file in five roles (the person's city, its country and continent; the message country and its continent) along place and isPartOf; dropped comment.content (free text), person.language and person.email (multi-valued composite attributes) and the url and type columns of the place roles (type is the constant discriminator of each role).",
+   "random_columns": null,
+   "gold_design": null,
+   "gold_design_note": "No normalized design is published; the 3NF designs of Sigma* are synthesized."
+  },
+  "fresh_ldbc_study": {
+   "attributes": [
+    "person_id",
+    "university_id",
+    "classYear",
+    "person_firstName",
+    "person_lastName",
+    "person_gender",
+    "person_birthday",
+    "person_creationDate",
+    "person_locationIP",
+    "person_browserUsed",
+    "person_city",
+    "person_city_name",
+    "person_country",
+    "person_country_name",
+    "person_continent",
+    "person_continent_name",
+    "university_name",
+    "university_url",
+    "university_city",
+    "university_city_name",
+    "university_country",
+    "university_country_name",
+    "university_continent",
+    "university_continent_name"
+   ],
+   "key": [
+    "person_id",
+    "university_id"
+   ],
+   "spec": {
+    "tables": {
+     "study": {
+      "file": "ldbc/social_network-sf1-CsvCompositeMergeForeign-LongDateFormatter/dynamic/person_studyAt_organisation_0_0.csv",
+      "delimiter": "|",
+      "encoding": "utf-8-sig"
+     },
+     "person": {
+      "file": "ldbc/social_network-sf1-CsvCompositeMergeForeign-LongDateFormatter/dynamic/person_0_0.csv",
+      "delimiter": "|",
+      "encoding": "utf-8-sig"
+     },
+     "person_city": {
+      "file": "ldbc/social_network-sf1-CsvCompositeMergeForeign-LongDateFormatter/static/place_0_0.csv",
+      "delimiter": "|",
+      "encoding": "utf-8-sig"
+     },
+     "person_country": {
+      "file": "ldbc/social_network-sf1-CsvCompositeMergeForeign-LongDateFormatter/static/place_0_0.csv",
+      "delimiter": "|",
+      "encoding": "utf-8-sig"
+     },
+     "person_continent": {
+      "file": "ldbc/social_network-sf1-CsvCompositeMergeForeign-LongDateFormatter/static/place_0_0.csv",
+      "delimiter": "|",
+      "encoding": "utf-8-sig"
+     },
+     "university": {
+      "file": "ldbc/social_network-sf1-CsvCompositeMergeForeign-LongDateFormatter/static/organisation_0_0.csv",
+      "delimiter": "|",
+      "encoding": "utf-8-sig"
+     },
+     "university_city": {
+      "file": "ldbc/social_network-sf1-CsvCompositeMergeForeign-LongDateFormatter/static/place_0_0.csv",
+      "delimiter": "|",
+      "encoding": "utf-8-sig"
+     },
+     "university_country": {
+      "file": "ldbc/social_network-sf1-CsvCompositeMergeForeign-LongDateFormatter/static/place_0_0.csv",
+      "delimiter": "|",
+      "encoding": "utf-8-sig"
+     },
+     "university_continent": {
+      "file": "ldbc/social_network-sf1-CsvCompositeMergeForeign-LongDateFormatter/static/place_0_0.csv",
+      "delimiter": "|",
+      "encoding": "utf-8-sig"
+     }
+    },
+    "root": "study",
+    "joins": [
+     {
+      "left": [
+       "study.Person.id"
+      ],
+      "right": "person",
+      "key": [
+       "id"
+      ]
+     },
+     {
+      "left": [
+       "person.place"
+      ],
+      "right": "person_city",
+      "key": [
+       "id"
+      ]
+     },
+     {
+      "left": [
+       "person_city.isPartOf"
+      ],
+      "right": "person_country",
+      "key": [
+       "id"
+      ]
+     },
+     {
+      "left": [
+       "person_country.isPartOf"
+      ],
+      "right": "person_continent",
+      "key": [
+       "id"
+      ]
+     },
+     {
+      "left": [
+       "study.Organisation.id"
+      ],
+      "right": "university",
+      "key": [
+       "id"
+      ]
+     },
+     {
+      "left": [
+       "university.place"
+      ],
+      "right": "university_city",
+      "key": [
+       "id"
+      ]
+     },
+     {
+      "left": [
+       "university_city.isPartOf"
+      ],
+      "right": "university_country",
+      "key": [
+       "id"
+      ]
+     },
+     {
+      "left": [
+       "university_country.isPartOf"
+      ],
+      "right": "university_continent",
+      "key": [
+       "id"
+      ]
+     }
+    ],
+    "attributes": [
+     "person_id",
+     "university_id",
+     "classYear",
+     "person_firstName",
+     "person_lastName",
+     "person_gender",
+     "person_birthday",
+     "person_creationDate",
+     "person_locationIP",
+     "person_browserUsed",
+     "person_city",
+     "person_city_name",
+     "person_country",
+     "person_country_name",
+     "person_continent",
+     "person_continent_name",
+     "university_name",
+     "university_url",
+     "university_city",
+     "university_city_name",
+     "university_country",
+     "university_country_name",
+     "university_continent",
+     "university_continent_name"
+    ],
+    "columns": {
+     "study.Person.id": "person_id",
+     "study.Organisation.id": "university_id",
+     "study.classYear": "classYear",
+     "person.firstName": "person_firstName",
+     "person.lastName": "person_lastName",
+     "person.gender": "person_gender",
+     "person.birthday": "person_birthday",
+     "person.creationDate": "person_creationDate",
+     "person.locationIP": "person_locationIP",
+     "person.browserUsed": "person_browserUsed",
+     "person.place": "person_city",
+     "person_city.name": "person_city_name",
+     "person_city.isPartOf": "person_country",
+     "person_country.name": "person_country_name",
+     "person_country.isPartOf": "person_continent",
+     "person_continent.name": "person_continent_name",
+     "university.name": "university_name",
+     "university.url": "university_url",
+     "university.place": "university_city",
+     "university_city.name": "university_city_name",
+     "university_city.isPartOf": "university_country",
+     "university_country.name": "university_country_name",
+     "university_country.isPartOf": "university_continent",
+     "university_continent.name": "university_continent_name"
+    }
+   },
+   "truth": [
+    {
+     "lhs": [
+      "person_id",
+      "university_id"
+     ],
+     "rhs": [
+      "classYear"
+     ],
+     "sure": true,
+     "clause": "ldbc-snb-specification.pdf, Section 3.2.2 (p. 23): \"Multiple edges (i.e. edges of the same type between two entity instances) are not allowed in SNB graphs.\"; Table 3.10 (p. 24): \"studyAt Person[0..*] University[0..*]\" with attribute classYear \"The year the person graduated\"; ldbc-snb-specification.pdf, Appendix D.1.2, Table D.7 (Files output by the CsvCompositeMergeForeign serializer, p. 162): \"person_studyAt_organisation_*.csv Person.id | Organisation.id | classYear\"",
+     "justification": "At most one studyAt edge joins a person and a university, and the edge carries one classYear; Person[0..*] University[0..*] is a documented non-dependency: neither id alone determines the other.",
+     "audit": {
+      "verdicts": {
+       "classYear": "TRUE"
+      },
+      "quote": "Multiple edges (i.e. edges of the same type between two entity instances) are not allowed in SNB graphs. | studyAt Person[0..*] University[0..*] D A Person and a University it has studied (Attribute classYear) | person_studyAt_organisation_*.csv Person.id | Organisation.id | classYear",
+      "source": "ldbc-snb-specification.pdf, Section 3.2.2, p. 23; ldbc-snb-specification.pdf, Section 3.2.2, Table 3.10, p. 24; ldbc-snb-specification.pdf, Appendix D.1.2, Table D.7 (CsvCompositeMergeForeign), p. 162"
+     }
+    },
+    {
+     "lhs": [
+      "person_id"
+     ],
+     "rhs": [
+      "person_firstName",
+      "person_lastName",
+      "person_gender",
+      "person_birthday",
+      "person_creationDate",
+      "person_locationIP",
+      "person_browserUsed",
+      "person_city"
+     ],
+     "sure": true,
+     "clause": "ldbc-snb-specification.pdf, Section 3.1, Table 3.1 (p. 19): \"All IDs within a single entity type (e.g. Person, Message) are unique\"; ldbc-snb-specification.pdf, Appendix D.1.2, Table D.7 (Files output by the CsvCompositeMergeForeign serializer, p. 162): \"person_*.csv id | firstName | lastName | gender | birthday | creationDate | locationIP | browserUsed | place | language | email\"; ldbc-snb-specification.pdf, Section 3.2.2, Table 3.10 (p. 23): \"isLocatedIn Person[0..*] City[1]\"",
+     "justification": "Person ids are unique, so the id determines the person row, including its single home city (place).",
+     "audit": {
+      "verdicts": {
+       "person_firstName": "TRUE",
+       "person_lastName": "TRUE",
+       "person_gender": "TRUE",
+       "person_birthday": "TRUE",
+       "person_creationDate": "TRUE",
+       "person_locationIP": "TRUE",
+       "person_browserUsed": "TRUE",
+       "person_city": "TRUE"
+      },
+      "quote": "All IDs within a single entity type (e.g. Person, Message) are unique, but different entity types (e.g. a Forum and a Tag) might have the same ID. | person_*.csv id | firstName | lastName | gender | birthday | creationDate | locationIP | browserUsed | place | language | email | isLocatedIn Person[0..*] City[1] D A Person and their home City",
+      "source": "ldbc-snb-specification.pdf, Section 3.1, Table 3.1, p. 19; ldbc-snb-specification.pdf, Appendix D.1.2, Table D.7 (CsvCompositeMergeForeign), p. 162; ldbc-snb-specification.pdf, Section 3.2.2, Table 3.10, p. 23"
+     }
+    },
+    {
+     "lhs": [
+      "person_city"
+     ],
+     "rhs": [
+      "person_city_name",
+      "person_country"
+     ],
+     "sure": true,
+     "clause": "ldbc-snb-specification.pdf, Section 3.1, Table 3.1 (p. 19): \"All IDs within a single entity type (e.g. Person, Message) are unique\"; ldbc-snb-specification.pdf, Appendix D.1.2, Table D.7 (Files output by the CsvCompositeMergeForeign serializer, p. 162): \"place_*.csv id | name | url | type | isPartOf\"; ldbc-snb-specification.pdf, Section 3.2.2, Table 3.10 (p. 23): \"isPartOf City[1..*] Country[1]\"",
+     "justification": "Place ids are unique, so the city id determines the name and the isPartOf column of its place row, and a city is part of exactly one country.",
+     "audit": {
+      "verdicts": {
+       "person_city_name": "TRUE",
+       "person_country": "TRUE"
+      },
+      "quote": "All IDs within a single entity type (e.g. Person, Message) are unique, but different entity types (e.g. a Forum and a Tag) might have the same ID. | all subclasses use the same id space, e.g. there cannot be a Comment and a Post with id 1 at the same time | place_*.csv id | name | url | type | isPartOf | isPartOf City[1..*] Country[1] D A City and the Country it is part of",
+      "source": "ldbc-snb-specification.pdf, Section 3.1, Table 3.1, p. 19; ldbc-snb-specification.pdf, Appendix D.1.2 (Inheritance), p. 160; ldbc-snb-specification.pdf, Appendix D.1.2, Table D.7 (CsvCompositeMergeForeign), p. 162; ldbc-snb-specification.pdf, Section 3.2.2, Table 3.10, p. 23"
+     }
+    },
+    {
+     "lhs": [
+      "person_country"
+     ],
+     "rhs": [
+      "person_country_name",
+      "person_continent"
+     ],
+     "sure": true,
+     "clause": "ldbc-snb-specification.pdf, Section 3.1, Table 3.1 (p. 19): \"All IDs within a single entity type (e.g. Person, Message) are unique\"; ldbc-snb-specification.pdf, Appendix D.1.2, Table D.7 (Files output by the CsvCompositeMergeForeign serializer, p. 162): \"place_*.csv id | name | url | type | isPartOf\"; ldbc-snb-specification.pdf, Section 3.2.2, Table 3.10 (p. 23): \"isPartOf Country[1..*] Continent[1]\"",
+     "justification": "The country id determines its place row, and a country is part of exactly one continent.",
+     "audit": {
+      "verdicts": {
+       "person_country_name": "TRUE",
+       "person_continent": "TRUE"
+      },
+      "quote": "All IDs within a single entity type (e.g. Person, Message) are unique, but different entity types (e.g. a Forum and a Tag) might have the same ID. | all subclasses use the same id space, e.g. there cannot be a Comment and a Post with id 1 at the same time | place_*.csv id | name | url | type | isPartOf | isPartOf Country[1..*] Continent[1] D A Country and the Continent it is part of",
+      "source": "ldbc-snb-specification.pdf, Section 3.1, Table 3.1, p. 19; ldbc-snb-specification.pdf, Appendix D.1.2 (Inheritance), p. 160; ldbc-snb-specification.pdf, Appendix D.1.2, Table D.7 (CsvCompositeMergeForeign), p. 162; ldbc-snb-specification.pdf, Section 3.2.2, Table 3.10, p. 23"
+     }
+    },
+    {
+     "lhs": [
+      "person_continent"
+     ],
+     "rhs": [
+      "person_continent_name"
+     ],
+     "sure": true,
+     "clause": "ldbc-snb-specification.pdf, Section 3.1, Table 3.1 (p. 19): \"All IDs within a single entity type (e.g. Person, Message) are unique\"; ldbc-snb-specification.pdf, Appendix D.1.2, Table D.7 (Files output by the CsvCompositeMergeForeign serializer, p. 162): \"place_*.csv id | name | url | type | isPartOf\"",
+     "justification": "The continent id determines its place row and so its name.",
+     "audit": {
+      "verdicts": {
+       "person_continent_name": "TRUE"
+      },
+      "quote": "All IDs within a single entity type (e.g. Person, Message) are unique, but different entity types (e.g. a Forum and a Tag) might have the same ID. | all subclasses use the same id space, e.g. there cannot be a Comment and a Post with id 1 at the same time | place_*.csv id | name | url | type | isPartOf",
+      "source": "ldbc-snb-specification.pdf, Section 3.1, Table 3.1, p. 19; ldbc-snb-specification.pdf, Appendix D.1.2 (Inheritance), p. 160; ldbc-snb-specification.pdf, Appendix D.1.2, Table D.7 (CsvCompositeMergeForeign), p. 162"
+     }
+    },
+    {
+     "lhs": [
+      "university_id"
+     ],
+     "rhs": [
+      "university_name",
+      "university_url",
+      "university_city"
+     ],
+     "sure": true,
+     "clause": "ldbc-snb-specification.pdf, Section 3.1, Table 3.1 (p. 19): \"All IDs within a single entity type (e.g. Person, Message) are unique\"; ldbc-snb-specification.pdf, Appendix D.1.2, Table D.7 (Files output by the CsvCompositeMergeForeign serializer, p. 162): \"organisation_*.csv id | type | name | url | place\"; ldbc-snb-specification.pdf, Table 3.10 (p. 23): \"isLocatedIn University[0..*] City[1]\"",
+     "justification": "Organisation ids are unique, so the id determines the organisation row, and a university is located in exactly one city.",
+     "audit": {
+      "verdicts": {
+       "university_name": "TRUE",
+       "university_url": "TRUE",
+       "university_city": "TRUE"
+      },
+      "quote": "All IDs within a single entity type (e.g. Person, Message) are unique, but different entity types (e.g. a Forum and a Tag) might have the same ID. | organisation_*.csv id | type | name | url | place | isLocatedIn University[0..*] City[1] D A University and the City where the university is",
+      "source": "ldbc-snb-specification.pdf, Section 3.1, Table 3.1, p. 19; ldbc-snb-specification.pdf, Appendix D.1.2, Table D.7 (CsvCompositeMergeForeign), p. 162; ldbc-snb-specification.pdf, Section 3.2.2, Table 3.10, p. 23"
+     }
+    },
+    {
+     "lhs": [
+      "university_city"
+     ],
+     "rhs": [
+      "university_city_name",
+      "university_country"
+     ],
+     "sure": true,
+     "clause": "ldbc-snb-specification.pdf, Section 3.1, Table 3.1 (p. 19): \"All IDs within a single entity type (e.g. Person, Message) are unique\"; ldbc-snb-specification.pdf, Appendix D.1.2, Table D.7 (Files output by the CsvCompositeMergeForeign serializer, p. 162): \"place_*.csv id | name | url | type | isPartOf\"; ldbc-snb-specification.pdf, Section 3.2.2, Table 3.10 (p. 23): \"isPartOf City[1..*] Country[1]\"",
+     "justification": "Place ids are unique, so the city id determines the name and the isPartOf column of its place row, and a city is part of exactly one country.",
+     "audit": {
+      "verdicts": {
+       "university_city_name": "TRUE",
+       "university_country": "TRUE"
+      },
+      "quote": "All IDs within a single entity type (e.g. Person, Message) are unique, but different entity types (e.g. a Forum and a Tag) might have the same ID. | all subclasses use the same id space, e.g. there cannot be a Comment and a Post with id 1 at the same time | place_*.csv id | name | url | type | isPartOf | isPartOf City[1..*] Country[1] D A City and the Country it is part of",
+      "source": "ldbc-snb-specification.pdf, Section 3.1, Table 3.1, p. 19; ldbc-snb-specification.pdf, Appendix D.1.2 (Inheritance), p. 160; ldbc-snb-specification.pdf, Appendix D.1.2, Table D.7 (CsvCompositeMergeForeign), p. 162; ldbc-snb-specification.pdf, Section 3.2.2, Table 3.10, p. 23"
+     }
+    },
+    {
+     "lhs": [
+      "university_country"
+     ],
+     "rhs": [
+      "university_country_name",
+      "university_continent"
+     ],
+     "sure": true,
+     "clause": "ldbc-snb-specification.pdf, Section 3.1, Table 3.1 (p. 19): \"All IDs within a single entity type (e.g. Person, Message) are unique\"; ldbc-snb-specification.pdf, Appendix D.1.2, Table D.7 (Files output by the CsvCompositeMergeForeign serializer, p. 162): \"place_*.csv id | name | url | type | isPartOf\"; ldbc-snb-specification.pdf, Section 3.2.2, Table 3.10 (p. 23): \"isPartOf Country[1..*] Continent[1]\"",
+     "justification": "The country id determines its place row, and a country is part of exactly one continent.",
+     "audit": {
+      "verdicts": {
+       "university_country_name": "TRUE",
+       "university_continent": "TRUE"
+      },
+      "quote": "All IDs within a single entity type (e.g. Person, Message) are unique, but different entity types (e.g. a Forum and a Tag) might have the same ID. | all subclasses use the same id space, e.g. there cannot be a Comment and a Post with id 1 at the same time | place_*.csv id | name | url | type | isPartOf | isPartOf Country[1..*] Continent[1] D A Country and the Continent it is part of",
+      "source": "ldbc-snb-specification.pdf, Section 3.1, Table 3.1, p. 19; ldbc-snb-specification.pdf, Appendix D.1.2 (Inheritance), p. 160; ldbc-snb-specification.pdf, Appendix D.1.2, Table D.7 (CsvCompositeMergeForeign), p. 162; ldbc-snb-specification.pdf, Section 3.2.2, Table 3.10, p. 23"
+     }
+    },
+    {
+     "lhs": [
+      "university_continent"
+     ],
+     "rhs": [
+      "university_continent_name"
+     ],
+     "sure": true,
+     "clause": "ldbc-snb-specification.pdf, Section 3.1, Table 3.1 (p. 19): \"All IDs within a single entity type (e.g. Person, Message) are unique\"; ldbc-snb-specification.pdf, Appendix D.1.2, Table D.7 (Files output by the CsvCompositeMergeForeign serializer, p. 162): \"place_*.csv id | name | url | type | isPartOf\"",
+     "justification": "The continent id determines its place row and so its name.",
+     "audit": {
+      "verdicts": {
+       "university_continent_name": "TRUE"
+      },
+      "quote": "All IDs within a single entity type (e.g. Person, Message) are unique, but different entity types (e.g. a Forum and a Tag) might have the same ID. | all subclasses use the same id space, e.g. there cannot be a Comment and a Post with id 1 at the same time | place_*.csv id | name | url | type | isPartOf",
+      "source": "ldbc-snb-specification.pdf, Section 3.1, Table 3.1, p. 19; ldbc-snb-specification.pdf, Appendix D.1.2 (Inheritance), p. 160; ldbc-snb-specification.pdf, Appendix D.1.2, Table D.7 (CsvCompositeMergeForeign), p. 162"
+     }
+    }
+   ],
+   "undocumented_regularities": [
+    "university_country equal to person_country or related to it (Table 3.11 'Cities by Country ... used to assign cities to users and universities'; no rule ties a person's university to the person's country)",
+    "classYear determined by or bounded by person_birthday (no rule stated)",
+    "university_name -> university_id and university_url -> university_id (organisation names and urls are not declared unique)",
+    "names of cities, countries and continents determine their ids (not declared unique)",
+    "Documented non-dependency: studyAt Person[0..*] University[0..*], so person_id does not determine university_id."
+   ],
+   "construction": "Same LDBC SNB Interactive v1 SF1 CsvCompositeMergeForeign-LongDateFormatter files: person_studyAt_organisation (root; 8,808 edges at SF1 for the full network per Table B.1) left-joined to person on Person.id and to organisation on Organisation.id, then to the place file in six roles (the person's city, country, continent; the university's city, country, continent) along place and isPartOf; dropped person.language and person.email (multi-valued composite attributes), organisation.type (constant University for the target of studyAt) and the url and type columns of the place roles.",
+   "random_columns": null,
+   "gold_design": null,
+   "gold_design_note": "No normalized design is published; the 3NF designs of Sigma* are synthesized."
+  },
+  "fresh_gtfs_at": {
+   "attributes": [
+    "trip_id",
+    "stop_sequence",
+    "arrival_time",
+    "departure_time",
+    "stop_id",
+    "pickup_type",
+    "drop_off_type",
+    "shape_dist_traveled",
+    "route_id",
+    "service_id",
+    "trip_headsign",
+    "direction_id",
+    "block_id",
+    "shape_id",
+    "agency_id",
+    "route_short_name",
+    "route_long_name",
+    "route_type",
+    "agency_name",
+    "stop_code",
+    "stop_name",
+    "stop_lat",
+    "stop_lon",
+    "parent_station",
+    "parent_station_name"
+   ],
+   "key": [
+    "trip_id",
+    "stop_sequence"
+   ],
+   "spec": {
+    "tables": {
+     "stop_times": {
+      "file": "gtfs/stop_times.txt",
+      "delimiter": ",",
+      "encoding": "utf-8-sig"
+     },
+     "trips": {
+      "file": "gtfs/trips.txt",
+      "delimiter": ",",
+      "encoding": "utf-8-sig"
+     },
+     "routes": {
+      "file": "gtfs/routes.txt",
+      "delimiter": ",",
+      "encoding": "utf-8-sig"
+     },
+     "agency": {
+      "file": "gtfs/agency.txt",
+      "delimiter": ",",
+      "encoding": "utf-8-sig"
+     },
+     "stops": {
+      "file": "gtfs/stops.txt",
+      "delimiter": ",",
+      "encoding": "utf-8-sig"
+     },
+     "parent": {
+      "file": "gtfs/stops.txt",
+      "delimiter": ",",
+      "encoding": "utf-8-sig"
+     }
+    },
+    "root": "stop_times",
+    "joins": [
+     {
+      "left": [
+       "stop_times.trip_id"
+      ],
+      "right": "trips",
+      "key": [
+       "trip_id"
+      ]
+     },
+     {
+      "left": [
+       "trips.route_id"
+      ],
+      "right": "routes",
+      "key": [
+       "route_id"
+      ]
+     },
+     {
+      "left": [
+       "routes.agency_id"
+      ],
+      "right": "agency",
+      "key": [
+       "agency_id"
+      ]
+     },
+     {
+      "left": [
+       "stop_times.stop_id"
+      ],
+      "right": "stops",
+      "key": [
+       "stop_id"
+      ]
+     },
+     {
+      "left": [
+       "stops.parent_station"
+      ],
+      "right": "parent",
+      "key": [
+       "stop_id"
+      ]
+     }
+    ],
+    "attributes": [
+     "trip_id",
+     "stop_sequence",
+     "arrival_time",
+     "departure_time",
+     "stop_id",
+     "pickup_type",
+     "drop_off_type",
+     "shape_dist_traveled",
+     "route_id",
+     "service_id",
+     "trip_headsign",
+     "direction_id",
+     "block_id",
+     "shape_id",
+     "agency_id",
+     "route_short_name",
+     "route_long_name",
+     "route_type",
+     "agency_name",
+     "stop_code",
+     "stop_name",
+     "stop_lat",
+     "stop_lon",
+     "parent_station",
+     "parent_station_name"
+    ],
+    "columns": {
+     "stop_times.trip_id": "trip_id",
+     "stop_times.stop_sequence": "stop_sequence",
+     "stop_times.arrival_time": "arrival_time",
+     "stop_times.departure_time": "departure_time",
+     "stop_times.stop_id": "stop_id",
+     "stop_times.pickup_type": "pickup_type",
+     "stop_times.drop_off_type": "drop_off_type",
+     "stop_times.shape_dist_traveled": "shape_dist_traveled",
+     "trips.route_id": "route_id",
+     "trips.service_id": "service_id",
+     "trips.trip_headsign": "trip_headsign",
+     "trips.direction_id": "direction_id",
+     "trips.block_id": "block_id",
+     "trips.shape_id": "shape_id",
+     "routes.agency_id": "agency_id",
+     "routes.route_short_name": "route_short_name",
+     "routes.route_long_name": "route_long_name",
+     "routes.route_type": "route_type",
+     "agency.agency_name": "agency_name",
+     "stops.stop_code": "stop_code",
+     "stops.stop_name": "stop_name",
+     "stops.stop_lat": "stop_lat",
+     "stops.stop_lon": "stop_lon",
+     "stops.parent_station": "parent_station",
+     "parent.stop_name": "parent_station_name"
+    }
+   },
+   "truth": [
+    {
+     "lhs": [
+      "trip_id",
+      "stop_sequence"
+     ],
+     "rhs": [
+      "arrival_time",
+      "departure_time",
+      "stop_id",
+      "pickup_type",
+      "drop_off_type",
+      "shape_dist_traveled"
+     ],
+     "sure": true,
+     "clause": "gtfs_schedule_reference.html, Field Definitions, stop_times.txt: \"Primary key (trip_id, stop_sequence)\"; gtfs_schedule_reference.html, Dataset Attributes: \"The primary key of a dataset is the field or combination of fields that uniquely identify a row.\"",
+     "justification": "(trip_id, stop_sequence) is the declared primary key of stop_times.txt; the documented 'A stop may be serviced multiple times in the same trip' rules out (trip_id, stop_id) -> stop_sequence.",
+     "audit": {
+      "verdicts": {
+       "arrival_time": "TRUE",
+       "departure_time": "TRUE",
+       "stop_id": "TRUE",
+       "pickup_type": "TRUE",
+       "drop_off_type": "TRUE",
+       "shape_dist_traveled": "TRUE"
+      },
+      "quote": "Primary key (trip_id, stop_sequence) | The primary key of a dataset is the field or combination of fields that uniquely identify a row.",
+      "source": "gtfs_schedule_reference.html, Field Definitions, stop_times.txt; gtfs_schedule_reference.html, Dataset Attributes"
+     }
+    },
+    {
+     "lhs": [
+      "trip_id"
+     ],
+     "rhs": [
+      "route_id",
+      "service_id",
+      "trip_headsign",
+      "direction_id",
+      "block_id",
+      "shape_id"
+     ],
+     "sure": true,
+     "clause": "gtfs_schedule_reference.html, Field Definitions, trips.txt: \"Primary key (trip_id)\"; stop_times.txt, trip_id: \"Foreign ID referencing trips.trip_id\"; gtfs_schedule_reference.html, Dataset Attributes: \"The primary key of a dataset is the field or combination of fields that uniquely identify a row.\"",
+     "justification": "trip_id references the primary key of trips.txt, whose row holds these fields; 'A block_id may have trips with different service days' rules out block_id -> service_id.",
+     "audit": {
+      "verdicts": {
+       "route_id": "TRUE",
+       "service_id": "TRUE",
+       "trip_headsign": "TRUE",
+       "direction_id": "TRUE",
+       "block_id": "TRUE",
+       "shape_id": "TRUE"
+      },
+      "quote": "Primary key (trip_id) | trip_id: Foreign ID referencing trips.trip_id | The primary key of a dataset is the field or combination of fields that uniquely identify a row.",
+      "source": "gtfs_schedule_reference.html, Field Definitions, trips.txt; gtfs_schedule_reference.html, Field Definitions, stop_times.txt; gtfs_schedule_reference.html, Dataset Attributes"
+     }
+    },
+    {
+     "lhs": [
+      "route_id"
+     ],
+     "rhs": [
+      "agency_id",
+      "route_short_name",
+      "route_long_name",
+      "route_type"
+     ],
+     "sure": true,
+     "clause": "gtfs_schedule_reference.html, Field Definitions, routes.txt: \"Primary key (route_id)\"; trips.txt, route_id: \"Foreign ID referencing routes.route_id\"",
+     "justification": "route_id references the primary key of routes.txt.",
+     "audit": {
+      "verdicts": {
+       "agency_id": "TRUE",
+       "route_short_name": "TRUE",
+       "route_long_name": "TRUE",
+       "route_type": "TRUE"
+      },
+      "quote": "Primary key (route_id) | route_id: Foreign ID referencing routes.route_id | The primary key of a dataset is the field or combination of fields that uniquely identify a row.",
+      "source": "gtfs_schedule_reference.html, Field Definitions, routes.txt; gtfs_schedule_reference.html, Field Definitions, trips.txt; gtfs_schedule_reference.html, Dataset Attributes"
+     }
+    },
+    {
+     "lhs": [
+      "agency_id"
+     ],
+     "rhs": [
+      "agency_name"
+     ],
+     "sure": true,
+     "clause": "gtfs_schedule_reference.html, Field Definitions, agency.txt: \"Primary key (agency_id)\"; routes.txt, agency_id: \"Foreign ID referencing agency.agency_id\"",
+     "justification": "agency_id references the primary key of agency.txt.",
+     "audit": {
+      "verdicts": {
+       "agency_name": "TRUE"
+      },
+      "quote": "Primary key (agency_id) | agency_id: Foreign ID referencing agency.agency_id | The primary key of a dataset is the field or combination of fields that uniquely identify a row.",
+      "source": "gtfs_schedule_reference.html, Field Definitions, agency.txt; gtfs_schedule_reference.html, Field Definitions, routes.txt; gtfs_schedule_reference.html, Dataset Attributes"
+     }
+    },
+    {
+     "lhs": [
+      "stop_id"
+     ],
+     "rhs": [
+      "stop_code",
+      "stop_name",
+      "stop_lat",
+      "stop_lon",
+      "parent_station"
+     ],
+     "sure": true,
+     "clause": "gtfs_schedule_reference.html, Field Definitions, stops.txt: \"Primary key (stop_id)\"; stop_times.txt, stop_id: \"Foreign ID referencing stops.stop_id\"",
+     "justification": "stop_id references the primary key of stops.txt; 'Multiple routes may use the same stop_id' rules out stop_id -> route_id.",
+     "audit": {
+      "verdicts": {
+       "stop_code": "TRUE",
+       "stop_name": "TRUE",
+       "stop_lat": "TRUE",
+       "stop_lon": "TRUE",
+       "parent_station": "TRUE"
+      },
+      "quote": "Primary key (stop_id) | stop_id: Foreign ID referencing stops.stop_id | The primary key of a dataset is the field or combination of fields that uniquely identify a row.",
+      "source": "gtfs_schedule_reference.html, Field Definitions, stops.txt; gtfs_schedule_reference.html, Field Definitions, stop_times.txt; gtfs_schedule_reference.html, Dataset Attributes"
+     }
+    },
+    {
+     "lhs": [
+      "parent_station"
+     ],
+     "rhs": [
+      "parent_station_name"
+     ],
+     "sure": true,
+     "clause": "gtfs_schedule_reference.html, Field Definitions, stops.txt, parent_station: \"Foreign ID referencing stops.stop_id\" and \"Stop/platform (location_type=0): the parent_station field contains the ID of a station.\"; stops.txt: \"Primary key (stop_id)\"",
+     "justification": "parent_station references the primary key of stops.txt, read a second time for the station, whose stop_name it determines.",
+     "audit": {
+      "verdicts": {
+       "parent_station_name": "TRUE"
+      },
+      "quote": "parent_station: Foreign ID referencing stops.stop_id | Stop/platform (location_type=0): the parent_station field contains the ID of a station. | Primary key (stop_id)",
+      "source": "gtfs_schedule_reference.html, Field Definitions, stops.txt"
+     }
+    }
+   ],
+   "undocumented_regularities": [
+    "stop_code -> stop_id (stop_code 'may be the same as stop_id if it is public facing'; not declared unique)",
+    "route_short_name -> route_id, route_long_name -> route_id (route names not declared unique)",
+    "shape_id -> route_id, shape_id -> direction_id (a shape is not tied to one route by the reference)",
+    "(route_id, direction_id) -> trip_headsign and trip_headsign -> direction_id (the direction_id example pairs headsigns and directions, without a rule)",
+    "stop_name -> stop_id, parent_station_name -> parent_station (names not declared unique)",
+    "(trip_id, stop_id) -> stop_sequence holds unless a stop is visited twice; documented non-dependency: 'A stop may be serviced multiple times in the same trip'",
+    "Documented non-dependencies: 'A block_id may have trips with different service days, making distinct blocks.' (block_id does not determine service_id); 'Multiple routes may use the same stop_id.'"
+   ],
+   "construction": "Auckland Transport static GTFS feed (gtfs.at.govt.nz/gtfs.zip), the snapshot downloaded for the confirmatory evaluation (date in the README), read against the GTFS Schedule Reference saved on 2026-10-27: stop_times (root, sampled to 1,000,000 records if larger) left-joined to trips on trip_id, routes on route_id, agency on agency_id, stops on stop_id and stops again (role parent) on parent_station; dropped stops.location_type (documented to be 0 or empty for every stop that stop_times references), agency_timezone (documented to be the same for all agencies), the free-text, URL, colour, accessibility and on-demand fields (stop_headsign, timepoint, continuous_*, *_booking_rule_id, stop_desc, stop_url, zone_id, stop_timezone, wheelchair_*, level_id, platform_code, route_desc, route_url, route_color, route_text_color, route_sort_order, trip_short_name, bikes_allowed, agency_url, agency_lang, agency_phone, agency_fare_url) to stay within 25 columns.",
+   "random_columns": null,
+   "gold_design": null,
+   "gold_design_note": "No normalized design is published; the 3NF designs of Sigma* are synthesized."
+  },
+  "fresh_faa": {
+   "attributes": [
+    "N-Number",
+    "Serial Number",
+    "Aircraft Mfr Model Code",
+    "Engine Mfr Mode Code",
+    "Year Mfr",
+    "Type Registrant",
+    "Registrant's State",
+    "Registrant's Region",
+    "Status Code",
+    "Mode S Code",
+    "Mode S Code Hex",
+    "Certification Requested and Uses",
+    "Type Aircraft",
+    "Aircraft Manufacturer Name",
+    "Model Name",
+    "ACFTREF Type Aircraft",
+    "Aircraft Category Code",
+    "Builder Certification Code",
+    "Number of Engines",
+    "Number of Seats",
+    "Aircraft Weight",
+    "Engine Manufacturer Name",
+    "Engine Model Name",
+    "ENGINE Type Engine",
+    "Engine Horsepower"
+   ],
+   "key": [
+    "N-Number"
+   ],
+   "spec": {
+    "tables": {
+     "master": {
+      "file": "faa/MASTER.txt",
+      "delimiter": ",",
+      "encoding": "utf-8-sig"
+     },
+     "acftref": {
+      "file": "faa/ACFTREF.txt",
+      "delimiter": ",",
+      "encoding": "utf-8-sig"
+     },
+     "engine": {
+      "file": "faa/ENGINE.txt",
+      "delimiter": ",",
+      "encoding": "utf-8-sig"
+     }
+    },
+    "root": "master",
+    "joins": [
+     {
+      "left": [
+       "master.MFR MDL CODE"
+      ],
+      "right": "acftref",
+      "key": [
+       "CODE"
+      ]
+     },
+     {
+      "left": [
+       "master.ENG MFR MDL"
+      ],
+      "right": "engine",
+      "key": [
+       "CODE"
+      ]
+     }
+    ],
+    "attributes": [
+     "N-Number",
+     "Serial Number",
+     "Aircraft Mfr Model Code",
+     "Engine Mfr Mode Code",
+     "Year Mfr",
+     "Type Registrant",
+     "Registrant's State",
+     "Registrant's Region",
+     "Status Code",
+     "Mode S Code",
+     "Mode S Code Hex",
+     "Certification Requested and Uses",
+     "Type Aircraft",
+     "Aircraft Manufacturer Name",
+     "Model Name",
+     "ACFTREF Type Aircraft",
+     "Aircraft Category Code",
+     "Builder Certification Code",
+     "Number of Engines",
+     "Number of Seats",
+     "Aircraft Weight",
+     "Engine Manufacturer Name",
+     "Engine Model Name",
+     "ENGINE Type Engine",
+     "Engine Horsepower"
+    ],
+    "columns": {
+     "master.N-NUMBER": "N-Number",
+     "master.SERIAL NUMBER": "Serial Number",
+     "master.MFR MDL CODE": "Aircraft Mfr Model Code",
+     "master.ENG MFR MDL": "Engine Mfr Mode Code",
+     "master.YEAR MFR": "Year Mfr",
+     "master.TYPE REGISTRANT": "Type Registrant",
+     "master.STATE": "Registrant's State",
+     "master.REGION": "Registrant's Region",
+     "master.STATUS CODE": "Status Code",
+     "master.MODE S CODE": "Mode S Code",
+     "master.MODE S CODE HEX": "Mode S Code Hex",
+     "master.CERTIFICATION": "Certification Requested and Uses",
+     "master.TYPE AIRCRAFT": "Type Aircraft",
+     "acftref.MFR": "Aircraft Manufacturer Name",
+     "acftref.MODEL": "Model Name",
+     "acftref.TYPE-ACFT": "ACFTREF Type Aircraft",
+     "acftref.AC-CAT": "Aircraft Category Code",
+     "acftref.BUILD-CERT-IND": "Builder Certification Code",
+     "acftref.NO-ENG": "Number of Engines",
+     "acftref.NO-SEATS": "Number of Seats",
+     "acftref.AC-WEIGHT": "Aircraft Weight",
+     "engine.MFR": "Engine Manufacturer Name",
+     "engine.MODEL": "Engine Model Name",
+     "engine.TYPE": "ENGINE Type Engine",
+     "engine.HORSEPOWER": "Engine Horsepower"
+    }
+   },
+   "truth": [
+    {
+     "lhs": [
+      "N-Number"
+     ],
+     "rhs": [
+      "Serial Number",
+      "Aircraft Mfr Model Code",
+      "Engine Mfr Mode Code",
+      "Year Mfr",
+      "Type Registrant",
+      "Registrant's State",
+      "Registrant's Region",
+      "Status Code",
+      "Mode S Code",
+      "Mode S Code Hex",
+      "Certification Requested and Uses",
+      "Type Aircraft"
+     ],
+     "sure": true,
+     "clause": "faa_ardata.pdf (document dated 5/8/2025), Aircraft Registration Master File (p. 1): \"N-Number 1-5 5 Identification number assigned to aircraft.\" and (p. 8) \"SEQUENCE N-Number (positions 1-5)\"; (p. 1) \"Contains the records of all U.S. Civil Aircraft maintained by the FAA\"",
+     "justification": "The master file holds one record per registered aircraft, identified by its N-Number and sequenced by it.",
+     "audit": {
+      "verdicts": {
+       "Serial Number": "TRUE",
+       "Aircraft Mfr Model Code": "TRUE",
+       "Engine Mfr Mode Code": "TRUE",
+       "Year Mfr": "TRUE",
+       "Type Registrant": "TRUE",
+       "Registrant's State": "TRUE",
+       "Registrant's Region": "TRUE",
+       "Status Code": "TRUE",
+       "Mode S Code": "TRUE",
+       "Mode S Code Hex": "TRUE",
+       "Certification Requested and Uses": "TRUE",
+       "Type Aircraft": "TRUE"
+      },
+      "quote": "\"N-Number 1-5 5 Identification number assigned to aircraft.\" (p. 1); \"Contains the records of all U.S. Civil Aircraft maintained by the FAA, Civil Aviation Registry, Aircraft Registration Branch, AFS-750\" (p. 1); \"SEQUENCE N-Number (positions 1-5)\" (p. 8)",
+      "source": "faa_ardata.pdf (dated 5/8/2025), pp. 1 and 8"
+     }
+    },
+    {
+     "lhs": [
+      "Aircraft Mfr Model Code"
+     ],
+     "rhs": [
+      "Aircraft Manufacturer Name",
+      "Model Name",
+      "ACFTREF Type Aircraft",
+      "Aircraft Category Code",
+      "Builder Certification Code",
+      "Number of Engines",
+      "Number of Seats",
+      "Aircraft Weight"
+     ],
+     "sure": true,
+     "clause": "faa_ardata.pdf (document dated 5/8/2025), Aircraft Reference File (p. 9): \"The two reference files are required to identify the aircraft manufacturer/model/series codes and the engine manufacturer/model codes.\" and (p. 10) \"SEQUENCE Aircraft Manufacturer/Model/Series Code\"; Master File (p. 1): \"A code assigned to the aircraft manufacturer, model and series.\"",
+     "justification": "The master's Aircraft Mfr Model Code references the aircraft reference file, which is keyed (sequenced) by that code and identifies it.",
+     "audit": {
+      "verdicts": {
+       "Aircraft Manufacturer Name": "TRUE",
+       "Model Name": "TRUE",
+       "ACFTREF Type Aircraft": "TRUE",
+       "Aircraft Category Code": "TRUE",
+       "Builder Certification Code": "TRUE",
+       "Number of Engines": "TRUE",
+       "Number of Seats": "TRUE",
+       "Aircraft Weight": "TRUE"
+      },
+      "quote": "\"The two reference files are required to identify the aircraft manufacturer/model/series codes and the engine manufacturer/model codes.\" (Aircraft Reference File, p. 9); \"SEQUENCE Aircraft Manufacturer/Model/Series Code\" (p. 10); master Aircraft Mfr Model Code: \"A code assigned to the aircraft manufacturer, model and series.\" (p. 1)",
+      "source": "faa_ardata.pdf (dated 5/8/2025), pp. 1, 9-10"
+     }
+    },
+    {
+     "lhs": [
+      "Engine Mfr Mode Code"
+     ],
+     "rhs": [
+      "Engine Manufacturer Name",
+      "Engine Model Name",
+      "ENGINE Type Engine",
+      "Engine Horsepower"
+     ],
+     "sure": true,
+     "clause": "faa_ardata.pdf (document dated 5/8/2025), Engine Reference File (p. 11): \"SEQUENCE Engine Manufacturer/Mode Code (positions 1-5)\"; Aircraft Reference File (p. 9): \"The two reference files are required to identify the aircraft manufacturer/model/series codes and the engine manufacturer/model codes.\"",
+     "justification": "The master's Engine Mfr Mode Code references the engine reference file, keyed (sequenced) by that code.",
+     "audit": {
+      "verdicts": {
+       "Engine Manufacturer Name": "TRUE",
+       "Engine Model Name": "TRUE",
+       "ENGINE Type Engine": "TRUE",
+       "Engine Horsepower": "TRUE"
+      },
+      "quote": "\"The two reference files are required to identify the aircraft manufacturer/model/series codes and the engine manufacturer/model codes.\" (p. 9); Engine Reference File: \"SEQUENCE Engine Manufacturer/Mode Code (positions 1-5)\" (p. 11); master Engine Mfr Mode Code: \"A code assigned to the engine manufacturer and model.\" (p. 1)",
+      "source": "faa_ardata.pdf (dated 5/8/2025), pp. 1, 9, 11"
+     }
+    },
+    {
+     "lhs": [
+      "Mode S Code"
+     ],
+     "rhs": [
+      "Mode S Code Hex"
+     ],
+     "sure": true,
+     "clause": "faa_ardata.pdf (document dated 5/8/2025), Master File (p. 7): \"Mode S Code 257-264 8 Aircraft Transponder Code\"; (p. 8): \"Mode S Code Hex 602-611 10 Mode S Code in Hexidecimal Format\"",
+     "justification": "Mode S Code Hex is the same transponder code written in hexadecimal, a function of Mode S Code.",
+     "audit": {
+      "verdicts": {
+       "Mode S Code Hex": "TRUE"
+      },
+      "quote": "\"Mode S Code 257-264 8 Aircraft Transponder Code\" (p. 7); \"Mode S Code Hex 602-611 10 Mode S Code in Hexidecimal Format\" (p. 8)",
+      "source": "faa_ardata.pdf (dated 5/8/2025), pp. 7-8"
+     }
+    },
+    {
+     "lhs": [
+      "Mode S Code Hex"
+     ],
+     "rhs": [
+      "Mode S Code"
+     ],
+     "sure": true,
+     "clause": "faa_ardata.pdf (document dated 5/8/2025), Master File (p. 8): \"Mode S Code Hex 602-611 10 Mode S Code in Hexidecimal Format\"",
+     "justification": "A change of number base is invertible, so the hexadecimal form determines the code.",
+     "audit": {
+      "verdicts": {
+       "Mode S Code": "TRUE"
+      },
+      "quote": "\"Mode S Code Hex 602-611 10 Mode S Code in Hexidecimal Format\" (p. 8)",
+      "source": "faa_ardata.pdf (dated 5/8/2025), p. 8"
+     }
+    }
+   ],
+   "undocumented_regularities": [
+    "Aircraft Mfr Model Code -> Type Aircraft (the master's own Type Aircraft is not declared to copy the reference file's; Type Aircraft = ACFTREF Type Aircraft)",
+    "Registrant's State -> Registrant's Region (region codes are listed without a state mapping)",
+    "Mode S Code -> N-Number (a transponder code is not declared unique per aircraft)",
+    "(Aircraft Mfr Model Code, Serial Number) -> N-Number (serial numbers not declared unique)",
+    "Aircraft Manufacturer Name, Model Name -> Aircraft Mfr Model Code; Engine Model Name -> Engine Mfr Mode Code (names not declared unique)",
+    "Engine Horsepower is filled only for engine types 1, 2, 3, 7, 8 ('Horsepower for engines types 1, 2, 3, 7, 8'): a conditional constraint, not an FD"
+   ],
+   "construction": "FAA Releasable Aircraft database (ReleasableAircraft.zip, the daily snapshot downloaded for the confirmatory evaluation, date in the README), column names of ardata.pdf (5/8/2025): MASTER (root) left-joined to ACFTREF on Aircraft Mfr Model Code and to ENGINE on Engine Mfr Mode Code; dropped the registrant name and address lines, city and zip, County Mail, Country Mail, Other Name 1-5, Kit Mfr, Kit Model (free text or personal data), Last Activity Date, Certificate Issue Date, Airworthiness Date, Expiration Date, Approved Operation Codes, Fractional Ownership, Unique ID, the master's Type Engine, ACFTREF's Type Engine, Aircraft Cruising Speed, TC Data Sheet, TC Data Holder and ENGINE's Pounds of Thrust to stay within 25 columns. Column names: the documented element names are the attribute names; the published files abbreviate them (e.g. MFR MDL CODE), and the spec reads those headers. The file's CERTIFICATION column is the whole field 'Certification requested and uses' (positions 238-247: the Airworthiness Classification Code and the Approved Operation Codes), so the attribute carries that name; only the key determines it.",
+   "random_columns": null,
+   "gold_design": null,
+   "gold_design_note": "No normalized design is published; the 3NF designs of Sigma* are synthesized."
+  },
+  "fresh_abs_mb": {
+   "attributes": [
+    "MB_CODE_2021",
+    "MB_CATEGORY_2021",
+    "CHANGE_FLAG_2021",
+    "CHANGE_LABEL_2021",
+    "SA1_CODE_2021",
+    "SA2_CODE_2021",
+    "SA2_NAME_2021",
+    "SA3_CODE_2021",
+    "SA3_NAME_2021",
+    "SA4_CODE_2021",
+    "SA4_NAME_2021",
+    "GCCSA_CODE_2021",
+    "GCCSA_NAME_2021",
+    "STATE_CODE_2021",
+    "STATE_NAME_2021",
+    "AREA_ALBERS_SQKM",
+    "ASGS_LOCI_URI_2021"
+   ],
+   "key": [
+    "MB_CODE_2021"
+   ],
+   "spec": {
+    "tables": {
+     "mb": {
+      "file": "abs/MB_2021_AUST.csv",
+      "delimiter": ",",
+      "encoding": "utf-8-sig"
+     }
+    },
+    "root": "mb",
+    "joins": [],
+    "attributes": [
+     "MB_CODE_2021",
+     "MB_CATEGORY_2021",
+     "CHANGE_FLAG_2021",
+     "CHANGE_LABEL_2021",
+     "SA1_CODE_2021",
+     "SA2_CODE_2021",
+     "SA2_NAME_2021",
+     "SA3_CODE_2021",
+     "SA3_NAME_2021",
+     "SA4_CODE_2021",
+     "SA4_NAME_2021",
+     "GCCSA_CODE_2021",
+     "GCCSA_NAME_2021",
+     "STATE_CODE_2021",
+     "STATE_NAME_2021",
+     "AREA_ALBERS_SQKM",
+     "ASGS_LOCI_URI_2021"
+    ],
+    "columns": {
+     "mb.MB_CODE_2021": "MB_CODE_2021",
+     "mb.MB_CATEGORY_2021": "MB_CATEGORY_2021",
+     "mb.CHANGE_FLAG_2021": "CHANGE_FLAG_2021",
+     "mb.CHANGE_LABEL_2021": "CHANGE_LABEL_2021",
+     "mb.SA1_CODE_2021": "SA1_CODE_2021",
+     "mb.SA2_CODE_2021": "SA2_CODE_2021",
+     "mb.SA2_NAME_2021": "SA2_NAME_2021",
+     "mb.SA3_CODE_2021": "SA3_CODE_2021",
+     "mb.SA3_NAME_2021": "SA3_NAME_2021",
+     "mb.SA4_CODE_2021": "SA4_CODE_2021",
+     "mb.SA4_NAME_2021": "SA4_NAME_2021",
+     "mb.GCCSA_CODE_2021": "GCCSA_CODE_2021",
+     "mb.GCCSA_NAME_2021": "GCCSA_NAME_2021",
+     "mb.STATE_CODE_2021": "STATE_CODE_2021",
+     "mb.STATE_NAME_2021": "STATE_NAME_2021",
+     "mb.AREA_ALBERS_SQKM": "AREA_ALBERS_SQKM",
+     "mb.ASGS_LOCI_URI_2021": "ASGS_LOCI_URI_2021"
+    }
+   },
+   "truth": [
+    {
+     "lhs": [
+      "MB_CODE_2021"
+     ],
+     "rhs": [
+      "MB_CATEGORY_2021",
+      "CHANGE_FLAG_2021",
+      "CHANGE_LABEL_2021",
+      "AREA_ALBERS_SQKM",
+      "ASGS_LOCI_URI_2021"
+     ],
+     "sure": true,
+     "clause": "abs_allocation-files.html, Metadata for allocation files: \"MB_2021_AUST contains all Mesh Blocks within Australia and includes the following fields:\" and \"It also gives the area in square kilometres of the Mesh Block, based on Albers Equal Area Conic projection.\"; abs_mesh-blocks.html: \"Land use is recorded in the Mesh Block category attribute according to the criteria below.\"; abs_changes-previous-edition-asgs.html (https://www.abs.gov.au/statistics/standards/australian-statistical-geography-standard-asgs/edition-3-july-2021-june-2026/main-structure-and-greater-capital-city-statistical-areas/changes-previous-edition-asgs, retrieved 2026-10-27): \"In ASGS Edition 3, change flags have been included on all Main Structure and Greater Capital City Statistical boundaries as an attribute.\"",
+     "justification": "The file has one row per Mesh Block, identified by its code, and the category, change flag and label, area and LOCI URI are attributes of that Mesh Block.",
+     "audit": {
+      "verdicts": {
+       "MB_CATEGORY_2021": "TRUE",
+       "CHANGE_FLAG_2021": "TRUE",
+       "CHANGE_LABEL_2021": "TRUE",
+       "AREA_ALBERS_SQKM": "TRUE",
+       "ASGS_LOCI_URI_2021": "TRUE"
+      },
+      "quote": "\"For example MB_2021_AUST contains all Mesh Blocks within Australia and includes the following fields:\" and \"It also gives the area in square kilometres of the Mesh Block, based on Albers Equal Area Conic projection.\" (abs_allocation-files.html, Metadata for allocation files); \"The 11-digit Mesh Block code comprises: State and Territory identifier (1 digit), and a Mesh Block identifier (10 digits).\" and \"Land use is recorded in the Mesh Block category attribute according to the criteria below.\" (abs_mesh-blocks.html); \"In ASGS Edition 3, change flags have been included on all Main Structure and Greater Capital City Statistical boundaries as an attribute.\" (abs_changes-previous-edition-asgs.html, Identifying change, Change flag descriptions)",
+      "source": "abs_allocation-files.html, Metadata for allocation files; abs_mesh-blocks.html; abs_changes-previous-edition-asgs.html, Identifying change, Change flag descriptions"
+     }
+    },
+    {
+     "lhs": [
+      "MB_CODE_2021"
+     ],
+     "rhs": [
+      "SA1_CODE_2021"
+     ],
+     "sure": true,
+     "clause": "abs_statistical-area-level-1.html: \"Statistical Areas Level 1 (SA1s) are geographic areas built from whole Mesh Blocks.\"",
+     "justification": "SA1s are built from whole Mesh Blocks, so each Mesh Block lies in exactly one SA1.",
+     "audit": {
+      "verdicts": {
+       "SA1_CODE_2021": "TRUE"
+      },
+      "quote": "\"Statistical Areas Level 1 (SA1s) are geographic areas built from whole Mesh Blocks.\" and \"There are 61,845 SA1 regions covering the whole of Australia without gaps or overlaps.\" (abs_statistical-area-level-1.html)",
+      "source": "abs_statistical-area-level-1.html"
+     }
+    },
+    {
+     "lhs": [
+      "SA1_CODE_2021"
+     ],
+     "rhs": [
+      "SA2_CODE_2021"
+     ],
+     "sure": true,
+     "clause": "abs_statistical-area-level-1.html: \"Whole SA1s aggregate to form Statistical Areas Level 2 (SA2s).\"",
+     "justification": "Whole SA1s aggregate to SA2s, so each SA1 lies in exactly one SA2.",
+     "audit": {
+      "verdicts": {
+       "SA2_CODE_2021": "TRUE"
+      },
+      "quote": "\"Whole SA1s aggregate to form Statistical Areas Level 2 (SA2s).\" and \"SA1s are identified by an 11-digit fully hierarchical code, comprising the 1-digit State and Territory, and Statistical Areas Level 1-4 identifiers.\" (abs_statistical-area-level-1.html)",
+      "source": "abs_statistical-area-level-1.html"
+     }
+    },
+    {
+     "lhs": [
+      "SA2_CODE_2021"
+     ],
+     "rhs": [
+      "SA2_NAME_2021",
+      "SA3_CODE_2021"
+     ],
+     "sure": true,
+     "clause": "abs_statistical-area-level-2.html: \"Whole SA2s aggregate to form Statistical Areas Level 3 (SA3s).\" and \"An SA2 is identifiable by a 9-digit fully hierarchical code comprising the 1-digit State or Territory identifier, and Statistical Areas Level 2-4 identifiers.\"",
+     "justification": "The SA2 code identifies the SA2, which has one name and lies in exactly one SA3.",
+     "audit": {
+      "verdicts": {
+       "SA2_NAME_2021": "TRUE",
+       "SA3_CODE_2021": "TRUE"
+      },
+      "quote": "\"Whole SA2s aggregate to form Statistical Areas Level 3 (SA3s).\" and \"An SA2 is identifiable by a 9-digit fully hierarchical code comprising the 1-digit State or Territory identifier, and Statistical Areas Level 2-4 identifiers.\" (abs_statistical-area-level-2.html)",
+      "source": "abs_statistical-area-level-2.html"
+     }
+    },
+    {
+     "lhs": [
+      "SA2_NAME_2021"
+     ],
+     "rhs": [
+      "SA2_CODE_2021"
+     ],
+     "sure": true,
+     "clause": "abs_statistical-area-level-2.html, SA2 name criteria: \"unique, that is not shared by any other SA2 in Australia\"",
+     "justification": "SA2 names are unique in Australia, so the name identifies the SA2 and its code.",
+     "audit": {
+      "verdicts": {
+       "SA2_CODE_2021": "TRUE"
+      },
+      "quote": "SA2 name criteria: \"unique, that is not shared by any other SA2 in Australia\" (abs_statistical-area-level-2.html)",
+      "source": "abs_statistical-area-level-2.html, SA2 name criteria"
+     }
+    },
+    {
+     "lhs": [
+      "SA3_CODE_2021"
+     ],
+     "rhs": [
+      "SA3_NAME_2021",
+      "SA4_CODE_2021"
+     ],
+     "sure": true,
+     "clause": "abs_statistical-area-level-3.html: \"Whole SA3s aggregate to form Statistical Areas Level 4 (SA4s).\" and \"SA3s are identified by 5-digit hierarchical codes.\"",
+     "justification": "The SA3 code identifies the SA3, which has one name and lies in exactly one SA4.",
+     "audit": {
+      "verdicts": {
+       "SA3_NAME_2021": "TRUE",
+       "SA4_CODE_2021": "TRUE"
+      },
+      "quote": "\"Whole SA3s aggregate to form Statistical Areas Level 4 (SA4s).\" and \"SA3s are identified by 5-digit hierarchical codes. This comprises a 1-digit State or Territory identifier followed by a 2-digit SA4 identifier, unique within each State and Territory, and a 2-digit SA3 identifier, unique within each SA4.\" (abs_statistical-area-level-3.html)",
+      "source": "abs_statistical-area-level-3.html"
+     }
+    },
+    {
+     "lhs": [
+      "SA3_NAME_2021"
+     ],
+     "rhs": [
+      "SA3_CODE_2021"
+     ],
+     "sure": true,
+     "clause": "abs_statistical-area-level-3.html, SA3 name criteria: \"unique, that is not shared by any other SA3 in Australia\"",
+     "justification": "SA3 names are unique in Australia.",
+     "audit": {
+      "verdicts": {
+       "SA3_CODE_2021": "TRUE"
+      },
+      "quote": "SA3 name criteria: \"unique, that is not shared by any other SA3 in Australia\" (abs_statistical-area-level-3.html)",
+      "source": "abs_statistical-area-level-3.html, SA3 name criteria"
+     }
+    },
+    {
+     "lhs": [
+      "SA4_CODE_2021"
+     ],
+     "rhs": [
+      "SA4_NAME_2021",
+      "GCCSA_CODE_2021",
+      "STATE_CODE_2021"
+     ],
+     "sure": true,
+     "clause": "abs_statistical-area-level-4.html: \"Whole SA4s aggregate to Greater Capital City Statistical Areas and States and Territories.\" and \"SA4s are identified by a 3-digit hierarchical code.\"",
+     "justification": "The SA4 code identifies the SA4, which has one name and lies in exactly one GCCSA and one State or Territory.",
+     "audit": {
+      "verdicts": {
+       "SA4_NAME_2021": "TRUE",
+       "GCCSA_CODE_2021": "TRUE",
+       "STATE_CODE_2021": "TRUE"
+      },
+      "quote": "\"Whole SA4s aggregate to Greater Capital City Statistical Areas and States and Territories.\" and \"SA4s are identified by a 3-digit hierarchical code. This comprises a 1-digit State or Territory identifier, which precedes a 2-digit SA4 identifier, unique within each State and Territory.\" (abs_statistical-area-level-4.html); \"Greater Capital City Statistical Areas (GCCSAs) are geographic areas built from Statistical Areas Level 4 (SA4s).\" and \"There are 16 GCCSAs covering the whole of Australia without gaps or overlaps.\" (abs_greater-capital-city-statistical-areas.html)",
+      "source": "abs_statistical-area-level-4.html; abs_greater-capital-city-statistical-areas.html"
+     }
+    },
+    {
+     "lhs": [
+      "SA4_NAME_2021"
+     ],
+     "rhs": [
+      "SA4_CODE_2021"
+     ],
+     "sure": true,
+     "clause": "abs_statistical-area-level-4.html, SA4 name criteria: \"unique, that is not shared by any other SA4 in Australia\"",
+     "justification": "SA4 names are unique in Australia.",
+     "audit": {
+      "verdicts": {
+       "SA4_CODE_2021": "TRUE"
+      },
+      "quote": "SA4 name criteria: \"unique, that is not shared by any other SA4 in Australia\" (abs_statistical-area-level-4.html)",
+      "source": "abs_statistical-area-level-4.html, SA4 name criteria"
+     }
+    },
+    {
+     "lhs": [
+      "GCCSA_CODE_2021"
+     ],
+     "rhs": [
+      "GCCSA_NAME_2021",
+      "STATE_CODE_2021"
+     ],
+     "sure": true,
+     "clause": "abs_greater-capital-city-statistical-areas.html, GCCSA coding structure: \"A GCCSA is identified by a 5-character alphanumeric code. This comprises a 1-digit State or Territory identifier followed by a 4-character GCCSA identifier that is unique within each State and Territory.\"",
+     "justification": "The GCCSA code identifies the GCCSA (hence its name) and contains the identifier of the one State or Territory it belongs to.",
+     "audit": {
+      "verdicts": {
+       "GCCSA_NAME_2021": "TRUE",
+       "STATE_CODE_2021": "TRUE"
+      },
+      "quote": "\"A GCCSA is identified by a 5-character alphanumeric code. This comprises a 1-digit State or Territory identifier followed by a 4-character GCCSA identifier that is unique within each State and Territory.\" (abs_greater-capital-city-statistical-areas.html, GCCSA coding structure)",
+      "source": "abs_greater-capital-city-statistical-areas.html"
+     }
+    },
+    {
+     "lhs": [
+      "STATE_CODE_2021"
+     ],
+     "rhs": [
+      "STATE_NAME_2021"
+     ],
+     "sure": true,
+     "clause": "abs_australia-and-stateterritory.html: \"States and Territories are identified by unique one-digit codes as follows:\" (code list 1 New South Wales ... 9 Other Territories)",
+     "justification": "The published code list gives one name per state code.",
+     "audit": {
+      "verdicts": {
+       "STATE_NAME_2021": "TRUE"
+      },
+      "quote": "\"States and Territories are identified by unique one-digit codes as follows:\" with the table \"1 | New South Wales ... 9 | Other Territories\" (abs_australia-and-stateterritory.html)",
+      "source": "abs_australia-and-stateterritory.html"
+     }
+    },
+    {
+     "lhs": [
+      "STATE_NAME_2021"
+     ],
+     "rhs": [
+      "STATE_CODE_2021"
+     ],
+     "sure": true,
+     "clause": "abs_australia-and-stateterritory.html: \"States and Territories are identified by unique one-digit codes as follows:\" (nine distinct names, each with one code)",
+     "justification": "The code list pairs nine distinct names with nine codes one to one.",
+     "audit": {
+      "verdicts": {
+       "STATE_CODE_2021": "TRUE"
+      },
+      "quote": "\"States and Territories are identified by unique one-digit codes as follows:\" with the table \"1 | New South Wales ... 9 | Other Territories\" (abs_australia-and-stateterritory.html)",
+      "source": "abs_australia-and-stateterritory.html"
+     }
+    },
+    {
+     "lhs": [
+      "CHANGE_FLAG_2021"
+     ],
+     "rhs": [
+      "CHANGE_LABEL_2021"
+     ],
+     "sure": true,
+     "clause": "abs_changes-previous-edition-asgs.html (https://www.abs.gov.au/statistics/standards/australian-statistical-geography-standard-asgs/edition-3-july-2021-june-2026/main-structure-and-greater-capital-city-statistical-areas/changes-previous-edition-asgs, retrieved 2026-10-27), Change flag descriptions (table with columns CHANGE_FLAG_2021, CHANGE_LABEL_2021, Description): flags 0, 1, 2, 3 labelled \"No change\", \"New\", \"Code change\", \"Name change\"",
+     "justification": "The published table gives exactly one label per change flag.",
+     "audit": {
+      "verdicts": {
+       "CHANGE_LABEL_2021": "TRUE"
+      },
+      "quote": "Change flag descriptions table with columns \"CHANGE_FLAG_2021 | CHANGE_LABEL_2021 | Description\": \"0 | No change\", \"1 | New\", \"2 | Code change\", \"3 | Name change\" (abs_changes-previous-edition-asgs.html, Identifying change, Change flag descriptions)",
+      "source": "abs_changes-previous-edition-asgs.html, Identifying change, Change flag descriptions"
+     }
+    },
+    {
+     "lhs": [
+      "CHANGE_LABEL_2021"
+     ],
+     "rhs": [
+      "CHANGE_FLAG_2021"
+     ],
+     "sure": true,
+     "clause": "abs_changes-previous-edition-asgs.html (https://www.abs.gov.au/statistics/standards/australian-statistical-geography-standard-asgs/edition-3-july-2021-june-2026/main-structure-and-greater-capital-city-statistical-areas/changes-previous-edition-asgs, retrieved 2026-10-27), Change flag descriptions: flags 0, 1, 2, 3 labelled \"No change\", \"New\", \"Code change\", \"Name change\"",
+     "justification": "The four labels are distinct, so each label determines its flag.",
+     "audit": {
+      "verdicts": {
+       "CHANGE_FLAG_2021": "TRUE"
+      },
+      "quote": "Change flag descriptions table with columns \"CHANGE_FLAG_2021 | CHANGE_LABEL_2021 | Description\": \"0 | No change\", \"1 | New\", \"2 | Code change\", \"3 | Name change\" (abs_changes-previous-edition-asgs.html, Identifying change, Change flag descriptions)",
+      "source": "abs_changes-previous-edition-asgs.html, Identifying change, Change flag descriptions"
+     }
+    }
+   ],
+   "undocumented_regularities": [
+    "GCCSA_NAME_2021 -> GCCSA_CODE_2021 (GCCSA names are not declared unique, unlike SA2-SA4 names)",
+    "ASGS_LOCI_URI_2021 -> MB_CODE_2021 (the URI is not declared to identify the Mesh Block in this file)",
+    "SA1_CODE_2021 -> STATE_CODE_2021 etc. by code prefix (implied anyway by the documented aggregation chain)",
+    "MB_CATEGORY_2021 related to AREA_ALBERS_SQKM (no rule)"
+   ],
+   "construction": "ABS ASGS Edition 3 (July 2021 - June 2026) Mesh Block allocation file MB_2021_AUST.xlsx converted to CSV with its header row (368,286 Mesh Blocks per the Mesh Blocks page); single table; dropped AUS_CODE_2021 and AUS_NAME_2021 (the single code AUS and its name, constant by the documentation).",
+   "random_columns": null,
+   "gold_design": null,
+   "gold_design_note": "No normalized design is published; the 3NF designs of Sigma* are synthesized."
+  },
+  "fresh_sec_fsds": {
+   "attributes": [
+    "adsh",
+    "tag",
+    "version",
+    "ddate",
+    "qtrs",
+    "uom",
+    "segments",
+    "coreg",
+    "value",
+    "cik",
+    "name",
+    "sic",
+    "countryba",
+    "stprba",
+    "cityba",
+    "afs",
+    "form",
+    "period",
+    "fy",
+    "fp",
+    "custom",
+    "datatype",
+    "iord",
+    "crdr",
+    "tlabel"
+   ],
+   "key": [
+    "adsh",
+    "tag",
+    "version",
+    "ddate",
+    "qtrs",
+    "uom",
+    "segments",
+    "coreg"
+   ],
+   "spec": {
+    "tables": {
+     "num": {
+      "file": "sec/num.txt",
+      "delimiter": "\t",
+      "encoding": "utf-8-sig"
+     },
+     "sub": {
+      "file": "sec/sub.txt",
+      "delimiter": "\t",
+      "encoding": "utf-8-sig"
+     },
+     "tag": {
+      "file": "sec/tag.txt",
+      "delimiter": "\t",
+      "encoding": "utf-8-sig"
+     }
+    },
+    "root": "num",
+    "joins": [
+     {
+      "left": [
+       "num.adsh"
+      ],
+      "right": "sub",
+      "key": [
+       "adsh"
+      ]
+     },
+     {
+      "left": [
+       "num.tag",
+       "num.version"
+      ],
+      "right": "tag",
+      "key": [
+       "tag",
+       "version"
+      ]
+     }
+    ],
+    "attributes": [
+     "adsh",
+     "tag",
+     "version",
+     "ddate",
+     "qtrs",
+     "uom",
+     "segments",
+     "coreg",
+     "value",
+     "cik",
+     "name",
+     "sic",
+     "countryba",
+     "stprba",
+     "cityba",
+     "afs",
+     "form",
+     "period",
+     "fy",
+     "fp",
+     "custom",
+     "datatype",
+     "iord",
+     "crdr",
+     "tlabel"
+    ],
+    "columns": {
+     "num.adsh": "adsh",
+     "num.tag": "tag",
+     "num.version": "version",
+     "num.ddate": "ddate",
+     "num.qtrs": "qtrs",
+     "num.uom": "uom",
+     "num.segments": "segments",
+     "num.coreg": "coreg",
+     "num.value": "value",
+     "sub.cik": "cik",
+     "sub.name": "name",
+     "sub.sic": "sic",
+     "sub.countryba": "countryba",
+     "sub.stprba": "stprba",
+     "sub.cityba": "cityba",
+     "sub.afs": "afs",
+     "sub.form": "form",
+     "sub.period": "period",
+     "sub.fy": "fy",
+     "sub.fp": "fp",
+     "tag.custom": "custom",
+     "tag.datatype": "datatype",
+     "tag.iord": "iord",
+     "tag.crdr": "crdr",
+     "tag.tlabel": "tlabel"
+    }
+   },
+   "truth": [
+    {
+     "lhs": [
+      "adsh",
+      "tag",
+      "version",
+      "ddate",
+      "qtrs",
+      "uom",
+      "segments",
+      "coreg"
+     ],
+     "rhs": [
+      "value"
+     ],
+     "sure": true,
+     "clause": "sec_financial-statement-data-sets.pdf, 3 Organization (pp. 2-3): \"NUM is a data set of all numeric XBRL facts presented on the primary financial statements as rendered by the Comission. A unique key of each row is a combination of the following fields:\" (adsh, tag, version, ddate, qtrs, uom, segments, coreg); sec_financial-statement-data-sets.pdf, 5 Table Definitions (p. 4): \"the column is a function of all or some of a unique key.\"",
+     "justification": "The eight fields are the declared unique key of NUM, and value is a non-key column of NUM; empty segments and coreg are kept as the value '?'.",
+     "audit": {
+      "verdicts": {
+       "value": "TRUE"
+      },
+      "quote": "\"NUM is a data set of all numeric XBRL facts presented on the primary financial statements as rendered by the Comission. A unique key of each row is a combination of the following fields:\" (adsh, tag, version, ddate, qtrs, uom, segments, coreg) (3 Organization, pp. 2-3); \"the column is a function of all or some of a unique key.\" (5 Table Definitions, p. 4)",
+      "source": "sec_financial-statement-data-sets.pdf, pp. 2-4"
+     }
+    },
+    {
+     "lhs": [
+      "adsh"
+     ],
+     "rhs": [
+      "cik",
+      "name",
+      "sic",
+      "countryba",
+      "stprba",
+      "cityba",
+      "afs",
+      "form",
+      "period",
+      "fy",
+      "fp"
+     ],
+     "sure": true,
+     "clause": "sec_financial-statement-data-sets.pdf, 3 Organization (p. 2): \"SUB identifies all the EDGAR submissions with amounts rendered by the Commission on the primary financial statements in the data set, with each row having the unique (primary) key adsh\"; (p. 3): \"The Accession Number (adsh) found in the NUM data set can be used to retrieve information about the submission in SUB.\"; sec_financial-statement-data-sets.pdf, 5 Table Definitions (p. 4): \"the column is a function of all or some of a unique key.\"",
+     "justification": "adsh is the primary key of SUB, referenced from NUM; name and sic are 'as of the filing date', so cik does not determine them across submissions.",
+     "audit": {
+      "verdicts": {
+       "cik": "TRUE",
+       "name": "TRUE",
+       "sic": "TRUE",
+       "countryba": "TRUE",
+       "stprba": "TRUE",
+       "cityba": "TRUE",
+       "afs": "TRUE",
+       "form": "TRUE",
+       "period": "TRUE",
+       "fy": "TRUE",
+       "fp": "TRUE"
+      },
+      "quote": "\"SUB identifies all the EDGAR submissions with amounts rendered by the Commission on the primary financial statements in the data set, with each row having the unique (primary) key adsh\" (p. 2); \"The Accession Number (adsh) found in the NUM data set can be used to retrieve information about the submission in SUB.\" (p. 3); \"the column is a function of all or some of a unique key.\" (5 Table Definitions, p. 4)",
+      "source": "sec_financial-statement-data-sets.pdf, pp. 2-6"
+     }
+    },
+    {
+     "lhs": [
+      "tag",
+      "version"
+     ],
+     "rhs": [
+      "custom",
+      "datatype",
+      "iord",
+      "crdr",
+      "tlabel"
+     ],
+     "sure": true,
+     "clause": "sec_financial-statement-data-sets.pdf, 3 Organization (p. 2): \"TAG is a data set of all numerical tags used in the submissions, both standard and custom. A unique key of each row is a combination of these fields:\" (tag, version); (p. 3): \"Information about the tag used can be found in TAG.\"; sec_financial-statement-data-sets.pdf, 5 Table Definitions (p. 4): \"the column is a function of all or some of a unique key.\"",
+     "justification": "(tag, version) is the declared unique key of TAG, referenced from NUM.",
+     "audit": {
+      "verdicts": {
+       "custom": "TRUE",
+       "datatype": "TRUE",
+       "iord": "TRUE",
+       "crdr": "TRUE",
+       "tlabel": "TRUE"
+      },
+      "quote": "\"TAG is a data set of all numerical tags used in the submissions, both standard and custom. A unique key of each row is a combination of these fields:\" (tag, version) (p. 2); \"Information about the tag used can be found in TAG.\" (p. 3); \"the column is a function of all or some of a unique key.\" (5 Table Definitions, p. 4)",
+      "source": "sec_financial-statement-data-sets.pdf, pp. 2-4, 7-8"
+     }
+    },
+    {
+     "lhs": [
+      "adsh",
+      "version"
+     ],
+     "rhs": [
+      "custom"
+     ],
+     "sure": true,
+     "clause": "sec_financial-statement-data-sets.pdf, 5.2 TAG (p. 7): \"custom 1 if tag is custom (version=adsh), 0 if it is standard. Note: This flag is technically redundant with the version and adsh columns.\"",
+     "justification": "The documentation states that custom is redundant with version and adsh (custom = 1 exactly when version equals the accession number).",
+     "audit": {
+      "verdicts": {
+       "custom": "TRUE"
+      },
+      "quote": "\"1 if tag is custom (version=adsh), 0 if it is standard. Note: This flag is technically redundant with the version and adsh columns.\" (5.2 TAG, Figure 3, p. 7)",
+      "source": "sec_financial-statement-data-sets.pdf, p. 7"
+     }
+    },
+    {
+     "lhs": [
+      "version"
+     ],
+     "rhs": [
+      "custom"
+     ],
+     "sure": false,
+     "clause": "sec_financial-statement-data-sets.pdf, 5.2 TAG (p. 7): \"For a standard tag, an identifier for the taxonomy; otherwise the accession number where the tag was defined.\"",
+     "justification": "A version value is either a taxonomy identifier (custom = 0) or an accession number (custom = 1), so it determines custom if the two kinds of value never coincide, which is not stated; unsure.",
+     "audit": {
+      "verdicts": {
+       "custom": "UNDETERMINED"
+      },
+      "quote": "\"For a standard tag, an identifier for the taxonomy; otherwise the accession number where the tag was defined.\" (5.2 TAG, p. 7)",
+      "source": "sec_financial-statement-data-sets.pdf, p. 7"
+     }
+    }
+   ],
+   "undocumented_regularities": [
+    "cik -> name, sic, countryba, stprba, cityba within one quarter (documented non-dependency in general: name and sic are 'as of the filing date' and 'EDGAR derived fields represent the most recent EDGAR assignment as of a given filing's submission date')",
+    "(cik, fy, fp, form) -> adsh (amendments make several submissions per period)",
+    "datatype, iord, crdr blank patterns ('If abstract=1, then NULL'; crdr only for monetary): conditional, not FDs",
+    "uom -> datatype, tag -> datatype for standard tags (not stated)",
+    "period -> fy, fp (fiscal focus is defined by the EDGAR XBRL Guide, not by the period date)"
+   ],
+   "construction": "SEC Financial Statement Data Sets, quarter 2026Q3 (2026q3.zip): NUM (root, sampled to 1,000,000 records if larger) left-joined to SUB on adsh and to TAG on (tag, version); empty segments and coreg are the value '?'; dropped NUM footnote and TAG doc (free text), TAG abstract (0 for every tag of a numeric fact in NUM), and the address, phone, incorporation, former-name, filing-status and file-name columns of SUB to stay within 25 columns.",
+   "random_columns": null,
+   "gold_design": null,
+   "gold_design_note": "No normalized design is published; the 3NF designs of Sigma* are synthesized."
+  },
+  "fresh_scorecard_fos": {
+   "attributes": [
+    "UNITID",
+    "OPEID6",
+    "INSTNM",
+    "CONTROL",
+    "MAIN",
+    "CIPCODE",
+    "CIPDESC",
+    "CREDLEV",
+    "CREDDESC",
+    "DISTANCE",
+    "IPEDSCOUNT1",
+    "IPEDSCOUNT2",
+    "DEBT_ALL_STGP_ANY_N",
+    "DEBT_ALL_STGP_ANY_MDN",
+    "DEBT_ALL_STGP_ANY_MDN10YRPAY",
+    "DEBT_ALL_STGP_EVAL_N",
+    "DEBT_ALL_STGP_EVAL_MDN",
+    "DEBT_ALL_STGP_EVAL_MDN10YRPAY",
+    "DEBT_ALL_PP_ANY_MDN",
+    "DEBT_ALL_PP_ANY_MDN10YRPAY",
+    "EARN_COUNT_WNE_1YR",
+    "EARN_MDN_1YR",
+    "EARN_MDN_4YR",
+    "EARN_MDN_4YR_NAT",
+    "EARN_COUNT_WNE_4YR_NAT"
+   ],
+   "key": [
+    "UNITID",
+    "OPEID6",
+    "CIPCODE",
+    "CREDLEV"
+   ],
+   "spec": {
+    "tables": {
+     "fos": {
+      "file": "scorecard/Most-Recent-Cohorts-Field-of-Study.csv",
+      "delimiter": ",",
+      "encoding": "utf-8-sig"
+     }
+    },
+    "root": "fos",
+    "joins": [],
+    "attributes": [
+     "UNITID",
+     "OPEID6",
+     "INSTNM",
+     "CONTROL",
+     "MAIN",
+     "CIPCODE",
+     "CIPDESC",
+     "CREDLEV",
+     "CREDDESC",
+     "DISTANCE",
+     "IPEDSCOUNT1",
+     "IPEDSCOUNT2",
+     "DEBT_ALL_STGP_ANY_N",
+     "DEBT_ALL_STGP_ANY_MDN",
+     "DEBT_ALL_STGP_ANY_MDN10YRPAY",
+     "DEBT_ALL_STGP_EVAL_N",
+     "DEBT_ALL_STGP_EVAL_MDN",
+     "DEBT_ALL_STGP_EVAL_MDN10YRPAY",
+     "DEBT_ALL_PP_ANY_MDN",
+     "DEBT_ALL_PP_ANY_MDN10YRPAY",
+     "EARN_COUNT_WNE_1YR",
+     "EARN_MDN_1YR",
+     "EARN_MDN_4YR",
+     "EARN_MDN_4YR_NAT",
+     "EARN_COUNT_WNE_4YR_NAT"
+    ],
+    "columns": {
+     "fos.UNITID": "UNITID",
+     "fos.OPEID6": "OPEID6",
+     "fos.INSTNM": "INSTNM",
+     "fos.CONTROL": "CONTROL",
+     "fos.MAIN": "MAIN",
+     "fos.CIPCODE": "CIPCODE",
+     "fos.CIPDESC": "CIPDESC",
+     "fos.CREDLEV": "CREDLEV",
+     "fos.CREDDESC": "CREDDESC",
+     "fos.DISTANCE": "DISTANCE",
+     "fos.IPEDSCOUNT1": "IPEDSCOUNT1",
+     "fos.IPEDSCOUNT2": "IPEDSCOUNT2",
+     "fos.DEBT_ALL_STGP_ANY_N": "DEBT_ALL_STGP_ANY_N",
+     "fos.DEBT_ALL_STGP_ANY_MDN": "DEBT_ALL_STGP_ANY_MDN",
+     "fos.DEBT_ALL_STGP_ANY_MDN10YRPAY": "DEBT_ALL_STGP_ANY_MDN10YRPAY",
+     "fos.DEBT_ALL_STGP_EVAL_N": "DEBT_ALL_STGP_EVAL_N",
+     "fos.DEBT_ALL_STGP_EVAL_MDN": "DEBT_ALL_STGP_EVAL_MDN",
+     "fos.DEBT_ALL_STGP_EVAL_MDN10YRPAY": "DEBT_ALL_STGP_EVAL_MDN10YRPAY",
+     "fos.DEBT_ALL_PP_ANY_MDN": "DEBT_ALL_PP_ANY_MDN",
+     "fos.DEBT_ALL_PP_ANY_MDN10YRPAY": "DEBT_ALL_PP_ANY_MDN10YRPAY",
+     "fos.EARN_COUNT_WNE_1YR": "EARN_COUNT_WNE_1YR",
+     "fos.EARN_MDN_1YR": "EARN_MDN_1YR",
+     "fos.EARN_MDN_4YR": "EARN_MDN_4YR",
+     "fos.EARN_MDN_4YR_NAT": "EARN_MDN_4YR_NAT",
+     "fos.EARN_COUNT_WNE_4YR_NAT": "EARN_COUNT_WNE_4YR_NAT"
+    }
+   },
+   "truth": [
+    {
+     "lhs": [
+      "UNITID",
+      "OPEID6",
+      "CIPCODE",
+      "CREDLEV"
+     ],
+     "rhs": [
+      "DISTANCE",
+      "IPEDSCOUNT1",
+      "IPEDSCOUNT2"
+     ],
+     "sure": true,
+     "clause": "scorecard_FieldOfStudyDataDocumentation.pdf (Version: October 2026), Defining field of study (p. 1): \"The unit of analysis for calculations by field of study is the unique combination of institutional identifiers, a four-digit Classification of Instructional Programs (CIP) code, and a credential level.\"; (p. 2): \"each field of study is assigned an indicator that describes the availability of distance education programs within that field of study (DISTANCE)\"; Number of credentials conferred (p. 2): \"Scorecard provides the number of recognized postsecondary credentials conferred by field of study for two consecutive award years (IPEDSCOUNT1 and IPEDSCOUNT2)\"",
+     "justification": "Each row is one field of study, the unique combination of the institutional identifiers (UNITID, OPEID6), the CIP code and the credential level; DISTANCE and the IPEDS counts are values of that field of study. With UNITID -> OPEID6 below, (UNITID, CIPCODE, CREDLEV) is a key too.",
+     "audit": {
+      "verdicts": {
+       "DISTANCE": "TRUE",
+       "IPEDSCOUNT1": "TRUE",
+       "IPEDSCOUNT2": "TRUE"
+      },
+      "quote": "\"The unit of analysis for calculations by field of study is the unique combination of institutional identifiers, a four-digit Classification of Instructional Programs (CIP) code, and a credential level.\" (Defining field of study, p. 1); \"each field of study is assigned an indicator that describes the availability of distance education programs within that field of study (DISTANCE)\" (p. 2); \"Scorecard provides the number of recognized postsecondary credentials conferred by field of study for two consecutive award years (IPEDSCOUNT1 and IPEDSCOUNT2) as reported by institutions to IPEDS.\" (p. 2)",
+      "source": "scorecard_FieldOfStudyDataDocumentation.pdf (Version: October 2026), printed pages 1-2"
+     }
+    },
+    {
+     "lhs": [
+      "UNITID"
+     ],
+     "rhs": [
+      "INSTNM",
+      "OPEID6"
+     ],
+     "sure": true,
+     "clause": "scorecard_FieldOfStudyDataDocumentation.pdf (Version: October 2026), Defining field of study (p. 1): \"Integrated Postsecondary Education Data System (IPEDS) assigned ID number (UNITID) and corresponding institution name (INSTNM), as reported by IPEDS.\" and \"For institutions with multiple UNITIDs (branches) that map to the same six-digit OPEID (main campus)\"",
+     "justification": "INSTNM is the name corresponding to the UNITID, and each UNITID maps to one six-digit OPEID; several UNITIDs may share an OPEID6, so OPEID6 does not determine UNITID.",
+     "audit": {
+      "verdicts": {
+       "INSTNM": "TRUE",
+       "OPEID6": "TRUE"
+      },
+      "quote": "\"Integrated Postsecondary Education Data System (IPEDS) assigned ID number (UNITID) and corresponding institution name (INSTNM), as reported by IPEDS.\" (p. 1); \"For institutions with multiple UNITIDs (branches) that map to the same six-digit OPEID (main campus), data calculated at the aggregated OPEID6-level are repeated across any branches that offer those fields of study based on IPEDS Completions component reporting.\" (p. 1)",
+      "source": "scorecard_FieldOfStudyDataDocumentation.pdf (Version: October 2026), printed page 1"
+     }
+    },
+    {
+     "lhs": [
+      "UNITID"
+     ],
+     "rhs": [
+      "CONTROL",
+      "MAIN"
+     ],
+     "sure": true,
+     "clause": "scorecard_CollegeScorecardDataDictionary.xlsx, sheet FieldOfStudy_Data_Dictionary, rows 5 and 9: \"Control of institution\" (CONTROL) and \"Flag for main campus\" (MAIN)",
+     "justification": "The dictionary describes both as attributes of the institution, which UNITID identifies, but does not say they are constant across an institution's rows; unsure.",
+     "audit": {
+      "verdicts": {
+       "CONTROL": "TRUE",
+       "MAIN": "TRUE"
+      },
+      "quote": "scorecard_CollegeScorecardDataDictionary.xlsx, sheet FieldOfStudy_Data_Dictionary, rows 5 and 9: \"Control of institution\" (CONTROL, developer name cip_4_digit.school.type) and \"Flag for main campus\" (MAIN, cip_4_digit.school.main_campus); row 2 \"Unit ID for institution\" (UNITID); \"Integrated Postsecondary Education Data System (IPEDS) assigned ID number (UNITID) and corresponding institution name (INSTNM), as reported by IPEDS.\" (p. 1)",
+      "source": "scorecard_CollegeScorecardDataDictionary.xlsx, sheet FieldOfStudy_Data_Dictionary, rows 2, 5, 9; scorecard_FieldOfStudyDataDocumentation.pdf (Version: October 2026), printed page 1"
+     }
+    },
+    {
+     "lhs": [
+      "CIPCODE"
+     ],
+     "rhs": [
+      "CIPDESC"
+     ],
+     "sure": true,
+     "clause": "scorecard_CollegeScorecardDataDictionary.xlsx, sheet FieldOfStudy_Data_Dictionary, row 12: \"Text description of the field of study CIP Code\" (CIPDESC)",
+     "justification": "CIPDESC is the text description of the CIP code.",
+     "audit": {
+      "verdicts": {
+       "CIPDESC": "TRUE"
+      },
+      "quote": "scorecard_CollegeScorecardDataDictionary.xlsx, sheet FieldOfStudy_Data_Dictionary, row 12: \"Text description of the field of study CIP Code\" (CIPDESC)",
+      "source": "scorecard_CollegeScorecardDataDictionary.xlsx, sheet FieldOfStudy_Data_Dictionary, row 12"
+     }
+    },
+    {
+     "lhs": [
+      "CREDLEV"
+     ],
+     "rhs": [
+      "CREDDESC"
+     ],
+     "sure": true,
+     "clause": "scorecard_CollegeScorecardDataDictionary.xlsx, sheet FieldOfStudy_Data_Dictionary, row 21: \"Text description of the level of credential\" (CREDDESC); rows 13-20 list the eight CREDLEV codes with their labels",
+     "justification": "CREDDESC is the text description of the credential level code.",
+     "audit": {
+      "verdicts": {
+       "CREDDESC": "TRUE"
+      },
+      "quote": "scorecard_CollegeScorecardDataDictionary.xlsx, sheet FieldOfStudy_Data_Dictionary, row 21: \"Text description of the level of credential\" (CREDDESC); rows 13-20 list the CREDLEV codes 1-8 with labels",
+      "source": "scorecard_CollegeScorecardDataDictionary.xlsx, sheet FieldOfStudy_Data_Dictionary, rows 13-21"
+     }
+    },
+    {
+     "lhs": [
+      "CREDDESC"
+     ],
+     "rhs": [
+      "CREDLEV"
+     ],
+     "sure": false,
+     "clause": "scorecard_CollegeScorecardDataDictionary.xlsx, sheet FieldOfStudy_Data_Dictionary, rows 13-20: CREDLEV values 1-8 with eight distinct labels (e.g. \"Undergraduate Certificate or Diploma\", \"Bachelor's Degree\")",
+     "justification": "The code list has distinct labels, but the dictionary does not state that CREDDESC holds exactly these labels; unsure.",
+     "audit": {
+      "verdicts": {
+       "CREDLEV": "UNDETERMINED"
+      },
+      "quote": "scorecard_CollegeScorecardDataDictionary.xlsx, sheet FieldOfStudy_Data_Dictionary, rows 13-21: CREDLEV labels \"Undergraduate Certificate or Diploma\" ... \"Graduate/Professional Certificate\"; CREDDESC \"Text description of the level of credential\"",
+      "source": "scorecard_CollegeScorecardDataDictionary.xlsx, sheet FieldOfStudy_Data_Dictionary, rows 13-21"
+     }
+    },
+    {
+     "lhs": [
+      "OPEID6",
+      "CIPCODE",
+      "CREDLEV"
+     ],
+     "rhs": [
+      "DEBT_ALL_STGP_ANY_N",
+      "DEBT_ALL_STGP_ANY_MDN",
+      "DEBT_ALL_STGP_ANY_MDN10YRPAY",
+      "DEBT_ALL_STGP_EVAL_N",
+      "DEBT_ALL_STGP_EVAL_MDN",
+      "DEBT_ALL_STGP_EVAL_MDN10YRPAY",
+      "DEBT_ALL_PP_ANY_MDN",
+      "DEBT_ALL_PP_ANY_MDN10YRPAY",
+      "EARN_COUNT_WNE_1YR",
+      "EARN_MDN_1YR",
+      "EARN_MDN_4YR"
+     ],
+     "sure": true,
+     "clause": "scorecard_FieldOfStudyDataDocumentation.pdf (Version: October 2026), Defining field of study (p. 1): \"Scorecard uses this aggregated approach to calculate cumulative debt and post-completion earnings data\" and \"data calculated at the aggregated OPEID6-level are repeated across any branches that offer those fields of study based on IPEDS Completions component reporting.\"",
+     "justification": "Debt (including the monthly payments computed from it) and earnings metrics are calculated per OPEID6, CIP code and credential level and repeated on every branch row: a dependency on a proper subset of the key once UNITID is dropped.",
+     "audit": {
+      "verdicts": {
+       "DEBT_ALL_STGP_ANY_N": "TRUE",
+       "DEBT_ALL_STGP_ANY_MDN": "TRUE",
+       "DEBT_ALL_STGP_ANY_MDN10YRPAY": "TRUE",
+       "DEBT_ALL_STGP_EVAL_N": "TRUE",
+       "DEBT_ALL_STGP_EVAL_MDN": "TRUE",
+       "DEBT_ALL_STGP_EVAL_MDN10YRPAY": "TRUE",
+       "DEBT_ALL_PP_ANY_MDN": "TRUE",
+       "DEBT_ALL_PP_ANY_MDN10YRPAY": "TRUE",
+       "EARN_COUNT_WNE_1YR": "TRUE",
+       "EARN_MDN_1YR": "TRUE",
+       "EARN_MDN_4YR": "TRUE"
+      },
+      "quote": "\"Scorecard uses this aggregated approach to calculate cumulative debt and post-completion earnings data because not all institutions report information needed to calculate these metrics at the more granular branch location level.\" (p. 1); \"For institutions with multiple UNITIDs (branches) that map to the same six-digit OPEID (main campus), data calculated at the aggregated OPEID6-level are repeated across any branches that offer those fields of study based on IPEDS Completions component reporting.\" (p. 1); \"Scorecard constructs cohorts and calculates data values by field of study using a six-digit OPEID institutional identifier\" (OPEIDs, p. 12); \"The estimated monthly payment is calculated for all graduates for both types of loans and both methods of debt measurement (DEBT_ALL_PP_ANY_MDN10YRPAY, DEBT_ALL_PP_EVAL_MDN10YRPAY, DEBT_ALL_STGP_ANY_MDN10YRPAY, DEBT_ALL_STGP_EVAL_MDN10YRPAY) and is based on the median cumulative loan debt amortized over 10 years using interest rates available at the time of calculation.\" (p. 5)",
+      "source": "scorecard_FieldOfStudyDataDocumentation.pdf (Version: October 2026), printed pages 1, 5 and 12"
+     }
+    },
+    {
+     "lhs": [
+      "CIPCODE",
+      "CREDLEV"
+     ],
+     "rhs": [
+      "EARN_MDN_4YR_NAT",
+      "EARN_COUNT_WNE_4YR_NAT"
+     ],
+     "sure": true,
+     "clause": "scorecard_FieldOfStudyDataDocumentation.pdf (Version: October 2026), Post-completion earnings (p. 4): \"Earnings data within credential level and CIP Code by at the national level were calculated 4, 5, and 7 years after completion.\" and \"are included in the data file (EARN_COUNT_WNE_xYR_NAT, EARN_MDN_xYR_NAT, EARN_P25_xYR_NAT, EARN_P75_xYR_NAT)\"",
+     "justification": "The national metrics are computed once per credential level and CIP code, so every row with that CIP code and credential level carries the same value.",
+     "audit": {
+      "verdicts": {
+       "EARN_MDN_4YR_NAT": "TRUE",
+       "EARN_COUNT_WNE_4YR_NAT": "TRUE"
+      },
+      "quote": "\"Earnings data within credential level and CIP Code by at the national level were calculated 4, 5, and 7 years after completion.\" and \"... are included in the data file (EARN_COUNT_WNE_xYR_NAT, EARN_MDN_xYR_NAT, EARN_P25_xYR_NAT, EARN_P75_xYR_NAT)\" (Post-completion earnings, p. 4)",
+      "source": "scorecard_FieldOfStudyDataDocumentation.pdf (Version: October 2026), printed page 4"
+     }
+    },
+    {
+     "lhs": [
+      "DEBT_ALL_STGP_ANY_MDN",
+      "CREDLEV"
+     ],
+     "rhs": [
+      "DEBT_ALL_STGP_ANY_MDN10YRPAY"
+     ],
+     "sure": false,
+     "clause": "scorecard_FieldOfStudyDataDocumentation.pdf (Version: October 2026), Cumulative loan debt (pp. 5-6): \"is based on the median cumulative loan debt amortized over 10 years using interest rates available at the time of calculation\" and \"Academic levels are assigned to credential levels based on the following categorizations:\"; (pp. 5-6): \"For undergraduate programs, calculations are based on the interest rate at the time of calculation for undergraduate Direct Subsidized Loans\" and \"For graduate programs, calculations are based on the interest rate at the time of calculation for Direct PLUS Loans for graduate and professional students (9.07%).\"",
+     "justification": "The payment is the median debt amortized at a rate fixed by the academic level, which the credential level determines; unsure because 'based on' and the rounding of the published median leave room for two rows with equal inputs and different payments.",
+     "audit": {
+      "verdicts": {
+       "DEBT_ALL_STGP_ANY_MDN10YRPAY": "UNDETERMINED"
+      },
+      "quote": "\"The estimated monthly payment is calculated for all graduates for both types of loans and both methods of debt measurement (DEBT_ALL_PP_ANY_MDN10YRPAY, DEBT_ALL_PP_EVAL_MDN10YRPAY, DEBT_ALL_STGP_ANY_MDN10YRPAY, DEBT_ALL_STGP_EVAL_MDN10YRPAY) and is based on the median cumulative loan debt amortized over 10 years using interest rates available at the time of calculation.\" (p. 5); \"For undergraduate programs, calculations are based on the interest rate ... (6.52%). For graduate programs ... (9.07%).\" (pp. 5-6); \"Debt metrics have been treated via cell suppression methods, and to further reduce disclosure risk, information about the specific suppression rules is not available to the public.\" (Privacy protection, p. 7)",
+      "source": "scorecard_FieldOfStudyDataDocumentation.pdf (Version: October 2026), printed pages 5-7"
+     }
+    },
+    {
+     "lhs": [
+      "DEBT_ALL_STGP_EVAL_MDN",
+      "CREDLEV"
+     ],
+     "rhs": [
+      "DEBT_ALL_STGP_EVAL_MDN10YRPAY"
+     ],
+     "sure": false,
+     "clause": "scorecard_FieldOfStudyDataDocumentation.pdf (Version: October 2026), Cumulative loan debt (pp. 5-6): \"is based on the median cumulative loan debt amortized over 10 years using interest rates available at the time of calculation\" and \"Academic levels are assigned to credential levels based on the following categorizations:\"",
+     "justification": "Same calculation as for the ANY median; unsure for the same reason.",
+     "audit": {
+      "verdicts": {
+       "DEBT_ALL_STGP_EVAL_MDN10YRPAY": "UNDETERMINED"
+      },
+      "quote": "\"The estimated monthly payment is calculated for all graduates for both types of loans and both methods of debt measurement (DEBT_ALL_PP_ANY_MDN10YRPAY, DEBT_ALL_PP_EVAL_MDN10YRPAY, DEBT_ALL_STGP_ANY_MDN10YRPAY, DEBT_ALL_STGP_EVAL_MDN10YRPAY) and is based on the median cumulative loan debt amortized over 10 years using interest rates available at the time of calculation.\" (p. 5); \"Debt metrics have been treated via cell suppression methods, and to further reduce disclosure risk, information about the specific suppression rules is not available to the public.\" (Privacy protection, p. 7)",
+      "source": "scorecard_FieldOfStudyDataDocumentation.pdf (Version: October 2026), printed pages 5-7"
+     }
+    },
+    {
+     "lhs": [
+      "DEBT_ALL_PP_ANY_MDN"
+     ],
+     "rhs": [
+      "DEBT_ALL_PP_ANY_MDN10YRPAY"
+     ],
+     "sure": false,
+     "clause": "scorecard_FieldOfStudyDataDocumentation.pdf (Version: October 2026), Cumulative loan debt (pp. 5-6): \"is based on the median cumulative loan debt amortized over 10 years using interest rates available at the time of calculation\" and \"Academic levels are assigned to credential levels based on the following categorizations:\"; (p. 6): \"Parent PLUS Loan calculations are based on the interest rate at the time of calculation for Direct PLUS loans (9.07%).\"",
+     "justification": "Parent PLUS payments use one rate for all levels, so the median alone fixes the payment; unsure for the same reason.",
+     "audit": {
+      "verdicts": {
+       "DEBT_ALL_PP_ANY_MDN10YRPAY": "UNDETERMINED"
+      },
+      "quote": "\"The estimated monthly payment is calculated for all graduates for both types of loans and both methods of debt measurement (DEBT_ALL_PP_ANY_MDN10YRPAY, DEBT_ALL_PP_EVAL_MDN10YRPAY, DEBT_ALL_STGP_ANY_MDN10YRPAY, DEBT_ALL_STGP_EVAL_MDN10YRPAY) and is based on the median cumulative loan debt amortized over 10 years using interest rates available at the time of calculation.\" (p. 5); \"Parent PLUS Loan calculations are based on the interest rate at the time of calculation for Direct PLUS loans (9.07%).\" (p. 6); \"Debt metrics have been treated via cell suppression methods, and to further reduce disclosure risk, information about the specific suppression rules is not available to the public.\" (Privacy protection, p. 7)",
+      "source": "scorecard_FieldOfStudyDataDocumentation.pdf (Version: October 2026), printed pages 5-7"
+     }
+    }
+   ],
+   "undocumented_regularities": [
+    "CIPDESC -> CIPCODE (CIP titles not declared unique)",
+    "INSTNM -> UNITID (institution names not declared unique)",
+    "OPEID6 -> CONTROL (control of the institutions sharing an OPEID6 is not stated to agree)",
+    "(UNITID, CIPCODE, CREDLEV) -> IPEDSCOUNT* only; any dependency of the IPEDS counts on OPEID6 is undocumented",
+    "privacy suppression: a suppressed (PS) median comes with a suppressed payment (not stated)",
+    "Documented non-dependency: several UNITIDs map to one OPEID6 (OPEID6 does not determine UNITID, INSTNM)."
+   ],
+   "construction": "College Scorecard 'Most Recent Data by Field of Study' file (release of October 2026, dictionary released October 15, 2026); single table; of its ~245 variables kept the identifiers, descriptions, DISTANCE, the IPEDS counts, the all-student Stafford/Grad PLUS debt counts and medians (ANY and EVAL) with their 10-year payments, the Parent PLUS ANY median and payment, two OPEID6-level earnings metrics at 1 and 4 years and two national 4-year metrics; dropped the remaining debt and earnings disaggregations (Pell, sex), the repayment rates and the other national metrics.",
+   "random_columns": null,
+   "gold_design": null,
+   "gold_design_note": "No normalized design is published; the 3NF designs of Sigma* are synthesized."
+  },
+  "fresh_epa_aqs": {
+   "attributes": [
+    "State Code",
+    "County Code",
+    "Site Num",
+    "POC",
+    "Latitude",
+    "Longitude",
+    "Datum",
+    "Sample Duration",
+    "Pollutant Standard",
+    "Date Local",
+    "Event Type",
+    "Observation Count",
+    "Observation Percent",
+    "Arithmetic Mean",
+    "1st Max Value",
+    "1st Max Hour",
+    "AQI",
+    "Method Code",
+    "Method Name",
+    "Local Site Name",
+    "Address",
+    "State Name",
+    "County Name",
+    "City Name",
+    "CBSA Name"
+   ],
+   "key": null,
+   "spec": {
+    "tables": {
+     "daily": {
+      "file": "epa/daily_44201_2025.csv",
+      "delimiter": ",",
+      "encoding": "utf-8-sig",
+      "filter": {
+       "Parameter Code": [
+        "44201"
+       ]
+      }
+     }
+    },
+    "root": "daily",
+    "joins": [],
+    "attributes": [
+     "State Code",
+     "County Code",
+     "Site Num",
+     "POC",
+     "Latitude",
+     "Longitude",
+     "Datum",
+     "Sample Duration",
+     "Pollutant Standard",
+     "Date Local",
+     "Event Type",
+     "Observation Count",
+     "Observation Percent",
+     "Arithmetic Mean",
+     "1st Max Value",
+     "1st Max Hour",
+     "AQI",
+     "Method Code",
+     "Method Name",
+     "Local Site Name",
+     "Address",
+     "State Name",
+     "County Name",
+     "City Name",
+     "CBSA Name"
+    ],
+    "columns": {
+     "daily.State Code": "State Code",
+     "daily.County Code": "County Code",
+     "daily.Site Num": "Site Num",
+     "daily.POC": "POC",
+     "daily.Latitude": "Latitude",
+     "daily.Longitude": "Longitude",
+     "daily.Datum": "Datum",
+     "daily.Sample Duration": "Sample Duration",
+     "daily.Pollutant Standard": "Pollutant Standard",
+     "daily.Date Local": "Date Local",
+     "daily.Event Type": "Event Type",
+     "daily.Observation Count": "Observation Count",
+     "daily.Observation Percent": "Observation Percent",
+     "daily.Arithmetic Mean": "Arithmetic Mean",
+     "daily.1st Max Value": "1st Max Value",
+     "daily.1st Max Hour": "1st Max Hour",
+     "daily.AQI": "AQI",
+     "daily.Method Code": "Method Code",
+     "daily.Method Name": "Method Name",
+     "daily.Local Site Name": "Local Site Name",
+     "daily.Address": "Address",
+     "daily.State Name": "State Name",
+     "daily.County Name": "County Name",
+     "daily.City Name": "City Name",
+     "daily.CBSA Name": "CBSA Name"
+    }
+   },
+   "truth": [
+    {
+     "lhs": [
+      "State Code",
+      "County Code",
+      "Site Num"
+     ],
+     "rhs": [
+      "Latitude",
+      "Longitude",
+      "Datum",
+      "Local Site Name",
+      "Address",
+      "State Name",
+      "County Name",
+      "City Name",
+      "CBSA Name"
+     ],
+     "sure": true,
+     "clause": "epa_aqs_FileFormats.html (Version 3.0.0), 2.1 Site Description File, Content: \"A unique site is identified by the combination of state code, county code, and site number (within county). It can also be identified by the latitude and longitude.\"; 5.2 Daily Summary Format: \"The monitoring site’s angular distance north of the equator measured in decimal degrees.\", \"The name of the site (if any) given by the State, local, or tribal air pollution control agency that operates it.\", \"The name of the core bases statistical area (metropolitan area) where the monitoring site is located.\"",
+     "justification": "The three codes identify the site, and these columns describe the site (its position, datum, name, address and the state, county, city and CBSA it lies in).",
+     "audit": {
+      "verdicts": {
+       "Latitude": "TRUE",
+       "Longitude": "TRUE",
+       "Datum": "TRUE",
+       "Local Site Name": "TRUE",
+       "Address": "TRUE",
+       "State Name": "TRUE",
+       "County Name": "TRUE",
+       "City Name": "TRUE",
+       "CBSA Name": "TRUE"
+      },
+      "quote": "2.1 Content: \"Each unique geographic location that contains monitors is called a \\\"site\\\" in AQS. Information about the geographic setting is store in the site record, which are presented here. A unique site is identified by the combination of state code, county code, and site number (within county).\"; 5.2: each right-hand side is defined as a property of the monitoring site, e.g. Latitude \"The monitoring site’s angular distance north of the equator measured in decimal degrees.\", Datum \"The Datum associated with the Latitude and Longitude measures.\", Local Site Name \"The name of the site (if any) given by the State, local, or tribal air pollution control agency that operates it.\", Address \"The approximate street address of the monitoring site.\", County Name \"The name of the county where the monitoring site is located.\", CBSA Name \"The name of the core bases statistical area (metropolitan area) where the monitoring site is located.\"",
+      "source": "epa_aqs_FileFormats.html (AirData Download Files Documentation, Version 3.0.0, December 01, 2015), 2.1 Site Description File - Content; 5.2 Daily Summary Files - Format"
+     }
+    },
+    {
+     "lhs": [
+      "Latitude",
+      "Longitude"
+     ],
+     "rhs": [
+      "State Code",
+      "County Code",
+      "Site Num"
+     ],
+     "sure": true,
+     "clause": "epa_aqs_FileFormats.html (Version 3.0.0), 2.1 Site Description File, Content: \"A unique site is identified by the combination of state code, county code, and site number (within county). It can also be identified by the latitude and longitude.\"",
+     "justification": "The documentation states that a site can also be identified by its latitude and longitude.",
+     "audit": {
+      "verdicts": {
+       "State Code": "TRUE",
+       "County Code": "TRUE",
+       "Site Num": "TRUE"
+      },
+      "quote": "2.1 Content: \"A unique site is identified by the combination of state code, county code, and site number (within county). It can also be identified by the latitude and longitude.\"",
+      "source": "epa_aqs_FileFormats.html (AirData Download Files Documentation, Version 3.0.0, December 01, 2015), 2.1 Site Description File - Content"
+     }
+    },
+    {
+     "lhs": [
+      "State Code"
+     ],
+     "rhs": [
+      "State Name"
+     ],
+     "sure": true,
+     "clause": "epa_aqs_FileFormats.html (Version 3.0.0), 5.2: \"The FIPS code of the state in which the monitor resides.\" and \"The name of the state where the monitoring site is located.\"",
+     "justification": "Both columns denote the state of the site, and a state FIPS code identifies one state.",
+     "audit": {
+      "verdicts": {
+       "State Name": "TRUE"
+      },
+      "quote": "1.1 Monitors: \"SS-CCC-NNNN-PPPPP-Q where SS is the State FIPS code, CCC is the County FIPS code, and NNNN is the Site Number within the county\" and \"01-089-0014-44201-2 is Alabama, Madison County, Site Number 14, ozone monitor, POC 2.\"; 5.2: State Code \"The FIPS code of the state in which the monitor resides.\", County Code \"The FIPS code of the county in which the monitor resides.\", State Name \"The name of the state where the monitoring site is located.\", County Name \"The name of the county where the monitoring site is located.\"",
+      "source": "epa_aqs_FileFormats.html (AirData Download Files Documentation, Version 3.0.0, December 01, 2015), 1.1 Monitors; 5.2 Daily Summary Files - Format"
+     }
+    },
+    {
+     "lhs": [
+      "State Name"
+     ],
+     "rhs": [
+      "State Code"
+     ],
+     "sure": false,
+     "clause": "epa_aqs_FileFormats.html (Version 3.0.0), 5.2: \"The name of the state where the monitoring site is located.\"",
+     "justification": "Requires that state names are unique, which the documentation does not state; unsure.",
+     "audit": {
+      "verdicts": {
+       "State Code": "UNDETERMINED"
+      },
+      "quote": "5.2 State Name: \"The name of the state where the monitoring site is located.\"",
+      "source": "epa_aqs_FileFormats.html (AirData Download Files Documentation, Version 3.0.0, December 01, 2015), 5.2 Daily Summary Files - Format"
+     }
+    },
+    {
+     "lhs": [
+      "State Code",
+      "County Code"
+     ],
+     "rhs": [
+      "County Name"
+     ],
+     "sure": true,
+     "clause": "epa_aqs_FileFormats.html (Version 3.0.0), 5.2: \"The FIPS code of the county in which the monitor resides.\" and \"The name of the county where the monitoring site is located.\"; 1.1 Monitors: \"SS is the State FIPS code, CCC is the County FIPS code\"",
+     "justification": "State and county FIPS codes together identify the county of the site; whether the county code alone is unique is not stated, so only the pair is used.",
+     "audit": {
+      "verdicts": {
+       "County Name": "TRUE"
+      },
+      "quote": "1.1 Monitors: \"SS-CCC-NNNN-PPPPP-Q where SS is the State FIPS code, CCC is the County FIPS code, and NNNN is the Site Number within the county\" and \"01-089-0014-44201-2 is Alabama, Madison County, Site Number 14, ozone monitor, POC 2.\"; 5.2: State Code \"The FIPS code of the state in which the monitor resides.\", County Code \"The FIPS code of the county in which the monitor resides.\", State Name \"The name of the state where the monitoring site is located.\", County Name \"The name of the county where the monitoring site is located.\"",
+      "source": "epa_aqs_FileFormats.html (AirData Download Files Documentation, Version 3.0.0, December 01, 2015), 1.1 Monitors; 5.2 Daily Summary Files - Format"
+     }
+    },
+    {
+     "lhs": [
+      "Method Code"
+     ],
+     "rhs": [
+      "Method Name"
+     ],
+     "sure": true,
+     "clause": "epa_aqs_FileFormats.html (Version 3.0.0), 5.2: \"An internal system code indicating the method (processes, equipment, and protocols) used in gathering and measuring the sample. The method name is in the next column.\"; 3.2 Monitor Description File: \"A method code is only unique within a parameter (that is, method 111 for ozone is not the same as method 111 for benzene).\"",
+     "justification": "(Parameter Code, Method Code) identifies a method and so its name; the relation is filtered to the single parameter 44201, so the dropped Parameter Code is constant and Method Code alone determines Method Name here (it does not across parameters).",
+     "audit": {
+      "verdicts": {
+       "Method Name": "TRUE"
+      },
+      "quote": "5.2 Method Code: \"An internal system code indicating the method (processes, equipment, and protocols) used in gathering and measuring the sample. The method name is in the next column.\"; 3.2 Last Method Code: \"A method code is only unique within a parameter (that is, method 111 for ozone is not the same as method 111 for benzene).\"; construction: \"filtered to Parameter Code 44201\"",
+      "source": "epa_aqs_FileFormats.html (AirData Download Files Documentation, Version 3.0.0, December 01, 2015), 5.2 Daily Summary Files - Format; 3.2 Monitor Description File - Format; construction of the relation"
+     }
+    },
+    {
+     "lhs": [
+      "State Code",
+      "County Code",
+      "Site Num",
+      "POC",
+      "Date Local",
+      "Sample Duration",
+      "Pollutant Standard",
+      "Event Type"
+     ],
+     "rhs": [
+      "Observation Count",
+      "Observation Percent",
+      "Arithmetic Mean",
+      "1st Max Value",
+      "1st Max Hour",
+      "AQI",
+      "Method Code"
+     ],
+     "sure": true,
+     "clause": "epa_aqs_FileFormats.html (Version 3.0.0), 1.1 Monitors: \"POC – Parameter Occurrence Code. Used to uniquely identify a monitor if there is more than one device measuring the same pollutant at the same site.\"; 5.1 Daily Summary Files, Content: \"The daily summary files contain (at least) one record for each monitor that reported data for the given day. There may be multiple records for the monitor if:\" (calculated sample durations, multiple standards, exceptional events)",
+     "justification": "A monitor (site, parameter, POC) has one record per day except for the three listed reasons, which Sample Duration, Pollutant Standard and Event Type distinguish; the documentation never declares this combination a key, so the record key is inferred and unsure.",
+     "audit": {
+      "verdicts": {
+       "Observation Count": "TRUE",
+       "Observation Percent": "TRUE",
+       "Arithmetic Mean": "TRUE",
+       "1st Max Value": "TRUE",
+       "1st Max Hour": "TRUE",
+       "AQI": "TRUE",
+       "Method Code": "TRUE"
+      },
+      "quote": "5.1 Content: \"This file will contain a daily summary record that is: 1) The aggregate of all sub-daily measurements taken at the monitor.\" and \"The daily summary files contain (at least) one record for each monitor that reported data for the given day. There may be multiple records for the monitor if: There are calculated sample durations for the pollutant. [...] There are multiple standards for the pollutant (q.v. pollutant standards). There were exceptional events associated with some measurements [...]\"; 1.2: \"So the annual and daily summary files will (possibly) contain multiple records that have been calculated using different rules and starting metrics. These are differentiated by the Pollutant Standard.\"; 5.2 Event Type: \"If an event occurred for the parameter in question, the data will have multiple records for each monitor.\"; 1.1: \"Identified by: The site (state + county + site number) where the monitor is located AND The pollutant code AND POC\"",
+      "source": "epa_aqs_FileFormats.html (AirData Download Files Documentation, Version 3.0.0, December 01, 2015), 1.1 Monitors; 1.2 Pollutant Standards; 5.1 Daily Summary Files - Content; 5.2 Event Type"
+     }
+    }
+   ],
+   "undocumented_regularities": [
+    "(State Name, County Name) -> County Code; County Name -> State Name (names not declared unique)",
+    "City Name -> State Code, CBSA Name -> State Code (no rule; CBSAs cross state lines)",
+    "Local Site Name -> site codes, Address -> site codes (names and addresses not declared unique)",
+    "Pollutant Standard -> Sample Duration (each standard has an averaging time; not stated as a rule on the columns)",
+    "AQI determined by the concentration (1st Max Value) and Pollutant Standard (AQI computation is not documented here)",
+    "Documented non-dependency: methods 'can change, but often do not' (the monitor does not determine Method Code across days); 'A method code is only unique within a parameter'."
+   ],
+   "construction": "EPA AirData daily summary file daily_44201_2025 (ozone, 2025; the file as downloaded for the confirmatory evaluation, 'As of' date in the README); single table filtered to Parameter Code 44201; dropped Parameter Code, Parameter Name and Units of Measure (constant: one parameter, reported in its standard unit) and Date of Last Change (record maintenance date).",
+   "random_columns": null,
+   "gold_design": null,
+   "gold_design_note": "No normalized design is published; the 3NF designs of Sigma* are synthesized."
+  },
+  "fresh_pums_ca": {
+   "attributes": [
+    "SERIALNO",
+    "SPORDER",
+    "PUMA",
+    "PWGTP",
+    "AGEP",
+    "SEX",
+    "CIT",
+    "NATIVITY",
+    "POBP",
+    "WAOB",
+    "YOEP",
+    "DECADE",
+    "MAR",
+    "MSP",
+    "SCHL",
+    "FOD1P",
+    "SCIENGP",
+    "SCIENGRLP",
+    "OCCP",
+    "SOCP",
+    "INDP",
+    "NAICSP",
+    "RAC1P",
+    "RAC2P",
+    "ESR"
+   ],
+   "key": [
+    "SERIALNO",
+    "SPORDER"
+   ],
+   "spec": {
+    "tables": {
+     "person": {
+      "file": "pums/psam_p06.csv",
+      "delimiter": ",",
+      "encoding": "utf-8-sig"
+     }
+    },
+    "root": "person",
+    "joins": [],
+    "attributes": [
+     "SERIALNO",
+     "SPORDER",
+     "PUMA",
+     "PWGTP",
+     "AGEP",
+     "SEX",
+     "CIT",
+     "NATIVITY",
+     "POBP",
+     "WAOB",
+     "YOEP",
+     "DECADE",
+     "MAR",
+     "MSP",
+     "SCHL",
+     "FOD1P",
+     "SCIENGP",
+     "SCIENGRLP",
+     "OCCP",
+     "SOCP",
+     "INDP",
+     "NAICSP",
+     "RAC1P",
+     "RAC2P",
+     "ESR"
+    ],
+    "columns": {
+     "person.SERIALNO": "SERIALNO",
+     "person.SPORDER": "SPORDER",
+     "person.PUMA": "PUMA",
+     "person.PWGTP": "PWGTP",
+     "person.AGEP": "AGEP",
+     "person.SEX": "SEX",
+     "person.CIT": "CIT",
+     "person.NATIVITY": "NATIVITY",
+     "person.POBP": "POBP",
+     "person.WAOB": "WAOB",
+     "person.YOEP": "YOEP",
+     "person.DECADE": "DECADE",
+     "person.MAR": "MAR",
+     "person.MSP": "MSP",
+     "person.SCHL": "SCHL",
+     "person.FOD1P": "FOD1P",
+     "person.SCIENGP": "SCIENGP",
+     "person.SCIENGRLP": "SCIENGRLP",
+     "person.OCCP": "OCCP",
+     "person.SOCP": "SOCP",
+     "person.INDP": "INDP",
+     "person.NAICSP": "NAICSP",
+     "person.RAC1P": "RAC1P",
+     "person.RAC2P": "RAC2P",
+     "person.ESR": "ESR"
+    }
+   },
+   "truth": [
+    {
+     "lhs": [
+      "SERIALNO",
+      "SPORDER"
+     ],
+     "rhs": [
+      "PUMA",
+      "PWGTP",
+      "AGEP",
+      "SEX",
+      "CIT",
+      "NATIVITY",
+      "POBP",
+      "WAOB",
+      "YOEP",
+      "DECADE",
+      "MAR",
+      "MSP",
+      "SCHL",
+      "FOD1P",
+      "SCIENGP",
+      "SCIENGRLP",
+      "OCCP",
+      "SOCP",
+      "INDP",
+      "NAICSP",
+      "RAC1P",
+      "RAC2P",
+      "ESR"
+     ],
+     "sure": true,
+     "clause": "pums_PUMS_Data_Dictionary_2024.txt (2024 ACS PUMS Data Dictionary, October 16, 2025), PERSON RECORD-BASIC VARIABLES: SERIALNO \"Housing unit/GQ person serial number\" with \"2024HU0000001..2024HU9999999 .HU Unique identifier\"; SPORDER \"Person number\" with \"01..20 .Person number\"",
+     "justification": "A person record is the person numbered SPORDER within the housing unit or group-quarters person identified by SERIALNO.",
+     "audit": {
+      "verdicts": {
+       "PUMA": "TRUE",
+       "PWGTP": "TRUE",
+       "AGEP": "TRUE",
+       "SEX": "TRUE",
+       "CIT": "TRUE",
+       "NATIVITY": "TRUE",
+       "POBP": "TRUE",
+       "WAOB": "TRUE",
+       "YOEP": "TRUE",
+       "DECADE": "TRUE",
+       "MAR": "TRUE",
+       "MSP": "TRUE",
+       "SCHL": "TRUE",
+       "FOD1P": "TRUE",
+       "SCIENGP": "TRUE",
+       "SCIENGRLP": "TRUE",
+       "OCCP": "TRUE",
+       "SOCP": "TRUE",
+       "INDP": "TRUE",
+       "NAICSP": "TRUE",
+       "RAC1P": "TRUE",
+       "RAC2P": "TRUE",
+       "ESR": "TRUE"
+      },
+      "quote": "SERIALNO \"Housing unit/GQ person serial number\" with \"2024GQ0000001..2024GQ9999999 .GQ Unique identifier\" and \"2024HU0000001..2024HU9999999 .HU Unique identifier\"; SPORDER \"Person number\" with \"01..20 .Person number\"",
+      "source": "pums_PUMS_Data_Dictionary_2024.txt (2024 ACS PUMS Data Dictionary, October 16, 2025), PERSON RECORD-BASIC VARIABLES"
+     }
+    },
+    {
+     "lhs": [
+      "SERIALNO"
+     ],
+     "rhs": [
+      "PUMA"
+     ],
+     "sure": true,
+     "clause": "pums_PUMS_Data_Dictionary_2024.txt (2024 ACS PUMS Data Dictionary, October 16, 2025), HOUSING RECORD-BASIC VARIABLES: SERIALNO \"Housing unit/GQ person serial number\" (\"HU Unique identifier\") and PUMA \"Public use microdata area code (PUMA) based on 2020 Census definition (areas with population of 100,000 or more, use with STATE for unique code)\"",
+     "justification": "PUMA is a basic variable of the housing record identified by SERIALNO and is repeated on its person records; within the one-state file STATE is constant, so PUMA alone is the area.",
+     "audit": {
+      "verdicts": {
+       "PUMA": "TRUE"
+      },
+      "quote": "HOUSING RECORD-BASIC VARIABLES: SERIALNO \"Housing unit/GQ person serial number\" (\"2024HU0000001..2024HU9999999 .HU Unique identifier\") and PUMA \"Public use microdata area code (PUMA) based on 2020 Census definition (areas with population of 100,000 or more, use with STATE for unique code)\"; the same SERIALNO and PUMA are listed under PERSON RECORD-BASIC VARIABLES",
+      "source": "pums_PUMS_Data_Dictionary_2024.txt (2024 ACS PUMS Data Dictionary, October 16, 2025), HOUSING RECORD-BASIC VARIABLES; PERSON RECORD-BASIC VARIABLES"
+     }
+    },
+    {
+     "lhs": [
+      "POBP"
+     ],
+     "rhs": [
+      "WAOB"
+     ],
+     "sure": true,
+     "clause": "pums_PUMS_Data_Dictionary_2024.txt (2024 ACS PUMS Data Dictionary, October 16, 2025), WAOB \"World area of birth\": \"US state (POBP = 001-059)\", \"Europe (POBP = 100-157,160,162-199)\", \"Africa (POBP = 400-499)\" (every category defined by POBP ranges)",
+     "justification": "Each WAOB category is defined as a set of POBP codes, so the place of birth determines the world area of birth.",
+     "audit": {
+      "verdicts": {
+       "WAOB": "TRUE"
+      },
+      "quote": "WAOB \"World area of birth\": \"1 .US state (POBP = 001-059)\", \"2 .PR and US Island Areas (POBP = 061-099)\", \"3 .Latin America (POBP = 303,310-399)\", \"4 .Asia (POBP = 158-159,161,200-299)\", \"5 .Europe (POBP = 100-157,160,162-199)\", \"6 .Africa (POBP = 400-499)\", \"7 .Northern America (POBP = 300-302,304-309)\", \"8 .Oceania and at Sea (POBP = 060,500-554)\"",
+      "source": "pums_PUMS_Data_Dictionary_2024.txt (2024 ACS PUMS Data Dictionary, October 16, 2025), PERSON RECORD-RECODED PERSON VARIABLES (WAOB)"
+     }
+    },
+    {
+     "lhs": [
+      "YOEP"
+     ],
+     "rhs": [
+      "DECADE"
+     ],
+     "sure": true,
+     "clause": "pums_PUMS_Data_Dictionary_2024.txt (2024 ACS PUMS Data Dictionary, October 16, 2025): YOEP \"Year of entry\" (e.g. \"1939 - 1944\", \"1950\") and DECADE \"Decade of entry\" (e.g. \"Before 1950\", \"1950 - 1959\"; \"N/A (Born in the US)\")",
+     "justification": "Both describe the same entry; the decade follows from the year by the label ranges, but the dictionary does not state that DECADE is recoded from YOEP; unsure.",
+     "audit": {
+      "verdicts": {
+       "DECADE": "TRUE"
+      },
+      "quote": "YOEP \"Year of entry\": \"bbbb .N/A (Not eligible - Born in the US)\", \"1938 .1938 or earlier (Bottom-coded)\", \"1939 .1939 - 1944\", \"1945 .1945\", ..., \"2024 .2024\"; DECADE \"Decade of entry\": \"b .N/A (Born in the US)\", \"1 .Before 1950\", \"2 .1950 - 1959\", \"3 .1960 - 1969\", ..., \"8 .2010 or later\"",
+      "source": "pums_PUMS_Data_Dictionary_2024.txt (2024 ACS PUMS Data Dictionary, October 16, 2025), PERSON RECORD-PERSON VARIABLES (YOEP); PERSON RECORD-RECODED PERSON VARIABLES (DECADE)"
+     }
+    },
+    {
+     "lhs": [
+      "OCCP"
+     ],
+     "rhs": [
+      "SOCP"
+     ],
+     "sure": true,
+     "clause": "pums_PUMS_Data_Dictionary_2024.txt (2024 ACS PUMS Data Dictionary, October 16, 2025): OCCP \"Occupation recode for 2018 and later based on 2018 OCC codes\" and SOCP \"Standard Occupational Classification (SOC) codes for 2018 and later based on 2018 SOC codes\"; both lists carry the same labels, e.g. \"MGR-Chief Executives And Legislators\"",
+     "justification": "The two code lists have the same 531 labels (up to case and order), so the codes correspond one to one, but no crosswalk is stated; unsure.",
+     "audit": {
+      "verdicts": {
+       "SOCP": "TRUE"
+      },
+      "quote": "OCCP \"Occupation recode for 2018 and later based on 2018 OCC codes\" and SOCP \"Standard Occupational Classification (SOC) codes for 2018 and later based on 2018 SOC codes\", both with \"N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)\"; e.g. OCCP \"0010 .MGR-Chief Executives And Legislators\" and SOCP \"1110XX .MGR-Chief Executives And Legislators\"",
+      "source": "pums_PUMS_Data_Dictionary_2024.txt (2024 ACS PUMS Data Dictionary, October 16, 2025), PERSON RECORD-RECODED PERSON VARIABLES (OCCP, SOCP)"
+     }
+    },
+    {
+     "lhs": [
+      "SOCP"
+     ],
+     "rhs": [
+      "OCCP"
+     ],
+     "sure": true,
+     "clause": "pums_PUMS_Data_Dictionary_2024.txt (2024 ACS PUMS Data Dictionary, October 16, 2025): SOCP and OCCP code lists with the same labels, e.g. \"MGR-Chief Executives And Legislators\"",
+     "justification": "Same inference in the other direction; unsure.",
+     "audit": {
+      "verdicts": {
+       "OCCP": "TRUE"
+      },
+      "quote": "OCCP \"Occupation recode for 2018 and later based on 2018 OCC codes\" and SOCP \"Standard Occupational Classification (SOC) codes for 2018 and later based on 2018 SOC codes\", both with \"N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)\"; e.g. OCCP \"0010 .MGR-Chief Executives And Legislators\" and SOCP \"1110XX .MGR-Chief Executives And Legislators\"",
+      "source": "pums_PUMS_Data_Dictionary_2024.txt (2024 ACS PUMS Data Dictionary, October 16, 2025), PERSON RECORD-RECODED PERSON VARIABLES (OCCP, SOCP)"
+     }
+    },
+    {
+     "lhs": [
+      "INDP"
+     ],
+     "rhs": [
+      "NAICSP"
+     ],
+     "sure": true,
+     "clause": "pums_PUMS_Data_Dictionary_2024.txt (2024 ACS PUMS Data Dictionary, October 16, 2025): INDP \"Industry recode for 2023 and later based on 2022 IND codes\" and NAICSP \"North American Industry Classification System (NAICS) recode for 2023 and later based on 2022 NAICS codes\"; both lists carry the same labels, e.g. \"AGR-Crop Production\"",
+     "justification": "The two code lists have the same 266 labels (up to case and order), so the codes correspond one to one, but no crosswalk is stated; unsure.",
+     "audit": {
+      "verdicts": {
+       "NAICSP": "TRUE"
+      },
+      "quote": "INDP \"Industry recode for 2023 and later based on 2022 IND codes\" and NAICSP \"North American Industry Classification System (NAICS) recode for 2023 and later based on 2022 NAICS codes\", both with \"N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)\"; e.g. INDP \"0170 .AGR-Crop Production\" and NAICSP \"111 .AGR-Crop Production\"",
+      "source": "pums_PUMS_Data_Dictionary_2024.txt (2024 ACS PUMS Data Dictionary, October 16, 2025), PERSON RECORD-RECODED PERSON VARIABLES (INDP, NAICSP)"
+     }
+    },
+    {
+     "lhs": [
+      "NAICSP"
+     ],
+     "rhs": [
+      "INDP"
+     ],
+     "sure": true,
+     "clause": "pums_PUMS_Data_Dictionary_2024.txt (2024 ACS PUMS Data Dictionary, October 16, 2025): NAICSP and INDP code lists with the same labels, e.g. \"AGR-Crop Production\"",
+     "justification": "Same inference in the other direction; unsure.",
+     "audit": {
+      "verdicts": {
+       "INDP": "TRUE"
+      },
+      "quote": "INDP \"Industry recode for 2023 and later based on 2022 IND codes\" and NAICSP \"North American Industry Classification System (NAICS) recode for 2023 and later based on 2022 NAICS codes\", both with \"N/A (less than 16 years old/NILF who last worked more than 5 years ago or never worked)\"; e.g. INDP \"0170 .AGR-Crop Production\" and NAICSP \"111 .AGR-Crop Production\"",
+      "source": "pums_PUMS_Data_Dictionary_2024.txt (2024 ACS PUMS Data Dictionary, October 16, 2025), PERSON RECORD-RECODED PERSON VARIABLES (INDP, NAICSP)"
+     }
+    },
+    {
+     "lhs": [
+      "MSP"
+     ],
+     "rhs": [
+      "MAR"
+     ],
+     "sure": true,
+     "clause": "pums_PUMS_Data_Dictionary_2024.txt (2024 ACS PUMS Data Dictionary, October 16, 2025): MSP \"Married, spouse present/spouse absent\" (e.g. \"Now married, spouse present\", \"N/A (age less than 15 years)\") and MAR \"Marital status\" (e.g. \"Married\", \"Never married or under 15 years old\")",
+     "justification": "Every MSP category falls into one MAR category by its label, but the dictionary does not state that MSP refines MAR; unsure.",
+     "audit": {
+      "verdicts": {
+       "MAR": "TRUE"
+      },
+      "quote": "MSP \"Married, spouse present/spouse absent\": \"b .N/A (age less than 15 years)\", \"1 .Now married, spouse present\", \"2 .Now married, spouse absent\", \"3 .Widowed\", \"4 .Divorced\", \"5 .Separated\", \"6 .Never married\"; MAR \"Marital status\": \"1 .Married\", \"2 .Widowed\", \"3 .Divorced\", \"4 .Separated\", \"5 .Never married or under 15 years old\"",
+      "source": "pums_PUMS_Data_Dictionary_2024.txt (2024 ACS PUMS Data Dictionary, October 16, 2025), PERSON RECORD-PERSON VARIABLES (MAR); PERSON RECORD-RECODED PERSON VARIABLES (MSP)"
+     }
+    },
+    {
+     "lhs": [
+      "CIT"
+     ],
+     "rhs": [
+      "NATIVITY"
+     ],
+     "sure": false,
+     "clause": "pums_PUMS_Data_Dictionary_2024.txt (2024 ACS PUMS Data Dictionary, October 16, 2025): CIT \"Citizenship status\" (e.g. \"Born abroad of U.S. citizen parent or parents\", \"U.S. citizen by naturalization\") and NATIVITY \"Nativity\" (\"Native\", \"Foreign born\")",
+     "justification": "Native versus foreign born follows from the citizenship categories under the Census definition of nativity, which the dictionary does not give; unsure.",
+     "audit": {
+      "verdicts": {
+       "NATIVITY": "UNDETERMINED"
+      },
+      "quote": "CIT \"Citizenship status\": \"2 .Born in Puerto Rico, Guam, the U.S. Virgin Islands, or Northern Marianas\", \"3 .Born abroad of U.S. citizen parent or parents\"; NATIVITY \"Nativity\": \"1 .Native\", \"2 .Foreign born\"",
+      "source": "pums_PUMS_Data_Dictionary_2024.txt (2024 ACS PUMS Data Dictionary, October 16, 2025), PERSON RECORD-PERSON VARIABLES (CIT); PERSON RECORD-RECODED PERSON VARIABLES (NATIVITY)"
+     }
+    },
+    {
+     "lhs": [
+      "RAC2P"
+     ],
+     "rhs": [
+      "RAC1P"
+     ],
+     "sure": false,
+     "clause": "pums_PUMS_Data_Dictionary_2024.txt (2024 ACS PUMS Data Dictionary, October 16, 2025): RAC1P and RAC2P both \"Recoded detailed race code\"; RAC1P has nine groups (e.g. \"White alone\", \"Two or More Races\"), RAC2P detailed groups (e.g. \"Albanian alone\")",
+     "justification": "RAC2P looks like a refinement of RAC1P, but the dictionary gives no mapping from detailed codes to the nine groups; unsure.",
+     "audit": {
+      "verdicts": {
+       "RAC1P": "UNDETERMINED"
+      },
+      "quote": "RAC1P \"Recoded detailed race code\": \"1 .White alone\", ..., \"9 .Two or More Races\"; RAC2P \"Recoded detailed race code\": \"1001 .Albanian alone\", ..., \"5024 .Other specified American Indian and Alaska Native combinations\", ..., \"9000 .Two or More Races\"",
+      "source": "pums_PUMS_Data_Dictionary_2024.txt (2024 ACS PUMS Data Dictionary, October 16, 2025), PERSON RECORD-RECODED PERSON VARIABLES (RAC1P, RAC2P)"
+     }
+    },
+    {
+     "lhs": [
+      "FOD1P"
+     ],
+     "rhs": [
+      "SCIENGP",
+      "SCIENGRLP"
+     ],
+     "sure": false,
+     "clause": "pums_PUMS_Data_Dictionary_2024.txt (2024 ACS PUMS Data Dictionary, October 16, 2025): FOD1P \"Recoded field of degree - first entry\"; SCIENGP \"Field of Degree Science and Engineering Flag - NSF Definition\"; SCIENGRLP \"Field of Degree Science and Engineering Related Flag - NSF Definition\"",
+     "justification": "The flags are properties of the field of degree under the NSF definition, which the dictionary does not give, and it does not say whether they use the first entry only or also FOD2P; unsure.",
+     "audit": {
+      "verdicts": {
+       "SCIENGP": "UNDETERMINED",
+       "SCIENGRLP": "UNDETERMINED"
+      },
+      "quote": "FOD1P \"Recoded field of degree - first entry\"; SCIENGP \"Field of Degree Science and Engineering Flag - NSF Definition\"; SCIENGRLP \"Field of Degree Science and Engineering Related Flag - NSF Definition\"",
+      "source": "pums_PUMS_Data_Dictionary_2024.txt (2024 ACS PUMS Data Dictionary, October 16, 2025), PERSON RECORD-RECODED PERSON VARIABLES (FOD1P, SCIENGP, SCIENGRLP)"
+     }
+    }
+   ],
+   "undocumented_regularities": [
+    "POBP -> NATIVITY partly (POBP 001-059 implies native, but a person born abroad of U.S. citizen parents is native too; no rule)",
+    "SCHL below bachelor's degree <-> FOD1P, SCIENGP, SCIENGRLP blank (a conditional pattern of N/A values, not an FD)",
+    "AGEP < 15 <-> MSP blank; NATIVITY native <-> YOEP and DECADE blank (conditional N/A patterns)",
+    "SOCP code prefix -> occupation group, NAICSP prefix -> sector (derived columns are not built)",
+    "(SERIALNO) -> PWGTP for one-person units only (weights are per person)"
+   ],
+   "construction": "ACS 2024 1-year PUMS person file for California (psam_p06.csv); single table; dropped RT, STATE, DIVISION, REGION and ADJINC (constant in a one-state, one-year file: STATE 06, DIVISION 9 Pacific and REGION 4 West per census_us_regdiv.pdf 'California (06)' under 'Division 9: Pacific' and 'Region 4: West', and the single '2024 factor (1.015250)'), the replicate weights PWGTP1-80, the allocation flags and the other person variables, keeping the recodes the dictionary relates to another kept variable.",
+   "random_columns": null,
+   "gold_design": null,
+   "gold_design_note": "No normalized design is published; the 3NF designs of Sigma* are synthesized."
+  },
+  "fresh_chicago_crimes": {
+   "attributes": [
+    "id",
+    "case_number",
+    "date",
+    "block",
+    "iucr",
+    "primary_type",
+    "description",
+    "location_description",
+    "arrest",
+    "domestic",
+    "beat",
+    "district",
+    "ward",
+    "community_area",
+    "fbi_code",
+    "x_coordinate",
+    "y_coordinate",
+    "latitude",
+    "longitude",
+    "updated_on",
+    "index_code",
+    "active"
+   ],
+   "key": [
+    "id"
+   ],
+   "spec": {
+    "tables": {
+     "crimes": {
+      "file": "chicago/crimes_2024.csv",
+      "delimiter": ",",
+      "encoding": "utf-8-sig",
+      "filter": {
+       "year": [
+        "2024"
+       ]
+      }
+     },
+     "iucr": {
+      "file": "chicago/iucr.csv",
+      "delimiter": ",",
+      "encoding": "utf-8-sig"
+     }
+    },
+    "root": "crimes",
+    "joins": [
+     {
+      "left": [
+       "crimes.iucr"
+      ],
+      "right": "iucr",
+      "key": [
+       "iucr"
+      ]
+     }
+    ],
+    "attributes": [
+     "id",
+     "case_number",
+     "date",
+     "block",
+     "iucr",
+     "primary_type",
+     "description",
+     "location_description",
+     "arrest",
+     "domestic",
+     "beat",
+     "district",
+     "ward",
+     "community_area",
+     "fbi_code",
+     "x_coordinate",
+     "y_coordinate",
+     "latitude",
+     "longitude",
+     "updated_on",
+     "index_code",
+     "active"
+    ],
+    "columns": {
+     "crimes.id": "id",
+     "crimes.case_number": "case_number",
+     "crimes.date": "date",
+     "crimes.block": "block",
+     "crimes.iucr": "iucr",
+     "crimes.primary_type": "primary_type",
+     "crimes.description": "description",
+     "crimes.location_description": "location_description",
+     "crimes.arrest": "arrest",
+     "crimes.domestic": "domestic",
+     "crimes.beat": "beat",
+     "crimes.district": "district",
+     "crimes.ward": "ward",
+     "crimes.community_area": "community_area",
+     "crimes.fbi_code": "fbi_code",
+     "crimes.x_coordinate": "x_coordinate",
+     "crimes.y_coordinate": "y_coordinate",
+     "crimes.latitude": "latitude",
+     "crimes.longitude": "longitude",
+     "crimes.updated_on": "updated_on",
+     "iucr.index_code": "index_code",
+     "iucr.active": "active"
+    }
+   },
+   "truth": [
+    {
+     "lhs": [
+      "id"
+     ],
+     "rhs": [
+      "case_number",
+      "date",
+      "block",
+      "iucr",
+      "primary_type",
+      "description",
+      "location_description",
+      "arrest",
+      "domestic",
+      "beat",
+      "district",
+      "ward",
+      "community_area",
+      "fbi_code",
+      "x_coordinate",
+      "y_coordinate",
+      "latitude",
+      "longitude",
+      "updated_on",
+      "index_code",
+      "active"
+     ],
+     "sure": true,
+     "clause": "chicago_crimes_ijzp-q8t2_metadata.json (Socrata metadata of data.cityofchicago.org dataset ijzp-q8t2), column id: \"Unique identifier for the record.\"",
+     "justification": "id is the unique identifier of the crime record; the IUCR columns follow through iucr.",
+     "audit": {
+      "verdicts": {
+       "case_number": "TRUE",
+       "date": "TRUE",
+       "block": "TRUE",
+       "iucr": "TRUE",
+       "primary_type": "TRUE",
+       "description": "TRUE",
+       "location_description": "TRUE",
+       "arrest": "TRUE",
+       "domestic": "TRUE",
+       "beat": "TRUE",
+       "district": "TRUE",
+       "ward": "TRUE",
+       "community_area": "TRUE",
+       "fbi_code": "TRUE",
+       "x_coordinate": "TRUE",
+       "y_coordinate": "TRUE",
+       "latitude": "TRUE",
+       "longitude": "TRUE",
+       "updated_on": "TRUE",
+       "index_code": "TRUE",
+       "active": "TRUE"
+      },
+      "quote": "column id: \"Unique identifier for the record.\"; metadata \"rowIdentifier\": \"580897883\", the column id of id; crimes column iucr: \"The Illinois Uniform Crime Reporting code. This is directly linked to the Primary Type and Description.\"; primary_type: \"The primary description of the IUCR code.\"; description: \"The secondary description of the IUCR code, a subcategory of the primary description.\"; IUCR code list description: \"The Chicago Police Department currently uses more than 400 IUCR codes to classify criminal offenses, divided into ‘Index’ and ‘Non-Index’ offenses.\"; IUCR column active: \"Whether the code is active. Retired codes (No) are present in this dataset for historical reference.\"",
+      "source": "chicago_crimes_ijzp-q8t2_metadata.json (Socrata metadata of data.cityofchicago.org dataset ijzp-q8t2, \"Crimes - 2001 to Present\"), columns[id]; metadata.rowIdentifier; chicago_crimes_ijzp-q8t2_metadata.json (Socrata metadata of data.cityofchicago.org dataset ijzp-q8t2, \"Crimes - 2001 to Present\"), columns[iucr, primary_type, description]; chicago_iucr_c7ck-438e_metadata.json (Socrata metadata of dataset c7ck-438e, \"Chicago Police Department - Illinois Uniform Crime Reporting (IUCR) Codes\"), description; columns[active]"
+     }
+    },
+    {
+     "lhs": [
+      "case_number"
+     ],
+     "rhs": [
+      "date",
+      "block",
+      "location_description",
+      "domestic",
+      "beat",
+      "district",
+      "ward",
+      "community_area"
+     ],
+     "sure": true,
+     "clause": "chicago_crimes_ijzp-q8t2_metadata.json (Socrata metadata of data.cityofchicago.org dataset ijzp-q8t2), column case_number: \"The Chicago Police Department RD Number (Records Division Number), which is unique to the incident.\"; dataset description: \"This dataset reflects reported incidents of crime (with the exception of murders where data exists for each victim) that occurred in the City of Chicago from 2001 to present, minus the most recent seven days.\"; columns date: \"Date when the incident occurred.\", beat: \"Indicates the beat where the incident occurred.\", location_description: \"Description of the location where the incident occurred.\"",
+     "justification": "The RD number identifies the incident, and these columns describe the incident (when, where, whether domestic); records repeat an incident only for murders with several victims, so case_number does not determine id, iucr or arrest.",
+     "audit": {
+      "verdicts": {
+       "date": "TRUE",
+       "block": "TRUE",
+       "location_description": "TRUE",
+       "domestic": "TRUE",
+       "beat": "TRUE",
+       "district": "TRUE",
+       "ward": "TRUE",
+       "community_area": "TRUE"
+      },
+      "quote": "column case_number: \"The Chicago Police Department RD Number (Records Division Number), which is unique to the incident.\"; dataset description: \"This dataset reflects reported incidents of crime (with the exception of murders where data exists for each victim) that occurred in the City of Chicago from 2001 to present, minus the most recent seven days.\"; columns date \"Date when the incident occurred.\", block \"The partially redacted address where the incident occurred, placing it on the same block as the actual address.\", location_description \"Description of the location where the incident occurred.\", domestic \"Indicates whether the incident was domestic-related as defined by the Illinois Domestic Violence Act.\", beat \"Indicates the beat where the incident occurred.\", district \"Indicates the police district where the incident occurred.\", ward \"The ward (City Council district) where the incident occurred.\", community_area \"Indicates the community area where the incident occurred.\"",
+      "source": "chicago_crimes_ijzp-q8t2_metadata.json (Socrata metadata of data.cityofchicago.org dataset ijzp-q8t2, \"Crimes - 2001 to Present\"), description; columns[case_number, date, block, location_description, domestic, beat, district, ward, community_area]"
+     }
+    },
+    {
+     "lhs": [
+      "case_number"
+     ],
+     "rhs": [
+      "x_coordinate",
+      "y_coordinate",
+      "latitude",
+      "longitude"
+     ],
+     "sure": false,
+     "clause": "chicago_crimes_ijzp-q8t2_metadata.json (Socrata metadata of data.cityofchicago.org dataset ijzp-q8t2), column case_number: \"The Chicago Police Department RD Number (Records Division Number), which is unique to the incident.\"; dataset description: \"This dataset reflects reported incidents of crime (with the exception of murders where data exists for each victim) that occurred in the City of Chicago from 2001 to present, minus the most recent seven days.\"; column x_coordinate: \"The x coordinate of the location where the incident occurred in State Plane Illinois East NAD 1983 projection.  This location is shifted from the actual location for partial redaction but falls on the same block.\"",
+     "justification": "The coordinates locate the incident, but they are shifted for redaction and the documentation does not say that two victim records of one murder are shifted alike; unsure.",
+     "audit": {
+      "verdicts": {
+       "x_coordinate": "UNDETERMINED",
+       "y_coordinate": "UNDETERMINED",
+       "latitude": "UNDETERMINED",
+       "longitude": "UNDETERMINED"
+      },
+      "quote": "columns x_coordinate/y_coordinate: \"The x coordinate of the location where the incident occurred in State Plane Illinois East NAD 1983 projection.  This location is shifted from the actual location for partial redaction but falls on the same block.\"; latitude/longitude: \"The latitude of the location where the incident occurred. This location is shifted from the actual location for partial redaction but falls on the same block.\"",
+      "source": "chicago_crimes_ijzp-q8t2_metadata.json (Socrata metadata of data.cityofchicago.org dataset ijzp-q8t2, \"Crimes - 2001 to Present\"), columns[x_coordinate, y_coordinate, latitude, longitude]"
+     }
+    },
+    {
+     "lhs": [
+      "iucr"
+     ],
+     "rhs": [
+      "primary_type",
+      "description",
+      "index_code",
+      "active"
+     ],
+     "sure": true,
+     "clause": "chicago_crimes_ijzp-q8t2_metadata.json (Socrata metadata of data.cityofchicago.org dataset ijzp-q8t2), column iucr: \"The Illinois Uniform Crime Reporting code. This is directly linked to the Primary Type and Description.\"; primary_type: \"The primary description of the IUCR code.\"; description: \"The secondary description of the IUCR code, a subcategory of the primary description.\"; chicago_iucr_c7ck-438e_metadata.json (Socrata metadata of data.cityofchicago.org dataset c7ck-438e): \"Illinois Uniform Crime Reporting (IUCR) codes are four digit codes that law enforcement agencies use to classify criminal incidents when taking individual reports.\" and column active: \"Whether the code is active.\"",
+     "justification": "Primary type and description are the descriptions of the IUCR code, and index_code and active are attributes of the code in the IUCR code list, joined on the code.",
+     "audit": {
+      "verdicts": {
+       "primary_type": "TRUE",
+       "description": "TRUE",
+       "index_code": "TRUE",
+       "active": "TRUE"
+      },
+      "quote": "crimes column iucr: \"The Illinois Uniform Crime Reporting code. This is directly linked to the Primary Type and Description.\"; primary_type: \"The primary description of the IUCR code.\"; description: \"The secondary description of the IUCR code, a subcategory of the primary description.\"; IUCR code list description: \"The Chicago Police Department currently uses more than 400 IUCR codes to classify criminal offenses, divided into ‘Index’ and ‘Non-Index’ offenses.\"; IUCR column active: \"Whether the code is active. Retired codes (No) are present in this dataset for historical reference.\"",
+      "source": "chicago_crimes_ijzp-q8t2_metadata.json (Socrata metadata of data.cityofchicago.org dataset ijzp-q8t2, \"Crimes - 2001 to Present\"), columns[iucr, primary_type, description]; chicago_iucr_c7ck-438e_metadata.json (Socrata metadata of dataset c7ck-438e, \"Chicago Police Department - Illinois Uniform Crime Reporting (IUCR) Codes\"), description; columns[active]"
+     }
+    },
+    {
+     "lhs": [
+      "beat"
+     ],
+     "rhs": [
+      "district"
+     ],
+     "sure": true,
+     "clause": "chicago_crimes_ijzp-q8t2_metadata.json (Socrata metadata of data.cityofchicago.org dataset ijzp-q8t2), column beat: \"A beat is the smallest police geographic area – each beat has a dedicated police beat car.  Three to five beats make up a police sector, and three sectors make up a police district.\"",
+     "justification": "Beats nest in sectors and sectors in districts, so a beat lies in one district; the relation covers 2024 only, so one boundary set applies.",
+     "audit": {
+      "verdicts": {
+       "district": "TRUE"
+      },
+      "quote": "column beat: \"A beat is the smallest police geographic area\" and \"Three to five beats make up a police sector, and three sectors make up a police district.\"; column district: \"Indicates the police district where the incident occurred.\"",
+      "source": "chicago_crimes_ijzp-q8t2_metadata.json (Socrata metadata of data.cityofchicago.org dataset ijzp-q8t2, \"Crimes - 2001 to Present\"), columns[beat, district]"
+     }
+    },
+    {
+     "lhs": [
+      "x_coordinate",
+      "y_coordinate"
+     ],
+     "rhs": [
+      "latitude",
+      "longitude"
+     ],
+     "sure": false,
+     "clause": "chicago_crimes_ijzp-q8t2_metadata.json (Socrata metadata of data.cityofchicago.org dataset ijzp-q8t2), columns x_coordinate/y_coordinate: \"State Plane Illinois East NAD 1983 projection\" and latitude: \"The latitude of the location where the incident occurred. This location is shifted from the actual location for partial redaction but falls on the same block.\"",
+     "justification": "Both pairs locate the incident in two coordinate systems, but the documentation does not say they come from the same shifted point; unsure.",
+     "audit": {
+      "verdicts": {
+       "latitude": "UNDETERMINED",
+       "longitude": "UNDETERMINED"
+      },
+      "quote": "columns x_coordinate/y_coordinate: \"The x coordinate of the location where the incident occurred in State Plane Illinois East NAD 1983 projection.  This location is shifted from the actual location for partial redaction but falls on the same block.\"; latitude/longitude: \"The latitude of the location where the incident occurred. This location is shifted from the actual location for partial redaction but falls on the same block.\"",
+      "source": "chicago_crimes_ijzp-q8t2_metadata.json (Socrata metadata of data.cityofchicago.org dataset ijzp-q8t2, \"Crimes - 2001 to Present\"), columns[x_coordinate, y_coordinate, latitude, longitude]"
+     }
+    },
+    {
+     "lhs": [
+      "latitude",
+      "longitude"
+     ],
+     "rhs": [
+      "x_coordinate",
+      "y_coordinate"
+     ],
+     "sure": false,
+     "clause": "chicago_crimes_ijzp-q8t2_metadata.json (Socrata metadata of data.cityofchicago.org dataset ijzp-q8t2), columns latitude/longitude and x_coordinate/y_coordinate: \"This location is shifted from the actual location for partial redaction but falls on the same block.\"",
+     "justification": "Same inference in the other direction; unsure.",
+     "audit": {
+      "verdicts": {
+       "x_coordinate": "UNDETERMINED",
+       "y_coordinate": "UNDETERMINED"
+      },
+      "quote": "columns x_coordinate/y_coordinate: \"The x coordinate of the location where the incident occurred in State Plane Illinois East NAD 1983 projection.  This location is shifted from the actual location for partial redaction but falls on the same block.\"; latitude/longitude: \"The latitude of the location where the incident occurred. This location is shifted from the actual location for partial redaction but falls on the same block.\"",
+      "source": "chicago_crimes_ijzp-q8t2_metadata.json (Socrata metadata of data.cityofchicago.org dataset ijzp-q8t2, \"Crimes - 2001 to Present\"), columns[x_coordinate, y_coordinate, latitude, longitude]"
+     }
+    }
+   ],
+   "undocumented_regularities": [
+    "iucr -> fbi_code (both classify the offence; not stated)",
+    "(primary_type, description) -> iucr (descriptions not declared unique)",
+    "case_number -> iucr, primary_type, description, fbi_code, arrest (hold when an incident has one record; murders with several victims are not described)",
+    "block -> beat, district, ward, community_area (a block can straddle boundaries; not stated)",
+    "Documented non-dependency: murders have one record per victim, so case_number does not determine id."
+   ],
+   "construction": "City of Chicago 'Crimes - 2001 to Present' (ijzp-q8t2) exported through the Socrata API for year 2024 (filter year = 2024), left-joined to the IUCR code list (c7ck-438e) on iucr; dropped year (constant), location (the latitude/longitude pair in another format), the portal's computed region columns, and the code list's primary_description and secondary_description (repeat primary_type and description).",
+   "random_columns": null,
+   "gold_design": null,
+   "gold_design_note": "No normalized design is published; the 3NF designs of Sigma* are synthesized."
+  },
+  "fresh_usda_sr": {
+   "attributes": [
+    "food_nutrient_id",
+    "fdc_id",
+    "nutrient_id",
+    "amount",
+    "data_points",
+    "derivation_id",
+    "min",
+    "max",
+    "median",
+    "min_year_acquired",
+    "food_description",
+    "food_category_id",
+    "publication_date",
+    "NDB_number",
+    "category_code",
+    "category_description",
+    "nutrient_name",
+    "unit_name",
+    "nutrient_nbr",
+    "derivation_code",
+    "derivation_description",
+    "source_id",
+    "source_code",
+    "source_description"
+   ],
+   "key": [
+    "food_nutrient_id"
+   ],
+   "spec": {
+    "tables": {
+     "food_nutrient": {
+      "file": "usda/FoodData_Central_sr_legacy_food_csv_2018-04/food_nutrient.csv",
+      "delimiter": ",",
+      "encoding": "utf-8-sig"
+     },
+     "food": {
+      "file": "usda/FoodData_Central_sr_legacy_food_csv_2018-04/food.csv",
+      "delimiter": ",",
+      "encoding": "utf-8-sig"
+     },
+     "sr_legacy_food": {
+      "file": "usda/FoodData_Central_sr_legacy_food_csv_2018-04/sr_legacy_food.csv",
+      "delimiter": ",",
+      "encoding": "utf-8-sig"
+     },
+     "food_category": {
+      "file": "usda/FoodData_Central_sr_legacy_food_csv_2018-04/food_category.csv",
+      "delimiter": ",",
+      "encoding": "utf-8-sig"
+     },
+     "nutrient": {
+      "file": "usda/FoodData_Central_sr_legacy_food_csv_2018-04/nutrient.csv",
+      "delimiter": ",",
+      "encoding": "utf-8-sig"
+     },
+     "food_nutrient_derivation": {
+      "file": "usda/FoodData_Central_sr_legacy_food_csv_2018-04/food_nutrient_derivation.csv",
+      "delimiter": ",",
+      "encoding": "utf-8-sig"
+     },
+     "food_nutrient_source": {
+      "file": "usda/FoodData_Central_sr_legacy_food_csv_2018-04/food_nutrient_source.csv",
+      "delimiter": ",",
+      "encoding": "utf-8-sig"
+     }
+    },
+    "root": "food_nutrient",
+    "joins": [
+     {
+      "left": [
+       "food_nutrient.fdc_id"
+      ],
+      "right": "food",
+      "key": [
+       "fdc_id"
+      ]
+     },
+     {
+      "left": [
+       "food_nutrient.fdc_id"
+      ],
+      "right": "sr_legacy_food",
+      "key": [
+       "fdc_id"
+      ]
+     },
+     {
+      "left": [
+       "food.food_category_id"
+      ],
+      "right": "food_category",
+      "key": [
+       "id"
+      ]
+     },
+     {
+      "left": [
+       "food_nutrient.nutrient_id"
+      ],
+      "right": "nutrient",
+      "key": [
+       "id"
+      ]
+     },
+     {
+      "left": [
+       "food_nutrient.derivation_id"
+      ],
+      "right": "food_nutrient_derivation",
+      "key": [
+       "id"
+      ]
+     },
+     {
+      "left": [
+       "food_nutrient_derivation.source_id"
+      ],
+      "right": "food_nutrient_source",
+      "key": [
+       "id"
+      ]
+     }
+    ],
+    "attributes": [
+     "food_nutrient_id",
+     "fdc_id",
+     "nutrient_id",
+     "amount",
+     "data_points",
+     "derivation_id",
+     "min",
+     "max",
+     "median",
+     "min_year_acquired",
+     "food_description",
+     "food_category_id",
+     "publication_date",
+     "NDB_number",
+     "category_code",
+     "category_description",
+     "nutrient_name",
+     "unit_name",
+     "nutrient_nbr",
+     "derivation_code",
+     "derivation_description",
+     "source_id",
+     "source_code",
+     "source_description"
+    ],
+    "columns": {
+     "food_nutrient.id": "food_nutrient_id",
+     "food_nutrient.fdc_id": "fdc_id",
+     "food_nutrient.nutrient_id": "nutrient_id",
+     "food_nutrient.amount": "amount",
+     "food_nutrient.data_points": "data_points",
+     "food_nutrient.derivation_id": "derivation_id",
+     "food_nutrient.min": "min",
+     "food_nutrient.max": "max",
+     "food_nutrient.median": "median",
+     "food_nutrient.min_year_acquired": "min_year_acquired",
+     "food.description": "food_description",
+     "food.food_category_id": "food_category_id",
+     "food.publication_date": "publication_date",
+     "sr_legacy_food.NDB_number": "NDB_number",
+     "food_category.code": "category_code",
+     "food_category.description": "category_description",
+     "nutrient.name": "nutrient_name",
+     "nutrient.unit_name": "unit_name",
+     "nutrient.nutrient_nbr": "nutrient_nbr",
+     "food_nutrient_derivation.code": "derivation_code",
+     "food_nutrient_derivation.description": "derivation_description",
+     "food_nutrient_derivation.source_id": "source_id",
+     "food_nutrient_source.code": "source_code",
+     "food_nutrient_source.description": "source_description"
+    }
+   },
+   "truth": [
+    {
+     "lhs": [
+      "food_nutrient_id"
+     ],
+     "rhs": [
+      "fdc_id",
+      "nutrient_id",
+      "amount",
+      "data_points",
+      "derivation_id",
+      "min",
+      "max",
+      "median",
+      "min_year_acquired"
+     ],
+     "sure": true,
+     "clause": "usda_fdc_Download_Field_Descriptions_Oct2020.pdf, Field Descriptions, GLOBAL column definitions (p. 2): \"id Unique permanent identifier of other kinds of data (e.g. nutrients, lab methods, etc.) in their related table\"; food_nutrient (p. 5): \"food_nutrient A nutrient value for a food\"",
+     "justification": "id is the unique identifier of a food_nutrient row, whose fields these are.",
+     "audit": {
+      "verdicts": {
+       "fdc_id": "TRUE",
+       "nutrient_id": "TRUE",
+       "amount": "TRUE",
+       "data_points": "TRUE",
+       "derivation_id": "TRUE",
+       "min": "TRUE",
+       "max": "TRUE",
+       "median": "TRUE",
+       "min_year_acquired": "TRUE"
+      },
+      "quote": "GLOBAL column definitions (p. 2): \"id Unique permanent identifier of other kinds of data (e.g. nutrients, lab methods, etc.) in their related table\"; food_nutrient (p. 5): \"food_nutrient A nutrient value for a food\"; Abbreviations (p. 13): \"id unique identification number\"",
+      "source": "usda_fdc_Download_Field_Descriptions_Oct2020.pdf (FoodData Central Download Field Descriptions), p. 2, p. 5, p. 13"
+     }
+    },
+    {
+     "lhs": [
+      "fdc_id"
+     ],
+     "rhs": [
+      "food_description",
+      "food_category_id",
+      "publication_date",
+      "NDB_number"
+     ],
+     "sure": true,
+     "clause": "usda_fdc_Download_Field_Descriptions_Oct2020.pdf, GLOBAL column definitions (p. 2): \"fdc_id Unique permanent identifier of a food in the food table\"; food (p. 3): \"food_category_id Id of the food category the food belongs to\"; Conventions (p. 14): \"subtype of a food ID of the food in the food table\"; sr_legacy_food (p. 11): \"fdc_id ID of the food in the food table\"",
+     "justification": "fdc_id identifies the food row, and sr_legacy_food is a subtype of food keyed by fdc_id, so fdc_id determines its NDB_number.",
+     "audit": {
+      "verdicts": {
+       "food_description": "TRUE",
+       "food_category_id": "TRUE",
+       "publication_date": "TRUE",
+       "NDB_number": "TRUE"
+      },
+      "quote": "GLOBAL column definitions (p. 2): \"fdc_id Unique permanent identifier of a food in the food table\"; food (p. 3): \"fdc_id Unique permanent identifier of the food\", \"description Description of the food\", \"food_category_id Id of the food category the food belongs to\", \"publication_date Date when the food was published to FoodData Central\"; sr_legacy_food (p. 11): \"fdc_id ID of the food in the food table\", \"NDB_number Unique number assigned for final food, starts from the minimum number of 100,000\"; Conventions (p. 14), Food relationship definitions: \"subtype of a food | ID of the food in the food table\"",
+      "source": "usda_fdc_Download_Field_Descriptions_Oct2020.pdf (FoodData Central Download Field Descriptions), p. 2, p. 3; usda_fdc_Download_Field_Descriptions_Oct2020.pdf (FoodData Central Download Field Descriptions), p. 11, p. 14"
+     }
+    },
+    {
+     "lhs": [
+      "NDB_number"
+     ],
+     "rhs": [
+      "fdc_id"
+     ],
+     "sure": true,
+     "clause": "usda_fdc_Download_Field_Descriptions_Oct2020.pdf, sr_legacy_food (p. 11): \"NDB_number Unique number assigned for final food, starts from the minimum number of 100,000\"",
+     "justification": "NDB_number is unique per food, so it determines the food's fdc_id.",
+     "audit": {
+      "verdicts": {
+       "fdc_id": "TRUE"
+      },
+      "quote": "sr_legacy_food (p. 11): \"NDB_number Unique number assigned for final food, starts from the minimum number of 100,000\"",
+      "source": "usda_fdc_Download_Field_Descriptions_Oct2020.pdf (FoodData Central Download Field Descriptions), p. 11"
+     }
+    },
+    {
+     "lhs": [
+      "food_category_id"
+     ],
+     "rhs": [
+      "category_code",
+      "category_description"
+     ],
+     "sure": true,
+     "clause": "usda_fdc_Download_Field_Descriptions_Oct2020.pdf, Field Descriptions, GLOBAL column definitions (p. 2): \"id Unique permanent identifier of other kinds of data (e.g. nutrients, lab methods, etc.) in their related table\"; food_category (p. 4): \"food_category Foods of defined similarity\", \"code Food group code\", \"description Description of the food group\"",
+     "justification": "food_category_id references the unique id of food_category.",
+     "audit": {
+      "verdicts": {
+       "category_code": "TRUE",
+       "category_description": "TRUE"
+      },
+      "quote": "GLOBAL column definitions (p. 2): \"id Unique permanent identifier of other kinds of data (e.g. nutrients, lab methods, etc.) in their related table\"; food_category (p. 4): \"food_category Foods of defined similarity\", \"code Food group code\", \"description Description of the food group\"",
+      "source": "usda_fdc_Download_Field_Descriptions_Oct2020.pdf (FoodData Central Download Field Descriptions), p. 2, p. 4"
+     }
+    },
+    {
+     "lhs": [
+      "nutrient_id"
+     ],
+     "rhs": [
+      "nutrient_name",
+      "unit_name",
+      "nutrient_nbr"
+     ],
+     "sure": true,
+     "clause": "usda_fdc_Download_Field_Descriptions_Oct2020.pdf, Field Descriptions, GLOBAL column definitions (p. 2): \"id Unique permanent identifier of other kinds of data (e.g. nutrients, lab methods, etc.) in their related table\"; food_nutrient (p. 5): \"nutrient_id ID of the nutrient to which the food nutrient pertains\" and \"Specified in unit defined in the nutrient table.\"; nutrient (p. 10): \"unit_name The standard unit of measure for the nutrient (per 100g of food)\"",
+     "justification": "nutrient_id references the unique id of nutrient, whose name, unit and number it determines.",
+     "audit": {
+      "verdicts": {
+       "nutrient_name": "TRUE",
+       "unit_name": "TRUE",
+       "nutrient_nbr": "TRUE"
+      },
+      "quote": "GLOBAL column definitions (p. 2): \"id Unique permanent identifier of other kinds of data (e.g. nutrients, lab methods, etc.) in their related table\"; nutrient (p. 10): \"name Name of the nutrient\", \"unit_name The standard unit of measure for the nutrient (per 100g of food)\", \"nutrient_nbr A unique code identifying a nutrient or food constituent\"",
+      "source": "usda_fdc_Download_Field_Descriptions_Oct2020.pdf (FoodData Central Download Field Descriptions), p. 2, p. 10"
+     }
+    },
+    {
+     "lhs": [
+      "nutrient_nbr"
+     ],
+     "rhs": [
+      "nutrient_id"
+     ],
+     "sure": true,
+     "clause": "usda_fdc_Download_Field_Descriptions_Oct2020.pdf, nutrient (p. 10): \"nutrient_nbr A unique code identifying a nutrient or food constituent\"",
+     "justification": "nutrient_nbr is a unique code of the nutrient.",
+     "audit": {
+      "verdicts": {
+       "nutrient_id": "TRUE"
+      },
+      "quote": "nutrient (p. 10): \"nutrient_nbr A unique code identifying a nutrient or food constituent\"",
+      "source": "usda_fdc_Download_Field_Descriptions_Oct2020.pdf (FoodData Central Download Field Descriptions), p. 10"
+     }
+    },
+    {
+     "lhs": [
+      "derivation_id"
+     ],
+     "rhs": [
+      "derivation_code",
+      "derivation_description",
+      "source_id"
+     ],
+     "sure": true,
+     "clause": "usda_fdc_Download_Field_Descriptions_Oct2020.pdf, Field Descriptions, GLOBAL column definitions (p. 2): \"id Unique permanent identifier of other kinds of data (e.g. nutrients, lab methods, etc.) in their related table\"; food_nutrient (p. 5): \"derivation_id ID of the food nutrient derivation technique used to derive the value\"; food_nutrient_derivation (p. 6): \"source_id ID of the nutrient source associated with the derivation\"",
+     "justification": "derivation_id references the unique id of food_nutrient_derivation, which holds one source per derivation.",
+     "audit": {
+      "verdicts": {
+       "derivation_code": "TRUE",
+       "derivation_description": "TRUE",
+       "source_id": "TRUE"
+      },
+      "quote": "GLOBAL column definitions (p. 2): \"id Unique permanent identifier of other kinds of data (e.g. nutrients, lab methods, etc.) in their related table\"; food_nutrient_derivation (p. 6): \"Procedure indicating how a food nutrient value was obtained\", \"code Code used for the derivation (e.g. A means analytical)\", \"description Description of the derivation\", \"source_id ID of the nutrient source associated with the derivation\"",
+      "source": "usda_fdc_Download_Field_Descriptions_Oct2020.pdf (FoodData Central Download Field Descriptions), p. 2, p. 6"
+     }
+    },
+    {
+     "lhs": [
+      "source_id"
+     ],
+     "rhs": [
+      "source_code",
+      "source_description"
+     ],
+     "sure": true,
+     "clause": "usda_fdc_Download_Field_Descriptions_Oct2020.pdf, Field Descriptions, GLOBAL column definitions (p. 2): \"id Unique permanent identifier of other kinds of data (e.g. nutrients, lab methods, etc.) in their related table\"; food_nutrient_source (p. 6): \"food_nutrient_source An information source from which we can obtain food nutrient values\"",
+     "justification": "source_id references the unique id of food_nutrient_source.",
+     "audit": {
+      "verdicts": {
+       "source_code": "TRUE",
+       "source_description": "TRUE"
+      },
+      "quote": "GLOBAL column definitions (p. 2): \"id Unique permanent identifier of other kinds of data (e.g. nutrients, lab methods, etc.) in their related table\"; food_nutrient_source (p. 6): \"An information source from which we can obtain food nutrient values\", \"code Code used for the source (e.g. 4 means calculated or imputed)\", \"description Description of the source\"",
+      "source": "usda_fdc_Download_Field_Descriptions_Oct2020.pdf (FoodData Central Download Field Descriptions), p. 2, p. 6"
+     }
+    },
+    {
+     "lhs": [
+      "fdc_id",
+      "nutrient_id"
+     ],
+     "rhs": [
+      "food_nutrient_id",
+      "amount",
+      "data_points",
+      "derivation_id",
+      "min",
+      "max",
+      "median",
+      "min_year_acquired"
+     ],
+     "sure": false,
+     "clause": "usda_fdc_Download_Field_Descriptions_Oct2020.pdf, food_nutrient (p. 5): \"food_nutrient A nutrient value for a food\" and \"amount Amount of the nutrient per 100g of food.\"",
+     "justification": "One amount per food and nutrient is suggested by the description, but uniqueness of (fdc_id, nutrient_id) is not stated; unsure.",
+     "audit": {
+      "verdicts": {
+       "food_nutrient_id": "UNDETERMINED",
+       "amount": "UNDETERMINED",
+       "data_points": "UNDETERMINED",
+       "derivation_id": "UNDETERMINED",
+       "min": "UNDETERMINED",
+       "max": "UNDETERMINED",
+       "median": "UNDETERMINED",
+       "min_year_acquired": "UNDETERMINED"
+      },
+      "quote": "food_nutrient (p. 5): \"food_nutrient A nutrient value for a food\", \"amount Amount of the nutrient per 100g of food. Specified in unit defined in the nutrient table.\"",
+      "source": "usda_fdc_Download_Field_Descriptions_Oct2020.pdf (FoodData Central Download Field Descriptions), p. 5"
+     }
+    }
+   ],
+   "undocumented_regularities": [
+    "category_code <-> category_description, derivation_code -> derivation_id, source_code -> source_id (codes of the lookup tables are not declared unique)",
+    "nutrient_name -> nutrient_id (names not declared unique)",
+    "food_description -> fdc_id (descriptions not declared unique)",
+    "data_points, min, max, median blank together for calculated values (conditional pattern)",
+    "Documented non-dependency (other file): branded_food gtin_upc 'Duplicate codes signify an update to the product'."
+   ],
+   "construction": "USDA FoodData Central SR Legacy CSV release (FoodData_Central_sr_legacy_food_csv_2018-04, frozen April 2018 data): food_nutrient (root) left-joined to food and sr_legacy_food on fdc_id, food_category on food_category_id, nutrient on nutrient_id, food_nutrient_derivation on derivation_id and food_nutrient_source on its source_id; dropped food_nutrient.footnote (free text), food.data_type (constant in an SR Legacy release) and nutrient columns absent from the field descriptions.",
+   "random_columns": null,
+   "gold_design": null,
+   "gold_design_note": "No normalized design is published; the 3NF designs of Sigma* are synthesized."
+  }
+ },
+ "audit": "Blind documentation-only audit (truth/audit_fresh/), applied by apply_audit_fresh.py; the file before it is truth/fresh_preaudit.json"
+}

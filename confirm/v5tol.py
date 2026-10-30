@@ -1,0 +1,538 @@
+"""
+Cert3NF v5 with a designer who may err (design notes, item 34; rules written before any result).
+Exploratory on the 24 development relations.  The run of v5.py, with the mechanism of item 31 (maxset_tol.py) in it;
+v5.py and the other files frozen by item 33 are not changed.  With eps_m = 0 the run is v5.run's, question for
+question (the designer may still err: the trusting controls).  With eps_m > 0:
+
+  answers   every question keeps all the designer's answers; the net answer is the majority, a tie counts as
+            unanswered.  H is sigma0 and the net yes answers, the negatives the net no answers; a net no that H
+            implies is a conflict.  Discovery and certification share one history (v5 has no separate first phase).
+  H         holds only FDs the designer answered: the X -> A that QuickXplain finds is asked once if H does not
+            imply it.  A no that the data give (Z -> A violated on r) is not an answer of the designer and no premise.
+  premises  D_yes, net yes answers that with sigma0 are equivalent to H (the redundant dropped, most likely wrong
+            first); D_no, net no answers that refute every maximal set of H that holds on the data (the certificate of
+            v5, item 32), likewise without the redundant ones.  If all are right, so is the certificate.
+  risk      R = sum of r_q over the premises, infinite with a conflict; r_q as in item 31, with v5's rho' of the
+            candidates of A within closure(Z, sigma0) for a yes and closure(Z, H) for a no.
+  certify   no maximal set left to ask, no conflict, no tie, and R <= DELTA.
+  ask again at most REASK answers a question: a tie at once; for a conflict, the answer of largest local r among the
+            no and a minimal set of yes answers that imply it; with nothing left to ask and R > DELTA, the premise of
+            largest r.  Every answer counts against the budget of 100.
+
+The simulated designer answers from Sigma0 and the documented truth (CONFIRM_ORACLE=gold) and errs independently
+with probability err (the SHA-256 key of items 24 and 26), or stubbornly (the same wrong answer when asked again).
+A certificate is wrong when H+ differs from Sigma*+ restricted to the FDs of the data: a net yes outside Sigma*+, or a
+maximal set of H that holds on the data and determines its attribute under Sigma* (the criterion of check_cert.py).
+
+Variants: v5, v5s (eps_m = 0, trusting) and v5t, v5st (eps_m = 0.02).
+Mechanisms (--mech; they differ only in the risk, so the trusting variants are the same under both):
+  a  as written in item 34: r_q from the advisor's rho' (with the LLM's evidence for v5t), DELTA = 0.1
+  b  the revision of item 34 (10-29): r_q from a statistics-only advisor (v5st's: learned prior and the drd grid,
+     given the same designer answers, no LLM evidence), DELTA = 0.05
+  c  the second revision (10-29): no risk model; a certificate needs every premise answered at least twice with a
+     majority (two agreeing answers, or the majority of three).  R is still recorded with p = 1/2 but decides nothing.
+     Theorem: with independent errors at rate eps, a premise's net answer is wrong with probability 3 eps^2 - 2 eps^3,
+     a certificate with m premises with probability at most m times that.
+Correlated errors (--rho, item 42 (b)): question q has its own error rate eps_q ~ Beta(eps (1-rho)/rho,
+(1-eps)(1-rho)/rho), mean eps, so that two answers to q err together with correlation rho; the k-th answer errs when
+the uniform number of designer_flip is below eps_q.  A premise is then wrong with probability 3 E[eps_q^2] - 2 E[eps_q^3].
+rho = 0 (the default) is the independent designer above, by the same code; with rho > 0 only the tolerant variants run.
+Usage (in confirm):
+  CONFIRM_ORACLE=gold CONFIRM_TRUTH=full python v5tol.py --answers llm_fresh_full_q35_ms --out F [--workers 16] [--mech b]
+"""
+import argparse, hashlib, json, math, os, statistics, time
+from concurrent.futures import ProcessPoolExecutor, as_completed
+import numpy as np
+import auto_common as AC
+import auto_confirm as C
+import drd
+import v5
+from v5 import Budget, closure_many, advisor_for, BUDGET, BELIEVE, GUESS, HEAD
+from price import closure, bits, maxsets
+
+REASK, DELTA, EPS_M = 3, C.DELTA, 0.02
+MECHS = {"a": DELTA, "b": 0.05, "c": None}        # mechanism -> delta (None: every premise answered twice)
+VARIANTS = {"v5": (True, 0.0), "v5s": (False, 0.0), "v5t": (True, EPS_M), "v5st": (False, EPS_M)}   # llm, eps_m
+
+
+def flip_uniform(ds, seed, p, eps, k=0):
+    """the uniform number that auto_confirm.designer_flip compares with eps"""
+    h = hashlib.sha256(repr((ds, seed, sorted(p[0]), sorted(p[1]), eps) + ((k,) if k else ())).encode()).digest()
+    return int.from_bytes(h[:8], "big") / 2 ** 64
+
+
+def flip_rate(ds, seed, p, eps, rho):
+    """eps_q of the correlated designer (item 42 (b)): Beta with mean eps and correlation rho, seeded by the question"""
+    h = hashlib.sha256(repr((ds, seed, sorted(p[0]), sorted(p[1]), eps, "rate")).encode()).digest()
+    s = (1 - rho) / rho
+    return float(np.random.default_rng(int.from_bytes(h[:8], "big")).beta(eps * s, (1 - eps) * s))
+
+
+def net(v):
+    y = v.count(True)
+    return None if 2 * y == len(v) else 2 * y > len(v)
+
+
+def run(b, adv, cap, discovery, guess, ds, seed, err, eps_m, stuck, radv=None, delta=DELTA, half=False, rho=0.0):
+    """one run of v5 (adv not None) with a designer who errs with probability err and the tolerance eps_m; radv,
+    if given, is the advisor whose rho' gives the risk (mechanism b), and delta the bound on R; half: p = 1/2 in r_q
+    and delta None, a certificate needs every premise answered at least twice (mechanism c)"""
+    n = len(b["R"])
+    full = (1 << n) - 1
+    mask = lambda s: sum(1 << i for i in s)
+    sig0 = [(mask(l), mask(r)) for l, r in b["sigma0"]]
+    reach = [(mask(l), mask(r)) for l, r in AC.oracle(b)]          # what the designer answers from
+    P = b["P"]
+    pix = {p: i for i, p in enumerate(P)}
+    by = {}
+    for p in P:
+        by.setdefault(mask(p[1]), []).append(p)
+    minfd = {}                                     # rhs bit -> lhs masks of the minimal FDs that hold on the data
+    for p in P + b["implied0"]:
+        minfd.setdefault(mask(p[1]), []).append(mask(p[0]))
+    minfd = {a: np.array(ls, dtype=np.int64) for a, ls in minfd.items()}
+    cand = {a: (np.array([mask(p[0]) for p in ps], dtype=np.int64), np.full(len(ps), 0.5), ps,
+                np.array([pix[p] for p in ps], dtype=np.int64)) for a, ps in by.items()}
+    state = {a: np.zeros(len(ps), dtype=np.int8) for a, ps in by.items()}     # 0 open, 1 implied, 2 refuted
+    tol = eps_m > 0
+    hist = {}                                      # question (Z, A) -> the designer's answers
+    H, NEG, conflict = list(sig0), [], []
+    st = {"q": 0, "free": 0, "data_no": 0, "disc_q": 0, "disc_no": 0, "max_q": 0, "max_asked": 0, "max_no": 0,
+          "guess_q": 0, "guess_hit": 0, "qx_q": 0, "found": 0, "llm_q": 0, "attrs": [], "confirm_q": 0,
+          "reask_q": 0}
+    rp = np.full(len(P), 0.5)
+    ry = np.full(len(P), 0.5)
+    where = {int(i): (a, k) for a, (_, _, _, idx) in cand.items() for k, i in enumerate(idx)}
+    poss = []
+    fresh = [True]
+
+    def refresh():
+        if adv is not None:
+            rp[:] = adv.rho_prime(np.arange(len(P)))
+            ry[:] = adv.rho_prime(np.arange(len(P)), "yes") if adv.kind != "none" else rp
+            poss[:] = [(i,) + where[i] for i in np.flatnonzero(ry >= BELIEVE / 5).tolist()]
+            for a, (_, R_, _, idx) in cand.items():
+                R_[:] = rp[idx]
+        fresh[0] = True
+
+    def observe(i, y):
+        if radv is not None and radv is not adv:
+            radv.observe(i, y)
+        if adv is not None:
+            adv.observe(i, y)
+            if adv.observations % 10 == 0:
+                fresh[0] = False
+
+    def update():
+        for a, (L, _, _, _) in cand.items():
+            s = state[a]
+            o = s == 0
+            if not o.any():
+                continue
+            imp = (closure_many(L, H) & a) != 0
+            s[o & imp] = 1
+            for z, a2 in NEG:
+                c = closure(z, H)
+                if closure(c | a, H) & a2:
+                    s[(s == 0) & ((L & ~c) == 0)] = 2
+
+    def rebuild():
+        H[:] = sig0 + [k for k, v in hist.items() if net(v) is True]
+        no = [k for k, v in hist.items() if net(v) is False]
+        conflict[:] = [k for k in no if closure(k[0], H) & k[1]]
+        NEG[:] = [k for k in no if k not in conflict]
+        for s in state.values():
+            s[:] = 0
+        update()
+
+    def known(z, a):
+        if closure(z, H) & a:
+            return True
+        for z2, a2 in NEG:
+            c = closure(z2, H)
+            if z & ~c == 0 and closure(c | a, H) & a2:
+                return False
+        return None
+
+    def holds(z, a):
+        return a in minfd and bool(((minfd[a] & ~z) == 0).any())
+
+    def designer(z, a, k):
+        truth = bool(closure(z, reach) & a)
+        if err <= 0:
+            return truth
+        key = (tuple(i for i in range(n) if z >> i & 1), tuple(i for i in range(n) if a >> i & 1))
+        if rho > 0:
+            return truth != (flip_uniform(ds, seed, key, err, 0 if stuck else k) < flip_rate(ds, seed, key, err, rho))
+        return truth != C.designer_flip(ds, seed, key, err, 0 if stuck else k)
+
+    def put(key, kind):
+        if st["q"] >= BUDGET:
+            raise Budget
+        st["q"] += 1
+        st[kind] += 1
+        m = bin(key[0]).count("1")
+        st["attrs"].append(min(m, n - m) + 1)
+        v = hist.setdefault(key, [])
+        v.append(designer(key[0], key[1], len(v)))
+        if tol:
+            rebuild()
+            return net(v) is True
+        (H if v[-1] else NEG).append(key)          # as v5: the answer joins H or the negatives
+        update()
+        return v[-1]
+
+    def ask(z, a, kind):
+        k = known(z, a)
+        if k is None and not holds(z, a):
+            st["data_no"] += 1
+            k = False
+        if k is not None:
+            st["free"] += 1
+            return k
+        return put((z, a), kind)
+
+    def qx(base, last, cs, a):
+        if last and ask(base, a, "qx_q"):
+            return 0
+        if len(cs) == 1:
+            return cs[0]
+        k = len(cs) // 2
+        c1, c2 = cs[:k], cs[k:]
+        m1 = sum(c1)
+        x2 = qx(base | m1, m1, c2, a)
+        x1 = qx(base | x2, x2, c1, a)
+        return x1 | x2
+
+    def r_of(key, yes, F):
+        """the local posterior that the net answer yes (True) or no (False) on key is wrong (item 31)"""
+        z, a = key
+        if half:
+            p = 0.5
+        elif a in cand:
+            L, R_ = cand[a][0], cand[a][1]
+            ins = (L & ~closure(z, F)) == 0
+            if radv is not None:                   # mechanism b: the statistics-only rho', current
+                R_ = np.zeros(len(L))
+                if ins.any():
+                    R_[ins] = radv.rho_prime(cand[a][3][ins])
+            p = 1 - float(np.exp(np.log1p(-np.minimum(R_[ins], 1 - 1e-12)).sum()))
+        else:
+            p = 0.0
+        p = min(max(p, 1e-12), 1 - 1e-12)
+        v = hist[key]
+        y = v.count(True)
+        t = p * (1 - eps_m) ** y * eps_m ** (len(v) - y)
+        f = (1 - p) * eps_m ** y * (1 - eps_m) ** (len(v) - y)
+        return f / (t + f) if yes else t / (t + f)
+
+    def targets():
+        """the maximal sets of H that hold on the data: they contain the left-hand side of a candidate H does not
+        imply (Thm. price (a)); every one has to be refuted"""
+        out = []
+        for a, (L, _, _, _) in cand.items():
+            unimplied = state[a] != 1
+            if not unimplied.any():
+                continue
+            for M in maxsets(H, a, full):
+                if (unimplied & ((L & ~M) == 0)).any():
+                    out.append((M, a))
+        return out
+
+    def premises():
+        """R and the premises with their r_q (item 34)"""
+        if conflict:
+            return float("inf"), {}
+        yes = [k for k, v in hist.items() if net(v) is True]
+        ry_ = {k: r_of(k, True, sig0) for k in yes}
+        keep = list(yes)
+        for k in sorted(yes, key=lambda q: -ry_[q]):
+            if closure(k[0], sig0 + [q for q in keep if q != k]) & k[1]:
+                keep.remove(k)
+        dep = {k: ry_[k] for k in keep}
+        T = targets()
+        cover = {}
+        for z, a2 in NEG:
+            c = closure(z, H)
+            cv = {t for t, (M, a) in enumerate(T) if M & ~c == 0 and closure(c | a, H) & a2}
+            if cv:
+                cover[(z, a2)] = cv
+        rn = {k: r_of(k, False, H) for k in cover}
+        cnt = {}
+        for cv in cover.values():
+            for e in cv:
+                cnt[e] = cnt.get(e, 0) + 1
+        for k in sorted(cover, key=lambda q: -rn[q]):
+            if all(cnt[e] > 1 for e in cover[k]):
+                for e in cover[k]:
+                    cnt[e] -= 1
+                del cover[k]
+        dep.update({k: rn[k] for k in cover})
+        st["d_yes"], st["d_no"] = len(keep), len(cover)
+        return sum(dep.values()), dep
+
+    def pending():
+        """the question to ask again before anything else: for a conflict, the answer most likely wrong among the
+        no and a minimal set of yes answers that imply it; a tie"""
+        for k in conflict:
+            yes = [q for q, v in hist.items() if net(v) is True]
+            r = {q: r_of(q, True, sig0) for q in yes}
+            sub = list(yes)
+            for q in sorted(yes, key=lambda q: r[q]):
+                if closure(k[0], sig0 + [x for x in sub if x != q]) & k[1]:
+                    sub.remove(q)
+            r[k] = r_of(k, False, sig0)
+            for q in sorted(sub + [k], key=lambda q: -r[q]):
+                if len(hist[q]) < REASK:
+                    return q
+        for k, v in hist.items():
+            if net(v) is None and len(v) < REASK:
+                return k
+        return None
+
+    update()
+    if adv is not None:
+        refresh()
+    sound = capped = False
+    certified, R = False, None
+    try:
+        # ---------------- discovery (v5.run) ----------------
+        if discovery and adv is not None:
+            while True:
+                if not fresh[0]:
+                    refresh()
+                opn = [i for i, a, k in poss if state[a][k] == 0 and i not in adv.answered]
+                unq = [i for i in opn if not adv.queried[i]]
+                if unq:
+                    bel = [i for i, v in zip(unq, adv.rho_prime(unq, "yes")) if v >= BELIEVE]
+                    if bel and adv.query(bel):
+                        continue
+                r = dict(zip(opn, adv.rho_prime(opn))) if opn else {}
+                order = sorted((i for i in opn if r[i] >= BELIEVE), key=lambda i: -r[i])
+                Ft, G = list(H), []
+                for i in order:
+                    l, a = mask(P[i][0]), mask(P[i][1])
+                    if closure(l, Ft) & a:
+                        continue
+                    G.append(i)
+                    Ft.append((l, a))
+                if not G:
+                    sound = True
+                    break
+                if st["disc_no"] >= cap:
+                    capped = True
+                    break
+                i = G[0]
+                l, a = mask(P[i][0]), mask(P[i][1])
+                ans = ask(l, a, "disc_q")
+                observe(i, ans)
+                if not ans:
+                    st["disc_no"] += 1
+                if not fresh[0]:
+                    refresh()
+        st["switch_q"] = st["q"]
+        # ---------------- certification (v5.run, with the tolerance of item 34) ----------------
+        if not fresh[0]:
+            refresh()
+        while True:
+            if tol:
+                k = pending()
+                if k is not None:
+                    put(k, "reask_q")
+                    continue
+            best = None
+            for a, (L, R_, _, _) in cand.items():
+                s = state[a]
+                unimplied = s != 1
+                if not unimplied.any():
+                    continue
+                for M in maxsets(H, a, full):
+                    inside = unimplied & ((L & ~M) == 0)
+                    if not inside.any() or known(M, a) is False:
+                        continue
+                    ins = inside & (s == 0)
+                    if adv is None:
+                        key = (bool(ins.any()), -a, -M)
+                    else:
+                        py = 1 - float(np.exp(np.log1p(-np.minimum(R_[ins], 1 - 1e-12)).sum())) if ins.any() else 0.0
+                        key = (py, -a, M)
+                    if best is None or key > best[0]:
+                        best = (key, M, a, ins)
+            if best is None:
+                if not tol:
+                    certified = True
+                    break
+                R, dep = premises()
+                if all(len(hist[k]) >= 2 for k in dep) if delta is None else R <= delta:
+                    certified = True
+                    break
+                again = [k for k in sorted(dep, key=lambda q: -dep[q]) if len(hist[k]) < REASK]
+                if not again:
+                    break
+                put(again[0], "reask_q")
+                continue
+            key, M, a, ins = best
+            st["max_q"] += 1
+            if not ask(M, a, "max_asked"):
+                st["max_no"] += 1
+                continue
+            L, R_, ps, idx = cand[a]
+            x = None
+            if adv is not None:
+                top = np.flatnonzero(ins)[np.argsort(-R_[ins], kind="stable")][:HEAD]   # ties by candidate index, the same on every machine
+                if adv.query(idx[top].tolist()):
+                    rq = adv.rho_prime(idx[top])
+                    R_[top] = rq
+                    rp[idx[top]] = rq
+                qx_cost = math.ceil(math.log2(max(bin(M).count("1"), 2))) + 1
+                guesses = 0
+                while guess and guesses < qx_cost:
+                    o2 = ins & (state[a] == 0)
+                    if not o2.any():
+                        break
+                    guesses += 1
+                    py = 1 - float(np.exp(np.log1p(-np.minimum(R_[o2], 1 - 1e-12)).sum()))
+                    cond = R_ * o2 / max(py, 1e-12)
+                    i = int(np.argmax(cond))
+                    if cond[i] < max(GUESS, 1.0 / qx_cost):
+                        break
+                    ans = ask(int(L[i]), a, "guess_q")
+                    observe(int(idx[i]), ans)
+                    if ans:
+                        x = int(L[i])
+                        st["guess_hit"] += 1
+                        break
+                py = 1 - float(np.exp(np.log1p(-np.minimum(R_[ins], 1 - 1e-12)).sum()))
+                cond = R_ * ins / max(py, 1e-12)
+                w = {bt: float(cond[(L & bt) != 0].sum()) for bt in bits(M)}
+                order = sorted(w, key=lambda bt: (-w[bt], bt))
+            else:
+                order = list(bits(M))
+            if x is None:
+                x = qx(0, 0, order, a)
+                if not closure(x, H) & a:
+                    if tol:                           # H holds only the designer's answers
+                        ask(x, a, "confirm_q")
+                    else:
+                        H.append((x, a))
+                        update()
+            st["found"] += 1
+            if not fresh[0]:
+                refresh()
+    except Budget:
+        certified = False
+        st.setdefault("switch_q", st["q"])
+    if tol and R is None and not certified:
+        R = premises()[0]
+    st["llm_q"] = int(adv.queried.sum()) if adv is not None else 0
+    # ---------------- output ----------------
+    pred = {p for a, (_, _, ps, _) in cand.items() for i, p in enumerate(ps) if state[a][i] == 1}
+    opn = [p for a, (_, _, ps, _) in cand.items() for i, p in enumerate(ps) if state[a][i] == 0]
+    inst = drd.Instance(b["R"], b["sigma0"], P, {p: 0.5 for p in P}, list(b["truth"]), name=b["name"])
+    Hf = [AC.S.fd(tuple(i for i in range(n) if z >> i & 1), a.bit_length() - 1) for z, a in H[len(sig0):]]
+    D = inst._synth(inst._atomic(b["sigma0"] + Hf))[0]
+    truth = lambda k: bool(closure(k[0], reach) & k[1])
+    # H+ = Sigma*+ restricted to the FDs of the data (check_cert.py): every yes true, no maximal set of H that holds
+    # on the data determines its attribute under Sigma*
+    exact = all(truth(k) for k in H[len(sig0):]) and not any(closure(M, reach) & a for M, a in targets())
+    nets = {k: net(v) for k, v in hist.items()}
+    out = {"certified": certified, "cert_exact": exact, "wrong_cert": certified and not exact,
+           "questions": st["q"], "switch_q": st.get("switch_q", st["q"]), "sound": sound, "capped": capped,
+           "oracle": AC.oracle_mode(), "free": st["free"], "data_no": st["data_no"],
+           "disc_questions": st["disc_q"], "disc_no": st["disc_no"], "open_left": len(opn),
+           "max_questions": st["max_q"], "max_no": st["max_no"], "guess_questions": st["guess_q"],
+           "guess_hits": st["guess_hit"], "qx_questions": st["qx_q"], "found": st["found"],
+           "confirm_questions": st["confirm_q"], "reask_questions": st["reask_q"],
+           "confirmed": len(H) - len(sig0), "refuted_answers": len(NEG), "conflicts": len(conflict),
+           "risk": None if R is None else (R if R != float("inf") else "inf"), "delta": delta if tol else None,
+           "d_yes": st.get("d_yes"), "d_no": st.get("d_no"),
+           "designer_wrong": sum(x != truth(k) for k, v in hist.items() for x in v),
+           "first_wrong": sum(v[0] != truth(k) for k, v in hist.items()),
+           "net_wrong": sum(x is not None and x != truth(k) for k, x in nets.items()),
+           "net_tie": sum(x is None for x in nets.values()), "llm_queries": st["llm_q"],
+           "attrs_median": statistics.median(st["attrs"]) if st["attrs"] else None,
+           "schemata": len(D)}
+    names = b["names"]
+    nm = lambda m: [names[i] for i in range(n) if m >> i & 1]
+    out["certificate"] = {"yes": [[nm(z), nm(a)[0]] for z, a in H[len(sig0):]],
+                          "no": [[nm(z), nm(a)[0]] for z, a in NEG]}
+    out.update(C.evaluate(b, D, pred))
+    return out
+
+
+def one(args):
+    variant, ds, adir, model, err, seed, stuck, mech, rho = args
+    t0 = time.time()
+    b = AC.load(ds)
+    llm, eps_m = VARIANTS[variant]
+    adv, pk, am = advisor_for(b, adir, model, llm, True)
+    radv = None
+    if mech == "b" and eps_m > 0:
+        radv = adv if not llm else advisor_for(b, adir, model, False, True)[0]
+    half = mech == "c" and eps_m > 0
+    r = {"variant": variant, "dataset": ds, "truth": AC.truth_mode(), "designer_err": err, "seed": seed,
+         "persistent": stuck, "eps_m": eps_m, "mech": mech if eps_m > 0 else None, "candidates": len(b["P"]),
+         "prior_kind": pk, "answer_model": am,
+         **run(b, adv, v5.CAP, True, True, ds, seed, err, eps_m, stuck, radv, MECHS[mech], half, rho)}
+    if rho > 0:
+        r["rho"] = rho
+    r["secs"] = round(time.time() - t0, 1)
+    return r
+
+
+DEV = ("food,hospital,pricepaid,ssb_customer,ssb_date,ssb_lineorder,ssb_part,ssb_supplier,tpcds_core,"
+       "tpch_lineitem_orders,tpch_orders_customer,tpch_partsupp_part_supplier,fresh_ldbc_comment,fresh_ldbc_study,"
+       "fresh_gtfs_at,fresh_faa,fresh_abs_mb,fresh_sec_fsds,fresh_scorecard_fos,fresh_epa_aqs,fresh_pums_ca,"
+       "fresh_chicago_crimes,fresh_usda_sr,fresh_tpcds_customer")
+NO_LLM = {"fresh_tpcds_customer"}            # its LLM answers were stopped (item 33): statistics-only variants
+
+
+def plan(dss, check_only, rho=0.0):
+    """the runs of item 34: (variant, err, seed, stubborn); with rho > 0 the tolerant runs of item 42 (b)"""
+    runs = [("v5", 0.0, 0, False), ("v5s", 0.0, 0, False)]          # the implementation check against item 32
+    if rho > 0:
+        runs = [(v, e, s, False) for e in (0.02, 0.05) for s in range(3) for v in ("v5t", "v5st")]
+    elif not check_only:
+        runs += [("v5t", 0.0, 0, False), ("v5st", 0.0, 0, False)]
+        for e in (0.02, 0.05):
+            runs += [(v, e, s, False) for s in range(3) for v in ("v5t", "v5st", "v5", "v5s")]
+        runs += [("v5t", 0.05, s, True) for s in range(3)]
+    return [(v, ds, e, s, p) for ds in dss for v, e, s, p in runs if not (ds in NO_LLM and VARIANTS[v][0])]
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--answers", required=True)
+    ap.add_argument("--model", default="q35")
+    ap.add_argument("--datasets", default=DEV)
+    ap.add_argument("--check-only", action="store_true", help="only the implementation check (eps = eps_m = 0)")
+    ap.add_argument("--workers", type=int, default=1)
+    ap.add_argument("--out", required=True)
+    ap.add_argument("--mech", default="a", choices=sorted(MECHS))
+    ap.add_argument("--rho", type=float, default=0.0, help="correlation of a question's errors (item 42 (b)), in [0, 1)")
+    a = ap.parse_args()
+    assert AC.oracle_mode() == "gold", "item 34 runs with CONFIRM_ORACLE=gold"
+    assert 0 <= a.rho < 1
+    done = set()
+    if os.path.exists(a.out):
+        with open(a.out, encoding="utf-8") as fh:
+            done = {(r["variant"], r["dataset"], r["designer_err"], r["seed"], r["persistent"])
+                    for r in map(json.loads, fh) if r}
+    big = {"fresh_tpcds_customer", "tpch_lineitem_orders", "fresh_scorecard_fos", "ssb_lineorder", "fresh_pums_ca"}
+    dss = sorted(a.datasets.split(","), key=lambda d: (d not in big, d))
+    jobs = [(v, ds, a.answers, a.model, e, s, p, a.mech, a.rho) for v, ds, e, s, p in plan(dss, a.check_only, a.rho)
+            if (v, ds, e, s, p) not in done]
+    print(f"{len(jobs)} runs to do, {len(done)} done", flush=True)
+    with ProcessPoolExecutor(max(1, a.workers)) as ex, open(a.out, "a", encoding="utf-8") as fo:
+        for f in as_completed([ex.submit(one, j) for j in jobs]):
+            r = f.result()
+            fo.write(json.dumps(r) + "\n")
+            fo.flush()
+            print(f"{r['variant']:4s} e{r['designer_err']:<4} s{r['seed']}{'p' if r['persistent'] else ' '} "
+                  f"{r['dataset']:28s} cert {r['certified']!s:5s} exact {r['cert_exact']!s:5s} "
+                  f"good {r['gold_good']!s:5s} q {r['questions']:3d} reask {r['reask_questions']} "
+                  f"confirm {r['confirm_questions']} risk {r['risk']} {r['secs']}s", flush=True)
+
+
+if __name__ == "__main__":
+    main()

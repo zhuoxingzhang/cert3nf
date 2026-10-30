@@ -1,0 +1,17 @@
+# TABLES
+nation.csv	1
+# COLUMN
+1.n_name	2
+1.n_nationkey	1
+1.n_comment	4
+1.n_regionkey	3
+# RESULTS
+1->2
+1->3
+1->4
+2->1
+2->3
+2->4
+4->1
+4->2
+4->3
