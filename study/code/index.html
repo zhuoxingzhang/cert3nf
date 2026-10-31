@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rules of a table</title>
+<style>
+  :root { --ink:#1d2530; --muted:#5f6b7a; --line:#d9dee5; --bg:#f6f7f9; --card:#fff; --btn:#24364b; --err:#b42318; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width: 640px; margin: 0 auto; padding: 32px 16px 48px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:20px 22px; margin-bottom:16px; }
+  h1 { font-size:24px; margin:0 0 8px; } h2 { font-size:18px; margin:0 0 10px; }
+  p { margin: 8px 0; } .muted { color:var(--muted); font-size:14px; }
+  label { display:block; margin:12px 0 4px; font-weight:600; }
+  input[type=text] { font:inherit; padding:8px 10px; width:160px; text-transform:uppercase; border:1px solid #aab3bf; border-radius:6px; }
+  .sessions { display:flex; gap:18px; } .sessions label { display:inline; font-weight:400; margin:0; }
+  button { font:inherit; border-radius:8px; border:1px solid var(--btn); padding:10px 22px; cursor:pointer; background:#fff; color:var(--btn); }
+  button.main { background:var(--btn); color:#fff; margin-top:16px; }
+  .err { color:var(--err); min-height:1.5em; margin-top:8px; }
+</style>
+</head>
+<body>
+<main>
+  <div class="card">
+    <h1>Rules of a table</h1>
+    <p>A study on database design at the University of Auckland. You answer questions about the rules of a table:
+       must two records that agree on some attributes also agree on another one?</p>
+  </div>
+
+  <form class="card" id="enter">
+    <h2>I was invited</h2>
+    <label for="code">Your participant code</label>
+    <input type="text" id="code" autocomplete="off" spellcheck="false" placeholder="e.g. E01" maxlength="4">
+    <label>Session</label>
+    <div class="sessions">
+      <label><input type="radio" name="sno" value="1" checked> 1 (first table)</label>
+      <label><input type="radio" name="sno" value="2"> 2 (second table)</label>
+    </div>
+    <p class="muted">The code and the session are in your invitation. If you closed the page, enter them again: the session
+       continues where you left it.</p>
+    <button class="main" type="submit">Start</button>
+    <p class="err" id="err"></p>
+  </form>
+
+  <form class="card" method="post" action="/try">
+    <h2>I want to see what it looks like</h2>
+    <p>Try a session of your own and stop it whenever you like. Answers in a try are not part of the study.</p>
+    <button type="submit">Try it</button>
+  </form>
+</main>
+<script>
+document.getElementById("enter").onsubmit = e => {
+  e.preventDefault();
+  const code = document.getElementById("code").value.trim().toUpperCase();
+  const sno = document.querySelector("input[name=sno]:checked").value;
+  if (!/^T?[EPU]0[1-3]$/.test(code)) {
+    document.getElementById("err").textContent = "This is not a participant code. A code is a letter and two digits, such as E01.";
+    return;
+  }
+  location.href = `/s/${code}/${sno}/`;
+};
+</script>
+</body>
+</html>

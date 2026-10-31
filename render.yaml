@@ -1,7 +1,6 @@
-# The server of the human-designer study (study/README.md) as a free Render web service.
-# Render generates STUDY_SECRET, from which every participant link is made (do not change it during the study), and
-# STUDY_ADMIN_KEY, which opens /admin.  Durable storage of the answers needs STUDY_GITHUB_REPO and STUDY_GITHUB_TOKEN,
-# set by hand under Environment.  An uptime monitor requests /healthz every 5 minutes so that the instance does not sleep.
+# The server of the human-designer study (study/README.md) as a free Render web service.  Durable storage of the
+# answers needs STUDY_GITHUB_REPO and STUDY_GITHUB_TOKEN, set by hand under Environment.  An uptime monitor requests
+# /healthz every 5 minutes so that the instance does not sleep.
 services:
   - type: web
     name: cert3nf
@@ -28,7 +27,3 @@ services:
     envVars:
       - key: PYTHON_VERSION
         value: 3.12.6
-      - key: STUDY_SECRET
-        generateValue: true
-      - key: STUDY_ADMIN_KEY
-        generateValue: true

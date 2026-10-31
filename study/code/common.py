@@ -42,11 +42,13 @@ def setenv(truth):
 
 
 def parse(participant):
-    """(condition, number, test) of a participant code: E01, P02, U03, or TE01 etc. for a test that is not part of the
-    study (the experimenter's own tries and the pilot)"""
-    test = participant.startswith("T") and len(participant) == 4
-    cond, num = participant[1 if test else 0], participant[-2:]
-    assert cond in CONDITIONS and num in ASSIGN and len(participant) == 3 + test, participant
+    """(condition, number, test) of a participant code: E01, P02, U03; TE01 etc. for a test that is not part of the
+    study (the experimenter's own tries and the pilot), and TP02-1a2b3c for a try from the site's start page"""
+    code, _, tag = participant.partition("-")
+    test = code.startswith("T") and len(code) == 4
+    cond, num = code[1 if test else 0], code[-2:]
+    assert cond in CONDITIONS and num in ASSIGN and len(code) == 3 + test, participant
+    assert not tag or test and len(tag) == 6 and all(c in "0123456789abcdef" for c in tag), participant
     return cond, num, test
 
 
