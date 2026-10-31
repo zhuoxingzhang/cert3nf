@@ -24,7 +24,8 @@ Locally: `python study/code/server.py`; session files are written to `study/sess
 
 Online: `render.yaml` describes a free Render web service.
 There are no passwords: a participant opens the site, enters the code of the invitation (E01 to U03) and the session number, or opens `/s/<code>/<session>/` directly, and reopening it continues the session.
-Codes starting with T are tests that are not part of the study, and "Try it" on the start page opens a try of its own whose files are not kept.
+Codes starting with T are tests that are not part of the study, and "Try it" on the start page opens a try of its own whose files are not kept; since a try shows the study's tables, `STUDY_TRIES=0` removes it before the first real session.
+No page of the site names the authors or the storage repository.
 `/status` lists every session's state and number of answers, never the answers themselves.
 A free instance sleeps after 15 minutes without a request, so an uptime monitor requests `/healthz` every 5 minutes.
 Its disk is wiped at every restart, so the answers are kept by setting `STUDY_GITHUB_REPO` (a private repository) and `STUDY_GITHUB_TOKEN` (a fine-grained token with Contents read and write on that repository only).

@@ -24,7 +24,7 @@
 <main>
   <div class="card">
     <h1>Rules of a table</h1>
-    <p>A study on database design at the University of Auckland. You answer questions about the rules of a table:
+    <p>A study on database design. You answer questions about the rules of a table:
        must two records that agree on some attributes also agree on another one?</p>
   </div>
 
@@ -43,11 +43,11 @@
     <p class="err" id="err"></p>
   </form>
 
-  <form class="card" method="post" action="/try">
+  <!--try--><form class="card" method="post" action="/try">
     <h2>I want to see what it looks like</h2>
     <p>Try a session of your own and stop it whenever you like. Answers in a try are not part of the study.</p>
     <button type="submit">Try it</button>
-  </form>
+  </form><!--/try-->
 </main>
 <script>
 document.getElementById("enter").onsubmit = e => {

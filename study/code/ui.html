@@ -52,7 +52,7 @@
       <li><b>No</b> if two valid records could break it,</li>
       <li><b>Don't know</b> if you cannot tell.</li>
     </ul>
-    <p id="docnote" class="hidden">You can open the documentation of the table at any time with the links above the questions.</p>
+    <p id="docnote" class="hidden">The documentation of the table: <span id="doclinks"></span><br>You can open it at any time, also with the links above the questions.</p>
     <p>There are at most about 130 questions and at most about 55 minutes of answering. You can stop at any time
        with the Stop button, without giving a reason.</p>
     <p class="muted">Two practice questions follow. They are not part of the study.</p>
@@ -129,11 +129,11 @@ async function api(p, body) {
 
 // ---------- practice on the Orders example ----------
 const ORD = {attrs:["Order","Name","City","Date"],
-  rows:[["o1","Smith","Auckland","3 March"],["o2","Smith","Auckland","3 March"],["o3","Jones","Wellington","3 March"],
-        ["o4","Brown","Auckland","5 March"],["o5","Smith","Auckland","5 March"]]};
+  rows:[["o1","Smith","Paris","3 March"],["o2","Smith","Paris","3 March"],["o3","Jones","Rome","3 March"],
+        ["o4","Brown","Paris","5 March"],["o5","Smith","Paris","5 March"]]};
 const PRACTICE = [
   {lhs:["Name"], rhs:"City", text:"Must any two records that agree on <b class='agree'>Name</b> also agree on <b class='rhs'>City</b>?", answer:"no",
-   why:"No. In these rows every Smith lives in Auckland, but two different customers called Smith may live in different cities, so the rule need not hold."},
+   why:"No. In these rows every Smith lives in Paris, but two different customers called Smith may live in different cities, so the rule need not hold."},
   {lhs:["Order","Name","Date"], rhs:"City", text:"Must any two records that agree on all attributes except <b class='rhs'>City</b> also agree on <b class='rhs'>City</b>?", answer:"yes",
    why:"Yes. Two such records have the same order, and an order belongs to one customer with one city."}];
 function table(el, attrs, rows, lhs, rhs) {
@@ -209,8 +209,10 @@ function bye() {
   $("#relname").textContent = "Table: " + META.relation.replace(/^fresh_/, "");
   $("#rows").textContent = `Ten of the ${META.rows.toLocaleString("en")} records, drawn at random.`;
   if (META.docs.length) {
+    const links = META.docs.map(d => `<a class="doc" href="${esc(d.href)}" target="_blank" rel="noopener">${esc(d.name)}</a>`).join("");
     $("#docnote").classList.remove("hidden");
-    $("#docs").innerHTML = "Documentation: " + META.docs.map(d => `<a class="doc" href="${esc(d.href)}" target="_blank" rel="noopener">${esc(d.name)}</a>`).join("");
+    $("#doclinks").innerHTML = links;
+    $("#docs").innerHTML = "Documentation: " + links;
   }
   if (/^\/s\/T[EPU]0[1-3]-/.test(location.pathname)) {      // a try from the start page
     $("#trynote").classList.remove("hidden");

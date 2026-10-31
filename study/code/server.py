@@ -17,6 +17,7 @@ at the same time.
 The codes are E01-E03, P01-P03, U01-U03; TE01 ... TU03 are the experimenter's own tests and TP0x-xxxxxx the tries, not
 part of the study, whose files go to sessions/test/.  Session files are kept by store.py, except those of the tries,
 which stay on the instance's disk.  A try idle for IDLE seconds is ended and released, and at most MAX_TRIES are kept.
+A try shows the relations of the study, so STUDY_TRIES=0 removes it before the first real session.
 
 Locally:   python server.py [--port 8765]
 On Render: render.yaml at the root of the repository; STUDY_GITHUB_REPO and STUDY_GITHUB_TOKEN set by hand for
@@ -118,9 +119,12 @@ def status_page():
             "<p class=warn><b>Storage is not durable.</b> STUDY_GITHUB_REPO and STUDY_GITHUB_TOKEN are not both set, so "
             "the session files live on this instance's disk only, which Render wipes at every restart or deploy. "
             "Do not run real sessions like this.</p>")
-    st_line = (f"storage: {'GitHub ' + html.escape(st['repo']) if st['durable'] else 'local disk only'}; "
+    err = st["last_error"] or ""
+    for name in filter(None, [st["repo"], (st["repo"] or "").split("/")[0]]):  # the page is public: no names
+        err = err.replace(name, "<repository>")
+    st_line = (f"storage: {'a private GitHub repository' if st['durable'] else 'local disk only'}; "
                f"files put {st['puts']}, last {st['last_sync'] or '-'}, waiting {st['pending']}"
-               + (f"; last error {html.escape(st['last_error'])}" if st["last_error"] else ""))
+               + (f"; last error {html.escape(err)}" if err else ""))
     trs = []
     for code in CODES + TESTS:
         for sno in (1, 2):
@@ -209,7 +213,11 @@ class Handler(BaseHTTPRequestHandler):
         if path == "/healthz":
             return self.send(200, b"ok", "text/plain")
         if path == "/":
-            return self.page(INDEX)
+            with open(INDEX, encoding="utf-8") as fh:
+                page = fh.read()
+            if not CFG["tries"]:
+                page = re.sub(r"<!--try-->.*?<!--/try-->", "", page, flags=re.S)
+            return self.send(200, page, "text/html; charset=utf-8")
         if path == "/status":
             return self.send(200, status_page(), "text/html; charset=utf-8")
         if path.rstrip("/") == "/admin":                       # the earlier address of the status page
@@ -237,7 +245,7 @@ class Handler(BaseHTTPRequestHandler):
     def do_POST(self):
         path = urllib.parse.urlparse(self.path).path
         b = self.body()
-        if path == "/try":
+        if path == "/try" and CFG["tries"]:
             if not release_tries(MAX_TRIES):
                 return self.send(503, "Many people are trying the study right now. Please try again in a few minutes.",
                                  "text/plain; charset=utf-8")
@@ -282,6 +290,7 @@ def main():
     ap.add_argument("--minutes", type=float, default=S.LIVE_MINUTES)
     a = ap.parse_args()
     CFG["minutes"] = a.minutes
+    CFG["tries"] = os.environ.get("STUDY_TRIES", "1") != "0"
     store = Store(SESSIONS, os.environ.get("STUDY_GITHUB_REPO"), os.environ.get("STUDY_GITHUB_TOKEN"),
                   os.environ.get("STUDY_GITHUB_BRANCH", "main"))
     CFG["store"] = store
