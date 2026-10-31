@@ -1,0 +1,13 @@
+{
+ "note": "FDs that the documented truth omits but that the hand check of the fixed blocks (2026-10-31) judges true in the domain. They only exclude disputed questions from the blocks and enter the analysis as a sensitivity truth; they change neither the truths of the paper nor what the method or the simulated designer knows.",
+ "datasets": {
+  "fresh_abs_mb": [
+   {"lhs": ["ASGS_LOCI_URI_2021"], "rhs": ["MB_CODE_2021"],
+    "reason": "The LOCI URI ends with the Mesh Block code (http://linked.data.gov.au/dataset/asgsed3/MB/<MB_CODE_2021>), checked on all ten sample rows."},
+   {"lhs": ["GCCSA_NAME_2021"], "rhs": ["GCCSA_CODE_2021"],
+    "reason": "abs_greater-capital-city-statistical-areas.html: GCCSAs are named after their city or as Rest of <State>, and the special-purpose codes name their state, so names and codes correspond one to one, as the documented truth already states for the SA2, SA3, SA4 and state names."}
+  ],
+  "ssb_customer": [],
+  "tpcds_core": []
+ }
+}

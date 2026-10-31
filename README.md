@@ -22,6 +22,7 @@ Raw data and LLM answers are not included; the scripts below download or recompu
 | `confirm/check_cert.py` | independent check of every certificate |
 | `confirm/scripts/` | tables and reports |
 | `confirm/v5_*/`, `confirm/v5tol_*/`, `confirm/paper_src/`, ... | results of the runs below |
+| `study/`, `render.yaml` | the human-designer study: its web server, fixed question blocks and materials (`study/README.md`) |
 
 ## Reproduce
 

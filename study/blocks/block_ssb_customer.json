@@ -1,0 +1,676 @@
+{
+ "dataset": "ssb_customer",
+ "attributes": [
+  "c_custkey",
+  "c_name",
+  "c_address",
+  "c_city",
+  "c_nation",
+  "c_region",
+  "c_phone",
+  "c_mktsegment"
+ ],
+ "generator": "4641afdc6930",
+ "data_md5": "9faa9fd326b1",
+ "supplement_md5": "5889003e8fbf",
+ "supplement": [],
+ "pool_sizes": {
+  "cand/True": 10,
+  "cand/False": 12,
+  "max/True": 15,
+  "max/False": 8,
+  "qx/True": 216,
+  "qx/False": 120
+ },
+ "short": {},
+ "questions": [
+  {
+   "id": "b01",
+   "type": "cand",
+   "lhs": [
+    "c_name"
+   ],
+   "rhs": "c_mktsegment",
+   "form": "agree",
+   "listed": [
+    "c_name"
+   ],
+   "a_q": 2,
+   "text": "Must any two records that agree on c_name also agree on c_mktsegment?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": true
+  },
+  {
+   "id": "b02",
+   "type": "cand",
+   "lhs": [
+    "c_name"
+   ],
+   "rhs": "c_city",
+   "form": "agree",
+   "listed": [
+    "c_name"
+   ],
+   "a_q": 2,
+   "text": "Must any two records that agree on c_name also agree on c_city?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": true
+  },
+  {
+   "id": "b03",
+   "type": "cand",
+   "lhs": [
+    "c_city"
+   ],
+   "rhs": "c_region",
+   "form": "agree",
+   "listed": [
+    "c_city"
+   ],
+   "a_q": 2,
+   "text": "Must any two records that agree on c_city also agree on c_region?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": true
+  },
+  {
+   "id": "b04",
+   "type": "cand",
+   "lhs": [
+    "c_address"
+   ],
+   "rhs": "c_name",
+   "form": "agree",
+   "listed": [
+    "c_address"
+   ],
+   "a_q": 2,
+   "text": "Must any two records that agree on c_address also agree on c_name?",
+   "truth_full": false,
+   "truth_sure": false,
+   "truth_supp": false,
+   "minimal_on_data": true
+  },
+  {
+   "id": "b05",
+   "type": "cand",
+   "lhs": [
+    "c_phone"
+   ],
+   "rhs": "c_city",
+   "form": "agree",
+   "listed": [
+    "c_phone"
+   ],
+   "a_q": 2,
+   "text": "Must any two records that agree on c_phone also agree on c_city?",
+   "truth_full": false,
+   "truth_sure": false,
+   "truth_supp": false,
+   "minimal_on_data": true
+  },
+  {
+   "id": "b06",
+   "type": "cand",
+   "lhs": [
+    "c_phone"
+   ],
+   "rhs": "c_mktsegment",
+   "form": "agree",
+   "listed": [
+    "c_phone"
+   ],
+   "a_q": 2,
+   "text": "Must any two records that agree on c_phone also agree on c_mktsegment?",
+   "truth_full": false,
+   "truth_sure": false,
+   "truth_supp": false,
+   "minimal_on_data": true
+  },
+  {
+   "id": "b07",
+   "type": "max",
+   "lhs": [
+    "c_name",
+    "c_address",
+    "c_city",
+    "c_nation",
+    "c_region",
+    "c_phone",
+    "c_mktsegment"
+   ],
+   "rhs": "c_custkey",
+   "form": "except",
+   "listed": [
+    "c_custkey"
+   ],
+   "a_q": 2,
+   "text": "Must any two records that agree on all attributes except c_custkey also agree on c_custkey?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": false
+  },
+  {
+   "id": "b08",
+   "type": "max",
+   "lhs": [
+    "c_address",
+    "c_city",
+    "c_region",
+    "c_phone",
+    "c_mktsegment"
+   ],
+   "rhs": "c_nation",
+   "form": "except",
+   "listed": [
+    "c_custkey",
+    "c_name",
+    "c_nation"
+   ],
+   "a_q": 4,
+   "text": "Must any two records that agree on all attributes except c_custkey, c_name and c_nation also agree on c_nation?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": false
+  },
+  {
+   "id": "b09",
+   "type": "max",
+   "lhs": [
+    "c_address",
+    "c_city",
+    "c_region",
+    "c_mktsegment"
+   ],
+   "rhs": "c_nation",
+   "form": "agree",
+   "listed": [
+    "c_address",
+    "c_city",
+    "c_region",
+    "c_mktsegment"
+   ],
+   "a_q": 5,
+   "text": "Must any two records that agree on c_address, c_city, c_region and c_mktsegment also agree on c_nation?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": false
+  },
+  {
+   "id": "b10",
+   "type": "max",
+   "lhs": [
+    "c_address",
+    "c_mktsegment"
+   ],
+   "rhs": "c_region",
+   "form": "agree",
+   "listed": [
+    "c_address",
+    "c_mktsegment"
+   ],
+   "a_q": 3,
+   "text": "Must any two records that agree on c_address and c_mktsegment also agree on c_region?",
+   "truth_full": false,
+   "truth_sure": false,
+   "truth_supp": false,
+   "minimal_on_data": false
+  },
+  {
+   "id": "b11",
+   "type": "max",
+   "lhs": [
+    "c_address",
+    "c_city",
+    "c_nation",
+    "c_region",
+    "c_phone",
+    "c_mktsegment"
+   ],
+   "rhs": "c_name",
+   "form": "except",
+   "listed": [
+    "c_custkey",
+    "c_name"
+   ],
+   "a_q": 3,
+   "text": "Must any two records that agree on all attributes except c_custkey and c_name also agree on c_name?",
+   "truth_full": false,
+   "truth_sure": false,
+   "truth_supp": false,
+   "minimal_on_data": false
+  },
+  {
+   "id": "b12",
+   "type": "max",
+   "lhs": [
+    "c_address",
+    "c_nation",
+    "c_region",
+    "c_phone",
+    "c_mktsegment"
+   ],
+   "rhs": "c_city",
+   "form": "except",
+   "listed": [
+    "c_custkey",
+    "c_name",
+    "c_city"
+   ],
+   "a_q": 4,
+   "text": "Must any two records that agree on all attributes except c_custkey, c_name and c_city also agree on c_city?",
+   "truth_full": false,
+   "truth_sure": false,
+   "truth_supp": false,
+   "minimal_on_data": false
+  },
+  {
+   "id": "b13",
+   "type": "qx",
+   "lhs": [
+    "c_name",
+    "c_address",
+    "c_phone"
+   ],
+   "rhs": "c_mktsegment",
+   "form": "agree",
+   "listed": [
+    "c_name",
+    "c_address",
+    "c_phone"
+   ],
+   "a_q": 4,
+   "text": "Must any two records that agree on c_name, c_address and c_phone also agree on c_mktsegment?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": false
+  },
+  {
+   "id": "b14",
+   "type": "qx",
+   "lhs": [
+    "c_name",
+    "c_address",
+    "c_mktsegment"
+   ],
+   "rhs": "c_phone",
+   "form": "agree",
+   "listed": [
+    "c_name",
+    "c_address",
+    "c_mktsegment"
+   ],
+   "a_q": 4,
+   "text": "Must any two records that agree on c_name, c_address and c_mktsegment also agree on c_phone?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": false
+  },
+  {
+   "id": "b15",
+   "type": "qx",
+   "lhs": [
+    "c_name",
+    "c_address",
+    "c_region",
+    "c_phone"
+   ],
+   "rhs": "c_mktsegment",
+   "form": "agree",
+   "listed": [
+    "c_name",
+    "c_address",
+    "c_region",
+    "c_phone"
+   ],
+   "a_q": 5,
+   "text": "Must any two records that agree on c_name, c_address, c_region and c_phone also agree on c_mktsegment?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": false
+  },
+  {
+   "id": "b16",
+   "type": "qx",
+   "lhs": [
+    "c_address",
+    "c_city",
+    "c_nation",
+    "c_phone",
+    "c_mktsegment"
+   ],
+   "rhs": "c_name",
+   "form": "except",
+   "listed": [
+    "c_custkey",
+    "c_region",
+    "c_name"
+   ],
+   "a_q": 4,
+   "text": "Must any two records that agree on all attributes except c_custkey, c_region and c_name also agree on c_name?",
+   "truth_full": false,
+   "truth_sure": false,
+   "truth_supp": false,
+   "minimal_on_data": false
+  },
+  {
+   "id": "b17",
+   "type": "qx",
+   "lhs": [
+    "c_address",
+    "c_nation",
+    "c_region"
+   ],
+   "rhs": "c_custkey",
+   "form": "agree",
+   "listed": [
+    "c_address",
+    "c_nation",
+    "c_region"
+   ],
+   "a_q": 4,
+   "text": "Must any two records that agree on c_address, c_nation and c_region also agree on c_custkey?",
+   "truth_full": false,
+   "truth_sure": false,
+   "truth_supp": false,
+   "minimal_on_data": false
+  },
+  {
+   "id": "b18",
+   "type": "qx",
+   "lhs": [
+    "c_address",
+    "c_city",
+    "c_phone",
+    "c_mktsegment"
+   ],
+   "rhs": "c_name",
+   "form": "agree",
+   "listed": [
+    "c_address",
+    "c_city",
+    "c_phone",
+    "c_mktsegment"
+   ],
+   "a_q": 5,
+   "text": "Must any two records that agree on c_address, c_city, c_phone and c_mktsegment also agree on c_name?",
+   "truth_full": false,
+   "truth_sure": false,
+   "truth_supp": false,
+   "minimal_on_data": false
+  }
+ ],
+ "fillers": [
+  {
+   "id": "f01",
+   "type": "cand",
+   "lhs": [
+    "c_name"
+   ],
+   "rhs": "c_custkey",
+   "form": "agree",
+   "listed": [
+    "c_name"
+   ],
+   "a_q": 2,
+   "text": "Must any two records that agree on c_name also agree on c_custkey?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": true
+  },
+  {
+   "id": "f02",
+   "type": "cand",
+   "lhs": [
+    "c_name"
+   ],
+   "rhs": "c_phone",
+   "form": "agree",
+   "listed": [
+    "c_name"
+   ],
+   "a_q": 2,
+   "text": "Must any two records that agree on c_name also agree on c_phone?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": true
+  },
+  {
+   "id": "f03",
+   "type": "cand",
+   "lhs": [
+    "c_address"
+   ],
+   "rhs": "c_city",
+   "form": "agree",
+   "listed": [
+    "c_address"
+   ],
+   "a_q": 2,
+   "text": "Must any two records that agree on c_address also agree on c_city?",
+   "truth_full": false,
+   "truth_sure": false,
+   "truth_supp": false,
+   "minimal_on_data": true
+  },
+  {
+   "id": "f04",
+   "type": "cand",
+   "lhs": [
+    "c_address"
+   ],
+   "rhs": "c_nation",
+   "form": "agree",
+   "listed": [
+    "c_address"
+   ],
+   "a_q": 2,
+   "text": "Must any two records that agree on c_address also agree on c_nation?",
+   "truth_full": false,
+   "truth_sure": false,
+   "truth_supp": false,
+   "minimal_on_data": true
+  },
+  {
+   "id": "f05",
+   "type": "max",
+   "lhs": [
+    "c_name",
+    "c_city",
+    "c_nation",
+    "c_region",
+    "c_phone",
+    "c_mktsegment"
+   ],
+   "rhs": "c_address",
+   "form": "except",
+   "listed": [
+    "c_custkey",
+    "c_address"
+   ],
+   "a_q": 3,
+   "text": "Must any two records that agree on all attributes except c_custkey and c_address also agree on c_address?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": false
+  },
+  {
+   "id": "f06",
+   "type": "max",
+   "lhs": [
+    "c_address",
+    "c_city",
+    "c_phone",
+    "c_mktsegment"
+   ],
+   "rhs": "c_region",
+   "form": "agree",
+   "listed": [
+    "c_address",
+    "c_city",
+    "c_phone",
+    "c_mktsegment"
+   ],
+   "a_q": 5,
+   "text": "Must any two records that agree on c_address, c_city, c_phone and c_mktsegment also agree on c_region?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": false
+  },
+  {
+   "id": "f07",
+   "type": "max",
+   "lhs": [
+    "c_address",
+    "c_city",
+    "c_nation",
+    "c_region",
+    "c_phone",
+    "c_mktsegment"
+   ],
+   "rhs": "c_custkey",
+   "form": "except",
+   "listed": [
+    "c_name",
+    "c_custkey"
+   ],
+   "a_q": 3,
+   "text": "Must any two records that agree on all attributes except c_name and c_custkey also agree on c_custkey?",
+   "truth_full": false,
+   "truth_sure": false,
+   "truth_supp": false,
+   "minimal_on_data": false
+  },
+  {
+   "id": "f08",
+   "type": "max",
+   "lhs": [
+    "c_address",
+    "c_city",
+    "c_nation",
+    "c_region",
+    "c_phone"
+   ],
+   "rhs": "c_mktsegment",
+   "form": "except",
+   "listed": [
+    "c_custkey",
+    "c_name",
+    "c_mktsegment"
+   ],
+   "a_q": 4,
+   "text": "Must any two records that agree on all attributes except c_custkey, c_name and c_mktsegment also agree on c_mktsegment?",
+   "truth_full": false,
+   "truth_sure": false,
+   "truth_supp": false,
+   "minimal_on_data": false
+  },
+  {
+   "id": "f09",
+   "type": "qx",
+   "lhs": [
+    "c_name",
+    "c_city",
+    "c_mktsegment"
+   ],
+   "rhs": "c_region",
+   "form": "agree",
+   "listed": [
+    "c_name",
+    "c_city",
+    "c_mktsegment"
+   ],
+   "a_q": 4,
+   "text": "Must any two records that agree on c_name, c_city and c_mktsegment also agree on c_region?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": false
+  },
+  {
+   "id": "f10",
+   "type": "qx",
+   "lhs": [
+    "c_name",
+    "c_city",
+    "c_phone",
+    "c_mktsegment"
+   ],
+   "rhs": "c_region",
+   "form": "agree",
+   "listed": [
+    "c_name",
+    "c_city",
+    "c_phone",
+    "c_mktsegment"
+   ],
+   "a_q": 5,
+   "text": "Must any two records that agree on c_name, c_city, c_phone and c_mktsegment also agree on c_region?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": false
+  },
+  {
+   "id": "f11",
+   "type": "qx",
+   "lhs": [
+    "c_address",
+    "c_nation",
+    "c_phone"
+   ],
+   "rhs": "c_custkey",
+   "form": "agree",
+   "listed": [
+    "c_address",
+    "c_nation",
+    "c_phone"
+   ],
+   "a_q": 4,
+   "text": "Must any two records that agree on c_address, c_nation and c_phone also agree on c_custkey?",
+   "truth_full": false,
+   "truth_sure": false,
+   "truth_supp": false,
+   "minimal_on_data": false
+  },
+  {
+   "id": "f12",
+   "type": "qx",
+   "lhs": [
+    "c_address",
+    "c_city",
+    "c_region",
+    "c_phone"
+   ],
+   "rhs": "c_name",
+   "form": "agree",
+   "listed": [
+    "c_address",
+    "c_city",
+    "c_region",
+    "c_phone"
+   ],
+   "a_q": 5,
+   "text": "Must any two records that agree on c_address, c_city, c_region and c_phone also agree on c_name?",
+   "truth_full": false,
+   "truth_sure": false,
+   "truth_supp": false,
+   "minimal_on_data": false
+  }
+ ]
+}

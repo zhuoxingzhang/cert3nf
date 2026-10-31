@@ -7,3 +7,7 @@ e3/codes/
 confirm/llm_*/
 confirm/aexp
 confirm/aexp.exe
+
+# the human-designer study: participants' answers and local secrets never enter this repository
+study/sessions/
+study/code/.local_secrets.json

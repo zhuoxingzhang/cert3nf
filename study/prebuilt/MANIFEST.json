@@ -1,0 +1,108 @@
+{
+ "python": "3.12.6",
+ "numpy": "2.5.0",
+ "variant": "v5t",
+ "answers": "llm_fresh_full_q35_ms",
+ "frozen": {
+  "confirm/v5.py": "8e0e04aeb2ce",
+  "confirm/v5tol.py": "f3ec39c04c59"
+ },
+ "method": {
+  "confirm/v5.py": {
+   "md5": "57fca422d318",
+   "source_md5": "8e0e04aeb2ce",
+   "same_code": true
+  },
+  "confirm/v5tol.py": {
+   "md5": "4a57b1100308",
+   "source_md5": "f3ec39c04c59",
+   "same_code": true
+  },
+  "confirm/auto_common.py": {
+   "md5": "a3df4371f2f4",
+   "source_md5": "bf147b2f2abe",
+   "same_code": true
+  },
+  "confirm/auto_confirm.py": {
+   "md5": "bc7f48e0d512",
+   "source_md5": "cf2a596a1578",
+   "same_code": true
+  },
+  "confirm/auto_answer.py": {
+   "md5": "7575a3c0c2c6",
+   "source_md5": "7e3fc328e3e1",
+   "same_code": true
+  },
+  "confirm/auto_noisy.py": {
+   "md5": "facb5ae11489",
+   "source_md5": "16b65d3e09eb",
+   "same_code": true
+  },
+  "confirm/baseline_direct.py": {
+   "md5": "12ecc0f822d9",
+   "source_md5": "511e2326ed30",
+   "same_code": false
+  },
+  "confirm/bench.py": {
+   "md5": "e4eda1bb0f93",
+   "source_md5": "e4eda1bb0f93",
+   "same_code": true
+  },
+  "confirm/drd.py": {
+   "md5": "b59682881306",
+   "source_md5": "b59682881306",
+   "same_code": true
+  },
+  "confirm/estimators.py": {
+   "md5": "e3f8de81ef96",
+   "source_md5": "e3f8de81ef96",
+   "same_code": true
+  },
+  "confirm/llm_rules.py": {
+   "md5": "1f81a294f16b",
+   "source_md5": "1f81a294f16b",
+   "same_code": true
+  },
+  "confirm/price.py": {
+   "md5": "f78c1da06f03",
+   "source_md5": "f98e52cbdfed",
+   "same_code": true
+  },
+  "e2/e2_tpch.py": {
+   "md5": "1cd77654bb85",
+   "source_md5": "89b411731ba0",
+   "same_code": true
+  },
+  "o3_lossiness_check.py": {
+   "md5": "079cb0a37b95",
+   "source_md5": "079cb0a37b95",
+   "same_code": true
+  },
+  "sensitivity_bruteforce.py": {
+   "md5": "268f88ef709e",
+   "source_md5": "434e1f4587d4",
+   "same_code": false
+  }
+ },
+ "relations": {
+  "ssb_customer": {
+   "pkl": "29141b5929d8",
+   "bytes": 313253,
+   "data": "9faa9fd326b1",
+   "sample": "95eb1319d008"
+  },
+  "tpcds_core": {
+   "pkl": "3abae1cb4b28",
+   "bytes": 156740,
+   "data": "edf1cb7ac561",
+   "sample": "82e906a8978e"
+  },
+  "fresh_abs_mb": {
+   "pkl": "eccc0ccdd85b",
+   "bytes": 483986,
+   "data": "3731b235ac4f",
+   "sample": "610811bf4764"
+  }
+ },
+ "supplement": "5889003e8fbf"
+}

@@ -1,0 +1,15 @@
+DIFF full v5 fresh_abs_mb 0.0 0 False same: [] hook: [] stored: ['certificate'] 
+DIFF full v5t fresh_abs_mb 0.0 0 False same: [] hook: [] stored: ['certificate'] 
+DIFF full v5t fresh_abs_mb 0.02 0 False same: [] hook: [] stored: ['certificate'] 
+DIFF full v5st fresh_abs_mb 0.02 0 False same: [] hook: [] stored: ['certificate'] 
+DIFF full v5 fresh_abs_mb 0.02 0 False same: [] hook: [] stored: ['certificate'] 
+DIFF full v5s fresh_abs_mb 0.02 0 False same: [] hook: [] stored: ['certificate'] 
+DIFF full v5t fresh_abs_mb 0.02 1 False same: [] hook: [] stored: ['certificate'] 
+DIFF full v5 fresh_abs_mb 0.02 1 False same: [] hook: [] stored: ['certificate'] 
+DIFF full v5t fresh_abs_mb 0.02 2 False same: [] hook: [] stored: ['certificate'] 
+DIFF full v5 fresh_abs_mb 0.02 2 False same: [] hook: [] stored: ['certificate'] 
+DIFF full v5t fresh_abs_mb 0.05 0 False same: [] hook: [] stored: ['certificate'] 
+DIFF full v5 fresh_abs_mb 0.05 0 False same: [] hook: [] stored: ['certificate'] 
+DIFF full v5t fresh_abs_mb 0.05 0 True same: [] hook: [] stored: ['certificate'] 
+full 93 runs compared
+same/hook/stored: 13 differing runs; dk runs 120, dk/stop failures 0

@@ -1,0 +1,8 @@
+DIFF sure v5s fresh_abs_mb 0.0 0 False same: [] hook: [] stored: ['certificate'] 
+DIFF sure v5st fresh_abs_mb 0.0 0 False same: [] hook: [] stored: ['certificate'] 
+DIFF sure v5st fresh_abs_mb 0.02 1 False same: [] hook: [] stored: ['certificate'] 
+DIFF sure v5s fresh_abs_mb 0.02 1 False same: [] hook: [] stored: ['certificate'] 
+DIFF sure v5st fresh_abs_mb 0.05 0 False same: [] hook: [] stored: ['certificate'] 
+DIFF sure v5s fresh_abs_mb 0.05 0 False same: [] hook: [] stored: ['certificate'] 
+sure 93 runs compared
+same/hook/stored: 6 differing runs; dk runs 120, dk/stop failures 0

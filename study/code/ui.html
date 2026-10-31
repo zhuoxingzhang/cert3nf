@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rules of a table</title>
+<style>
+  :root { --ink:#1d2530; --muted:#5f6b7a; --line:#d9dee5; --bg:#f6f7f9; --card:#fff;
+          --agree:#dbe9ff; --agree-ink:#174ea6; --rhs:#ffe3c2; --rhs-ink:#9a4a00; --btn:#24364b; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width: 1100px; margin: 0 auto; padding: 24px 16px 48px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:20px 22px; margin-bottom:16px; }
+  h1 { font-size:22px; margin:0 0 12px; } h2 { font-size:18px; margin:0 0 10px; }
+  p { margin: 8px 0; } .muted { color:var(--muted); font-size:14px; }
+  .tablewrap { overflow-x:auto; border:1px solid var(--line); border-radius:8px; }
+  table { border-collapse:collapse; font-size:13px; white-space:nowrap; }
+  th, td { padding:5px 9px; border-bottom:1px solid var(--line); text-align:left; }
+  th { background:#eef1f5; position:sticky; top:0; }
+  th.agree, td.agree { background:var(--agree); } th.agree { color:var(--agree-ink); }
+  th.rhs, td.rhs { background:var(--rhs); } th.rhs { color:var(--rhs-ink); }
+  .q { font-size:19px; margin:4px 0 14px; }
+  .q b.agree { color:var(--agree-ink); } .q b.rhs { color:var(--rhs-ink); }
+  .btns { display:flex; gap:12px; flex-wrap:wrap; }
+  button { font:inherit; border-radius:8px; border:1px solid var(--btn); padding:10px 22px; cursor:pointer; background:#fff; color:var(--btn); }
+  button.main { background:var(--btn); color:#fff; min-width:120px; }
+  button:disabled { opacity:.45; cursor:default; }
+  .top { display:flex; justify-content:space-between; align-items:baseline; gap:12px; flex-wrap:wrap; }
+  .legend span { display:inline-block; padding:1px 8px; border-radius:4px; margin-right:8px; font-size:13px; }
+  .stop { margin-top:18px; text-align:right; }
+  .stop button { border-color:#9aa4b1; color:#5f6b7a; padding:6px 14px; font-size:14px; }
+  .fb { margin-top:10px; padding:10px 12px; border-radius:8px; background:#f1f6ee; border:1px solid #cfe3c4; display:none; }
+  label { display:block; margin:10px 0 4px; } select, textarea { font:inherit; padding:6px; width:100%; max-width:520px; }
+  .scale { display:flex; gap:14px; flex-wrap:wrap; } .scale label { display:inline; margin:0; }
+  .hidden { display:none; }
+  a.doc { margin-right:14px; }
+</style>
+</head>
+<body>
+<main>
+<p id="net" class="card hidden" style="background:#fff4e5;border-color:#f0c58a">The connection to the server was lost. Trying again&hellip; Your answers so far are kept.</p>
+
+<section id="intro">
+  <div class="card">
+    <h1>Rules of a table</h1>
+    <p>You will see a table and answer questions about its <b>rules</b>. Each question names some attributes
+       (columns) and asks whether two records that agree on them <b>must</b> also agree on another attribute.</p>
+    <p>A question is about every valid state of the table, not only about the ten sample rows you see.
+       The rows only show what the values look like. Answer</p>
+    <ul>
+      <li><b>Yes</b> if the rule must always hold,</li>
+      <li><b>No</b> if two valid records could break it,</li>
+      <li><b>Don't know</b> if you cannot tell.</li>
+    </ul>
+    <p id="docnote" class="hidden">You can open the documentation of the table at any time with the links above the questions.</p>
+    <p>There are at most about 130 questions and at most about 55 minutes of answering. You can stop at any time
+       with the Stop button, without giving a reason.</p>
+    <p class="muted">Two practice questions follow. They are not part of the study.</p>
+  </div>
+  <div class="card" id="practice"></div>
+</section>
+
+<section id="ask" class="hidden">
+  <div class="card">
+    <div class="top">
+      <h2 id="relname"></h2>
+      <span class="muted" id="counter"></span>
+    </div>
+    <div id="docs" class="muted"></div>
+    <p class="legend muted"><span style="background:var(--agree)">the two records agree here</span><span style="background:var(--rhs)">must they agree here?</span></p>
+    <div class="tablewrap"><table id="sample"></table></div>
+    <p class="muted" id="rows"></p>
+  </div>
+  <div class="card">
+    <p class="q" id="qtext"></p>
+    <div class="btns">
+      <button class="main" data-a="yes">Yes</button>
+      <button class="main" data-a="no">No</button>
+      <button data-a="dk">Don't know</button>
+    </div>
+    <div class="stop"><button id="stopbtn">Stop the session</button></div>
+  </div>
+</section>
+
+<section id="done" class="hidden">
+  <div class="card">
+    <h1>Thank you</h1>
+    <p>The questions are finished. Please answer these last questions.</p>
+    <form id="qform">
+      <label>How familiar were you with the domain of this table? (1 = not at all, 5 = very)</label>
+      <div class="scale" data-name="familiarity"></div>
+      <label>How tired did you feel at the end? (1 = not at all, 5 = very)</label>
+      <div class="scale" data-name="fatigue"></div>
+      <label>How confident are you in your answers overall? (1 = not at all, 5 = very)</label>
+      <div class="scale" data-name="confidence"></div>
+      <label for="why">If you stopped before the end, why?</label>
+      <select id="why">
+        <option value="">I did not stop early</option><option>I was tired</option><option>It took too long</option>
+        <option>I was no longer sure of my answers</option><option>Other</option>
+      </select>
+      <label for="comments">Any comments (optional)</label>
+      <textarea id="comments" rows="3"></textarea>
+      <p><button class="main" type="submit">Submit</button></p>
+    </form>
+  </div>
+</section>
+
+<section id="bye" class="hidden">
+  <div class="card"><h1>Thank you</h1><p>This session is finished. Please tell the experimenter.</p></div>
+</section>
+
+</main>
+<script>
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+let META = null, CUR = null, SHOWN = 0;
+// paths are relative to the session's page /s/<token>/; a failed request is tried again (the server may be restarting)
+async function api(p, body) {
+  for (let k = 0; ; k++) {
+    try {
+      const r = await fetch(p, body ? {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(body)} : {});
+      if (r.ok) { $("#net").classList.add("hidden"); return await r.json(); }
+    } catch (e) {}
+    $("#net").classList.remove("hidden");
+    await new Promise(res => setTimeout(res, Math.min(2000 * (k + 1), 10000)));
+  }
+}
+
+// ---------- practice on the Orders example ----------
+const ORD = {attrs:["Order","Name","City","Date"],
+  rows:[["o1","Smith","Auckland","3 March"],["o2","Smith","Auckland","3 March"],["o3","Jones","Wellington","3 March"],
+        ["o4","Brown","Auckland","5 March"],["o5","Smith","Auckland","5 March"]]};
+const PRACTICE = [
+  {lhs:["Name"], rhs:"City", text:"Must any two records that agree on <b class='agree'>Name</b> also agree on <b class='rhs'>City</b>?", answer:"no",
+   why:"No. In these rows every Smith lives in Auckland, but two different customers called Smith may live in different cities, so the rule need not hold."},
+  {lhs:["Order","Name","Date"], rhs:"City", text:"Must any two records that agree on all attributes except <b class='rhs'>City</b> also agree on <b class='rhs'>City</b>?", answer:"yes",
+   why:"Yes. Two such records have the same order, and an order belongs to one customer with one city."}];
+function table(el, attrs, rows, lhs, rhs) {
+  const cls = a => lhs.includes(a) ? "agree" : (a === rhs ? "rhs" : "");
+  el.innerHTML = "<tr>" + attrs.map(a => `<th class="${cls(a)}">${esc(a)}</th>`).join("") + "</tr>" +
+    rows.map(r => "<tr>" + r.map((v, j) => `<td class="${cls(attrs[j])}">${esc(v)}</td>`).join("") + "</tr>").join("");
+}
+function practice(k) {
+  const p = PRACTICE[k], box = $("#practice");
+  box.innerHTML = `<h2>Practice ${k + 1} of 2</h2><div class="tablewrap"><table id="ptab"></table></div>
+    <p class="q" style="margin-top:14px">${p.text}</p>
+    <div class="btns"><button class="main" data-p="yes">Yes</button><button class="main" data-p="no">No</button><button data-p="dk">Don't know</button></div>
+    <div class="fb" id="fb"></div>`;
+  table($("#ptab"), ORD.attrs, ORD.rows, p.lhs, p.rhs);
+  box.querySelectorAll("[data-p]").forEach(b => b.onclick = () => {
+    box.querySelectorAll("[data-p]").forEach(x => x.disabled = true);
+    api("api/practice", {practice: k + 1, answer: b.dataset.p});
+    const fb = $("#fb"); fb.style.display = "block";
+    fb.innerHTML = esc(p.why) + `<p><button class="main" id="pnext">${k === 0 ? "Next practice question" : "Start"}</button></p>`;
+    $("#pnext").onclick = () => k === 0 ? practice(1) : start();
+  });
+}
+
+// ---------- the session ----------
+async function start() {
+  $("#intro").classList.add("hidden"); $("#ask").classList.remove("hidden");
+  next(await api("api/question"));
+}
+function next(q) {
+  if (q.done) return finish();
+  CUR = q; SHOWN = performance.now();
+  $("#counter").textContent = "Question " + q.i;
+  table($("#sample"), META.attributes, META.sample, q.lhs, q.rhs);
+  const lhs = new Set(q.lhs);
+  const fmt = a => `<b class="${a === q.rhs ? "rhs" : (lhs.has(a) ? "agree" : "")}">${esc(a)}</b>`;
+  const list = xs => xs.length === 1 ? fmt(xs[0]) : xs.slice(0, -1).map(fmt).join(", ") + " and " + fmt(xs[xs.length - 1]);
+  $("#qtext").innerHTML = q.form === "except"
+    ? `Must any two records that agree on all attributes except ${list(q.listed)} also agree on ${fmt(q.rhs)}?`
+    : (q.listed.length ? `Must any two records that agree on ${list(q.listed)} also agree on ${fmt(q.rhs)}?`
+                       : `Must all records agree on ${fmt(q.rhs)}?`);
+  document.querySelectorAll("[data-a]").forEach(b => b.disabled = false);
+  window.scrollTo({top: 0});
+}
+document.querySelectorAll("[data-a]").forEach(b => b.onclick = async () => {
+  if (!CUR) return;
+  document.querySelectorAll("[data-a]").forEach(x => x.disabled = true);
+  const q = CUR; CUR = null;
+  next(await api("api/answer", {qid: q.qid, answer: b.dataset.a, rt_ms: Math.round(performance.now() - SHOWN)}));
+});
+$("#stopbtn").onclick = async () => {
+  if (!confirm("Stop the session now? Your answers so far are kept.")) return;
+  await api("api/stop", {}); finish();
+};
+function finish() {
+  $("#ask").classList.add("hidden"); $("#done").classList.remove("hidden");
+  document.querySelectorAll(".scale").forEach(s => {
+    s.innerHTML = [1,2,3,4,5].map(v => `<label><input type="radio" name="${s.dataset.name}" value="${v}"> ${v}</label>`).join("");
+  });
+}
+$("#qform").onsubmit = async e => {
+  e.preventDefault();
+  const val = n => { const x = document.querySelector(`input[name=${n}]:checked`); return x ? +x.value : null; };
+  await api("api/questionnaire", {familiarity: val("familiarity"), fatigue: val("fatigue"), confidence: val("confidence"),
+                                   stop_reason: $("#why").value, comments: $("#comments").value});
+  bye();
+};
+function bye() {
+  ["#intro", "#ask", "#done"].forEach(s => $(s).classList.add("hidden")); $("#bye").classList.remove("hidden");
+}
+
+(async () => {
+  META = await api("api/meta");
+  $("#relname").textContent = "Table: " + META.relation.replace(/^fresh_/, "");
+  $("#rows").textContent = `Ten of the ${META.rows.toLocaleString("en")} records, drawn at random.`;
+  if (META.docs.length) {
+    $("#docnote").classList.remove("hidden");
+    $("#docs").innerHTML = "Documentation: " + META.docs.map(d => `<a class="doc" href="${esc(d.href)}" target="_blank" rel="noopener">${esc(d.name)}</a>`).join("");
+  }
+  if (META.state === "closed") return bye();               // reopened link: where the session is
+  if (META.state === "ended") { $("#intro").classList.add("hidden"); return finish(); }
+  if (META.answered > 0) return start();
+  practice(0);
+})();
+</script>
+</body>
+</html>

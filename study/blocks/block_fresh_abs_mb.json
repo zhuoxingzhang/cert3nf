@@ -1,0 +1,437 @@
+{
+ "dataset": "fresh_abs_mb",
+ "attributes": [
+  "MB_CODE_2021",
+  "MB_CATEGORY_2021",
+  "CHANGE_FLAG_2021",
+  "CHANGE_LABEL_2021",
+  "SA1_CODE_2021",
+  "SA2_CODE_2021",
+  "SA2_NAME_2021",
+  "SA3_CODE_2021",
+  "SA3_NAME_2021",
+  "SA4_CODE_2021",
+  "SA4_NAME_2021",
+  "GCCSA_CODE_2021",
+  "GCCSA_NAME_2021",
+  "STATE_CODE_2021",
+  "STATE_NAME_2021",
+  "AREA_ALBERS_SQKM",
+  "ASGS_LOCI_URI_2021"
+ ],
+ "generator": "4641afdc6930",
+ "data_md5": "3731b235ac4f",
+ "supplement_md5": "5889003e8fbf",
+ "supplement": [
+  {
+   "lhs": [
+    "ASGS_LOCI_URI_2021"
+   ],
+   "rhs": [
+    "MB_CODE_2021"
+   ],
+   "reason": "The LOCI URI ends with the Mesh Block code (http://linked.data.gov.au/dataset/asgsed3/MB/<MB_CODE_2021>), checked on all ten sample rows."
+  },
+  {
+   "lhs": [
+    "GCCSA_NAME_2021"
+   ],
+   "rhs": [
+    "GCCSA_CODE_2021"
+   ],
+   "reason": "abs_greater-capital-city-statistical-areas.html: GCCSAs are named after their city or as Rest of <State>, and the special-purpose codes name their state, so names and codes correspond one to one, as the documented truth already states for the SA2, SA3, SA4 and state names."
+  }
+ ],
+ "pool_sizes": {
+  "cand/True": 59,
+  "cand/False": 0,
+  "max/True": 59,
+  "max/False": 0,
+  "qx/True": 43625,
+  "qx/False": 0
+ },
+ "short": {
+  "cand/False": 0,
+  "max/False": 0,
+  "qx/False": 0
+ },
+ "questions": [
+  {
+   "id": "b01",
+   "type": "cand",
+   "lhs": [
+    "SA2_CODE_2021"
+   ],
+   "rhs": "SA3_CODE_2021",
+   "form": "agree",
+   "listed": [
+    "SA2_CODE_2021"
+   ],
+   "a_q": 2,
+   "text": "Must any two records that agree on SA2_CODE_2021 also agree on SA3_CODE_2021?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": true
+  },
+  {
+   "id": "b02",
+   "type": "cand",
+   "lhs": [
+    "SA3_NAME_2021"
+   ],
+   "rhs": "SA4_CODE_2021",
+   "form": "agree",
+   "listed": [
+    "SA3_NAME_2021"
+   ],
+   "a_q": 2,
+   "text": "Must any two records that agree on SA3_NAME_2021 also agree on SA4_CODE_2021?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": true
+  },
+  {
+   "id": "b03",
+   "type": "cand",
+   "lhs": [
+    "SA2_NAME_2021"
+   ],
+   "rhs": "GCCSA_CODE_2021",
+   "form": "agree",
+   "listed": [
+    "SA2_NAME_2021"
+   ],
+   "a_q": 2,
+   "text": "Must any two records that agree on SA2_NAME_2021 also agree on GCCSA_CODE_2021?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": true
+  },
+  {
+   "id": "b04",
+   "type": "max",
+   "lhs": [
+    "MB_CATEGORY_2021",
+    "CHANGE_FLAG_2021",
+    "SA1_CODE_2021",
+    "SA2_CODE_2021",
+    "SA2_NAME_2021",
+    "SA3_CODE_2021",
+    "SA3_NAME_2021",
+    "SA4_CODE_2021",
+    "SA4_NAME_2021",
+    "GCCSA_CODE_2021",
+    "GCCSA_NAME_2021",
+    "STATE_CODE_2021",
+    "STATE_NAME_2021",
+    "AREA_ALBERS_SQKM",
+    "ASGS_LOCI_URI_2021"
+   ],
+   "rhs": "CHANGE_LABEL_2021",
+   "form": "except",
+   "listed": [
+    "MB_CODE_2021",
+    "CHANGE_LABEL_2021"
+   ],
+   "a_q": 3,
+   "text": "Must any two records that agree on all attributes except MB_CODE_2021 and CHANGE_LABEL_2021 also agree on CHANGE_LABEL_2021?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": false
+  },
+  {
+   "id": "b05",
+   "type": "max",
+   "lhs": [
+    "MB_CATEGORY_2021",
+    "CHANGE_FLAG_2021",
+    "CHANGE_LABEL_2021",
+    "SA1_CODE_2021",
+    "SA3_CODE_2021",
+    "SA3_NAME_2021",
+    "SA4_CODE_2021",
+    "SA4_NAME_2021",
+    "GCCSA_CODE_2021",
+    "GCCSA_NAME_2021",
+    "STATE_CODE_2021",
+    "STATE_NAME_2021",
+    "AREA_ALBERS_SQKM",
+    "ASGS_LOCI_URI_2021"
+   ],
+   "rhs": "SA2_CODE_2021",
+   "form": "except",
+   "listed": [
+    "MB_CODE_2021",
+    "SA2_NAME_2021",
+    "SA2_CODE_2021"
+   ],
+   "a_q": 4,
+   "text": "Must any two records that agree on all attributes except MB_CODE_2021, SA2_NAME_2021 and SA2_CODE_2021 also agree on SA2_CODE_2021?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": false
+  },
+  {
+   "id": "b06",
+   "type": "max",
+   "lhs": [
+    "MB_CATEGORY_2021",
+    "CHANGE_FLAG_2021",
+    "CHANGE_LABEL_2021",
+    "SA2_NAME_2021",
+    "SA4_CODE_2021",
+    "SA4_NAME_2021",
+    "GCCSA_CODE_2021",
+    "GCCSA_NAME_2021",
+    "STATE_CODE_2021",
+    "STATE_NAME_2021",
+    "AREA_ALBERS_SQKM",
+    "ASGS_LOCI_URI_2021"
+   ],
+   "rhs": "SA3_CODE_2021",
+   "form": "except",
+   "listed": [
+    "MB_CODE_2021",
+    "SA1_CODE_2021",
+    "SA2_CODE_2021",
+    "SA3_NAME_2021",
+    "SA3_CODE_2021"
+   ],
+   "a_q": 6,
+   "text": "Must any two records that agree on all attributes except MB_CODE_2021, SA1_CODE_2021, SA2_CODE_2021, SA3_NAME_2021 and SA3_CODE_2021 also agree on SA3_CODE_2021?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": false
+  },
+  {
+   "id": "b07",
+   "type": "qx",
+   "lhs": [
+    "SA1_CODE_2021",
+    "SA2_CODE_2021",
+    "GCCSA_NAME_2021"
+   ],
+   "rhs": "STATE_CODE_2021",
+   "form": "agree",
+   "listed": [
+    "SA1_CODE_2021",
+    "SA2_CODE_2021",
+    "GCCSA_NAME_2021"
+   ],
+   "a_q": 4,
+   "text": "Must any two records that agree on SA1_CODE_2021, SA2_CODE_2021 and GCCSA_NAME_2021 also agree on STATE_CODE_2021?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": false
+  },
+  {
+   "id": "b08",
+   "type": "qx",
+   "lhs": [
+    "MB_CATEGORY_2021",
+    "SA2_CODE_2021",
+    "SA3_CODE_2021",
+    "AREA_ALBERS_SQKM"
+   ],
+   "rhs": "STATE_NAME_2021",
+   "form": "agree",
+   "listed": [
+    "MB_CATEGORY_2021",
+    "SA2_CODE_2021",
+    "SA3_CODE_2021",
+    "AREA_ALBERS_SQKM"
+   ],
+   "a_q": 5,
+   "text": "Must any two records that agree on MB_CATEGORY_2021, SA2_CODE_2021, SA3_CODE_2021 and AREA_ALBERS_SQKM also agree on STATE_NAME_2021?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": false
+  },
+  {
+   "id": "b09",
+   "type": "qx",
+   "lhs": [
+    "SA1_CODE_2021",
+    "SA3_NAME_2021",
+    "SA4_CODE_2021",
+    "GCCSA_CODE_2021",
+    "STATE_NAME_2021"
+   ],
+   "rhs": "SA3_CODE_2021",
+   "form": "agree",
+   "listed": [
+    "SA1_CODE_2021",
+    "SA3_NAME_2021",
+    "SA4_CODE_2021",
+    "GCCSA_CODE_2021",
+    "STATE_NAME_2021"
+   ],
+   "a_q": 6,
+   "text": "Must any two records that agree on SA1_CODE_2021, SA3_NAME_2021, SA4_CODE_2021, GCCSA_CODE_2021 and STATE_NAME_2021 also agree on SA3_CODE_2021?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": false
+  }
+ ],
+ "fillers": [
+  {
+   "id": "f01",
+   "type": "cand",
+   "lhs": [
+    "SA4_NAME_2021"
+   ],
+   "rhs": "STATE_NAME_2021",
+   "form": "agree",
+   "listed": [
+    "SA4_NAME_2021"
+   ],
+   "a_q": 2,
+   "text": "Must any two records that agree on SA4_NAME_2021 also agree on STATE_NAME_2021?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": true
+  },
+  {
+   "id": "f02",
+   "type": "cand",
+   "lhs": [
+    "SA3_CODE_2021"
+   ],
+   "rhs": "SA4_CODE_2021",
+   "form": "agree",
+   "listed": [
+    "SA3_CODE_2021"
+   ],
+   "a_q": 2,
+   "text": "Must any two records that agree on SA3_CODE_2021 also agree on SA4_CODE_2021?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": true
+  },
+  {
+   "id": "f03",
+   "type": "max",
+   "lhs": [
+    "MB_CATEGORY_2021",
+    "CHANGE_LABEL_2021",
+    "SA1_CODE_2021",
+    "SA2_CODE_2021",
+    "SA2_NAME_2021",
+    "SA3_CODE_2021",
+    "SA3_NAME_2021",
+    "SA4_CODE_2021",
+    "SA4_NAME_2021",
+    "GCCSA_CODE_2021",
+    "GCCSA_NAME_2021",
+    "STATE_CODE_2021",
+    "STATE_NAME_2021",
+    "AREA_ALBERS_SQKM",
+    "ASGS_LOCI_URI_2021"
+   ],
+   "rhs": "CHANGE_FLAG_2021",
+   "form": "except",
+   "listed": [
+    "MB_CODE_2021",
+    "CHANGE_FLAG_2021"
+   ],
+   "a_q": 3,
+   "text": "Must any two records that agree on all attributes except MB_CODE_2021 and CHANGE_FLAG_2021 also agree on CHANGE_FLAG_2021?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": false
+  },
+  {
+   "id": "f04",
+   "type": "max",
+   "lhs": [
+    "MB_CATEGORY_2021",
+    "CHANGE_FLAG_2021",
+    "CHANGE_LABEL_2021",
+    "SA3_CODE_2021",
+    "SA4_CODE_2021",
+    "SA4_NAME_2021",
+    "GCCSA_CODE_2021",
+    "GCCSA_NAME_2021",
+    "STATE_CODE_2021",
+    "STATE_NAME_2021",
+    "AREA_ALBERS_SQKM",
+    "ASGS_LOCI_URI_2021"
+   ],
+   "rhs": "SA3_NAME_2021",
+   "form": "except",
+   "listed": [
+    "MB_CODE_2021",
+    "SA1_CODE_2021",
+    "SA2_CODE_2021",
+    "SA2_NAME_2021",
+    "SA3_NAME_2021"
+   ],
+   "a_q": 6,
+   "text": "Must any two records that agree on all attributes except MB_CODE_2021, SA1_CODE_2021, SA2_CODE_2021, SA2_NAME_2021 and SA3_NAME_2021 also agree on SA3_NAME_2021?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": false
+  },
+  {
+   "id": "f05",
+   "type": "qx",
+   "lhs": [
+    "CHANGE_LABEL_2021",
+    "SA3_CODE_2021",
+    "SA3_NAME_2021"
+   ],
+   "rhs": "SA4_NAME_2021",
+   "form": "agree",
+   "listed": [
+    "CHANGE_LABEL_2021",
+    "SA3_CODE_2021",
+    "SA3_NAME_2021"
+   ],
+   "a_q": 4,
+   "text": "Must any two records that agree on CHANGE_LABEL_2021, SA3_CODE_2021 and SA3_NAME_2021 also agree on SA4_NAME_2021?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": false
+  },
+  {
+   "id": "f06",
+   "type": "qx",
+   "lhs": [
+    "MB_CATEGORY_2021",
+    "CHANGE_FLAG_2021",
+    "CHANGE_LABEL_2021",
+    "SA1_CODE_2021",
+    "SA4_CODE_2021"
+   ],
+   "rhs": "SA3_CODE_2021",
+   "form": "agree",
+   "listed": [
+    "MB_CATEGORY_2021",
+    "CHANGE_FLAG_2021",
+    "CHANGE_LABEL_2021",
+    "SA1_CODE_2021",
+    "SA4_CODE_2021"
+   ],
+   "a_q": 6,
+   "text": "Must any two records that agree on MB_CATEGORY_2021, CHANGE_FLAG_2021, CHANGE_LABEL_2021, SA1_CODE_2021 and SA4_CODE_2021 also agree on SA3_CODE_2021?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": false
+  }
+ ]
+}
