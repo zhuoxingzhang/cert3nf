@@ -1,0 +1,5673 @@
+{
+ "truth_kind": "synthetic (construction)",
+ "source": "e3/scale.py: synthetic snowflake joins for the scale experiment (design note item 53)",
+ "rule": "Sigma* is the set of FDs of the construction: entity keys determine their attributes, names and child keys, names determine keys, and the fact key determines every attribute",
+ "datasets": {
+  "scale_n10_d60_s0": {
+   "attributes": [
+    "A01",
+    "A02",
+    "A03",
+    "A04",
+    "A05",
+    "A06",
+    "A07",
+    "A08",
+    "A09",
+    "A10"
+   ],
+   "truth": [
+    {
+     "lhs": [
+      "A07",
+      "A08"
+     ],
+     "rhs": [
+      "A01",
+      "A02",
+      "A03",
+      "A04",
+      "A05",
+      "A06",
+      "A09",
+      "A10"
+     ],
+     "sure": true,
+     "clause": "fact key"
+    },
+    {
+     "lhs": [
+      "A07"
+     ],
+     "rhs": [
+      "A06"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A06"
+     ],
+     "rhs": [
+      "A09"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A06"
+     ],
+     "rhs": [
+      "A03"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A06"
+     ],
+     "rhs": [
+      "A04"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A06"
+     ],
+     "rhs": [
+      "A01"
+     ],
+     "sure": true,
+     "clause": "construction"
+    }
+   ],
+   "key": [
+    "A07",
+    "A08"
+   ],
+   "construction": "scale.py generate(10, 0.6, 0), 20000 rows"
+  },
+  "scale_n10_d60_s1": {
+   "attributes": [
+    "A01",
+    "A02",
+    "A03",
+    "A04",
+    "A05",
+    "A06",
+    "A07",
+    "A08",
+    "A09",
+    "A10"
+   ],
+   "truth": [
+    {
+     "lhs": [
+      "A04",
+      "A10"
+     ],
+     "rhs": [
+      "A01",
+      "A02",
+      "A03",
+      "A05",
+      "A06",
+      "A07",
+      "A08",
+      "A09"
+     ],
+     "sure": true,
+     "clause": "fact key"
+    },
+    {
+     "lhs": [
+      "A08"
+     ],
+     "rhs": [
+      "A06"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A08"
+     ],
+     "rhs": [
+      "A09"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A09"
+     ],
+     "rhs": [
+      "A08"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A01"
+     ],
+     "rhs": [
+      "A03"
+     ],
+     "sure": true,
+     "clause": "construction"
+    }
+   ],
+   "key": [
+    "A04",
+    "A10"
+   ],
+   "construction": "scale.py generate(10, 0.6, 1), 20000 rows"
+  },
+  "scale_n10_d60_s2": {
+   "attributes": [
+    "A01",
+    "A02",
+    "A03",
+    "A04",
+    "A05",
+    "A06",
+    "A07",
+    "A08",
+    "A09",
+    "A10"
+   ],
+   "truth": [
+    {
+     "lhs": [
+      "A05",
+      "A06"
+     ],
+     "rhs": [
+      "A01",
+      "A02",
+      "A03",
+      "A04",
+      "A07",
+      "A08",
+      "A09",
+      "A10"
+     ],
+     "sure": true,
+     "clause": "fact key"
+    },
+    {
+     "lhs": [
+      "A08"
+     ],
+     "rhs": [
+      "A10"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A08"
+     ],
+     "rhs": [
+      "A07"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A08"
+     ],
+     "rhs": [
+      "A09"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A08"
+     ],
+     "rhs": [
+      "A03"
+     ],
+     "sure": true,
+     "clause": "construction"
+    }
+   ],
+   "key": [
+    "A05",
+    "A06"
+   ],
+   "construction": "scale.py generate(10, 0.6, 2), 20000 rows"
+  },
+  "scale_n20_d60_s0": {
+   "attributes": [
+    "A01",
+    "A02",
+    "A03",
+    "A04",
+    "A05",
+    "A06",
+    "A07",
+    "A08",
+    "A09",
+    "A10",
+    "A11",
+    "A12",
+    "A13",
+    "A14",
+    "A15",
+    "A16",
+    "A17",
+    "A18",
+    "A19",
+    "A20"
+   ],
+   "truth": [
+    {
+     "lhs": [
+      "A08",
+      "A18"
+     ],
+     "rhs": [
+      "A01",
+      "A02",
+      "A03",
+      "A04",
+      "A05",
+      "A06",
+      "A07",
+      "A09",
+      "A10",
+      "A11",
+      "A12",
+      "A13",
+      "A14",
+      "A15",
+      "A16",
+      "A17",
+      "A19",
+      "A20"
+     ],
+     "sure": true,
+     "clause": "fact key"
+    },
+    {
+     "lhs": [
+      "A07"
+     ],
+     "rhs": [
+      "A19"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A07"
+     ],
+     "rhs": [
+      "A09"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A09"
+     ],
+     "rhs": [
+      "A13"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A09"
+     ],
+     "rhs": [
+      "A02"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A09"
+     ],
+     "rhs": [
+      "A04"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A09"
+     ],
+     "rhs": [
+      "A01"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A09"
+     ],
+     "rhs": [
+      "A20"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A20"
+     ],
+     "rhs": [
+      "A09"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A09"
+     ],
+     "rhs": [
+      "A03"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A03"
+     ],
+     "rhs": [
+      "A14"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A08"
+     ],
+     "rhs": [
+      "A06"
+     ],
+     "sure": true,
+     "clause": "construction"
+    }
+   ],
+   "key": [
+    "A08",
+    "A18"
+   ],
+   "construction": "scale.py generate(20, 0.6, 0), 20000 rows"
+  },
+  "scale_n20_d60_s1": {
+   "attributes": [
+    "A01",
+    "A02",
+    "A03",
+    "A04",
+    "A05",
+    "A06",
+    "A07",
+    "A08",
+    "A09",
+    "A10",
+    "A11",
+    "A12",
+    "A13",
+    "A14",
+    "A15",
+    "A16",
+    "A17",
+    "A18",
+    "A19",
+    "A20"
+   ],
+   "truth": [
+    {
+     "lhs": [
+      "A15",
+      "A13"
+     ],
+     "rhs": [
+      "A01",
+      "A02",
+      "A03",
+      "A04",
+      "A05",
+      "A06",
+      "A07",
+      "A08",
+      "A09",
+      "A10",
+      "A11",
+      "A12",
+      "A14",
+      "A16",
+      "A17",
+      "A18",
+      "A19",
+      "A20"
+     ],
+     "sure": true,
+     "clause": "fact key"
+    },
+    {
+     "lhs": [
+      "A15"
+     ],
+     "rhs": [
+      "A10"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A10"
+     ],
+     "rhs": [
+      "A08"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A10"
+     ],
+     "rhs": [
+      "A14"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A10"
+     ],
+     "rhs": [
+      "A20"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A10"
+     ],
+     "rhs": [
+      "A11"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A09"
+     ],
+     "rhs": [
+      "A04"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A09"
+     ],
+     "rhs": [
+      "A06"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A10"
+     ],
+     "rhs": [
+      "A12"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A12"
+     ],
+     "rhs": [
+      "A18"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A12"
+     ],
+     "rhs": [
+      "A05"
+     ],
+     "sure": true,
+     "clause": "construction"
+    }
+   ],
+   "key": [
+    "A15",
+    "A13"
+   ],
+   "construction": "scale.py generate(20, 0.6, 1), 20000 rows"
+  },
+  "scale_n20_d60_s2": {
+   "attributes": [
+    "A01",
+    "A02",
+    "A03",
+    "A04",
+    "A05",
+    "A06",
+    "A07",
+    "A08",
+    "A09",
+    "A10",
+    "A11",
+    "A12",
+    "A13",
+    "A14",
+    "A15",
+    "A16",
+    "A17",
+    "A18",
+    "A19",
+    "A20"
+   ],
+   "truth": [
+    {
+     "lhs": [
+      "A16",
+      "A10"
+     ],
+     "rhs": [
+      "A01",
+      "A02",
+      "A03",
+      "A04",
+      "A05",
+      "A06",
+      "A07",
+      "A08",
+      "A09",
+      "A11",
+      "A12",
+      "A13",
+      "A14",
+      "A15",
+      "A17",
+      "A18",
+      "A19",
+      "A20"
+     ],
+     "sure": true,
+     "clause": "fact key"
+    },
+    {
+     "lhs": [
+      "A12"
+     ],
+     "rhs": [
+      "A07"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A12"
+     ],
+     "rhs": [
+      "A05"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A12"
+     ],
+     "rhs": [
+      "A20"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A20"
+     ],
+     "rhs": [
+      "A02"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A16"
+     ],
+     "rhs": [
+      "A19"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A19"
+     ],
+     "rhs": [
+      "A03"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A19"
+     ],
+     "rhs": [
+      "A04"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A19"
+     ],
+     "rhs": [
+      "A01"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A19"
+     ],
+     "rhs": [
+      "A13"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A13"
+     ],
+     "rhs": [
+      "A11"
+     ],
+     "sure": true,
+     "clause": "construction"
+    }
+   ],
+   "key": [
+    "A16",
+    "A10"
+   ],
+   "construction": "scale.py generate(20, 0.6, 2), 20000 rows"
+  },
+  "scale_n30_d60_s0": {
+   "attributes": [
+    "A01",
+    "A02",
+    "A03",
+    "A04",
+    "A05",
+    "A06",
+    "A07",
+    "A08",
+    "A09",
+    "A10",
+    "A11",
+    "A12",
+    "A13",
+    "A14",
+    "A15",
+    "A16",
+    "A17",
+    "A18",
+    "A19",
+    "A20",
+    "A21",
+    "A22",
+    "A23",
+    "A24",
+    "A25",
+    "A26",
+    "A27",
+    "A28",
+    "A29",
+    "A30"
+   ],
+   "truth": [
+    {
+     "lhs": [
+      "A28",
+      "A09"
+     ],
+     "rhs": [
+      "A01",
+      "A02",
+      "A03",
+      "A04",
+      "A05",
+      "A06",
+      "A07",
+      "A08",
+      "A10",
+      "A11",
+      "A12",
+      "A13",
+      "A14",
+      "A15",
+      "A16",
+      "A17",
+      "A18",
+      "A19",
+      "A20",
+      "A21",
+      "A22",
+      "A23",
+      "A24",
+      "A25",
+      "A26",
+      "A27",
+      "A29",
+      "A30"
+     ],
+     "sure": true,
+     "clause": "fact key"
+    },
+    {
+     "lhs": [
+      "A28"
+     ],
+     "rhs": [
+      "A11"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A11"
+     ],
+     "rhs": [
+      "A29"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A11"
+     ],
+     "rhs": [
+      "A02"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A11"
+     ],
+     "rhs": [
+      "A30"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A11"
+     ],
+     "rhs": [
+      "A14"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A14"
+     ],
+     "rhs": [
+      "A08"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A14"
+     ],
+     "rhs": [
+      "A26"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A14"
+     ],
+     "rhs": [
+      "A27"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A14"
+     ],
+     "rhs": [
+      "A01"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A14"
+     ],
+     "rhs": [
+      "A19"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A19"
+     ],
+     "rhs": [
+      "A13"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A19"
+     ],
+     "rhs": [
+      "A06"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A04"
+     ],
+     "rhs": [
+      "A10"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A04"
+     ],
+     "rhs": [
+      "A18"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A04"
+     ],
+     "rhs": [
+      "A25"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A04"
+     ],
+     "rhs": [
+      "A24"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A24"
+     ],
+     "rhs": [
+      "A04"
+     ],
+     "sure": true,
+     "clause": "construction"
+    }
+   ],
+   "key": [
+    "A28",
+    "A09"
+   ],
+   "construction": "scale.py generate(30, 0.6, 0), 20000 rows"
+  },
+  "scale_n30_d60_s1": {
+   "attributes": [
+    "A01",
+    "A02",
+    "A03",
+    "A04",
+    "A05",
+    "A06",
+    "A07",
+    "A08",
+    "A09",
+    "A10",
+    "A11",
+    "A12",
+    "A13",
+    "A14",
+    "A15",
+    "A16",
+    "A17",
+    "A18",
+    "A19",
+    "A20",
+    "A21",
+    "A22",
+    "A23",
+    "A24",
+    "A25",
+    "A26",
+    "A27",
+    "A28",
+    "A29",
+    "A30"
+   ],
+   "truth": [
+    {
+     "lhs": [
+      "A03",
+      "A14"
+     ],
+     "rhs": [
+      "A01",
+      "A02",
+      "A04",
+      "A05",
+      "A06",
+      "A07",
+      "A08",
+      "A09",
+      "A10",
+      "A11",
+      "A12",
+      "A13",
+      "A15",
+      "A16",
+      "A17",
+      "A18",
+      "A19",
+      "A20",
+      "A21",
+      "A22",
+      "A23",
+      "A24",
+      "A25",
+      "A26",
+      "A27",
+      "A28",
+      "A29",
+      "A30"
+     ],
+     "sure": true,
+     "clause": "fact key"
+    },
+    {
+     "lhs": [
+      "A20"
+     ],
+     "rhs": [
+      "A13"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A20"
+     ],
+     "rhs": [
+      "A06"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A20"
+     ],
+     "rhs": [
+      "A01"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A20"
+     ],
+     "rhs": [
+      "A10"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A20"
+     ],
+     "rhs": [
+      "A25"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A25"
+     ],
+     "rhs": [
+      "A29"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A25"
+     ],
+     "rhs": [
+      "A18"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A25"
+     ],
+     "rhs": [
+      "A30"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A25"
+     ],
+     "rhs": [
+      "A22"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A22"
+     ],
+     "rhs": [
+      "A25"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A17"
+     ],
+     "rhs": [
+      "A16"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A25"
+     ],
+     "rhs": [
+      "A19"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A19"
+     ],
+     "rhs": [
+      "A08"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A19"
+     ],
+     "rhs": [
+      "A21"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A19"
+     ],
+     "rhs": [
+      "A12"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A19"
+     ],
+     "rhs": [
+      "A24"
+     ],
+     "sure": true,
+     "clause": "construction"
+    }
+   ],
+   "key": [
+    "A03",
+    "A14"
+   ],
+   "construction": "scale.py generate(30, 0.6, 1), 20000 rows"
+  },
+  "scale_n30_d60_s2": {
+   "attributes": [
+    "A01",
+    "A02",
+    "A03",
+    "A04",
+    "A05",
+    "A06",
+    "A07",
+    "A08",
+    "A09",
+    "A10",
+    "A11",
+    "A12",
+    "A13",
+    "A14",
+    "A15",
+    "A16",
+    "A17",
+    "A18",
+    "A19",
+    "A20",
+    "A21",
+    "A22",
+    "A23",
+    "A24",
+    "A25",
+    "A26",
+    "A27",
+    "A28",
+    "A29",
+    "A30"
+   ],
+   "truth": [
+    {
+     "lhs": [
+      "A11",
+      "A24"
+     ],
+     "rhs": [
+      "A01",
+      "A02",
+      "A03",
+      "A04",
+      "A05",
+      "A06",
+      "A07",
+      "A08",
+      "A09",
+      "A10",
+      "A12",
+      "A13",
+      "A14",
+      "A15",
+      "A16",
+      "A17",
+      "A18",
+      "A19",
+      "A20",
+      "A21",
+      "A22",
+      "A23",
+      "A25",
+      "A26",
+      "A27",
+      "A28",
+      "A29",
+      "A30"
+     ],
+     "sure": true,
+     "clause": "fact key"
+    },
+    {
+     "lhs": [
+      "A11"
+     ],
+     "rhs": [
+      "A30"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A30"
+     ],
+     "rhs": [
+      "A26"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A30"
+     ],
+     "rhs": [
+      "A21"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A30"
+     ],
+     "rhs": [
+      "A08"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A30"
+     ],
+     "rhs": [
+      "A22"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A30"
+     ],
+     "rhs": [
+      "A10"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A10"
+     ],
+     "rhs": [
+      "A30"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A11"
+     ],
+     "rhs": [
+      "A01"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A01"
+     ],
+     "rhs": [
+      "A14"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A01"
+     ],
+     "rhs": [
+      "A13"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A01"
+     ],
+     "rhs": [
+      "A20"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A01"
+     ],
+     "rhs": [
+      "A03"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A01"
+     ],
+     "rhs": [
+      "A05"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A05"
+     ],
+     "rhs": [
+      "A01"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A01"
+     ],
+     "rhs": [
+      "A06"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A06"
+     ],
+     "rhs": [
+      "A12"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A06"
+     ],
+     "rhs": [
+      "A18"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A06"
+     ],
+     "rhs": [
+      "A27"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A06"
+     ],
+     "rhs": [
+      "A23"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A23"
+     ],
+     "rhs": [
+      "A06"
+     ],
+     "sure": true,
+     "clause": "construction"
+    }
+   ],
+   "key": [
+    "A11",
+    "A24"
+   ],
+   "construction": "scale.py generate(30, 0.6, 2), 20000 rows"
+  },
+  "scale_n40_d60_s0": {
+   "attributes": [
+    "A01",
+    "A02",
+    "A03",
+    "A04",
+    "A05",
+    "A06",
+    "A07",
+    "A08",
+    "A09",
+    "A10",
+    "A11",
+    "A12",
+    "A13",
+    "A14",
+    "A15",
+    "A16",
+    "A17",
+    "A18",
+    "A19",
+    "A20",
+    "A21",
+    "A22",
+    "A23",
+    "A24",
+    "A25",
+    "A26",
+    "A27",
+    "A28",
+    "A29",
+    "A30",
+    "A31",
+    "A32",
+    "A33",
+    "A34",
+    "A35",
+    "A36",
+    "A37",
+    "A38",
+    "A39",
+    "A40"
+   ],
+   "truth": [
+    {
+     "lhs": [
+      "A36",
+      "A04"
+     ],
+     "rhs": [
+      "A01",
+      "A02",
+      "A03",
+      "A05",
+      "A06",
+      "A07",
+      "A08",
+      "A09",
+      "A10",
+      "A11",
+      "A12",
+      "A13",
+      "A14",
+      "A15",
+      "A16",
+      "A17",
+      "A18",
+      "A19",
+      "A20",
+      "A21",
+      "A22",
+      "A23",
+      "A24",
+      "A25",
+      "A26",
+      "A27",
+      "A28",
+      "A29",
+      "A30",
+      "A31",
+      "A32",
+      "A33",
+      "A34",
+      "A35",
+      "A37",
+      "A38",
+      "A39",
+      "A40"
+     ],
+     "sure": true,
+     "clause": "fact key"
+    },
+    {
+     "lhs": [
+      "A36"
+     ],
+     "rhs": [
+      "A07"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A07"
+     ],
+     "rhs": [
+      "A28"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A07"
+     ],
+     "rhs": [
+      "A35"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A07"
+     ],
+     "rhs": [
+      "A13"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A13"
+     ],
+     "rhs": [
+      "A32"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A13"
+     ],
+     "rhs": [
+      "A37"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A13"
+     ],
+     "rhs": [
+      "A40"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A13"
+     ],
+     "rhs": [
+      "A34"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A34"
+     ],
+     "rhs": [
+      "A13"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A36"
+     ],
+     "rhs": [
+      "A27"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A27"
+     ],
+     "rhs": [
+      "A16"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A27"
+     ],
+     "rhs": [
+      "A10"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A10"
+     ],
+     "rhs": [
+      "A15"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A10"
+     ],
+     "rhs": [
+      "A22"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A10"
+     ],
+     "rhs": [
+      "A26"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A10"
+     ],
+     "rhs": [
+      "A06"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A27"
+     ],
+     "rhs": [
+      "A31"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A31"
+     ],
+     "rhs": [
+      "A21"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A31"
+     ],
+     "rhs": [
+      "A19"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A31"
+     ],
+     "rhs": [
+      "A38"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A36"
+     ],
+     "rhs": [
+      "A30"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A30"
+     ],
+     "rhs": [
+      "A08"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A30"
+     ],
+     "rhs": [
+      "A02"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A30"
+     ],
+     "rhs": [
+      "A01"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A01"
+     ],
+     "rhs": [
+      "A30"
+     ],
+     "sure": true,
+     "clause": "construction"
+    }
+   ],
+   "key": [
+    "A36",
+    "A04"
+   ],
+   "construction": "scale.py generate(40, 0.6, 0), 20000 rows"
+  },
+  "scale_n40_d60_s1": {
+   "attributes": [
+    "A01",
+    "A02",
+    "A03",
+    "A04",
+    "A05",
+    "A06",
+    "A07",
+    "A08",
+    "A09",
+    "A10",
+    "A11",
+    "A12",
+    "A13",
+    "A14",
+    "A15",
+    "A16",
+    "A17",
+    "A18",
+    "A19",
+    "A20",
+    "A21",
+    "A22",
+    "A23",
+    "A24",
+    "A25",
+    "A26",
+    "A27",
+    "A28",
+    "A29",
+    "A30",
+    "A31",
+    "A32",
+    "A33",
+    "A34",
+    "A35",
+    "A36",
+    "A37",
+    "A38",
+    "A39",
+    "A40"
+   ],
+   "truth": [
+    {
+     "lhs": [
+      "A22",
+      "A32"
+     ],
+     "rhs": [
+      "A01",
+      "A02",
+      "A03",
+      "A04",
+      "A05",
+      "A06",
+      "A07",
+      "A08",
+      "A09",
+      "A10",
+      "A11",
+      "A12",
+      "A13",
+      "A14",
+      "A15",
+      "A16",
+      "A17",
+      "A18",
+      "A19",
+      "A20",
+      "A21",
+      "A23",
+      "A24",
+      "A25",
+      "A26",
+      "A27",
+      "A28",
+      "A29",
+      "A30",
+      "A31",
+      "A33",
+      "A34",
+      "A35",
+      "A36",
+      "A37",
+      "A38",
+      "A39",
+      "A40"
+     ],
+     "sure": true,
+     "clause": "fact key"
+    },
+    {
+     "lhs": [
+      "A05"
+     ],
+     "rhs": [
+      "A06"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A05"
+     ],
+     "rhs": [
+      "A39"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A05"
+     ],
+     "rhs": [
+      "A19"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A22"
+     ],
+     "rhs": [
+      "A01"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A01"
+     ],
+     "rhs": [
+      "A04"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A01"
+     ],
+     "rhs": [
+      "A12"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A01"
+     ],
+     "rhs": [
+      "A15"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A01"
+     ],
+     "rhs": [
+      "A24"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A24"
+     ],
+     "rhs": [
+      "A01"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A22"
+     ],
+     "rhs": [
+      "A07"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A07"
+     ],
+     "rhs": [
+      "A10"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A07"
+     ],
+     "rhs": [
+      "A03"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A03"
+     ],
+     "rhs": [
+      "A07"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A05"
+     ],
+     "rhs": [
+      "A33"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A33"
+     ],
+     "rhs": [
+      "A23"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A33"
+     ],
+     "rhs": [
+      "A40"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A33"
+     ],
+     "rhs": [
+      "A30"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A05"
+     ],
+     "rhs": [
+      "A36"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A36"
+     ],
+     "rhs": [
+      "A17"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A36"
+     ],
+     "rhs": [
+      "A31"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A36"
+     ],
+     "rhs": [
+      "A38"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A36"
+     ],
+     "rhs": [
+      "A28"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A28"
+     ],
+     "rhs": [
+      "A36"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A01"
+     ],
+     "rhs": [
+      "A13"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A13"
+     ],
+     "rhs": [
+      "A16"
+     ],
+     "sure": true,
+     "clause": "construction"
+    }
+   ],
+   "key": [
+    "A22",
+    "A32"
+   ],
+   "construction": "scale.py generate(40, 0.6, 1), 20000 rows"
+  },
+  "scale_n40_d60_s2": {
+   "attributes": [
+    "A01",
+    "A02",
+    "A03",
+    "A04",
+    "A05",
+    "A06",
+    "A07",
+    "A08",
+    "A09",
+    "A10",
+    "A11",
+    "A12",
+    "A13",
+    "A14",
+    "A15",
+    "A16",
+    "A17",
+    "A18",
+    "A19",
+    "A20",
+    "A21",
+    "A22",
+    "A23",
+    "A24",
+    "A25",
+    "A26",
+    "A27",
+    "A28",
+    "A29",
+    "A30",
+    "A31",
+    "A32",
+    "A33",
+    "A34",
+    "A35",
+    "A36",
+    "A37",
+    "A38",
+    "A39",
+    "A40"
+   ],
+   "truth": [
+    {
+     "lhs": [
+      "A32",
+      "A30"
+     ],
+     "rhs": [
+      "A01",
+      "A02",
+      "A03",
+      "A04",
+      "A05",
+      "A06",
+      "A07",
+      "A08",
+      "A09",
+      "A10",
+      "A11",
+      "A12",
+      "A13",
+      "A14",
+      "A15",
+      "A16",
+      "A17",
+      "A18",
+      "A19",
+      "A20",
+      "A21",
+      "A22",
+      "A23",
+      "A24",
+      "A25",
+      "A26",
+      "A27",
+      "A28",
+      "A29",
+      "A31",
+      "A33",
+      "A34",
+      "A35",
+      "A36",
+      "A37",
+      "A38",
+      "A39",
+      "A40"
+     ],
+     "sure": true,
+     "clause": "fact key"
+    },
+    {
+     "lhs": [
+      "A32"
+     ],
+     "rhs": [
+      "A29"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A29"
+     ],
+     "rhs": [
+      "A37"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A29"
+     ],
+     "rhs": [
+      "A33"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A29"
+     ],
+     "rhs": [
+      "A24"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A29"
+     ],
+     "rhs": [
+      "A36"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A29"
+     ],
+     "rhs": [
+      "A03"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A03"
+     ],
+     "rhs": [
+      "A29"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A10"
+     ],
+     "rhs": [
+      "A05"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A10"
+     ],
+     "rhs": [
+      "A16"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A10"
+     ],
+     "rhs": [
+      "A25"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A25"
+     ],
+     "rhs": [
+      "A10"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A18"
+     ],
+     "rhs": [
+      "A08"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A18"
+     ],
+     "rhs": [
+      "A22"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A18"
+     ],
+     "rhs": [
+      "A39"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A29"
+     ],
+     "rhs": [
+      "A19"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A19"
+     ],
+     "rhs": [
+      "A14"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A19"
+     ],
+     "rhs": [
+      "A23"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A23"
+     ],
+     "rhs": [
+      "A19"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A10"
+     ],
+     "rhs": [
+      "A35"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A35"
+     ],
+     "rhs": [
+      "A31"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A35"
+     ],
+     "rhs": [
+      "A38"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A35"
+     ],
+     "rhs": [
+      "A34"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A32"
+     ],
+     "rhs": [
+      "A12"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A12"
+     ],
+     "rhs": [
+      "A21"
+     ],
+     "sure": true,
+     "clause": "construction"
+    }
+   ],
+   "key": [
+    "A32",
+    "A30"
+   ],
+   "construction": "scale.py generate(40, 0.6, 2), 20000 rows"
+  },
+  "scale_n50_d60_s0": {
+   "attributes": [
+    "A01",
+    "A02",
+    "A03",
+    "A04",
+    "A05",
+    "A06",
+    "A07",
+    "A08",
+    "A09",
+    "A10",
+    "A11",
+    "A12",
+    "A13",
+    "A14",
+    "A15",
+    "A16",
+    "A17",
+    "A18",
+    "A19",
+    "A20",
+    "A21",
+    "A22",
+    "A23",
+    "A24",
+    "A25",
+    "A26",
+    "A27",
+    "A28",
+    "A29",
+    "A30",
+    "A31",
+    "A32",
+    "A33",
+    "A34",
+    "A35",
+    "A36",
+    "A37",
+    "A38",
+    "A39",
+    "A40",
+    "A41",
+    "A42",
+    "A43",
+    "A44",
+    "A45",
+    "A46",
+    "A47",
+    "A48",
+    "A49",
+    "A50"
+   ],
+   "truth": [
+    {
+     "lhs": [
+      "A27",
+      "A44"
+     ],
+     "rhs": [
+      "A01",
+      "A02",
+      "A03",
+      "A04",
+      "A05",
+      "A06",
+      "A07",
+      "A08",
+      "A09",
+      "A10",
+      "A11",
+      "A12",
+      "A13",
+      "A14",
+      "A15",
+      "A16",
+      "A17",
+      "A18",
+      "A19",
+      "A20",
+      "A21",
+      "A22",
+      "A23",
+      "A24",
+      "A25",
+      "A26",
+      "A28",
+      "A29",
+      "A30",
+      "A31",
+      "A32",
+      "A33",
+      "A34",
+      "A35",
+      "A36",
+      "A37",
+      "A38",
+      "A39",
+      "A40",
+      "A41",
+      "A42",
+      "A43",
+      "A45",
+      "A46",
+      "A47",
+      "A48",
+      "A49",
+      "A50"
+     ],
+     "sure": true,
+     "clause": "fact key"
+    },
+    {
+     "lhs": [
+      "A27"
+     ],
+     "rhs": [
+      "A28"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A28"
+     ],
+     "rhs": [
+      "A26"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A28"
+     ],
+     "rhs": [
+      "A41"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A28"
+     ],
+     "rhs": [
+      "A03"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A28"
+     ],
+     "rhs": [
+      "A37"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A37"
+     ],
+     "rhs": [
+      "A38"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A37"
+     ],
+     "rhs": [
+      "A47"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A47"
+     ],
+     "rhs": [
+      "A37"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A21"
+     ],
+     "rhs": [
+      "A19"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A21"
+     ],
+     "rhs": [
+      "A39"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A39"
+     ],
+     "rhs": [
+      "A32"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A39"
+     ],
+     "rhs": [
+      "A22"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A39"
+     ],
+     "rhs": [
+      "A34"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A34"
+     ],
+     "rhs": [
+      "A40"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A21"
+     ],
+     "rhs": [
+      "A09"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A09"
+     ],
+     "rhs": [
+      "A45"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A09"
+     ],
+     "rhs": [
+      "A33"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A34"
+     ],
+     "rhs": [
+      "A07"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A07"
+     ],
+     "rhs": [
+      "A15"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A07"
+     ],
+     "rhs": [
+      "A43"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A07"
+     ],
+     "rhs": [
+      "A29"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A07"
+     ],
+     "rhs": [
+      "A35"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A35"
+     ],
+     "rhs": [
+      "A07"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A34"
+     ],
+     "rhs": [
+      "A16"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A16"
+     ],
+     "rhs": [
+      "A31"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A37"
+     ],
+     "rhs": [
+      "A48"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A48"
+     ],
+     "rhs": [
+      "A18"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A48"
+     ],
+     "rhs": [
+      "A14"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A48"
+     ],
+     "rhs": [
+      "A25"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A25"
+     ],
+     "rhs": [
+      "A48"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A07"
+     ],
+     "rhs": [
+      "A10"
+     ],
+     "sure": true,
+     "clause": "construction"
+    }
+   ],
+   "key": [
+    "A27",
+    "A44"
+   ],
+   "construction": "scale.py generate(50, 0.6, 0), 20000 rows"
+  },
+  "scale_n50_d60_s1": {
+   "attributes": [
+    "A01",
+    "A02",
+    "A03",
+    "A04",
+    "A05",
+    "A06",
+    "A07",
+    "A08",
+    "A09",
+    "A10",
+    "A11",
+    "A12",
+    "A13",
+    "A14",
+    "A15",
+    "A16",
+    "A17",
+    "A18",
+    "A19",
+    "A20",
+    "A21",
+    "A22",
+    "A23",
+    "A24",
+    "A25",
+    "A26",
+    "A27",
+    "A28",
+    "A29",
+    "A30",
+    "A31",
+    "A32",
+    "A33",
+    "A34",
+    "A35",
+    "A36",
+    "A37",
+    "A38",
+    "A39",
+    "A40",
+    "A41",
+    "A42",
+    "A43",
+    "A44",
+    "A45",
+    "A46",
+    "A47",
+    "A48",
+    "A49",
+    "A50"
+   ],
+   "truth": [
+    {
+     "lhs": [
+      "A14",
+      "A42"
+     ],
+     "rhs": [
+      "A01",
+      "A02",
+      "A03",
+      "A04",
+      "A05",
+      "A06",
+      "A07",
+      "A08",
+      "A09",
+      "A10",
+      "A11",
+      "A12",
+      "A13",
+      "A15",
+      "A16",
+      "A17",
+      "A18",
+      "A19",
+      "A20",
+      "A21",
+      "A22",
+      "A23",
+      "A24",
+      "A25",
+      "A26",
+      "A27",
+      "A28",
+      "A29",
+      "A30",
+      "A31",
+      "A32",
+      "A33",
+      "A34",
+      "A35",
+      "A36",
+      "A37",
+      "A38",
+      "A39",
+      "A40",
+      "A41",
+      "A43",
+      "A44",
+      "A45",
+      "A46",
+      "A47",
+      "A48",
+      "A49",
+      "A50"
+     ],
+     "sure": true,
+     "clause": "fact key"
+    },
+    {
+     "lhs": [
+      "A14"
+     ],
+     "rhs": [
+      "A26"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A26"
+     ],
+     "rhs": [
+      "A12"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A26"
+     ],
+     "rhs": [
+      "A41"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A26"
+     ],
+     "rhs": [
+      "A22"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A26"
+     ],
+     "rhs": [
+      "A19"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A18"
+     ],
+     "rhs": [
+      "A24"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A18"
+     ],
+     "rhs": [
+      "A36"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A26"
+     ],
+     "rhs": [
+      "A35"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A35"
+     ],
+     "rhs": [
+      "A08"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A35"
+     ],
+     "rhs": [
+      "A31"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A35"
+     ],
+     "rhs": [
+      "A30"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A26"
+     ],
+     "rhs": [
+      "A27"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A27"
+     ],
+     "rhs": [
+      "A45"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A27"
+     ],
+     "rhs": [
+      "A13"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A13"
+     ],
+     "rhs": [
+      "A27"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A25"
+     ],
+     "rhs": [
+      "A01"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A25"
+     ],
+     "rhs": [
+      "A28"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A25"
+     ],
+     "rhs": [
+      "A40"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A25"
+     ],
+     "rhs": [
+      "A50"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A49"
+     ],
+     "rhs": [
+      "A20"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A49"
+     ],
+     "rhs": [
+      "A44"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A44"
+     ],
+     "rhs": [
+      "A38"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A44"
+     ],
+     "rhs": [
+      "A17"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A44"
+     ],
+     "rhs": [
+      "A46"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A46"
+     ],
+     "rhs": [
+      "A05"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A46"
+     ],
+     "rhs": [
+      "A07"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A35"
+     ],
+     "rhs": [
+      "A37"
+     ],
+     "sure": true,
+     "clause": "construction"
+    }
+   ],
+   "key": [
+    "A14",
+    "A42"
+   ],
+   "construction": "scale.py generate(50, 0.6, 1), 20000 rows"
+  },
+  "scale_n50_d60_s2": {
+   "attributes": [
+    "A01",
+    "A02",
+    "A03",
+    "A04",
+    "A05",
+    "A06",
+    "A07",
+    "A08",
+    "A09",
+    "A10",
+    "A11",
+    "A12",
+    "A13",
+    "A14",
+    "A15",
+    "A16",
+    "A17",
+    "A18",
+    "A19",
+    "A20",
+    "A21",
+    "A22",
+    "A23",
+    "A24",
+    "A25",
+    "A26",
+    "A27",
+    "A28",
+    "A29",
+    "A30",
+    "A31",
+    "A32",
+    "A33",
+    "A34",
+    "A35",
+    "A36",
+    "A37",
+    "A38",
+    "A39",
+    "A40",
+    "A41",
+    "A42",
+    "A43",
+    "A44",
+    "A45",
+    "A46",
+    "A47",
+    "A48",
+    "A49",
+    "A50"
+   ],
+   "truth": [
+    {
+     "lhs": [
+      "A11",
+      "A14"
+     ],
+     "rhs": [
+      "A01",
+      "A02",
+      "A03",
+      "A04",
+      "A05",
+      "A06",
+      "A07",
+      "A08",
+      "A09",
+      "A10",
+      "A12",
+      "A13",
+      "A15",
+      "A16",
+      "A17",
+      "A18",
+      "A19",
+      "A20",
+      "A21",
+      "A22",
+      "A23",
+      "A24",
+      "A25",
+      "A26",
+      "A27",
+      "A28",
+      "A29",
+      "A30",
+      "A31",
+      "A32",
+      "A33",
+      "A34",
+      "A35",
+      "A36",
+      "A37",
+      "A38",
+      "A39",
+      "A40",
+      "A41",
+      "A42",
+      "A43",
+      "A44",
+      "A45",
+      "A46",
+      "A47",
+      "A48",
+      "A49",
+      "A50"
+     ],
+     "sure": true,
+     "clause": "fact key"
+    },
+    {
+     "lhs": [
+      "A18"
+     ],
+     "rhs": [
+      "A41"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A18"
+     ],
+     "rhs": [
+      "A38"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A18"
+     ],
+     "rhs": [
+      "A23"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A23"
+     ],
+     "rhs": [
+      "A18"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A11"
+     ],
+     "rhs": [
+      "A44"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A44"
+     ],
+     "rhs": [
+      "A50"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A44"
+     ],
+     "rhs": [
+      "A04"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A44"
+     ],
+     "rhs": [
+      "A49"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A49"
+     ],
+     "rhs": [
+      "A35"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A49"
+     ],
+     "rhs": [
+      "A30"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A49"
+     ],
+     "rhs": [
+      "A27"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A49"
+     ],
+     "rhs": [
+      "A07"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A44"
+     ],
+     "rhs": [
+      "A36"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A36"
+     ],
+     "rhs": [
+      "A34"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A36"
+     ],
+     "rhs": [
+      "A42"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A36"
+     ],
+     "rhs": [
+      "A46"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A36"
+     ],
+     "rhs": [
+      "A13"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A13"
+     ],
+     "rhs": [
+      "A36"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A49"
+     ],
+     "rhs": [
+      "A09"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A09"
+     ],
+     "rhs": [
+      "A20"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A09"
+     ],
+     "rhs": [
+      "A01"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A09"
+     ],
+     "rhs": [
+      "A15"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A15"
+     ],
+     "rhs": [
+      "A09"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A49"
+     ],
+     "rhs": [
+      "A05"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A05"
+     ],
+     "rhs": [
+      "A28"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A05"
+     ],
+     "rhs": [
+      "A33"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A05"
+     ],
+     "rhs": [
+      "A40"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A17"
+     ],
+     "rhs": [
+      "A47"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A17"
+     ],
+     "rhs": [
+      "A25"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A49"
+     ],
+     "rhs": [
+      "A03"
+     ],
+     "sure": true,
+     "clause": "construction"
+    }
+   ],
+   "key": [
+    "A11",
+    "A14"
+   ],
+   "construction": "scale.py generate(50, 0.6, 2), 20000 rows"
+  },
+  "scale_n30_d20_s0": {
+   "attributes": [
+    "A01",
+    "A02",
+    "A03",
+    "A04",
+    "A05",
+    "A06",
+    "A07",
+    "A08",
+    "A09",
+    "A10",
+    "A11",
+    "A12",
+    "A13",
+    "A14",
+    "A15",
+    "A16",
+    "A17",
+    "A18",
+    "A19",
+    "A20",
+    "A21",
+    "A22",
+    "A23",
+    "A24",
+    "A25",
+    "A26",
+    "A27",
+    "A28",
+    "A29",
+    "A30"
+   ],
+   "truth": [
+    {
+     "lhs": [
+      "A23",
+      "A11"
+     ],
+     "rhs": [
+      "A01",
+      "A02",
+      "A03",
+      "A04",
+      "A05",
+      "A06",
+      "A07",
+      "A08",
+      "A09",
+      "A10",
+      "A12",
+      "A13",
+      "A14",
+      "A15",
+      "A16",
+      "A17",
+      "A18",
+      "A19",
+      "A20",
+      "A21",
+      "A22",
+      "A24",
+      "A25",
+      "A26",
+      "A27",
+      "A28",
+      "A29",
+      "A30"
+     ],
+     "sure": true,
+     "clause": "fact key"
+    },
+    {
+     "lhs": [
+      "A24"
+     ],
+     "rhs": [
+      "A12"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A24"
+     ],
+     "rhs": [
+      "A22"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A22"
+     ],
+     "rhs": [
+      "A24"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A23"
+     ],
+     "rhs": [
+      "A27"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A27"
+     ],
+     "rhs": [
+      "A01"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A27"
+     ],
+     "rhs": [
+      "A19"
+     ],
+     "sure": true,
+     "clause": "construction"
+    }
+   ],
+   "key": [
+    "A23",
+    "A11"
+   ],
+   "construction": "scale.py generate(30, 0.2, 0), 20000 rows"
+  },
+  "scale_n30_d20_s1": {
+   "attributes": [
+    "A01",
+    "A02",
+    "A03",
+    "A04",
+    "A05",
+    "A06",
+    "A07",
+    "A08",
+    "A09",
+    "A10",
+    "A11",
+    "A12",
+    "A13",
+    "A14",
+    "A15",
+    "A16",
+    "A17",
+    "A18",
+    "A19",
+    "A20",
+    "A21",
+    "A22",
+    "A23",
+    "A24",
+    "A25",
+    "A26",
+    "A27",
+    "A28",
+    "A29",
+    "A30"
+   ],
+   "truth": [
+    {
+     "lhs": [
+      "A30",
+      "A12"
+     ],
+     "rhs": [
+      "A01",
+      "A02",
+      "A03",
+      "A04",
+      "A05",
+      "A06",
+      "A07",
+      "A08",
+      "A09",
+      "A10",
+      "A11",
+      "A13",
+      "A14",
+      "A15",
+      "A16",
+      "A17",
+      "A18",
+      "A19",
+      "A20",
+      "A21",
+      "A22",
+      "A23",
+      "A24",
+      "A25",
+      "A26",
+      "A27",
+      "A28",
+      "A29"
+     ],
+     "sure": true,
+     "clause": "fact key"
+    },
+    {
+     "lhs": [
+      "A30"
+     ],
+     "rhs": [
+      "A06"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A06"
+     ],
+     "rhs": [
+      "A03"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A13"
+     ],
+     "rhs": [
+      "A19"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A13"
+     ],
+     "rhs": [
+      "A08"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A13"
+     ],
+     "rhs": [
+      "A16"
+     ],
+     "sure": true,
+     "clause": "construction"
+    }
+   ],
+   "key": [
+    "A30",
+    "A12"
+   ],
+   "construction": "scale.py generate(30, 0.2, 1), 20000 rows"
+  },
+  "scale_n30_d20_s2": {
+   "attributes": [
+    "A01",
+    "A02",
+    "A03",
+    "A04",
+    "A05",
+    "A06",
+    "A07",
+    "A08",
+    "A09",
+    "A10",
+    "A11",
+    "A12",
+    "A13",
+    "A14",
+    "A15",
+    "A16",
+    "A17",
+    "A18",
+    "A19",
+    "A20",
+    "A21",
+    "A22",
+    "A23",
+    "A24",
+    "A25",
+    "A26",
+    "A27",
+    "A28",
+    "A29",
+    "A30"
+   ],
+   "truth": [
+    {
+     "lhs": [
+      "A04",
+      "A21"
+     ],
+     "rhs": [
+      "A01",
+      "A02",
+      "A03",
+      "A05",
+      "A06",
+      "A07",
+      "A08",
+      "A09",
+      "A10",
+      "A11",
+      "A12",
+      "A13",
+      "A14",
+      "A15",
+      "A16",
+      "A17",
+      "A18",
+      "A19",
+      "A20",
+      "A22",
+      "A23",
+      "A24",
+      "A25",
+      "A26",
+      "A27",
+      "A28",
+      "A29",
+      "A30"
+     ],
+     "sure": true,
+     "clause": "fact key"
+    },
+    {
+     "lhs": [
+      "A04"
+     ],
+     "rhs": [
+      "A22"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A22"
+     ],
+     "rhs": [
+      "A10"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A22"
+     ],
+     "rhs": [
+      "A23"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A22"
+     ],
+     "rhs": [
+      "A17"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A04"
+     ],
+     "rhs": [
+      "A29"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A29"
+     ],
+     "rhs": [
+      "A11"
+     ],
+     "sure": true,
+     "clause": "construction"
+    }
+   ],
+   "key": [
+    "A04",
+    "A21"
+   ],
+   "construction": "scale.py generate(30, 0.2, 2), 20000 rows"
+  },
+  "scale_n30_d40_s0": {
+   "attributes": [
+    "A01",
+    "A02",
+    "A03",
+    "A04",
+    "A05",
+    "A06",
+    "A07",
+    "A08",
+    "A09",
+    "A10",
+    "A11",
+    "A12",
+    "A13",
+    "A14",
+    "A15",
+    "A16",
+    "A17",
+    "A18",
+    "A19",
+    "A20",
+    "A21",
+    "A22",
+    "A23",
+    "A24",
+    "A25",
+    "A26",
+    "A27",
+    "A28",
+    "A29",
+    "A30"
+   ],
+   "truth": [
+    {
+     "lhs": [
+      "A13",
+      "A12"
+     ],
+     "rhs": [
+      "A01",
+      "A02",
+      "A03",
+      "A04",
+      "A05",
+      "A06",
+      "A07",
+      "A08",
+      "A09",
+      "A10",
+      "A11",
+      "A14",
+      "A15",
+      "A16",
+      "A17",
+      "A18",
+      "A19",
+      "A20",
+      "A21",
+      "A22",
+      "A23",
+      "A24",
+      "A25",
+      "A26",
+      "A27",
+      "A28",
+      "A29",
+      "A30"
+     ],
+     "sure": true,
+     "clause": "fact key"
+    },
+    {
+     "lhs": [
+      "A13"
+     ],
+     "rhs": [
+      "A16"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A16"
+     ],
+     "rhs": [
+      "A22"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A16"
+     ],
+     "rhs": [
+      "A11"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A16"
+     ],
+     "rhs": [
+      "A21"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A21"
+     ],
+     "rhs": [
+      "A16"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A13"
+     ],
+     "rhs": [
+      "A28"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A28"
+     ],
+     "rhs": [
+      "A06"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A28"
+     ],
+     "rhs": [
+      "A18"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A18"
+     ],
+     "rhs": [
+      "A28"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A14"
+     ],
+     "rhs": [
+      "A27"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A13"
+     ],
+     "rhs": [
+      "A02"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A02"
+     ],
+     "rhs": [
+      "A04"
+     ],
+     "sure": true,
+     "clause": "construction"
+    }
+   ],
+   "key": [
+    "A13",
+    "A12"
+   ],
+   "construction": "scale.py generate(30, 0.4, 0), 20000 rows"
+  },
+  "scale_n30_d40_s1": {
+   "attributes": [
+    "A01",
+    "A02",
+    "A03",
+    "A04",
+    "A05",
+    "A06",
+    "A07",
+    "A08",
+    "A09",
+    "A10",
+    "A11",
+    "A12",
+    "A13",
+    "A14",
+    "A15",
+    "A16",
+    "A17",
+    "A18",
+    "A19",
+    "A20",
+    "A21",
+    "A22",
+    "A23",
+    "A24",
+    "A25",
+    "A26",
+    "A27",
+    "A28",
+    "A29",
+    "A30"
+   ],
+   "truth": [
+    {
+     "lhs": [
+      "A04",
+      "A23"
+     ],
+     "rhs": [
+      "A01",
+      "A02",
+      "A03",
+      "A05",
+      "A06",
+      "A07",
+      "A08",
+      "A09",
+      "A10",
+      "A11",
+      "A12",
+      "A13",
+      "A14",
+      "A15",
+      "A16",
+      "A17",
+      "A18",
+      "A19",
+      "A20",
+      "A21",
+      "A22",
+      "A24",
+      "A25",
+      "A26",
+      "A27",
+      "A28",
+      "A29",
+      "A30"
+     ],
+     "sure": true,
+     "clause": "fact key"
+    },
+    {
+     "lhs": [
+      "A17"
+     ],
+     "rhs": [
+      "A03"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A17"
+     ],
+     "rhs": [
+      "A24"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A17"
+     ],
+     "rhs": [
+      "A29"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A17"
+     ],
+     "rhs": [
+      "A08"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A08"
+     ],
+     "rhs": [
+      "A17"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A05"
+     ],
+     "rhs": [
+      "A25"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A17"
+     ],
+     "rhs": [
+      "A10"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A10"
+     ],
+     "rhs": [
+      "A18"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A10"
+     ],
+     "rhs": [
+      "A11"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A10"
+     ],
+     "rhs": [
+      "A16"
+     ],
+     "sure": true,
+     "clause": "construction"
+    }
+   ],
+   "key": [
+    "A04",
+    "A23"
+   ],
+   "construction": "scale.py generate(30, 0.4, 1), 20000 rows"
+  },
+  "scale_n30_d40_s2": {
+   "attributes": [
+    "A01",
+    "A02",
+    "A03",
+    "A04",
+    "A05",
+    "A06",
+    "A07",
+    "A08",
+    "A09",
+    "A10",
+    "A11",
+    "A12",
+    "A13",
+    "A14",
+    "A15",
+    "A16",
+    "A17",
+    "A18",
+    "A19",
+    "A20",
+    "A21",
+    "A22",
+    "A23",
+    "A24",
+    "A25",
+    "A26",
+    "A27",
+    "A28",
+    "A29",
+    "A30"
+   ],
+   "truth": [
+    {
+     "lhs": [
+      "A19",
+      "A22"
+     ],
+     "rhs": [
+      "A01",
+      "A02",
+      "A03",
+      "A04",
+      "A05",
+      "A06",
+      "A07",
+      "A08",
+      "A09",
+      "A10",
+      "A11",
+      "A12",
+      "A13",
+      "A14",
+      "A15",
+      "A16",
+      "A17",
+      "A18",
+      "A20",
+      "A21",
+      "A23",
+      "A24",
+      "A25",
+      "A26",
+      "A27",
+      "A28",
+      "A29",
+      "A30"
+     ],
+     "sure": true,
+     "clause": "fact key"
+    },
+    {
+     "lhs": [
+      "A19"
+     ],
+     "rhs": [
+      "A28"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A28"
+     ],
+     "rhs": [
+      "A27"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A28"
+     ],
+     "rhs": [
+      "A05"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A28"
+     ],
+     "rhs": [
+      "A24"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A16"
+     ],
+     "rhs": [
+      "A23"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A16"
+     ],
+     "rhs": [
+      "A26"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A16"
+     ],
+     "rhs": [
+      "A30"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A13"
+     ],
+     "rhs": [
+      "A20"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A13"
+     ],
+     "rhs": [
+      "A12"
+     ],
+     "sure": true,
+     "clause": "construction"
+    }
+   ],
+   "key": [
+    "A19",
+    "A22"
+   ],
+   "construction": "scale.py generate(30, 0.4, 2), 20000 rows"
+  },
+  "scale_n30_d80_s0": {
+   "attributes": [
+    "A01",
+    "A02",
+    "A03",
+    "A04",
+    "A05",
+    "A06",
+    "A07",
+    "A08",
+    "A09",
+    "A10",
+    "A11",
+    "A12",
+    "A13",
+    "A14",
+    "A15",
+    "A16",
+    "A17",
+    "A18",
+    "A19",
+    "A20",
+    "A21",
+    "A22",
+    "A23",
+    "A24",
+    "A25",
+    "A26",
+    "A27",
+    "A28",
+    "A29",
+    "A30"
+   ],
+   "truth": [
+    {
+     "lhs": [
+      "A08",
+      "A06"
+     ],
+     "rhs": [
+      "A01",
+      "A02",
+      "A03",
+      "A04",
+      "A05",
+      "A07",
+      "A09",
+      "A10",
+      "A11",
+      "A12",
+      "A13",
+      "A14",
+      "A15",
+      "A16",
+      "A17",
+      "A18",
+      "A19",
+      "A20",
+      "A21",
+      "A22",
+      "A23",
+      "A24",
+      "A25",
+      "A26",
+      "A27",
+      "A28",
+      "A29",
+      "A30"
+     ],
+     "sure": true,
+     "clause": "fact key"
+    },
+    {
+     "lhs": [
+      "A15"
+     ],
+     "rhs": [
+      "A29"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A15"
+     ],
+     "rhs": [
+      "A11"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A11"
+     ],
+     "rhs": [
+      "A24"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A11"
+     ],
+     "rhs": [
+      "A17"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A11"
+     ],
+     "rhs": [
+      "A01"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A11"
+     ],
+     "rhs": [
+      "A26"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A11"
+     ],
+     "rhs": [
+      "A20"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A20"
+     ],
+     "rhs": [
+      "A11"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A08"
+     ],
+     "rhs": [
+      "A27"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A27"
+     ],
+     "rhs": [
+      "A16"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A27"
+     ],
+     "rhs": [
+      "A14"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A27"
+     ],
+     "rhs": [
+      "A28"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A28"
+     ],
+     "rhs": [
+      "A27"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A08"
+     ],
+     "rhs": [
+      "A07"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A07"
+     ],
+     "rhs": [
+      "A03"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A07"
+     ],
+     "rhs": [
+      "A25"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A07"
+     ],
+     "rhs": [
+      "A19"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A19"
+     ],
+     "rhs": [
+      "A02"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A19"
+     ],
+     "rhs": [
+      "A12"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A19"
+     ],
+     "rhs": [
+      "A30"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A19"
+     ],
+     "rhs": [
+      "A21"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A27"
+     ],
+     "rhs": [
+      "A04"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A04"
+     ],
+     "rhs": [
+      "A13"
+     ],
+     "sure": true,
+     "clause": "construction"
+    }
+   ],
+   "key": [
+    "A08",
+    "A06"
+   ],
+   "construction": "scale.py generate(30, 0.8, 0), 20000 rows"
+  },
+  "scale_n30_d80_s1": {
+   "attributes": [
+    "A01",
+    "A02",
+    "A03",
+    "A04",
+    "A05",
+    "A06",
+    "A07",
+    "A08",
+    "A09",
+    "A10",
+    "A11",
+    "A12",
+    "A13",
+    "A14",
+    "A15",
+    "A16",
+    "A17",
+    "A18",
+    "A19",
+    "A20",
+    "A21",
+    "A22",
+    "A23",
+    "A24",
+    "A25",
+    "A26",
+    "A27",
+    "A28",
+    "A29",
+    "A30"
+   ],
+   "truth": [
+    {
+     "lhs": [
+      "A10",
+      "A26"
+     ],
+     "rhs": [
+      "A01",
+      "A02",
+      "A03",
+      "A04",
+      "A05",
+      "A06",
+      "A07",
+      "A08",
+      "A09",
+      "A11",
+      "A12",
+      "A13",
+      "A14",
+      "A15",
+      "A16",
+      "A17",
+      "A18",
+      "A19",
+      "A20",
+      "A21",
+      "A22",
+      "A23",
+      "A24",
+      "A25",
+      "A27",
+      "A28",
+      "A29",
+      "A30"
+     ],
+     "sure": true,
+     "clause": "fact key"
+    },
+    {
+     "lhs": [
+      "A10"
+     ],
+     "rhs": [
+      "A01"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A01"
+     ],
+     "rhs": [
+      "A23"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A01"
+     ],
+     "rhs": [
+      "A04"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A01"
+     ],
+     "rhs": [
+      "A02"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A02"
+     ],
+     "rhs": [
+      "A18"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A02"
+     ],
+     "rhs": [
+      "A22"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A02"
+     ],
+     "rhs": [
+      "A05"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A05"
+     ],
+     "rhs": [
+      "A02"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A02"
+     ],
+     "rhs": [
+      "A25"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A25"
+     ],
+     "rhs": [
+      "A06"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A01"
+     ],
+     "rhs": [
+      "A07"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A07"
+     ],
+     "rhs": [
+      "A14"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A07"
+     ],
+     "rhs": [
+      "A09"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A07"
+     ],
+     "rhs": [
+      "A28"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A28"
+     ],
+     "rhs": [
+      "A21"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A28"
+     ],
+     "rhs": [
+      "A19"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A28"
+     ],
+     "rhs": [
+      "A13"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A10"
+     ],
+     "rhs": [
+      "A30"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A30"
+     ],
+     "rhs": [
+      "A29"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A30"
+     ],
+     "rhs": [
+      "A08"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A02"
+     ],
+     "rhs": [
+      "A12"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A12"
+     ],
+     "rhs": [
+      "A16"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A12"
+     ],
+     "rhs": [
+      "A17"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A17"
+     ],
+     "rhs": [
+      "A12"
+     ],
+     "sure": true,
+     "clause": "construction"
+    }
+   ],
+   "key": [
+    "A10",
+    "A26"
+   ],
+   "construction": "scale.py generate(30, 0.8, 1), 20000 rows"
+  },
+  "scale_n30_d80_s2": {
+   "attributes": [
+    "A01",
+    "A02",
+    "A03",
+    "A04",
+    "A05",
+    "A06",
+    "A07",
+    "A08",
+    "A09",
+    "A10",
+    "A11",
+    "A12",
+    "A13",
+    "A14",
+    "A15",
+    "A16",
+    "A17",
+    "A18",
+    "A19",
+    "A20",
+    "A21",
+    "A22",
+    "A23",
+    "A24",
+    "A25",
+    "A26",
+    "A27",
+    "A28",
+    "A29",
+    "A30"
+   ],
+   "truth": [
+    {
+     "lhs": [
+      "A23",
+      "A08"
+     ],
+     "rhs": [
+      "A01",
+      "A02",
+      "A03",
+      "A04",
+      "A05",
+      "A06",
+      "A07",
+      "A09",
+      "A10",
+      "A11",
+      "A12",
+      "A13",
+      "A14",
+      "A15",
+      "A16",
+      "A17",
+      "A18",
+      "A19",
+      "A20",
+      "A21",
+      "A22",
+      "A24",
+      "A25",
+      "A26",
+      "A27",
+      "A28",
+      "A29",
+      "A30"
+     ],
+     "sure": true,
+     "clause": "fact key"
+    },
+    {
+     "lhs": [
+      "A23"
+     ],
+     "rhs": [
+      "A09"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A09"
+     ],
+     "rhs": [
+      "A06"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A09"
+     ],
+     "rhs": [
+      "A16"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A09"
+     ],
+     "rhs": [
+      "A29"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A09"
+     ],
+     "rhs": [
+      "A07"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A23"
+     ],
+     "rhs": [
+      "A10"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A10"
+     ],
+     "rhs": [
+      "A19"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A10"
+     ],
+     "rhs": [
+      "A15"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A10"
+     ],
+     "rhs": [
+      "A18"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A10"
+     ],
+     "rhs": [
+      "A27"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A10"
+     ],
+     "rhs": [
+      "A25"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A25"
+     ],
+     "rhs": [
+      "A10"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A01"
+     ],
+     "rhs": [
+      "A14"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A01"
+     ],
+     "rhs": [
+      "A04"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A01"
+     ],
+     "rhs": [
+      "A13"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A10"
+     ],
+     "rhs": [
+      "A05"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A05"
+     ],
+     "rhs": [
+      "A22"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A05"
+     ],
+     "rhs": [
+      "A20"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A05"
+     ],
+     "rhs": [
+      "A12"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A12"
+     ],
+     "rhs": [
+      "A05"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A23"
+     ],
+     "rhs": [
+      "A30"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A30"
+     ],
+     "rhs": [
+      "A28"
+     ],
+     "sure": true,
+     "clause": "construction"
+    },
+    {
+     "lhs": [
+      "A30"
+     ],
+     "rhs": [
+      "A03"
+     ],
+     "sure": true,
+     "clause": "construction"
+    }
+   ],
+   "key": [
+    "A23",
+    "A08"
+   ],
+   "construction": "scale.py generate(30, 0.8, 2), 20000 rows"
+  }
+ }
+}

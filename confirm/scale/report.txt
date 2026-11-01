@@ -1,0 +1,13 @@
+no run: ['scale_n40_d60_s0', 'scale_n40_d60_s1', 'scale_n40_d60_s2', 'scale_n50_d60_s0', 'scale_n50_d60_s1', 'scale_n50_d60_s2']
+S1: 36/36 runs certified within the budget, checked and good -> holds
+n  share  rel  candidates  true  cover  m_r  price  v5s  ratio  v5n  secs/answer  (medians)
+10  0.6  3         78     5     4    13     17    21  1.24    38  0.314
+20  0.6  3      16294    19    10    32     42    64  1.60   154  0.127
+30  0.2  3     554220     9     6    53     59    71  1.20   113  0.394
+30  0.4  3     806080    20    10    54     63    78  1.24   153  0.477
+30  0.6  3     145161    40    17    44     61   105  1.79   256  0.105
+30  0.8  3     284217    53    23    38     61   112  1.75   268  0.171
+S2: median ratio of answers to price at most 2 in every configuration -> holds
+S3: Spearman(answers, price) 0.73 vs Spearman(answers, candidates) 0.41 -> holds
+not exact covers: []
+max secs per run: 47.1 max secs per answer: 0.604

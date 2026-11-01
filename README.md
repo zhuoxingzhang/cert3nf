@@ -20,6 +20,7 @@ Raw data and LLM answers are not included; the scripts below download or recompu
 | `confirm/auto_confirm.py`, `confirm/auto_mars.py` | automatic methods and the posterior certificate (Table 4) |
 | `confirm/ec2hyb.py` | the posterior certificate with the questions of EC² (Table 4, rule C6) |
 | `confirm/aexp.c`, `confirm/aexp.py` | attribute exploration |
+| `e3/scale.py`, `confirm/scale_run.py` | synthetic relations with up to a million candidates (Table 9, rules S1-S3) |
 | `confirm/check_cert.py` | independent check of every certificate |
 | `confirm/scripts/` | tables and reports |
 | `confirm/v5_*/`, `confirm/v5tol_*/`, `confirm/paper_src/`, ... | results of the runs below |
@@ -68,6 +69,18 @@ python auto_mars.py --model Qwen/Qwen3.5-9B --datasets $DS --out mars.jsonl     
 gcc -O2 -o aexp aexp.c && python aexp.py --out aexp_full.jsonl [--max]                                       # attribute exploration
 python check_cert.py --results v5_fresh2/v5_full.jsonl --truth
 PRICE_FILE=price_min.json python scripts/paper_tables_v5.py                                                  # Tables 3-5, 7 and 8
+```
+
+Synthetic relations (Table 9): `e3/scale.py` generates them deterministically and writes their ground truth to `e3/truth/scale.json`; their mined candidates (up to 2 GB per relation) are not included.
+Mining stops after two hours per relation; the relations with 40 and 50 attributes have no runs, since they are not mined within that limit or their millions of candidates do not fit into 60 GB of memory.
+
+```bash
+cd e3 && python scale.py gen && python scale.py mine --only <relation> && python scale.py json --only <relation>
+cd ../confirm   # with CONFIRM_TRUTH=full CONFIRM_ORACLE=gold CONFIRM_BATCH=2
+python scale_run.py v5 --answers llm_fresh2_full_q35 --variants v5s,v5n --budget 1000 --workers 8 --out scale/v5.jsonl
+python scale_run.py price --results scale/v5.jsonl --out scale/price.json
+python scale_run.py check --results scale/v5.jsonl --out scale/check.jsonl
+python scale_run.py report --results scale/v5.jsonl --price scale/price.json --check scale/check.jsonl > scale/report.txt   # S1-S3
 ```
 
 `v5tau.py` reads the records that `python ../e3/dump_codes.py ../e3/codes $DS` encodes.
