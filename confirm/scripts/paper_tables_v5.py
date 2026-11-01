@@ -5,6 +5,8 @@ items 32-34), from files kept in confirm:
                                  v5tol_dev_c, where the eps = 0 rows reproduce item 32 field by field)
   v5_dev/price.json              their prices (item 32, T-e)
   v5_fresh2/v5_<T>.jsonl         12 confirmatory relations, v5 family (item 33); v5_fresh2/price.json their prices
+  v5_unb/v5_<T>.jsonl            the same runs of v5, v5s and v5n with a budget of 1000 (item 39); a run that is not
+                                 certified within 100 answers shows its answers without the budget in parentheses
   paper_src/<set>_<T>_rbhyb.jsonl, paper_src/<set>_<T>_auto.jsonl
                                  the posterior certificate (rbhyb, rbhyb0) and the fully automatic methods: dev12 =
                                  the first twelve development relations (item 19/23), dev24b = the twelve of the first
@@ -73,6 +75,15 @@ def load_v5(T):
     return V
 
 
+def load_unb(T, V):
+    """the runs of load_v5 without the budget; a run certified within 100 answers is the same run, field by field"""
+    U = {(r["variant"], r["dataset"]): r for r in rows(os.path.join(HERE, "v5_unb", f"v5_{T}.jsonl"))}
+    for k, r in V.items():
+        if r.get("certified") and k in U:
+            assert U[k].get("certified") and U[k]["questions"] == r["questions"] and U[k].get("gold_good") == r.get("gold_good"), k
+    return U
+
+
 def load_price(T):
     P = {}
     for d in ("v5_dev", "v5_fresh2"):
@@ -100,11 +111,13 @@ def load_ref(T, kind):
     return R
 
 
-def v5cell(r, T):
+def v5cell(r, T, u=None):
     if r is None:
         return "--"
     if not r.get("certified"):
-        return "--"
+        if u is None or not u.get("certified"):
+            return "--"
+        return f"({v5cell(u, T)})"
     s = str(r["questions"])
     if not r.get("gold_good"):
         s += DAGGER if r["dataset"] in VIOL[T] else CROSS
@@ -122,14 +135,14 @@ def refcell(rs, T):
     return f"{len(c)}{CROSS * w}{DAGGER * d} ({fmt(med([r['questions'] for r in c]))})"
 
 
-def cert_rows(dss, V, P, RB, label):
+def cert_rows(dss, V, P, RB, U, label):
     print(f"%% ---- certificates ({label}) ----")
     for ds in dss:
         full, sure = V["full"], V["sure"]
         base = full.get(("v5n", ds)) or sure.get(("v5n", ds))
         cells = []
         for T in ("full", "sure"):
-            cells += [v5cell(V[T].get((v, ds)), T) for v in ("v5", "v5s", "v5n")]
+            cells += [v5cell(V[T].get((v, ds)), T, U[T].get((v, ds))) for v in ("v5", "v5s", "v5n")]
             cells.append(refcell([RB[T][k] for k in RB[T] if k[0] == "rbhyb" and k[1] == ds], T))
         name = NAME.get(ds, ds.replace("fresh_", "")) + (" (A)" if ds in CLASS_A else "")
         print(f"{name} & {base['candidates']:,} & {full[('v5n', ds)]['true']}/{sure[('v5n', ds)]['true']} & "
@@ -287,8 +300,9 @@ def main():
             viol = d.get("truth_fds_violated_by_data") or []
             if T == "full" and bool(viol) != (ds in VIOL["full"]):
                 print(f"% WARNING: violation list mismatch on {ds}: json {len(viol)} vs VIOL {ds in VIOL['full']}", file=sys.stderr)
-    cert_rows(CONF, V, P, RB, "confirmatory, Table 3")
-    cert_rows(DEV, V, P, RB, "development, appendix")
+    U = {T: load_unb(T, V[T]) for T in ("full", "sure")}
+    cert_rows(CONF, V, P, RB, U, "confirmatory, Table 4")
+    cert_rows(DEV, V, P, RB, U, "development, appendix")
     data_rows(DEV + CONF, V)
     auto_rows(V, RB, AU)
     tol_rows()
