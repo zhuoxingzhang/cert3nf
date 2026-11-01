@@ -1,0 +1,138 @@
+==== full truth
+-- rules for ec2hyb
+E1 all: good designs at the end of the budget, Cert3NF 5/12 vs ec2hyb 2/12 -> holds
+E1 A: good designs at the end of the budget, Cert3NF 1/4 vs ec2hyb 0/4 -> holds
+E1 B: good designs at the end of the budget, Cert3NF 4/8 vs ec2hyb 2/8 -> holds
+E2: relations certified within 100, Cert3NF 5 vs ec2hyb (at least two seeds) 4 -> holds
+   Cert3NF: ['fresh_auctionmark', 'fresh_eia860', 'fresh_geonames', 'fresh_ghcn', 'fresh_musicbrainz']; ec2hyb: ['fresh_ghcn', 'fresh_musicbrainz', 'fresh_simplewiki', 'fresh_stats19']
+-- rules for ec2hyb0
+E1 all: good designs at the end of the budget, Cert3NF 5/12 vs ec2hyb0 3/12 -> holds
+E1 A: good designs at the end of the budget, Cert3NF 1/4 vs ec2hyb0 0/4 -> holds
+E1 B: good designs at the end of the budget, Cert3NF 4/8 vs ec2hyb0 3/8 -> holds
+E2: relations certified within 100, Cert3NF 5 vs ec2hyb0 (at least two seeds) 1 -> holds
+   Cert3NF: ['fresh_auctionmark', 'fresh_eia860', 'fresh_geonames', 'fresh_ghcn', 'fresh_musicbrainz']; ec2hyb0: ['fresh_musicbrainz']
+-- reported
+rbhyb: certified runs 9/36, median answers 80, wrong 3 (['fresh_musicbrainz']; pre-listed 3), certified relations (two seeds) 3, good relations (median seed) 4/12, macro F1 0.74; where Cert3NF certifies too: Cert3NF - rbhyb answers median -29.0 over 6 runs; secs median 85.7, max 1234.6
+   fresh_auctionmark    100 100 100
+   fresh_seats          100 100 100
+   fresh_tatp           100 100 100
+   fresh_simplewiki     100 100 100
+   fresh_chembl         100 100 100
+   fresh_musicbrainz    81c! 80c! 80c!
+   fresh_pluto          100 100 100
+   fresh_fhrs           100 100 100
+   fresh_geonames       100 100 100
+   fresh_eia860         100 100 100
+   fresh_stats19        80c 60c 50c
+   fresh_ghcn           99c 98c 85c
+rbhyb0: certified runs 3/36, median answers 83, wrong 3 (['fresh_musicbrainz']; pre-listed 3), certified relations (two seeds) 1, good relations (median seed) 3/12, macro F1 0.84; where Cert3NF certifies too: Cert3NF - rbhyb0 answers median -12 over 3 runs; secs median 89.4, max 730.0
+   fresh_auctionmark    100 100 100
+   fresh_seats          100 100 100
+   fresh_tatp           100 100 100
+   fresh_simplewiki     100 100 100
+   fresh_chembl         100 100 100
+   fresh_musicbrainz    79c! 83c! 83c!
+   fresh_pluto          100 100 100
+   fresh_fhrs           100 100 100
+   fresh_geonames       100 100 100
+   fresh_eia860         100 100 100
+   fresh_stats19        100 100 100
+   fresh_ghcn           100 100 100
+ec2hyb: certified runs 11/36, median answers 84, wrong 6 (['fresh_musicbrainz', 'fresh_simplewiki']; pre-listed 6), certified relations (two seeds) 4, good relations (median seed) 2/12, macro F1 0.65; where Cert3NF certifies too: Cert3NF - ec2hyb answers median 21 over 5 runs; secs median 130.3, max 1896.4
+   fresh_auctionmark    100 100 100
+   fresh_seats          100 100 100
+   fresh_tatp           100 100 100
+   fresh_simplewiki     97c! 90c! 91c!
+   fresh_chembl         100 100 100
+   fresh_musicbrainz    50c! 46c! 48c!
+   fresh_pluto          100 100 100
+   fresh_fhrs           100 100 100
+   fresh_geonames       100 100 100
+   fresh_eia860         100 100 100
+   fresh_stats19        74c 84c 78c
+   fresh_ghcn           90c 95c 100
+ec2hyb0: certified runs 3/36, median answers 50, wrong 3 (['fresh_musicbrainz']; pre-listed 3), certified relations (two seeds) 1, good relations (median seed) 3/12, macro F1 0.83; where Cert3NF certifies too: Cert3NF - ec2hyb0 answers median 21 over 3 runs; secs median 62.05, max 710.2
+   fresh_auctionmark    100 100 100
+   fresh_seats          100 100 100
+   fresh_tatp           100 100 100
+   fresh_simplewiki     100 100 100
+   fresh_chembl         100 100 100
+   fresh_musicbrainz    50c! 50c! 51c!
+   fresh_pluto          100 100 100
+   fresh_fhrs           100 100 100
+   fresh_geonames       100 100 100
+   fresh_eia860         100 100 100
+   fresh_stats19        100 100 100
+   fresh_ghcn           100 100 100
+Cert3NF: certified 5 ['fresh_auctionmark', 'fresh_eia860', 'fresh_geonames', 'fresh_ghcn', 'fresh_musicbrainz'], good 5/12
+ec2hyb vs rbhyb by seed: certified 11 vs 9; both certified 8, ec2hyb - rbhyb answers median -7.5
+ec2hyb0 vs rbhyb0 by seed: certified 3 vs 3; both certified 3, ec2hyb0 - rbhyb0 answers median -32
+==== sure truth
+-- rules for ec2hyb
+E1 all: good designs at the end of the budget, Cert3NF 9/12 vs ec2hyb 6/12 -> holds
+E1 A: good designs at the end of the budget, Cert3NF 3/4 vs ec2hyb 1/4 -> holds
+E1 B: good designs at the end of the budget, Cert3NF 6/8 vs ec2hyb 5/8 -> holds
+E2: relations certified within 100, Cert3NF 9 vs ec2hyb (at least two seeds) 4 -> holds
+   Cert3NF: ['fresh_auctionmark', 'fresh_chembl', 'fresh_eia860', 'fresh_geonames', 'fresh_ghcn', 'fresh_musicbrainz', 'fresh_seats', 'fresh_stats19', 'fresh_tatp']; ec2hyb: ['fresh_ghcn', 'fresh_musicbrainz', 'fresh_simplewiki', 'fresh_stats19']
+-- rules for ec2hyb0
+E1 all: good designs at the end of the budget, Cert3NF 9/12 vs ec2hyb0 8/12 -> holds
+E1 A: good designs at the end of the budget, Cert3NF 3/4 vs ec2hyb0 3/4 -> holds
+E1 B: good designs at the end of the budget, Cert3NF 6/8 vs ec2hyb0 5/8 -> holds
+E2: relations certified within 100, Cert3NF 9 vs ec2hyb0 (at least two seeds) 3 -> holds
+   Cert3NF: ['fresh_auctionmark', 'fresh_chembl', 'fresh_eia860', 'fresh_geonames', 'fresh_ghcn', 'fresh_musicbrainz', 'fresh_seats', 'fresh_stats19', 'fresh_tatp']; ec2hyb0: ['fresh_chembl', 'fresh_ghcn', 'fresh_musicbrainz']
+-- reported
+rbhyb: certified runs 14/36, median answers 78.0, wrong 0 ([]; pre-listed 0), certified relations (two seeds) 5, good relations (median seed) 8/12, macro F1 0.89; where Cert3NF certifies too: Cert3NF - rbhyb answers median -28.0 over 12 runs; secs median 63.95, max 489.9
+   fresh_auctionmark    98c 89c 100
+   fresh_seats          100 100 100
+   fresh_tatp           100 100 100
+   fresh_simplewiki     100c 100 100c
+   fresh_chembl         100 100 100c
+   fresh_musicbrainz    70c 73c 76c
+   fresh_pluto          100 100 100
+   fresh_fhrs           100 100 100
+   fresh_geonames       100 100 100
+   fresh_eia860         100 100 100
+   fresh_stats19        45c 55c 55c
+   fresh_ghcn           85c 80c 70c
+rbhyb0: certified runs 5/36, median answers 78, wrong 0 ([]; pre-listed 0), certified relations (two seeds) 2, good relations (median seed) 8/12, macro F1 0.96; where Cert3NF certifies too: Cert3NF - rbhyb0 answers median -32 over 5 runs; secs median 32.3, max 249.1
+   fresh_auctionmark    100 100 100
+   fresh_seats          100 100 100
+   fresh_tatp           100 100 100
+   fresh_simplewiki     100 100 100
+   fresh_chembl         100 100 100
+   fresh_musicbrainz    74c 78c 75c
+   fresh_pluto          100 100 100
+   fresh_fhrs           100 100 100
+   fresh_geonames       100 100 100
+   fresh_eia860         100 100 100
+   fresh_stats19        100 100 100
+   fresh_ghcn           95c 90c 100
+ec2hyb: certified runs 12/36, median answers 82.5, wrong 0 ([]; pre-listed 0), certified relations (two seeds) 4, good relations (median seed) 6/12, macro F1 0.74; where Cert3NF certifies too: Cert3NF - ec2hyb answers median -6 over 9 runs; secs median 124.25, max 775.0
+   fresh_auctionmark    100 100 100
+   fresh_seats          100 100 100
+   fresh_tatp           100 100 100
+   fresh_simplewiki     100c 95c 90c
+   fresh_chembl         85c 100 100
+   fresh_musicbrainz    52c 50c 50c
+   fresh_pluto          100 100 100
+   fresh_fhrs           100 100 100
+   fresh_geonames       100 100 100
+   fresh_eia860         100 100 100
+   fresh_stats19        100 94c 80c
+   fresh_ghcn           85c 74c 75c
+ec2hyb0: certified runs 8/36, median answers 90.0, wrong 0 ([]; pre-listed 0), certified relations (two seeds) 3, good relations (median seed) 8/12, macro F1 0.93; where Cert3NF certifies too: Cert3NF - ec2hyb0 answers median -25.0 over 8 runs; secs median 24.450000000000003, max 313.0
+   fresh_auctionmark    100 100 100
+   fresh_seats          100 100 100
+   fresh_tatp           100 100 100
+   fresh_simplewiki     100 100 100
+   fresh_chembl         100 100c 100c
+   fresh_musicbrainz    52c 55c 55c
+   fresh_pluto          100 100 100
+   fresh_fhrs           100 100 100
+   fresh_geonames       100 100 100
+   fresh_eia860         100 100 100
+   fresh_stats19        100 100 100
+   fresh_ghcn           90c 90c 95c
+Cert3NF: certified 9 ['fresh_auctionmark', 'fresh_chembl', 'fresh_eia860', 'fresh_geonames', 'fresh_ghcn', 'fresh_musicbrainz', 'fresh_seats', 'fresh_stats19', 'fresh_tatp'], good 9/12
+ec2hyb vs rbhyb by seed: certified 12 vs 14; both certified 10, ec2hyb - rbhyb answers median -3.0
+ec2hyb0 vs rbhyb0 by seed: certified 8 vs 5; both certified 5, ec2hyb0 - rbhyb0 answers median -20
