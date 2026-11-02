@@ -3,18 +3,20 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Rules of a table</title>
+<title>Cert3NF: rules of a table</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48c3R5bGU+QG1lZGlhIChwcmVmZXJzLWNvbG9yLXNjaGVtZTpkYXJrKXsuc3F7c3Ryb2tlOiNmZmY7c3Ryb2tlLW9wYWNpdHk6LjU1O3N0cm9rZS13aWR0aDoyfX08L3N0eWxlPjxkZWZzPjxsaW5lYXJHcmFkaWVudCBpZD0iYzNuIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjM2Q1YTdkIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMWYzMDQ3Ii8+PC9saW5lYXJHcmFkaWVudD48bGluZWFyR3JhZGllbnQgaWQ9ImMzZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iIzNlYzI2NiIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzFhN2YzNyIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IGNsYXNzPSJzcSIgeD0iMSIgeT0iMSIgd2lkdGg9IjM4IiBoZWlnaHQ9IjM4IiByeD0iOSIgZmlsbD0idXJsKCNjM24pIi8+PHJlY3QgeD0iNi41IiB5PSI3LjUiIHdpZHRoPSI4IiBoZWlnaHQ9IjUuMiIgcng9IjEuNiIgZmlsbD0iI2E5YzhmZiIvPjxyZWN0IHg9IjE2IiB5PSI3LjUiIHdpZHRoPSI4IiBoZWlnaHQ9IjUuMiIgcng9IjEuNiIgZmlsbD0iI2ZmYzg4YyIvPjxyZWN0IHg9IjI1LjUiIHk9IjcuNSIgd2lkdGg9IjciIGhlaWdodD0iNS4yIiByeD0iMS42IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9Ii45Ii8+PHJlY3QgeD0iNi41IiB5PSIxNS41IiB3aWR0aD0iOCIgaGVpZ2h0PSI1LjIiIHJ4PSIxLjYiIGZpbGw9IiNhOWM4ZmYiIGZpbGwtb3BhY2l0eT0iLjc1Ii8+PHJlY3QgeD0iMTYiIHk9IjE1LjUiIHdpZHRoPSI4IiBoZWlnaHQ9IjUuMiIgcng9IjEuNiIgZmlsbD0iI2ZmYzg4YyIgZmlsbC1vcGFjaXR5PSIuNzUiLz48cmVjdCB4PSIyNS41IiB5PSIxNS41IiB3aWR0aD0iNyIgaGVpZ2h0PSI1LjIiIHJ4PSIxLjYiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iLjY1Ii8+PHJlY3QgeD0iNi41IiB5PSIyMy41IiB3aWR0aD0iOCIgaGVpZ2h0PSI1LjIiIHJ4PSIxLjYiIGZpbGw9IiNhOWM4ZmYiIGZpbGwtb3BhY2l0eT0iLjUiLz48cmVjdCB4PSIxNiIgeT0iMjMuNSIgd2lkdGg9IjgiIGhlaWdodD0iNS4yIiByeD0iMS42IiBmaWxsPSIjZmZjODhjIiBmaWxsLW9wYWNpdHk9Ii41Ii8+PGNpcmNsZSBjeD0iMzAuOCIgY3k9IjMwLjgiIHI9IjcuNiIgZmlsbD0idXJsKCNjM2cpIiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iMi4yIi8+PHBhdGggZD0iTTI3LjIgMzFsMi41IDIuNSA0LjctNS4xIiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iMi40IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48L3N2Zz4=">
 <style>
   :root { --ink:#1d2530; --muted:#5f6b7a; --line:#d9dee5; --bg:#f6f7f9; --card:#fff; --btn:#24364b; --err:#b42318;
           --go1:#34b85a; --go2:#1a7f37; --pick:#e9f7ee; }
   * { box-sizing: border-box; }
   body { margin:0; background:var(--bg); color:var(--ink); font:16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
-  main { max-width: 700px; margin: 0 auto; padding: 20px 16px 24px; }
+  main { max-width: 760px; margin: 0 auto; padding: 20px 16px 24px; }
   .card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:20px 22px; margin-bottom:16px; }
   h1 { font-size:24px; margin:0 0 8px; } h2 { font-size:18px; margin:0 0 10px; }
   p { margin: 8px 0; } .muted { color:var(--muted); font-size:14px; }
+  .card > :last-child { margin-bottom:0; }
   label { display:block; margin:12px 0 4px; font-weight:600; }
-  input[type=text] { font:inherit; padding:8px 10px; width:160px; text-transform:uppercase; border:1px solid #aab3bf; border-radius:6px; }
+  input[type=text] { font:inherit; padding:8px 10px; width:160px; text-transform:uppercase; border:1px solid #8a94a3; border-radius:6px; }
   .sessions { display:flex; gap:18px; } .sessions label { display:inline; font-weight:400; margin:0; }
   button { font:inherit; border-radius:8px; border:1px solid var(--btn); padding:10px 22px; cursor:pointer; background:#fff; color:var(--btn); }
   .err { color:var(--err); min-height:1.5em; margin-top:8px; }
@@ -22,7 +24,7 @@
   /* the try: the first thing a visitor sees */
   .try { border:2px solid #b7e4c4; box-shadow: 0 6px 22px rgba(26,127,55,.10); }
   .live { display:inline-flex; align-items:center; gap:6px; font:700 11px/1 system-ui, sans-serif; letter-spacing:.08em;
-          color:var(--go2); background:var(--pick); border-radius:999px; padding:5px 10px 5px 8px; }
+          color:#17722f; background:var(--pick); border-radius:999px; padding:5px 10px 5px 8px; }
   .trytop { display:flex; align-items:center; gap:12px; } .trytop h2 { margin:0; }
   .dot { position:relative; width:8px; height:8px; border-radius:50%; background:#2da44e; }
   .dot::after { content:""; position:absolute; inset:0; border-radius:50%; background:#2da44e; animation:ping 1.8s ease-out infinite; }
@@ -30,71 +32,84 @@
   .tables { display:grid; gap:10px; margin:14px 0 4px; }
   .opt { display:flex; align-items:center; gap:12px; margin:0; padding:9px 12px; border:1px solid var(--line); border-radius:10px;
          cursor:pointer; font-weight:400; transition: border-color .15s, background .15s, transform .15s; }
-  .opt:hover { border-color:#8fd3a5; transform: translateY(-1px); }
   .opt input { accent-color: var(--go2); width:18px; height:18px; margin:0; flex:none; }
-  .opt:has(input:checked) { border-color:#2da44e; background:var(--pick); box-shadow: 0 1px 2px rgba(26,127,55,.1), 0 3px 10px rgba(26,127,55,.14); }
+  .opt:has(input:checked) { border-color:#2da44e; background:var(--pick); box-shadow: 0 2px 4px rgba(26,127,55,.12), 0 4px 16px rgba(26,127,55,.22); }
   .opt > div { display:flex; flex-wrap:wrap; align-items:baseline; column-gap:10px; } .opt span { color:var(--muted); font-size:14px; }
   .gorow { display:flex; align-items:center; gap:14px; flex-wrap:wrap; margin-top:14px; } .gorow .go { margin-top:0; } .gorow p { margin:0; }
   .go { display:inline-flex; align-items:center; gap:8px; margin-top:14px; padding:8px 18px; border:none; border-radius:999px;
-        font-weight:700; font-size:16px; color:#fff; background:linear-gradient(135deg, var(--go1), var(--go2));
-        box-shadow: 0 1px 2px rgba(26,127,55,.22), 0 3px 10px rgba(26,127,55,.28); transition: transform .12s, box-shadow .12s, filter .12s; }
-  .go:hover { transform: translateY(-2px); filter: brightness(1.05); box-shadow: 0 2px 4px rgba(26,127,55,.2), 0 6px 18px rgba(26,127,55,.36); }
-  .go:active { transform: translateY(1px) scale(.98); box-shadow: 0 1px 2px rgba(26,127,55,.25), 0 2px 6px rgba(26,127,55,.24); }
-  .go .arrow { display:inline-grid; place-items:center; width:20px; height:20px; border-radius:50%; background:rgba(255,255,255,.22); font-size:10px;
+        font-weight:700; font-size:16px; color:#fff; background:linear-gradient(135deg, #1c873c, #146c2e);
+        box-shadow: 0 2px 5px rgba(26,127,55,.26), 0 4px 16px rgba(26,127,55,.4); transition: transform .12s, box-shadow .12s, filter .12s; }
+  .go:active { transform: translateY(1px) scale(.98); box-shadow: 0 1px 3px rgba(26,127,55,.3), 0 3px 10px rgba(26,127,55,.32); }
+  .go .arrow { display:inline-grid; place-items:center; width:22px; height:22px; border-radius:50%; background:rgba(255,255,255,.22); font-size:10px;
                animation: nudge 1.2s ease-in-out infinite; }
-  .go .arrow svg { display:block; width:10px; height:10px; margin-left:1px; }
+  .go .arrow svg { display:block; width:12px; height:12px; margin-left:2px; }
   @keyframes nudge { 0%,100% { transform:translateX(0); } 50% { transform:translateX(3px); } }
   .go:disabled { filter: grayscale(.3) brightness(.95); cursor: progress; }
   /* the participants' Start: same shape in the study's navy, its arrow moves on hover only */
   .go.navy { background:linear-gradient(135deg, #3d5a7d, var(--btn));
-             box-shadow: 0 1px 2px rgba(36,54,75,.22), 0 3px 10px rgba(36,54,75,.28); }
-  .go.navy:hover { filter: brightness(1.15); box-shadow: 0 2px 4px rgba(36,54,75,.2), 0 6px 18px rgba(36,54,75,.36); }
-  .go.navy:active { box-shadow: 0 1px 2px rgba(36,54,75,.25), 0 2px 6px rgba(36,54,75,.24); }
-  .go.navy .arrow { animation:none; } .go.navy:hover .arrow { animation: nudge 1.2s ease-in-out infinite; }
+             box-shadow: 0 2px 5px rgba(36,54,75,.26), 0 4px 16px rgba(36,54,75,.4); }
+  .go.navy:active { box-shadow: 0 1px 3px rgba(36,54,75,.3), 0 3px 10px rgba(36,54,75,.32); }
+  .go.navy .arrow { animation:none; }
+  .brand { display:flex; align-items:center; gap:10px; margin-bottom:6px; } .brand .mark { flex:none; width:42px; height:42px; }
+  .brand h1 { margin:0; font-size:27px; font-weight:800; letter-spacing:-.01em; } .brand h1 span { color:var(--go2); }
+  /* folding: an SVG chevron that turns when open, instead of the small native triangle */
+  summary { list-style:none; display:flex; align-items:center; gap:6px; }
+  summary::-webkit-details-marker { display:none; }
+  summary::before { content:""; flex:none; width:14px; height:14px; background:currentColor; transition: transform .2s; -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M6 3.4l4.6 4.6L6 12.6' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat; mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M6 3.4l4.6 4.6L6 12.6' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat; }
+  details[open] > summary::before { transform: rotate(90deg); }
   .invited { padding:14px 22px; }
   .invited summary { cursor:pointer; font-weight:600; font-size:18px; width:fit-content; }
-  .invited summary:hover { color:var(--btn); text-decoration:underline; text-underline-offset:3px; }
-  @media (prefers-reduced-motion: reduce) { *, *::after { animation:none !important; transition:none !important; } }
+  @media (hover:hover) {                       /* hover effects only where a pointer hovers: on touch screens they stick to the last tap */
+    .opt:hover { border-color:#8fd3a5; transform: translateY(-1px); }
+    .go:hover { transform: translateY(-2px); filter: brightness(1.05); box-shadow: 0 3px 7px rgba(26,127,55,.26), 0 8px 26px rgba(26,127,55,.5); }
+    .go.navy:hover { filter: brightness(1.15); box-shadow: 0 3px 7px rgba(36,54,75,.26), 0 8px 26px rgba(36,54,75,.5); }
+    .go.navy:hover .arrow { animation: nudge 1.2s ease-in-out infinite; }
+    .invited summary:hover { color:var(--btn); text-decoration:underline; text-underline-offset:3px; }
+  }
+  :is(button, a, summary, input, select, textarea, .tablewrap):focus-visible { outline:2px solid #174ea6; outline-offset:3px; }
+  .opt:has(input:focus-visible) { outline:2px solid #1a7f37; outline-offset:2px; }
+  @media (pointer:coarse) { summary { padding:6px 0; } .go { touch-action:manipulation; } }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation:none !important; transition:none !important; } }
 </style>
 </head>
 <body>
 <main>
   <div class="card">
-    <h1>Rules of a table</h1>
-    <p>Questions about the rules of a table: must two records that agree on some attributes also agree on another one?
-       From your answers, Cert3NF designs the table in Third Normal Form and certifies the design.</p>
+    <div class="brand"><svg class="mark" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><linearGradient id="c3n" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3d5a7d"/><stop offset="1" stop-color="#1f3047"/></linearGradient><linearGradient id="c3g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3ec266"/><stop offset="1" stop-color="#1a7f37"/></linearGradient></defs><rect x="2" y="2" width="31" height="31" rx="8" fill="url(#c3n)"/><rect x="7" y="8" width="6.5" height="4.2" rx="1.3" fill="#a9c8ff"/><rect x="15" y="8" width="6.5" height="4.2" rx="1.3" fill="#ffc88c"/><rect x="23" y="8" width="5" height="4.2" rx="1.3" fill="#fff" fill-opacity=".9"/><rect x="7" y="14.5" width="6.5" height="4.2" rx="1.3" fill="#a9c8ff" fill-opacity=".75"/><rect x="15" y="14.5" width="6.5" height="4.2" rx="1.3" fill="#ffc88c" fill-opacity=".75"/><rect x="23" y="14.5" width="5" height="4.2" rx="1.3" fill="#fff" fill-opacity=".65"/><rect x="7" y="21" width="6.5" height="4.2" rx="1.3" fill="#a9c8ff" fill-opacity=".5"/><rect x="15" y="21" width="6.5" height="4.2" rx="1.3" fill="#ffc88c" fill-opacity=".5"/><circle cx="30.5" cy="30.5" r="8" fill="url(#c3g)" stroke="#fff" stroke-width="2.4"/><path d="M26.7 30.7l2.6 2.6 5-5.4" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg><h1>Cert<span>3NF</span></h1></div>
+    <p>Cert3NF asks which rules (functional dependencies) a table must obey: must two records that agree on some attributes
+       also agree on another one? From your answers it designs the table in Third Normal Form and certifies the design.</p>
   </div>
 
   <!--try--><form class="card try" method="post" action="/try" id="try">
     <div class="trytop"><h2>Try it</h2><div class="live"><span class="dot"></span>LIVE DEMO</div></div>
     <p>Pick a table and answer yes or no. You can stop at any time and see the design your answers give.</p>
-    <div class="tables">
+    <div class="tables" role="radiogroup" aria-label="Table">
       <label class="opt"><input type="radio" name="table" value="1" checked>
-        <div><b>Customers</b><span>Star Schema Benchmark &middot; 8 attributes &middot; about 30 questions</span></div></label>
+        <div><b>Customers</b><span>Star Schema Benchmark &middot; 8&nbsp;attributes &middot; about&nbsp;30&nbsp;questions</span></div></label>
       <label class="opt"><input type="radio" name="table" value="2">
-        <div><b>Store sales</b><span>TPC-DS &middot; 12 attributes &middot; about 30 questions</span></div></label>
+        <div><b>Store sales</b><span>TPC-DS &middot; 12&nbsp;attributes &middot; about&nbsp;30&nbsp;questions</span></div></label>
       <label class="opt"><input type="radio" name="table" value="3">
-        <div><b>Mesh blocks</b><span>Australian statistical geography &middot; 17 attributes &middot; about 55 questions</span></div></label>
+        <div><b>Mesh blocks</b><span>Australian statistical geography &middot; 17&nbsp;attributes &middot; about&nbsp;55&nbsp;questions</span></div></label>
     </div>
     <div class="gorow">
-      <button class="go" type="submit">Start <span class="arrow"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 3.2l7 4.8-7 4.8z" fill="currentColor"/></svg></span></button>
-      <p class="muted">The server sleeps when nobody uses it, so the first page can take up to a minute.</p>
+      <button class="go" type="submit">Start <span class="arrow"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 2.6l8.6 5.4L5 13.4z" fill="currentColor" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg></span></button>
+      <p class="muted">About 10 minutes, Mesh blocks about 20.</p>
     </div>
   </form><!--/try-->
 
   <details class="card invited"><summary>I was invited</summary>
   <form id="enter">
     <label for="code">Your participant code</label>
-    <input type="text" id="code" autocomplete="off" spellcheck="false" placeholder="e.g. E01" maxlength="4">
+    <input type="text" id="code" autocomplete="off" spellcheck="false" placeholder="e.g. E01" maxlength="4" autocapitalize="characters" enterkeyhint="go" aria-describedby="err">
     <label>Session</label>
-    <div class="sessions">
+    <div class="sessions" role="radiogroup" aria-label="Session">
       <label><input type="radio" name="sno" value="1" checked> 1 (first table)</label>
       <label><input type="radio" name="sno" value="2"> 2 (second table)</label>
     </div>
     <p class="muted">The code and the session are in your invitation. If you closed the page, enter them again: the session
        continues where you left it.</p>
-    <button class="go navy" type="submit">Start <span class="arrow"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 3.2l7 4.8-7 4.8z" fill="currentColor"/></svg></span></button>
-    <p class="err" id="err"></p>
+    <button class="go navy" type="submit">Start <span class="arrow"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 2.6l8.6 5.4L5 13.4z" fill="currentColor" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg></span></button>
+    <p class="err" id="err" role="alert"></p>
   </form></details>
 </main>
 <script>

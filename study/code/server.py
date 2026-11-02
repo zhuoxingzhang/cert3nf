@@ -39,6 +39,9 @@ SESSIONS = os.path.join(K.KIT, "sessions")
 CODES = [c + n for c in K.CONDITIONS for n in sorted(K.ASSIGN)]
 TESTS = ["T" + c for c in CODES]
 IDLE, MAX_TRIES = 30 * 60, 10
+BUSY = ('<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">'
+        '<title>Cert3NF</title><body style="font:16px/1.5 system-ui, sans-serif; max-width:640px; margin:15vh auto; padding:0 16px">'
+        '<p>Many people are trying Cert3NF right now. Please try again in a few minutes.</p><p><a href="/">Back to the start page</a></p>')
 LIVE, SEEN, LIVE_LOCK = {}, {}, threading.Lock()              # (code, n) -> Session, and when it was last used
 CFG = {}
 
@@ -85,8 +88,8 @@ def release_tries(keep):
     with LIVE_LOCK:
         tries = sorted((SEEN[k], k) for k in LIVE if is_try(k[0]))
         now = time.time()
-        drop = [k for t, k in tries if now - t > IDLE]
-        rest = [(t, k) for t, k in tries if now - t <= IDLE]
+        drop = [k for t, k in tries if now - t > IDLE or LIVE[k].done]     # an ended try reopens from its file
+        rest = [(t, k) for t, k in tries if now - t <= IDLE and not LIVE[k].done]
         while len(rest) >= keep and rest and now - rest[0][0] > 600:  # the oldest, if it has been quiet for 10 min
             drop.append(rest.pop(0)[1])
         for k in drop:
@@ -250,8 +253,7 @@ class Handler(BaseHTTPRequestHandler):
         b = self.body()
         if path == "/try" and CFG["tries"]:
             if not release_tries(MAX_TRIES):
-                return self.send(503, "Many people are trying the study right now. Please try again in a few minutes.",
-                                 "text/plain; charset=utf-8")
+                return self.send(503, BUSY, "text/html; charset=utf-8")
             num = "0" + str(b.get("table", ""))                # the table chosen on the start page (R1, R2, R3)
             code = f"TP{num if num in K.ASSIGN else random.choice(sorted(K.ASSIGN))}-{secrets.token_hex(3)}"
             return self.redirect(f"/s/{code}/1/")

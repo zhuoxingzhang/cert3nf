@@ -4,47 +4,54 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Rules of a table</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48c3R5bGU+QG1lZGlhIChwcmVmZXJzLWNvbG9yLXNjaGVtZTpkYXJrKXsuc3F7c3Ryb2tlOiNmZmY7c3Ryb2tlLW9wYWNpdHk6LjU1O3N0cm9rZS13aWR0aDoyfX08L3N0eWxlPjxkZWZzPjxsaW5lYXJHcmFkaWVudCBpZD0iYzNuIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjM2Q1YTdkIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMWYzMDQ3Ii8+PC9saW5lYXJHcmFkaWVudD48bGluZWFyR3JhZGllbnQgaWQ9ImMzZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iIzNlYzI2NiIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzFhN2YzNyIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IGNsYXNzPSJzcSIgeD0iMSIgeT0iMSIgd2lkdGg9IjM4IiBoZWlnaHQ9IjM4IiByeD0iOSIgZmlsbD0idXJsKCNjM24pIi8+PHJlY3QgeD0iNi41IiB5PSI3LjUiIHdpZHRoPSI4IiBoZWlnaHQ9IjUuMiIgcng9IjEuNiIgZmlsbD0iI2E5YzhmZiIvPjxyZWN0IHg9IjE2IiB5PSI3LjUiIHdpZHRoPSI4IiBoZWlnaHQ9IjUuMiIgcng9IjEuNiIgZmlsbD0iI2ZmYzg4YyIvPjxyZWN0IHg9IjI1LjUiIHk9IjcuNSIgd2lkdGg9IjciIGhlaWdodD0iNS4yIiByeD0iMS42IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9Ii45Ii8+PHJlY3QgeD0iNi41IiB5PSIxNS41IiB3aWR0aD0iOCIgaGVpZ2h0PSI1LjIiIHJ4PSIxLjYiIGZpbGw9IiNhOWM4ZmYiIGZpbGwtb3BhY2l0eT0iLjc1Ii8+PHJlY3QgeD0iMTYiIHk9IjE1LjUiIHdpZHRoPSI4IiBoZWlnaHQ9IjUuMiIgcng9IjEuNiIgZmlsbD0iI2ZmYzg4YyIgZmlsbC1vcGFjaXR5PSIuNzUiLz48cmVjdCB4PSIyNS41IiB5PSIxNS41IiB3aWR0aD0iNyIgaGVpZ2h0PSI1LjIiIHJ4PSIxLjYiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iLjY1Ii8+PHJlY3QgeD0iNi41IiB5PSIyMy41IiB3aWR0aD0iOCIgaGVpZ2h0PSI1LjIiIHJ4PSIxLjYiIGZpbGw9IiNhOWM4ZmYiIGZpbGwtb3BhY2l0eT0iLjUiLz48cmVjdCB4PSIxNiIgeT0iMjMuNSIgd2lkdGg9IjgiIGhlaWdodD0iNS4yIiByeD0iMS42IiBmaWxsPSIjZmZjODhjIiBmaWxsLW9wYWNpdHk9Ii41Ii8+PGNpcmNsZSBjeD0iMzAuOCIgY3k9IjMwLjgiIHI9IjcuNiIgZmlsbD0idXJsKCNjM2cpIiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iMi4yIi8+PHBhdGggZD0iTTI3LjIgMzFsMi41IDIuNSA0LjctNS4xIiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iMi40IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48L3N2Zz4=">
 <style>
   :root { --ink:#1d2530; --muted:#5f6b7a; --line:#d9dee5; --bg:#f6f7f9; --card:#fff;
           --agree:#dbe9ff; --agree-ink:#174ea6; --rhs:#ffe3c2; --rhs-ink:#9a4a00; --btn:#24364b; }
   * { box-sizing: border-box; }
   body { margin:0; background:var(--bg); color:var(--ink); font:16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
   main { max-width: 1100px; margin: 0 auto; padding: 24px 16px; }
-  .card { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:20px 22px; margin-bottom:16px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:20px 22px; margin-bottom:16px; }
   h1 { font-size:22px; margin:0 0 12px; } h2 { font-size:18px; margin:0 0 10px; }
   p { margin: 8px 0; } .muted { color:var(--muted); font-size:14px; }
-  .tablewrap { overflow-x:auto; border:1px solid var(--line); border-radius:8px; }
-  table { border-collapse:collapse; font-size:13px; white-space:nowrap; }
+  .card > :last-child { margin-bottom:0; }
+  a { color:var(--agree-ink); text-decoration-color:rgba(23,78,166,.35); text-underline-offset:3px; }
+  .sr { position:absolute; width:1px; height:1px; margin:-1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+  .tablewrap { overflow-x:auto; border:1px solid var(--line); border-radius:8px; scrollbar-width:thin; scrollbar-color:#c5ccd6 transparent; }
+  table { border-collapse:collapse; font-size:13px; white-space:nowrap; font-variant-numeric:tabular-nums; }
   th, td { padding:5px 9px; border-bottom:1px solid var(--line); text-align:left; }
   th { background:#eef1f5; position:sticky; top:0; }
   th.agree, td.agree { background:var(--agree); } th.agree { color:var(--agree-ink); }
   th.rhs, td.rhs { background:var(--rhs); } th.rhs { color:var(--rhs-ink); }
+  th.agree { background:#c9ddfb; } th.rhs { background:#ffd3a3; }   /* the header row stays a header inside a coloured column */
   .q { font-size:19px; margin:4px 0 14px; }
   .q b.agree { color:var(--agree-ink); } .q b.rhs { color:var(--rhs-ink); }
   .btns { display:flex; gap:12px; flex-wrap:wrap; }
   button { font:inherit; border-radius:999px; border:1px solid var(--btn); padding:8px 18px; cursor:pointer; background:#fff; color:var(--btn);
            transition: transform .12s, box-shadow .12s, filter .12s, background .12s; }
   button.main { border:none; font-weight:600; color:#fff; background:linear-gradient(135deg, #3d5a7d, var(--btn));
-                box-shadow: 0 1px 2px rgba(36,54,75,.22), 0 3px 10px rgba(36,54,75,.28); }
-  button.main:hover:not(:disabled) { transform: translateY(-2px); filter: brightness(1.15); box-shadow: 0 2px 4px rgba(36,54,75,.2), 0 6px 18px rgba(36,54,75,.36); }
-  button.main:active:not(:disabled) { transform: translateY(1px) scale(.97); }
+                box-shadow: 0 2px 5px rgba(36,54,75,.26), 0 4px 16px rgba(36,54,75,.4); }
+  button.main:active:not([aria-disabled]) { transform: translateY(1px) scale(.97); }
   button.main kbd { font:600 11px/1 ui-monospace, Consolas, monospace; padding:2px 5px; border-radius:4px; margin-left:8px;
                     background:rgba(255,255,255,.2); vertical-align:1px; }
-  button:disabled { opacity:.45; cursor:default; }
+  button:disabled, button[aria-disabled="true"] { opacity:.45; cursor:default; }
   .top { display:flex; justify-content:space-between; align-items:baseline; gap:12px; flex-wrap:wrap; }
   .legend span { display:inline-block; padding:1px 8px; border-radius:4px; margin-right:8px; font-size:13px; }
+  .legend span:nth-child(1) { color:var(--agree-ink); } .legend span:nth-child(2) { color:var(--rhs-ink); }
+  .legend .free { background:#fff; box-shadow:inset 0 0 0 1px var(--line); }
+  .keyhint { white-space:nowrap; }
   .qrow { display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
   .stop { margin-left:auto; }
   /* stop: a quiet pill that turns red on hover */
   .stop button { display:inline-flex; align-items:center; gap:7px; border:none; color:#5f6b7a; padding:5px 14px 5px 6px; font-size:14px;
-                 font-weight:600; box-shadow: inset 0 0 0 1px #c5ccd6, 0 1px 2px rgba(31,41,55,.06), 0 3px 10px rgba(31,41,55,0.07); }
+                 font-weight:600; box-shadow: inset 0 0 0 1px #c5ccd6, 0 1px 3px rgba(31,41,55,.08), 0 4px 14px rgba(31,41,55,.13); }
   .stop .ico { display:inline-grid; place-items:center; width:20px; height:20px; border-radius:50%; background:#fde8e6; color:#c4372f;
                font-size:10px; line-height:1; transition: background .12s, color .12s, transform .2s; }
-  .stop button:hover { transform: translateY(-2px); color:#b42318; background:#fff7f6;
-                       box-shadow: inset 0 0 0 1px #ef9a92, 0 2px 4px rgba(196,55,47,.08), 0 6px 16px rgba(196,55,47,0.22); }
-  .stop button:hover .ico { background:#c4372f; color:#fff; transform: scale(1.12); }
+  .stop button.armed { color:#b42318; background:#fff7f6; box-shadow: inset 0 0 0 1px #ef9a92, 0 3px 6px rgba(196,55,47,.1), 0 8px 22px rgba(196,55,47,.32); }
+  .stop button.armed .ico { background:#c4372f; color:#fff; }
   .stop button:active { transform: translateY(1px) scale(.97); }
   .fb { margin-top:10px; padding:10px 12px; border-radius:8px; background:#f1f6ee; border:1px solid #cfe3c4; display:none; }
+  .fb.off { background:#fff7e8; border-color:#f3d39b; }   /* a practice answer that differs */
   label { display:block; margin:10px 0 4px; } select, textarea { font:inherit; padding:6px; width:100%; max-width:520px; }
   .scale { display:flex; gap:14px; flex-wrap:wrap; } .scale label { display:inline; margin:0; }
   .hidden { display:none; }
@@ -52,27 +59,27 @@
 
   /* answer buttons: colour, icon and key per answer; a lift on hover, a press on click */
   .ans { display:inline-flex; align-items:center; gap:7px; font-weight:600; font-size:15px; padding:7px 15px 7px 8px; border-radius:999px;
-         border:none; color:#fff; min-width:0; --glow:31,41,55; box-shadow: 0 1px 2px rgba(var(--glow),.22), 0 3px 10px rgba(var(--glow),.28);
+         border:none; color:#fff; min-width:0; --glow:31,41,55; box-shadow: 0 2px 5px rgba(var(--glow),.26), 0 4px 16px rgba(var(--glow),.4);
          transition: transform .12s, box-shadow .12s, filter .12s; }
   .ans .ico { display:inline-grid; place-items:center; width:21px; height:21px; border-radius:50%;
               background:rgba(255,255,255,.24); font-size:12px; line-height:1; }
   .ans kbd { font:600 11px/1 ui-monospace, Consolas, monospace; padding:2px 5px; border-radius:4px; margin-left:1px;
              background:rgba(255,255,255,.22); }
-  .ans.yes { background:linear-gradient(135deg, #34b85a, #1a7f37); --glow:26,127,55; }
-  .ans.no  { background:linear-gradient(135deg, #ef6a5e, #c4372f); --glow:196,55,47; }
-  .ans.dk  { background:#fff; color:#4a5565; box-shadow: inset 0 0 0 1px #c5ccd6, 0 1px 2px rgba(31,41,55,.06), 0 3px 10px rgba(31,41,55,0.07); }
+  .ans.yes { background:linear-gradient(135deg, #1c873c, #146c2e); --glow:26,127,55; }   /* white text at 4.5:1 or more */
+  .ans.no  { background:linear-gradient(135deg, #d0413a, #a8291f); --glow:196,55,47; }
+  .ans.yes kbd, .ans.no kbd { background:rgba(0,0,0,.18); }
+  .ans.dk  { background:#fff; color:#4a5565; box-shadow: inset 0 0 0 1px #c5ccd6, 0 1px 3px rgba(31,41,55,.08), 0 4px 14px rgba(31,41,55,.13); }
   .ans.dk .ico { background:#eef1f5; } .ans.dk kbd { background:#eef1f5; }
-  .ans:hover:not(:disabled) { transform: translateY(-2px); filter: brightness(1.05); box-shadow: 0 2px 4px rgba(var(--glow),.2), 0 6px 18px rgba(var(--glow),.36); }
-  .ans.dk:hover:not(:disabled) { box-shadow: inset 0 0 0 1px #9aa4b1, 0 2px 4px rgba(31,41,55,.08), 0 6px 16px rgba(31,41,55,0.13); }
-  .ans:active:not(:disabled) { transform: translateY(1px) scale(.97); }
+  .ans:active:not([aria-disabled]) { transform: translateY(1px) scale(.97); }
   .ans.picked { animation: pop .28s ease; opacity:1 !important; }
   @keyframes pop { 40% { transform: scale(1.08); } }
   .enter { animation: rise .28s ease; }
   @keyframes rise { from { opacity:0; transform: translateY(8px); } to { opacity:1; transform:none; } }
   .keys { margin-top:10px; }
-  .phase { display:inline-block; font-size:13px; font-weight:600; border-radius:999px; padding:3px 11px; margin-bottom:8px; }
-  .phase.p1 { background:#e3eefb; color:#174ea6; } .phase.p2 { background:#e3f5e8; color:#1a7f37; }
-  .skip { font-size:14px; margin-left:12px; }
+  .phase { display:flex; flex-wrap:wrap; align-items:center; gap:4px 8px; font-size:13px; color:var(--muted); margin-bottom:8px; }
+  .phase b { font-weight:600; color:#3d4a5c; background:#eef1f5; border-radius:999px; padding:2px 10px; white-space:nowrap; }
+  .phase.hidden { display:none; }
+  .phead { display:flex; align-items:baseline; gap:12px; margin-bottom:10px; } .phead h2 { margin:0; } .skip { font-size:14px; }
 
   /* the result of a try */
   .verdict { display:flex; align-items:center; gap:14px; margin-bottom:6px; }
@@ -80,31 +87,35 @@
   .badge.ok { background:linear-gradient(135deg, #34b85a, #1a7f37); animation: pop .5s ease; }
   .badge.part { background:linear-gradient(135deg, #f0b44c, #d08700); }
   .verdict h1 { margin:0; }
-  .schemata { display:flex; flex-wrap:wrap; gap:8px; margin:10px 0; }
-  .schema { border:1px solid var(--line); border-radius:8px; padding:5px 10px; font:13px ui-monospace, Consolas, monospace; background:#fafbfc; }
-  .schema u { text-decoration-thickness:2px; text-underline-offset:3px; }
+  .schemata { display:flex; flex-wrap:wrap; gap:6px; margin:8px 0 10px; }
+  .schema { border:1px solid var(--line); border-radius:8px; padding:3px 9px; font:13px ui-monospace, Consolas, monospace; background:#fafbfc; color:var(--muted); }
+  .schema u { color:var(--ink); font-weight:600; text-decoration-thickness:1.5px; text-underline-offset:4px; text-decoration-skip-ink:none; }
   .checks span { display:inline-block; margin:4px 8px 4px 0; padding:3px 10px; border-radius:999px; font-size:14px; }
-  .checks .y { background:#e3f5e8; color:#1a7f37; } .checks .n { background:#fde8e6; color:#b42318; }
-  .differ li { margin:6px 0; }
+  .checks .y { background:#e3f5e8; color:#17722f; } .checks .n { background:#fde8e6; color:#b42318; }
+  details.differ ul { list-style:none; padding:0; margin:4px 0 0; border:1px solid var(--line); border-radius:8px; max-height:45vh; overflow:auto; }
+  .differ li { display:grid; grid-template-columns:1fr auto auto; gap:4px 10px; align-items:center; margin:0; padding:6px 12px; border-top:1px solid var(--line); font-size:14px; }
+  .differ li:first-child { border-top:none; } .differ .tag { margin:0; white-space:nowrap; }
   .tag { font-size:12px; font-weight:600; padding:1px 7px; border-radius:4px; margin-left:4px; }
-  .tag.yes { background:#e3f5e8; color:#1a7f37; } .tag.no { background:#fde8e6; color:#b42318; }
+  .tag.yes { background:#e3f5e8; color:#17722f; } .tag.no { background:#fde8e6; color:#b42318; }
   a.ans { text-decoration:none; }
-  .ico svg { display:block; width:12px; height:12px; } .stop .ico svg { width:9px; height:9px; }
+  .ico svg { display:block; width:13px; height:13px; } .stop .ico svg { width:12px; height:12px; }
   .badge svg { display:block; width:24px; height:24px; }
-  .checks svg { display:inline-block; width:11px; height:11px; margin-right:5px; vertical-align:-1px; }
+  .checks svg { display:inline-block; width:13px; height:13px; margin-right:5px; vertical-align:-2px; }
   /* home: back to the start page from every screen */
   .home { margin:0 0 10px; }
   .home a { display:inline-flex; align-items:center; gap:6px; font-size:14px; font-weight:600; color:#4a5565; text-decoration:none;
-            padding:3px 12px 3px 4px; border-radius:999px; background:#fff; box-shadow: inset 0 0 0 1px #c5ccd6, 0 1px 2px rgba(31,41,55,.06), 0 3px 10px rgba(31,41,55,0.07);
+            padding:3px 12px 3px 4px; border-radius:999px; background:#fff; box-shadow: inset 0 0 0 1px #c5ccd6, 0 1px 3px rgba(31,41,55,.08), 0 4px 14px rgba(31,41,55,.13);
             transition: transform .12s, box-shadow .12s, color .12s; }
-  .home .ico { display:inline-grid; place-items:center; width:22px; height:22px; border-radius:50%; background:#eef1f5;
-               transition: background .12s, color .12s; }
-  .home a:hover { transform: translateY(-2px); color:var(--agree-ink); box-shadow: inset 0 0 0 1px #9db8e0, 0 2px 4px rgba(23,78,166,.08), 0 6px 16px rgba(23,78,166,0.18); }
-  .home a:hover .ico { background:var(--agree-ink); color:#fff; }
+  .home .mark { display:block; width:22px; height:22px; transition: transform .2s; }
   .home a:active { transform: translateY(1px) scale(.97); }
   @media (min-width: 1320px) { .home { position:absolute; top:16px; left:16px; margin:0; } }   /* wide screens: in the empty margin */
+  /* folding: an SVG chevron that turns when open, instead of the small native triangle */
+  summary { list-style:none; display:flex; align-items:center; gap:6px; }
+  summary::-webkit-details-marker { display:none; }
+  summary::before { content:""; flex:none; width:14px; height:14px; background:currentColor; transition: transform .2s; -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M6 3.4l4.6 4.6L6 12.6' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat; mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M6 3.4l4.6 4.6L6 12.6' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat; }
+  details[open] > summary::before { transform: rotate(90deg); }
   details.differ summary { cursor:pointer; margin:8px 0; width:fit-content; }
-  details.differ summary:hover { color:var(--agree-ink); }
+  details.differ summary { align-items:flex-start; } details.differ summary::before { margin-top:5px; }
 
   /* a try fits the screen without scrolling where it can: instructions beside the practice, tighter cards and rows */
   .try main { padding:16px; }
@@ -122,13 +133,39 @@
   .try #intro li::before { content:""; display:inline-block; width:5px; height:5px; border-radius:50%; background:currentColor; margin:0 8px 3px 0; }
   .try .fb { align-items:center; justify-content:space-between; gap:8px 16px; flex-wrap:wrap; }
   .try .fb span { flex:1 1 320px; } .try .fb button { flex:none; }
-  .try .pbody .tablewrap { flex:none; } .try .pq { flex:1; min-width:280px; } .try .pq .q { margin-top:0; }
-  @media (prefers-reduced-motion: reduce) { * { animation:none !important; transition:none !important; } }
+  .try #intro li { padding-left:13px; text-indent:-13px; }
+  .try #sample th.rhs, .try #sample td.rhs { position:sticky; right:0; z-index:1; } .try #sample th.rhs { z-index:2; }   /* phones: the asked column stays in view */
+  .try .pbody .tablewrap { flex:none; } .try .pq { flex:1; min-width:280px; } .try #intro .pq .q { margin:0 0 12px; }
+  @media (hover:hover) {                       /* hover effects only where a pointer hovers: on touch screens they stick to the last tap */
+    button.main:hover:not([aria-disabled]) { transform: translateY(-2px); filter: brightness(1.15); box-shadow: 0 3px 7px rgba(36,54,75,.26), 0 8px 26px rgba(36,54,75,.5); }
+    .stop button:hover { transform: translateY(-2px); color:#b42318; background:#fff7f6; box-shadow: inset 0 0 0 1px #ef9a92, 0 3px 6px rgba(196,55,47,.1), 0 8px 22px rgba(196,55,47,.32); }
+    .stop button:hover .ico { background:#c4372f; color:#fff; transform: scale(1.12); }
+    .ans:hover:not([aria-disabled]) { transform: translateY(-2px); filter: brightness(1.05); box-shadow: 0 3px 7px rgba(var(--glow),.26), 0 8px 26px rgba(var(--glow),.5); }
+    .ans.dk:hover:not([aria-disabled]) { box-shadow: inset 0 0 0 1px #9aa4b1, 0 3px 6px rgba(31,41,55,.1), 0 8px 22px rgba(31,41,55,.23); }
+    .home a:hover { transform: translateY(-2px); color:var(--agree-ink); box-shadow: inset 0 0 0 1px #9db8e0, 0 3px 6px rgba(23,78,166,.1), 0 8px 22px rgba(23,78,166,.28); }
+    .home a:hover .mark { transform: rotate(-8deg) scale(1.08); }
+    details.differ summary:hover, details.docs summary:hover { color:var(--agree-ink); }
+    a:hover { text-decoration-color:currentColor; }
+  }
+  :is(button, a, summary, input, select, textarea, .tablewrap):focus-visible { outline:2px solid #174ea6; outline-offset:3px; }
+  .ans:focus-visible:not([aria-disabled]) { transform: translateY(-2px); }
+  #rtitle:focus { outline:none; }
+  @media (forced-colors:active) { .ans, button.main, .stop button, .home a { border:1px solid ButtonText; } }
+  @media (hover:none) and (pointer:coarse) { .ans kbd, button.main kbd, .keyhint { display:none; } }   /* touch: the keys do nothing */
+  @media (pointer:coarse) {                   /* touch: larger invisible tap areas around the small pills */
+    .ans, button.main, .stop button, .home a { position:relative; touch-action:manipulation; }
+    .ans::after, button.main::after { content:""; position:absolute; inset:-6px -5px; }
+    .stop button::after, .home a::after { content:""; position:absolute; inset:-8px -5px; }
+    details.docs a.doc { display:inline-block; padding:6px 0; } summary { padding:6px 0; }
+  }
+  @media (max-width:480px) { .btns { gap:8px; } .ans { padding-right:13px; } .stop { margin-left:0; } .try #rows { margin-left:0; } .try .card { padding:14px 16px; } }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation:none !important; transition:none !important; } }
 </style>
 </head>
 <body>
 <main>
-<nav class="home"><a href="/" title="Back to the start page"><span class="ico"><svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 1.2 0.8 7.6h2.2V14.5h3.8v-4.2h2.4v4.2h3.8V7.6h2.2z"/></svg></span>Home</a></nav>
+<p id="say" class="sr" aria-live="polite"></p>
+<nav class="home"><a href="/" title="Back to the start page"><svg class="mark" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><linearGradient id="c3n" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3d5a7d"/><stop offset="1" stop-color="#1f3047"/></linearGradient><linearGradient id="c3g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3ec266"/><stop offset="1" stop-color="#1a7f37"/></linearGradient></defs><rect x="2" y="2" width="31" height="31" rx="8" fill="url(#c3n)"/><rect x="7" y="8" width="6.5" height="4.2" rx="1.3" fill="#a9c8ff"/><rect x="15" y="8" width="6.5" height="4.2" rx="1.3" fill="#ffc88c"/><rect x="23" y="8" width="5" height="4.2" rx="1.3" fill="#fff" fill-opacity=".9"/><rect x="7" y="14.5" width="6.5" height="4.2" rx="1.3" fill="#a9c8ff" fill-opacity=".75"/><rect x="15" y="14.5" width="6.5" height="4.2" rx="1.3" fill="#ffc88c" fill-opacity=".75"/><rect x="23" y="14.5" width="5" height="4.2" rx="1.3" fill="#fff" fill-opacity=".65"/><rect x="7" y="21" width="6.5" height="4.2" rx="1.3" fill="#a9c8ff" fill-opacity=".5"/><rect x="15" y="21" width="6.5" height="4.2" rx="1.3" fill="#ffc88c" fill-opacity=".5"/><circle cx="30.5" cy="30.5" r="8" fill="url(#c3g)" stroke="#fff" stroke-width="2.4"/><path d="M26.7 30.7l2.6 2.6 5-5.4" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Home</a></nav>
 <p id="net" class="card hidden" style="background:#fff4e5;border-color:#f0c58a">The connection to the server was lost. Trying again&hellip; Your answers so far are kept.</p>
 
 <section id="intro">
@@ -137,17 +174,17 @@
     <p>You will see a table and answer questions about its <b>rules</b>. Each question names some attributes
        (columns) and asks whether two records that agree on them <b>must</b> also agree on another attribute.</p>
     <p>A question is about every valid state of the table, not only about the ten sample rows you see.
-       The rows only show what the values look like. Answer</p>
+       <span id="rowsnote">The rows only show what the values look like.</span> Answer</p>
     <ul>
       <li><b>Yes</b> if the rule must always hold,</li>
       <li><b>No</b> if two valid records could break it,</li>
-      <li><b>Don't know</b> if you cannot tell.</li>
+      <li><b>Don't know</b> if you cannot tell, which leaves the rule undecided.</li>
     </ul>
     <p id="docnote" class="hidden">The documentation of the table: <span id="doclinks"></span><br>You can open it at any time, also with the links above the questions.</p>
     <p id="studylen">There are at most about 130 questions and at most about 55 minutes of answering. You can stop at any time
        with the Stop button, without giving a reason.</p>
     <p class="hidden" id="trylen">Cert3NF asks until your answers certify a design, at most 100 questions. You can stop at
-       any time and see the design so far. Keys: <b>Y</b> yes, <b>N</b> no, <b>D</b> don't know.</p>
+       any time and see the design so far. <span class="keyhint">Keys: <b>Y</b> yes, <b>N</b> no, <b>D</b> don't know.</span></p>
     <p class="muted" id="practnote">Two practice questions follow. They are not part of the study.</p>
     <p class="muted hidden" id="trynote">This is a try: none of its answers are part of the study.</p>
   </div>
@@ -161,8 +198,8 @@
       <span class="muted" id="counter"></span>
     </div>
     <div id="docs" class="muted"></div>
-    <div class="legend muted" style="margin:8px 0"><span style="background:var(--agree)">the two records agree here</span><span style="background:var(--rhs)">must they agree here?</span></div>
-    <div class="tablewrap"><table id="sample"></table></div>
+    <div class="legend muted" style="margin:8px 0"><span style="background:var(--agree)">the two records agree here</span><span style="background:var(--rhs)">must they agree here?</span><span class="free">they may differ here</span></div>
+    <div class="tablewrap" tabindex="0" role="region" aria-label="Ten sample records"><table id="sample"></table></div>
     <p class="muted" id="rows"></p>
   </div>
   <div class="card" id="qcard">
@@ -170,9 +207,9 @@
     <p class="q" id="qtext"></p>
     <div class="qrow">
       <div class="btns">
-        <button class="ans yes" data-a="yes"><span class="ico" data-i="yes"></span>Yes<kbd>Y</kbd></button>
-        <button class="ans no" data-a="no"><span class="ico" data-i="no"></span>No<kbd>N</kbd></button>
-        <button class="ans dk" data-a="dk"><span class="ico" data-i="dk"></span>Don't know<kbd>D</kbd></button>
+        <button class="ans yes" data-a="yes" aria-keyshortcuts="Y"><span class="ico" data-i="yes"></span>Yes<kbd aria-hidden="true">Y</kbd></button>
+        <button class="ans no" data-a="no" aria-keyshortcuts="N"><span class="ico" data-i="no"></span>No<kbd aria-hidden="true">N</kbd></button>
+        <button class="ans dk" data-a="dk" aria-keyshortcuts="D"><span class="ico" data-i="dk"></span>Don't know<kbd aria-hidden="true">D</kbd></button>
       </div>
       <div class="stop"><button id="stopbtn"><span class="ico" data-i="stop"></span>Stop the session</button></div>
     </div>
@@ -223,23 +260,26 @@ const $ = s => document.querySelector(s);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 let META = null, CUR = null, SHOWN = 0;
 const TRY = /^\/s\/T[EPU]0[1-3]-/.test(location.pathname);    // a try from the start page: a demo session
+const NAME = {ssb_customer: "Customers", tpcds_core: "Store sales", abs_mb: "Mesh blocks"};   // as on the start page
+const TYPICAL = {ssb_customer: 30, tpcds_core: 30, abs_mb: 55};   // questions when the answers match the documentation
+const STOP = TRY ? ["Stop and see the design", "Press again to see the design"] : ["Stop the session", "Press again to stop"];
 // icons as SVG, drawn with the text colour, so that they look the same in every font
 const svg = (body, w = 2.2) => `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${body}</svg>`;
 const SVG = {yes: svg('<path d="M3.3 8.6l3 3 6.4-6.9"/>'),
              no: svg('<path d="M4.6 4.6l6.8 6.8M11.4 4.6l-6.8 6.8"/>'),
              dk: svg('<path d="M5.7 6a2.3 2.3 0 1 1 3.4 2c-.7.4-1.1.9-1.1 1.6v.4"/><circle cx="8" cy="12.9" r="1.05" fill="currentColor" stroke="none"/>', 1.9),
-             stop: svg('<rect x="3.5" y="3.5" width="9" height="9" rx="1.6" fill="currentColor" stroke="none"/>'),
+             stop: svg('<rect x="2.6" y="2.6" width="10.8" height="10.8" rx="2" fill="currentColor" stroke="none"/>'),
              again: svg('<path d="M12.9 8.6A5 5 0 1 1 11.4 4.2"/><path d="M12 1.8v2.9H9.1"/>', 2),
              part: svg('<circle cx="8" cy="8" r="5.6"/><path d="M8 2.4a5.6 5.6 0 0 1 0 11.2z" fill="currentColor" stroke="none"/>', 1.8),
              none: svg('<circle cx="8" cy="8" r="5.6"/>', 1.8)};
 document.querySelectorAll("[data-i]").forEach(e => e.innerHTML = SVG[e.dataset.i]);
 const LABEL = {yes: "Yes", no: "No", dk: "Don't know"}, KEY = {yes: "Y", no: "N", dk: "D"};
-const PHASE = {disc: ["p1", "Phase 1 · Discovery: a rule the design relies on"],
-               max: ["p2", "Phase 2 · Certification: a maximal set"],
-               guess: ["p2", "Phase 2 · Certification: finding the missing rule"],
-               qx: ["p2", "Phase 2 · Certification: finding the missing rule"]};
+const PHASE = {disc: ["p1", "Phase 1 · Discovery: a candidate rule found in the data"],
+               max: ["p2", "Phase 2 · Certification: checking that no rule is missing"],
+               guess: ["p2", "Phase 2 · Certification: narrowing down the rule you just confirmed"],
+               qx: ["p2", "Phase 2 · Certification: narrowing down the rule you just confirmed"]};
 const ansButtons = attr => ["yes", "no", "dk"].map(a =>
-  `<button class="ans ${a}" ${attr}="${a}"><span class="ico">${SVG[a]}</span>${LABEL[a]}<kbd>${KEY[a]}</kbd></button>`).join("");
+  `<button class="ans ${a}" ${attr}="${a}" aria-keyshortcuts="${KEY[a]}"><span class="ico">${SVG[a]}</span>${LABEL[a]}<kbd aria-hidden="true">${KEY[a]}</kbd></button>`).join("");
 function replay(el) { el.classList.remove("enter"); void el.offsetWidth; el.classList.add("enter"); }
 // paths are relative to the session's page /s/<code>/<n>/; a failed request is tried again (the server may be restarting)
 async function api(p, body) {
@@ -249,6 +289,7 @@ async function api(p, body) {
       if (r.ok) { $("#net").classList.add("hidden"); return await r.json(); }
     } catch (e) {}
     $("#net").classList.remove("hidden");
+    if (k === 0) $("#say").textContent = "Connection lost. Trying again.";
     await new Promise(res => setTimeout(res, Math.min(2000 * (k + 1), 10000)));
   }
 }
@@ -259,9 +300,9 @@ const ORD = {attrs:["Order","Name","City","Date"],
         ["o4","Brown","Paris","5 March"],["o5","Smith","Paris","5 March"]]};
 const PRACTICE = [
   {lhs:["Name"], rhs:"City", text:"Must any two records that agree on <b class='agree'>Name</b> also agree on <b class='rhs'>City</b>?", answer:"no",
-   why:"No. In these rows every Smith lives in Paris, but two different customers called Smith may live in different cities, so the rule need not hold."},
+   why:"The answer is no: in these rows every Smith lives in Paris, but two different customers called Smith may live in different cities."},
   {lhs:["Order","Name","Date"], rhs:"City", text:"Must any two records that agree on all attributes except <b class='rhs'>City</b> also agree on <b class='rhs'>City</b>?", answer:"yes",
-   why:"Yes. Two such records have the same order, and an order belongs to one customer with one city."}];
+   why:"The answer is yes: two such records have the same order, and an order belongs to one customer with one city."}];
 function table(el, attrs, rows, lhs, rhs) {
   const cls = a => lhs.includes(a) ? "agree" : (a === rhs ? "rhs" : "");
   el.innerHTML = "<tr>" + attrs.map(a => `<th class="${cls(a)}">${esc(a)}</th>`).join("") + "</tr>" +
@@ -269,7 +310,7 @@ function table(el, attrs, rows, lhs, rhs) {
 }
 function practice(k) {
   const p = PRACTICE[k], box = $("#practice");
-  box.innerHTML = `<h2>Practice ${k + 1} of 2${TRY ? '<a class="skip" href="#" id="pskip">skip the practice</a>' : ""}</h2>
+  box.innerHTML = `<div class="phead"><h2>Practice ${k + 1} of 2</h2>${TRY ? '<a class="skip" href="#" id="pskip">skip the practice</a>' : ""}</div>
     <div class="pbody"><div class="tablewrap"><table id="ptab"></table></div>
     <div class="pq"><p class="q">${p.text}</p>
     <div class="btns">${ansButtons("data-p")}</div>
@@ -278,14 +319,18 @@ function practice(k) {
   table($("#ptab"), ORD.attrs, ORD.rows, p.lhs, p.rhs);
   if (TRY) $("#pskip").onclick = e => { e.preventDefault(); start(); };
   box.querySelectorAll("[data-p]").forEach(b => b.onclick = () => {
-    box.querySelectorAll("[data-p]").forEach(x => x.disabled = true);
+    if (b.hasAttribute("aria-disabled")) return;
+    box.querySelectorAll("[data-p]").forEach(x => x.setAttribute("aria-disabled", "true"));   // not disabled: the focus stays
     b.classList.add("picked");
     api("api/practice", {practice: k + 1, answer: b.dataset.p});
     const fb = $("#fb"), go = k === 0 ? "Next practice question" : "Start";
+    const why = (b.dataset.p === p.answer ? "Right. " : b.dataset.p === "dk" ? "" : "Not quite. ") + p.why;
+    fb.classList.toggle("off", b.dataset.p !== p.answer);
     fb.style.display = TRY ? "flex" : "block";               // a try: the explanation and the button on one line where they fit
-    fb.innerHTML = TRY ? `<span>${esc(p.why)}</span><button class="main" id="pnext">${go}<kbd>Enter</kbd></button>`
-                       : esc(p.why) + `<p><button class="main" id="pnext">${go}</button></p>`;
+    fb.innerHTML = TRY ? `<span>${esc(why)}</span><button class="main" id="pnext">${go}<kbd aria-hidden="true">Enter</kbd></button>`
+                       : esc(why) + `<p><button class="main" id="pnext">${go}</button></p>`;
     $("#pnext").onclick = () => k === 0 ? practice(1) : start();
+    $("#say").textContent = why; $("#pnext").focus({preventScroll: true});
   });
 }
 
@@ -293,16 +338,17 @@ function practice(k) {
 async function start() {
   $("#intro").classList.add("hidden"); $("#ask").classList.remove("hidden");
   $("#qtext").textContent = "Choosing the first question…";
-  document.querySelectorAll("[data-a]").forEach(b => b.disabled = true);
+  document.querySelectorAll("[data-a]").forEach(b => b.setAttribute("aria-disabled", "true"));
   next(await api("api/question"));
 }
 function next(q) {
   if (q.done) return finish();
   CUR = q; SHOWN = performance.now();
-  $("#counter").textContent = "Question " + q.i;
+  const typ = TRY && TYPICAL[META.relation.replace(/^fresh_/, "")];
+  $("#counter").textContent = "Question " + q.i + (typ ? (q.i <= typ ? ` of about ${typ}` : " · at most 100") : "");
   const ph = TRY && PHASE[q.kind];
   $("#phase").classList.toggle("hidden", !ph);
-  if (ph) { $("#phase").className = "phase " + ph[0]; $("#phase").textContent = ph[1]; }
+  if (ph) { const [tag, what] = ph[1].split(": "); $("#phase").className = "phase " + ph[0]; $("#phase").innerHTML = `<b>${tag}</b>${what}`; }
   document.querySelectorAll("[data-a]").forEach(b => b.classList.remove("picked"));
   replay($("#qcard"));
   if (TRY) {                       // in a try, the columns that the question names come first, so that wide tables need no scrolling
@@ -320,31 +366,40 @@ function next(q) {
     ? `Must any two records that agree on all attributes except ${list(q.listed)} also agree on ${fmt(q.rhs)}?`
     : (q.listed.length ? `Must any two records that agree on ${list(q.listed)} also agree on ${fmt(q.rhs)}?`
                        : `Must all records agree on ${fmt(q.rhs)}?`);
-  document.querySelectorAll("[data-a]").forEach(b => b.disabled = false);
+  document.querySelectorAll("[data-a]").forEach(b => b.removeAttribute("aria-disabled"));
+  $("#say").textContent = `Question ${q.i}. ${$("#qtext").textContent}`;
   window.scrollTo({top: 0});
   const card = $("#qcard").getBoundingClientRect();         // a try on a small screen: keep the question and its buttons in view
   if (TRY && card.bottom > window.innerHeight) window.scrollTo({top: card.bottom - window.innerHeight + 16});
 }
 document.querySelectorAll("[data-a]").forEach(b => b.onclick = async () => {
   if (!CUR) return;
-  document.querySelectorAll("[data-a]").forEach(x => x.disabled = true);
+  document.querySelectorAll("[data-a]").forEach(x => x.setAttribute("aria-disabled", "true"));
   b.classList.add("picked");
   const q = CUR; CUR = null;
   next(await api("api/answer", {qid: q.qid, answer: b.dataset.a, rt_ms: Math.round(performance.now() - SHOWN)}));
 });
+let ARMED = null;                       // Stop asks for a second press, not a confirm(), which some phone browsers never show
 $("#stopbtn").onclick = async () => {
-  if (!confirm("Stop the session now? Your answers so far are kept.")) return;
+  const b = $("#stopbtn"), t = b.lastChild;
+  if (!ARMED) {
+    b.classList.add("armed"); t.textContent = STOP[1];
+    $("#say").textContent = "Press again to stop. Your answers so far are kept.";
+    ARMED = setTimeout(() => { ARMED = null; b.classList.remove("armed"); t.textContent = STOP[0]; }, 4000);
+    return;
+  }
+  clearTimeout(ARMED); ARMED = null;
   await api("api/stop", {}); finish();
 };
 // ---------- keys: Y, N, D answer the question (or the practice question) on the screen, Enter goes on ----------
 document.addEventListener("keydown", e => {
-  if (e.ctrlKey || e.metaKey || e.altKey || /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) return;
-  const a = {y: "yes", n: "no", d: "dk"}[e.key.toLowerCase()];
+  if (e.repeat || e.ctrlKey || e.metaKey || e.altKey || /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) return;
+  const a = {y: "yes", n: "no", d: "dk"}[(e.key || "").toLowerCase()];
   const go = $("#pnext");
   if (a) {
-    const b = document.querySelector(`#ask:not(.hidden) [data-a="${a}"]:not(:disabled), #intro:not(.hidden) [data-p="${a}"]:not(:disabled)`);
+    const b = document.querySelector(`#ask:not(.hidden) [data-a="${a}"]:not([aria-disabled]), #intro:not(.hidden) [data-p="${a}"]:not([aria-disabled])`);
     if (b) { e.preventDefault(); b.click(); }
-  } else if (e.key === "Enter" && go && !$("#intro").classList.contains("hidden")) {
+  } else if (e.key === "Enter" && go && !$("#intro").classList.contains("hidden") && !e.target.closest("a, button, summary")) {
     e.preventDefault(); go.click();
   }
 });
@@ -355,32 +410,42 @@ async function result() {
   let r = await api("api/result");
   for (let k = 0; !r.done && k < 20; k++) { await new Promise(res => setTimeout(res, 500)); r = await api("api/result"); }
   const n = (x, w) => `${x} ${w}${x === 1 ? "" : "s"}`;
-  $("#rsum").textContent = `${n(r.answers, "answer")}: ${r.yes} yes, ${r.no} no` + (r.dk ? `, ${r.dk} don't know` : "");
+  const rel = META.relation.replace(/^fresh_/, "");
+  $("#rsum").textContent = `${NAME[rel] || rel} · ${n(r.answers, "answer")}: ${r.yes} yes, ${r.no} no` + (r.dk ? `, ${r.dk} don't know` : "");
   if (!r.design) {
     $("#rbadge").className = "badge part"; $("#rbadge").innerHTML = SVG.none;
     $("#rtitle").textContent = "No design yet";
     $("#rintro").textContent = "The try stopped before Cert3NF could build a design. Start another one whenever you like.";
   } else {
-    const cert = r.certified;
+    const cert = r.certified, k = r.confirmed.length;
+    const from = k ? `the table's key and the ${n(k, "rule")} you confirmed` : "the table's key alone";
+    const cause = {voluntary: "You stopped before the certificate was complete.",
+                   time: "The try reached its 40-minute limit before the certificate was complete.",
+                   idle: "The try was closed after 30 minutes without an answer."}[r.stop_reason]
+      || (r.dk ? `Your ${n(r.dk, "don't-know answer")} left rules undecided, so Cert3NF cannot certify the design.`
+               : "The 100 questions ran out before the certificate was complete.");
     $("#rbadge").className = "badge " + (cert ? "ok" : "part"); $("#rbadge").innerHTML = cert ? SVG.yes : SVG.part;
     $("#rtitle").textContent = cert ? "Your answers certify this design" : "The design so far";
     $("#rintro").textContent = cert
-      ? `Cert3NF synthesized this Third Normal Form design from the ${n(r.confirmed.length, "rule")} you confirmed, and your no answers rule out every other rule that would change it. Each schema is shown with its key underlined.`
-      : `The try ended before the certificate was complete. This design rests on the ${n(r.confirmed.length, "rule")} you confirmed so far. Each schema is shown with its key underlined.`;
+      ? `Cert3NF synthesized this design from ${from}. It is in Third Normal Form under these rules, and your answers and the stored records rule out every other rule that would change it. Keys are underlined.`
+      : `${cause} This design rests on ${from}. Keys are underlined.`;
     $("#rdesign").innerHTML = r.design.map(s =>
       `<span class="schema">(${s.key.map(a => `<u>${esc(a)}</u>`).concat(s.other.map(esc)).join(", ")})</span>`).join("");
-    const chk = (ok, w) => `<span class="${ok ? "y" : "n"}">${ok ? SVG.yes : SVG.no}${w}</span>`;
-    $("#rchecks").innerHTML = "Checked against the documentation of the table: " +
+    const chk = (ok, w) => `<span class="${ok ? "y" : "n"}">${ok ? SVG.yes : SVG.no}${ok ? "" : "not "}${w}</span>`;
+    $("#rchecks").innerHTML = "Under the documented rules of the table, the design is " +
       chk(r.lossless, "lossless") + chk(r.preserving, "dependency-preserving") + chk(r.nf3, "in 3NF");
   }
   if (r.differ.length) {
-    $("#rdiffer").innerHTML = `<details class="differ"><summary>${n(r.differ.length, "answer")} of yours ${r.differ.length === 1 ? "differs" : "differ"} from the documentation</summary><ul>` +
-      r.differ.map(d => `<li>${esc(d.text)} You: <span class="tag ${d.answer}">${d.answer}</span>, documentation: <span class="tag ${d.documented}">${d.documented}</span></li>`).join("") + "</ul></details>";
+    const fails = r.design && r.certified ? [r.lossless, r.preserving, r.nf3].filter(x => !x).length : 0;
+    $("#rdiffer").innerHTML = `<details class="differ"><summary>${n(r.differ.length, "answer")} of yours ${r.differ.length === 1 ? "differs" : "differ"} from the documentation` +
+      (fails ? `, hence the failed ${fails === 1 ? "check" : "checks"} above` : "") + "</summary><ul>" +
+      r.differ.map(d => `<li><span>${esc(d.text)}</span><span class="tag ${d.answer}">you: ${d.answer}</span><span class="tag ${d.documented}">docs: ${d.documented}</span></li>`).join("") + "</ul></details>";
   } else if (r.answers) {
     $("#rdiffer").innerHTML = "<p>Every answer of yours agrees with the documentation of the table.</p>";
   }
   $("#result").classList.remove("hidden");
   window.scrollTo({top: 0});
+  $("#rtitle").tabIndex = -1; $("#rtitle").focus({preventScroll: true});   // screen readers start at the verdict
 }
 
 function finish() {
@@ -404,12 +469,19 @@ function bye() {
 if (TRY) {                                                  // a try from the start page, before anything loads
   document.body.classList.add("try");
   $("#studylen").classList.add("hidden"); $("#trylen").classList.remove("hidden");
-  $("#practnote").textContent = "Two practice questions on a small example follow; you can skip them. This is a try: none of its answers are part of the study.";
+  $("#practnote").textContent = "Two practice questions on a small example follow. You can skip them.";
+  $("#rowsnote").textContent = "Every rule you are asked about holds on all stored records, so the rows never refute it: decide from what the attributes mean.";
+  $("#stopbtn").lastChild.textContent = STOP[0];
+  PRACTICE[1] = {lhs: ["Order", "Name"], rhs: "City", answer: "yes",
+    text: "Must any two records that agree on all attributes except <b>Date</b> and <b class='rhs'>City</b> also agree on <b class='rhs'>City</b>?",
+    why: "The answer is yes: two such records have the same order, whatever their dates, and an order belongs to one customer with one city."};
   $("#byetext").innerHTML = 'This try is finished. <a href="/">Back to the start page</a>.';
 }
 (async () => {
   META = await api("api/meta");
-  $("#relname").textContent = "Table: " + META.relation.replace(/^fresh_/, "");
+  const rel = META.relation.replace(/^fresh_/, "");
+  if (TRY) { $("#relname").innerHTML = `${esc(NAME[rel] || rel)} <span class="muted">${esc(rel)}</span>`; document.title = "Cert3NF: " + (NAME[rel] || rel); }
+  else $("#relname").textContent = "Table: " + rel;
   $("#rows").textContent = `Ten of the ${META.rows.toLocaleString("en")} records, drawn at random.`;
   if (META.docs.length) {
     const links = META.docs.map(d => `<a class="doc" href="${esc(d.href)}" target="_blank" rel="noopener">${esc(d.name)}</a>`).join("");
