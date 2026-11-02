@@ -285,8 +285,8 @@ class Session:
     # ---------------- the end of a demo session ----------------
     def result(self):
         """what a demo session shows at its end: the counts, the method's verdict, the design that 3NF synthesis
-        returns on sigma0 and the confirmed FDs (as in v5study's output, with a minimal key per schema), its check
-        against the documented FDs, and the answers that differ from them"""
+        returns on sigma0 and the confirmed FDs (as in v5study's output, with a minimal key per schema and the
+        schemata of one key merged), its check against the documented FDs, and the answers that differ from them"""
         with self.lock:
             if not self.done:
                 return {"done": False}
@@ -315,12 +315,24 @@ class Session:
                         return list(c)
             return sorted(s)
 
+        # the synthesis keeps one schema per atomic FD; for display, schemata with the same smallest key are merged
+        # where the merged schema stays in 3NF under the confirmed FDs, and the checks are redone on that design
+        sa = drd.E2.atomic_closure(b["R"], b["sigma0"] + yes)
+        groups = {}
+        for s in D:
+            groups.setdefault(tuple(key(s)), []).append(s)
+        M = []
+        for g in groups.values():
+            u = frozenset().union(*g)
+            M.extend([u] if len(g) > 1 and AC.S.is_3nf(u, AC.S.proj(sa, u)) else g)
+        M = [s for s in M if not any(s < t for t in M)]
+        gold = drd.E2.atomic_closure(b["R"], b["sigma0"] + b["gold"])        # the documented FDs, as in judge()
+        m = AC.S.metrics(b["R"], [list(s) for s in M], gold, gold)
         design = []
-        for s in sorted(D, key=lambda s: (-len(s), sorted(s))):
+        for s in sorted(M, key=lambda s: (-len(s), sorted(s))):
             k = key(s)
             design.append({"key": [names[i] for i in k], "other": [names[i] for i in sorted(s) if i not in k]})
         res.update({"certified": out["certified"], "asked": out["questions"], "by_data": out["data_no"],
                     "confirmed": [[l, a] for l, a in out["certificate"]["yes"]], "design": design,
-                    "good": out["gold_good"], "lossless": out["gold_lossless"],
-                    "preserving": out["gold_preserving"], "nf3": out["gold_nf3"]})
+                    "lossless": m["lossless"], "preserving": m["u_str"] == 0, "nf3": m["nf3"]})
         return res
