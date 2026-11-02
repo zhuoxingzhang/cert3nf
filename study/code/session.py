@@ -302,7 +302,7 @@ class Session:
     def result(self):
         """what a demo session shows at its end: the counts, the method's verdict, the design that 3NF synthesis
         returns on sigma0 and the confirmed FDs (as in v5study's output, with a minimal key per schema and the
-        schemata of one key merged), its check against the documented FDs, and the answers that differ from them;
+        schemata of equivalent keys merged), its check against the documented FDs, and the answers that differ from them;
         for an uploaded table, the check against the confirmed FDs and the SQL types of the columns"""
         with self.lock:
             if not self.done:
@@ -334,12 +334,13 @@ class Session:
                         return list(c)
             return sorted(s)
 
-        # the synthesis keeps one schema per atomic FD; for display, schemata with the same smallest key are merged
-        # where the merged schema stays in 3NF under the confirmed FDs, and the checks are redone on that design
+        # the synthesis keeps one schema per atomic FD; for display, schemata whose smallest keys determine each other
+        # (as in Bernstein's synthesis) are merged where the merged schema stays in 3NF under the confirmed FDs, and the
+        # checks are redone on that design
         sa = drd.E2.atomic_closure(b["R"], b["sigma0"] + yes)
         groups = {}
         for s in D:
-            groups.setdefault(tuple(key(s)), []).append(s)
+            groups.setdefault(K.closure(K.mask(key(s)), F), []).append(s)
         M = []
         for g in groups.values():
             u = frozenset().union(*g)
