@@ -9,7 +9,7 @@
           --agree:#dbe9ff; --agree-ink:#174ea6; --rhs:#ffe3c2; --rhs-ink:#9a4a00; --btn:#24364b; }
   * { box-sizing: border-box; }
   body { margin:0; background:var(--bg); color:var(--ink); font:16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
-  main { max-width: 1100px; margin: 0 auto; padding: 24px 16px 48px; }
+  main { max-width: 1100px; margin: 0 auto; padding: 24px 16px; }
   .card { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:20px 22px; margin-bottom:16px; }
   h1 { font-size:22px; margin:0 0 12px; } h2 { font-size:18px; margin:0 0 10px; }
   p { margin: 8px 0; } .muted { color:var(--muted); font-size:14px; }
@@ -33,7 +33,8 @@
   button:disabled { opacity:.45; cursor:default; }
   .top { display:flex; justify-content:space-between; align-items:baseline; gap:12px; flex-wrap:wrap; }
   .legend span { display:inline-block; padding:1px 8px; border-radius:4px; margin-right:8px; font-size:13px; }
-  .stop { margin-top:18px; text-align:right; }
+  .qrow { display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+  .stop { margin-left:auto; }
   /* stop: a quiet pill that turns red on hover */
   .stop button { display:inline-flex; align-items:center; gap:7px; border:none; color:#5f6b7a; padding:5px 14px 5px 6px; font-size:14px;
                  font-weight:600; box-shadow: inset 0 0 0 1px #c5ccd6, 0 2px 6px rgba(0,0,0,.05); }
@@ -88,11 +89,37 @@
   .tag { font-size:12px; font-weight:600; padding:1px 7px; border-radius:4px; margin-left:4px; }
   .tag.yes { background:#e3f5e8; color:#1a7f37; } .tag.no { background:#fde8e6; color:#b42318; }
   a.ans { text-decoration:none; }
+  /* home: back to the start page from every screen */
+  .home { margin:0 0 10px; }
+  .home a { display:inline-flex; align-items:center; gap:6px; font-size:14px; font-weight:600; color:#4a5565; text-decoration:none;
+            padding:3px 12px 3px 4px; border-radius:999px; background:#fff; box-shadow: inset 0 0 0 1px #c5ccd6, 0 2px 6px rgba(0,0,0,.05);
+            transition: transform .12s, box-shadow .12s, color .12s; }
+  .home .ico { display:inline-grid; place-items:center; width:22px; height:22px; border-radius:50%; background:#eef1f5;
+               transition: background .12s, color .12s; }
+  .home a:hover { transform: translateY(-2px); color:var(--agree-ink); box-shadow: inset 0 0 0 1px #9db8e0, 0 8px 16px rgba(23,78,166,.12); }
+  .home a:hover .ico { background:var(--agree-ink); color:#fff; }
+  .home a:active { transform: translateY(1px) scale(.97); }
+  details.differ summary { cursor:pointer; margin:8px 0; width:fit-content; }
+  details.differ summary:hover { color:var(--agree-ink); }
+
+  /* a try fits the screen without scrolling where it can: instructions beside the practice, tighter cards and rows */
+  .try main { padding-top:16px; }
+  .try .card { padding:16px 20px; margin-bottom:12px; }
+  .try table { line-height:1.3; } .try th, .try td { padding:4px 9px; }
+  .try .legend { display:flex; flex-wrap:wrap; align-items:center; row-gap:4px; } .try #rows { margin:0 0 0 auto; }
+  details.docs summary { cursor:pointer; width:fit-content; color:var(--agree-ink); }
+  details.docs[open] summary { margin-bottom:2px; }
+  .try .q { margin:2px 0 12px; }
+  @media (min-width: 900px) {
+    .try #intro:not(.hidden) { display:grid; grid-template-columns: 1fr 1fr; gap:12px; align-items:start; }
+    .try #intro .card { margin-bottom:0; }
+  }
   @media (prefers-reduced-motion: reduce) { * { animation:none !important; transition:none !important; } }
 </style>
 </head>
 <body>
 <main>
+<nav class="home"><a href="/" title="Back to the start page"><span class="ico"><svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 1.2 0.8 7.6h2.2V14.5h3.8v-4.2h2.4v4.2h3.8V7.6h2.2z"/></svg></span>Home</a></nav>
 <p id="net" class="card hidden" style="background:#fff4e5;border-color:#f0c58a">The connection to the server was lost. Trying again&hellip; Your answers so far are kept.</p>
 
 <section id="intro">
@@ -125,19 +152,21 @@
       <span class="muted" id="counter"></span>
     </div>
     <div id="docs" class="muted"></div>
-    <p class="legend muted"><span style="background:var(--agree)">the two records agree here</span><span style="background:var(--rhs)">must they agree here?</span></p>
+    <div class="legend muted" style="margin:8px 0"><span style="background:var(--agree)">the two records agree here</span><span style="background:var(--rhs)">must they agree here?</span></div>
     <div class="tablewrap"><table id="sample"></table></div>
     <p class="muted" id="rows"></p>
   </div>
   <div class="card" id="qcard">
     <span class="phase hidden" id="phase"></span>
     <p class="q" id="qtext"></p>
-    <div class="btns">
-      <button class="ans yes" data-a="yes"><span class="ico">&#10003;</span>Yes<kbd>Y</kbd></button>
-      <button class="ans no" data-a="no"><span class="ico">&#10007;</span>No<kbd>N</kbd></button>
-      <button class="ans dk" data-a="dk"><span class="ico">?</span>Don't know<kbd>D</kbd></button>
+    <div class="qrow">
+      <div class="btns">
+        <button class="ans yes" data-a="yes"><span class="ico">&#10003;</span>Yes<kbd>Y</kbd></button>
+        <button class="ans no" data-a="no"><span class="ico">&#10007;</span>No<kbd>N</kbd></button>
+        <button class="ans dk" data-a="dk"><span class="ico">?</span>Don't know<kbd>D</kbd></button>
+      </div>
+      <div class="stop"><button id="stopbtn"><span class="ico">&#9632;</span>Stop the session</button></div>
     </div>
-    <div class="stop"><button id="stopbtn"><span class="ico">&#9632;</span>Stop the session</button></div>
   </div>
 </section>
 
@@ -324,8 +353,8 @@ async function result() {
       chk(r.lossless, "lossless") + chk(r.preserving, "dependency-preserving") + chk(r.nf3, "in 3NF");
   }
   if (r.differ.length) {
-    $("#rdiffer").innerHTML = `<p>${n(r.differ.length, "answer")} of yours ${r.differ.length === 1 ? "differs" : "differ"} from the documentation:</p><ul class="differ">` +
-      r.differ.map(d => `<li>${esc(d.text)} You: <span class="tag ${d.answer}">${d.answer}</span>, documentation: <span class="tag ${d.documented}">${d.documented}</span></li>`).join("") + "</ul>";
+    $("#rdiffer").innerHTML = `<details class="differ"><summary>${n(r.differ.length, "answer")} of yours ${r.differ.length === 1 ? "differs" : "differ"} from the documentation</summary><ul>` +
+      r.differ.map(d => `<li>${esc(d.text)} You: <span class="tag ${d.answer}">${d.answer}</span>, documentation: <span class="tag ${d.documented}">${d.documented}</span></li>`).join("") + "</ul></details>";
   } else if (r.answers) {
     $("#rdiffer").innerHTML = "<p>Every answer of yours agrees with the documentation of the table.</p>";
   }
@@ -352,6 +381,7 @@ function bye() {
 }
 
 if (TRY) {                                                  // a try from the start page, before anything loads
+  document.body.classList.add("try");
   $("#trynote").classList.remove("hidden");
   $("#studylen").classList.add("hidden"); $("#trylen").classList.remove("hidden");
   $("#practnote").textContent = "Two practice questions on a small example follow; you can skip them.";
@@ -363,10 +393,13 @@ if (TRY) {                                                  // a try from the st
   $("#rows").textContent = `Ten of the ${META.rows.toLocaleString("en")} records, drawn at random.`;
   if (META.docs.length) {
     const links = META.docs.map(d => `<a class="doc" href="${esc(d.href)}" target="_blank" rel="noopener">${esc(d.name)}</a>`).join("");
+    const many = TRY && META.docs.length > 2;     // a try folds a long list of files, so that the page needs no scrolling
+    const fold = s => `<details class="docs"><summary>${s}${META.docs.length} files</summary>${links}</details>`;
     $("#docnote").classList.remove("hidden");
-    $("#doclinks").innerHTML = links;
-    $("#docs").innerHTML = "Documentation: " + links;
+    $("#doclinks").innerHTML = many ? fold("") : links;
+    $("#docs").innerHTML = many ? fold("Documentation: ") : "Documentation: " + links;
   }
+  if (TRY) $(".legend").append($("#rows"));
   if (META.state === "closed") return bye();               // reopened link: where the session is
   if (META.state === "ended") { $("#intro").classList.add("hidden"); return finish(); }
   if (META.answered > 0) return start();
