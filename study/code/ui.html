@@ -25,8 +25,8 @@
   button { font:inherit; border-radius:999px; border:1px solid var(--btn); padding:8px 18px; cursor:pointer; background:#fff; color:var(--btn);
            transition: transform .12s, box-shadow .12s, filter .12s, background .12s; }
   button.main { border:none; font-weight:600; color:#fff; background:linear-gradient(135deg, #3d5a7d, var(--btn));
-                box-shadow: 0 2px 0 rgba(14,24,36,.25), 0 6px 14px rgba(36,54,75,.18); }
-  button.main:hover:not(:disabled) { transform: translateY(-2px); filter: brightness(1.15); box-shadow: 0 4px 0 rgba(14,24,36,.2), 0 10px 20px rgba(36,54,75,.24); }
+                box-shadow: 0 1px 2px rgba(36,54,75,.22), 0 3px 10px rgba(36,54,75,.28); }
+  button.main:hover:not(:disabled) { transform: translateY(-2px); filter: brightness(1.15); box-shadow: 0 2px 4px rgba(36,54,75,.2), 0 6px 18px rgba(36,54,75,.36); }
   button.main:active:not(:disabled) { transform: translateY(1px) scale(.97); }
   button.main kbd { font:600 11px/1 ui-monospace, Consolas, monospace; padding:2px 5px; border-radius:4px; margin-left:8px;
                     background:rgba(255,255,255,.2); vertical-align:1px; }
@@ -37,11 +37,11 @@
   .stop { margin-left:auto; }
   /* stop: a quiet pill that turns red on hover */
   .stop button { display:inline-flex; align-items:center; gap:7px; border:none; color:#5f6b7a; padding:5px 14px 5px 6px; font-size:14px;
-                 font-weight:600; box-shadow: inset 0 0 0 1px #c5ccd6, 0 2px 6px rgba(0,0,0,.05); }
+                 font-weight:600; box-shadow: inset 0 0 0 1px #c5ccd6, 0 1px 2px rgba(31,41,55,.06), 0 3px 10px rgba(31,41,55,0.07); }
   .stop .ico { display:inline-grid; place-items:center; width:20px; height:20px; border-radius:50%; background:#fde8e6; color:#c4372f;
                font-size:10px; line-height:1; transition: background .12s, color .12s, transform .2s; }
   .stop button:hover { transform: translateY(-2px); color:#b42318; background:#fff7f6;
-                       box-shadow: inset 0 0 0 1px #ef9a92, 0 8px 16px rgba(196,55,47,.14); }
+                       box-shadow: inset 0 0 0 1px #ef9a92, 0 2px 4px rgba(196,55,47,.08), 0 6px 16px rgba(196,55,47,0.22); }
   .stop button:hover .ico { background:#c4372f; color:#fff; transform: scale(1.12); }
   .stop button:active { transform: translateY(1px) scale(.97); }
   .fb { margin-top:10px; padding:10px 12px; border-radius:8px; background:#f1f6ee; border:1px solid #cfe3c4; display:none; }
@@ -52,18 +52,18 @@
 
   /* answer buttons: colour, icon and key per answer; a lift on hover, a press on click */
   .ans { display:inline-flex; align-items:center; gap:7px; font-weight:600; font-size:15px; padding:7px 15px 7px 8px; border-radius:999px;
-         border:none; color:#fff; min-width:0; box-shadow: 0 2px 0 rgba(0,0,0,.14), 0 6px 14px rgba(0,0,0,.08);
+         border:none; color:#fff; min-width:0; --glow:31,41,55; box-shadow: 0 1px 2px rgba(var(--glow),.22), 0 3px 10px rgba(var(--glow),.28);
          transition: transform .12s, box-shadow .12s, filter .12s; }
   .ans .ico { display:inline-grid; place-items:center; width:21px; height:21px; border-radius:50%;
               background:rgba(255,255,255,.24); font-size:12px; line-height:1; }
   .ans kbd { font:600 11px/1 ui-monospace, Consolas, monospace; padding:2px 5px; border-radius:4px; margin-left:1px;
              background:rgba(255,255,255,.22); }
-  .ans.yes { background:linear-gradient(135deg, #34b85a, #1a7f37); }
-  .ans.no  { background:linear-gradient(135deg, #ef6a5e, #c4372f); }
-  .ans.dk  { background:#fff; color:#4a5565; box-shadow: inset 0 0 0 1px #c5ccd6; }
+  .ans.yes { background:linear-gradient(135deg, #34b85a, #1a7f37); --glow:26,127,55; }
+  .ans.no  { background:linear-gradient(135deg, #ef6a5e, #c4372f); --glow:196,55,47; }
+  .ans.dk  { background:#fff; color:#4a5565; box-shadow: inset 0 0 0 1px #c5ccd6, 0 1px 2px rgba(31,41,55,.06), 0 3px 10px rgba(31,41,55,0.07); }
   .ans.dk .ico { background:#eef1f5; } .ans.dk kbd { background:#eef1f5; }
-  .ans:hover:not(:disabled) { transform: translateY(-2px); filter: brightness(1.05); box-shadow: 0 4px 0 rgba(0,0,0,.12), 0 10px 20px rgba(0,0,0,.12); }
-  .ans.dk:hover:not(:disabled) { box-shadow: inset 0 0 0 1px #9aa4b1, 0 8px 16px rgba(0,0,0,.08); }
+  .ans:hover:not(:disabled) { transform: translateY(-2px); filter: brightness(1.05); box-shadow: 0 2px 4px rgba(var(--glow),.2), 0 6px 18px rgba(var(--glow),.36); }
+  .ans.dk:hover:not(:disabled) { box-shadow: inset 0 0 0 1px #9aa4b1, 0 2px 4px rgba(31,41,55,.08), 0 6px 16px rgba(31,41,55,0.13); }
   .ans:active:not(:disabled) { transform: translateY(1px) scale(.97); }
   .ans.picked { animation: pop .28s ease; opacity:1 !important; }
   @keyframes pop { 40% { transform: scale(1.08); } }
@@ -89,14 +89,17 @@
   .tag { font-size:12px; font-weight:600; padding:1px 7px; border-radius:4px; margin-left:4px; }
   .tag.yes { background:#e3f5e8; color:#1a7f37; } .tag.no { background:#fde8e6; color:#b42318; }
   a.ans { text-decoration:none; }
+  .ico svg { display:block; width:12px; height:12px; } .stop .ico svg { width:9px; height:9px; }
+  .badge svg { display:block; width:24px; height:24px; }
+  .checks svg { display:inline-block; width:11px; height:11px; margin-right:5px; vertical-align:-1px; }
   /* home: back to the start page from every screen */
   .home { margin:0 0 10px; }
   .home a { display:inline-flex; align-items:center; gap:6px; font-size:14px; font-weight:600; color:#4a5565; text-decoration:none;
-            padding:3px 12px 3px 4px; border-radius:999px; background:#fff; box-shadow: inset 0 0 0 1px #c5ccd6, 0 2px 6px rgba(0,0,0,.05);
+            padding:3px 12px 3px 4px; border-radius:999px; background:#fff; box-shadow: inset 0 0 0 1px #c5ccd6, 0 1px 2px rgba(31,41,55,.06), 0 3px 10px rgba(31,41,55,0.07);
             transition: transform .12s, box-shadow .12s, color .12s; }
   .home .ico { display:inline-grid; place-items:center; width:22px; height:22px; border-radius:50%; background:#eef1f5;
                transition: background .12s, color .12s; }
-  .home a:hover { transform: translateY(-2px); color:var(--agree-ink); box-shadow: inset 0 0 0 1px #9db8e0, 0 8px 16px rgba(23,78,166,.12); }
+  .home a:hover { transform: translateY(-2px); color:var(--agree-ink); box-shadow: inset 0 0 0 1px #9db8e0, 0 2px 4px rgba(23,78,166,.08), 0 6px 16px rgba(23,78,166,0.18); }
   .home a:hover .ico { background:var(--agree-ink); color:#fff; }
   .home a:active { transform: translateY(1px) scale(.97); }
   @media (min-width: 1320px) { .home { position:absolute; top:16px; left:16px; margin:0; } }   /* wide screens: in the empty margin */
@@ -104,18 +107,22 @@
   details.differ summary:hover { color:var(--agree-ink); }
 
   /* a try fits the screen without scrolling where it can: instructions beside the practice, tighter cards and rows */
-  .try main { padding-top:16px; }
-  .try .card { padding:16px 20px; margin-bottom:12px; }
+  .try main { padding:16px; }
+  .try .card { padding:14px 20px; margin-bottom:12px; }
   .try table { line-height:1.3; } .try th, .try td { padding:4px 9px; }
   .try .top #docs { margin-right:auto; }
   .try .legend { display:flex; flex-wrap:wrap; align-items:center; row-gap:4px; } .try #rows { margin:0 0 0 auto; }
   details.docs summary { cursor:pointer; width:fit-content; color:var(--agree-ink); }
   details.docs[open] summary { margin-bottom:2px; }
   .try .q { margin:2px 0 12px; }
-  @media (min-width: 900px) {
-    .try #intro:not(.hidden) { display:grid; grid-template-columns: 1fr 1fr; gap:12px; align-items:start; }
-    .try #intro .card { margin-bottom:0; }
-  }
+  .pq .q { margin-top:14px; }
+  .try .pbody { display:flex; gap:12px 22px; align-items:flex-start; flex-wrap:wrap; }   /* the small practice table beside its question */
+  .try #intro p { margin:6px 0; }
+  .try #intro ul { display:flex; flex-wrap:wrap; gap:2px 26px; list-style:none; margin:6px 0; padding:0 0 0 4px; }
+  .try #intro li::before { content:""; display:inline-block; width:5px; height:5px; border-radius:50%; background:currentColor; margin:0 8px 3px 0; }
+  .try .fb { align-items:center; justify-content:space-between; gap:8px 16px; flex-wrap:wrap; }
+  .try .fb span { flex:1 1 320px; } .try .fb button { flex:none; }
+  .try .pbody .tablewrap { flex:none; } .try .pq { flex:1; min-width:280px; } .try .pq .q { margin-top:0; }
   @media (prefers-reduced-motion: reduce) { * { animation:none !important; transition:none !important; } }
 </style>
 </head>
@@ -163,11 +170,11 @@
     <p class="q" id="qtext"></p>
     <div class="qrow">
       <div class="btns">
-        <button class="ans yes" data-a="yes"><span class="ico">&#10003;</span>Yes<kbd>Y</kbd></button>
-        <button class="ans no" data-a="no"><span class="ico">&#10007;</span>No<kbd>N</kbd></button>
-        <button class="ans dk" data-a="dk"><span class="ico">?</span>Don't know<kbd>D</kbd></button>
+        <button class="ans yes" data-a="yes"><span class="ico" data-i="yes"></span>Yes<kbd>Y</kbd></button>
+        <button class="ans no" data-a="no"><span class="ico" data-i="no"></span>No<kbd>N</kbd></button>
+        <button class="ans dk" data-a="dk"><span class="ico" data-i="dk"></span>Don't know<kbd>D</kbd></button>
       </div>
-      <div class="stop"><button id="stopbtn"><span class="ico">&#9632;</span>Stop the session</button></div>
+      <div class="stop"><button id="stopbtn"><span class="ico" data-i="stop"></span>Stop the session</button></div>
     </div>
   </div>
 </section>
@@ -179,7 +186,7 @@
     <div class="schemata" id="rdesign"></div>
     <p class="checks" id="rchecks"></p>
     <div id="rdiffer"></div>
-    <p class="btns" style="margin-top:18px"><a class="ans yes" href="/"><span class="ico">&#8635;</span>Try another table</a></p>
+    <p class="btns" style="margin-top:18px"><a class="ans yes" href="/"><span class="ico" data-i="again"></span>Try another table</a></p>
   </div>
 </section>
 
@@ -216,13 +223,23 @@ const $ = s => document.querySelector(s);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 let META = null, CUR = null, SHOWN = 0;
 const TRY = /^\/s\/T[EPU]0[1-3]-/.test(location.pathname);    // a try from the start page: a demo session
-const ICON = {yes: "&#10003;", no: "&#10007;", dk: "?"}, LABEL = {yes: "Yes", no: "No", dk: "Don't know"}, KEY = {yes: "Y", no: "N", dk: "D"};
+// icons as SVG, drawn with the text colour, so that they look the same in every font
+const svg = (body, w = 2.2) => `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${body}</svg>`;
+const SVG = {yes: svg('<path d="M3.3 8.6l3 3 6.4-6.9"/>'),
+             no: svg('<path d="M4.6 4.6l6.8 6.8M11.4 4.6l-6.8 6.8"/>'),
+             dk: svg('<path d="M5.7 6a2.3 2.3 0 1 1 3.4 2c-.7.4-1.1.9-1.1 1.6v.4"/><circle cx="8" cy="12.9" r="1.05" fill="currentColor" stroke="none"/>', 1.9),
+             stop: svg('<rect x="3.5" y="3.5" width="9" height="9" rx="1.6" fill="currentColor" stroke="none"/>'),
+             again: svg('<path d="M12.9 8.6A5 5 0 1 1 11.4 4.2"/><path d="M12 1.8v2.9H9.1"/>', 2),
+             part: svg('<circle cx="8" cy="8" r="5.6"/><path d="M8 2.4a5.6 5.6 0 0 1 0 11.2z" fill="currentColor" stroke="none"/>', 1.8),
+             none: svg('<circle cx="8" cy="8" r="5.6"/>', 1.8)};
+document.querySelectorAll("[data-i]").forEach(e => e.innerHTML = SVG[e.dataset.i]);
+const LABEL = {yes: "Yes", no: "No", dk: "Don't know"}, KEY = {yes: "Y", no: "N", dk: "D"};
 const PHASE = {disc: ["p1", "Phase 1 · Discovery: a rule the design relies on"],
                max: ["p2", "Phase 2 · Certification: a maximal set"],
                guess: ["p2", "Phase 2 · Certification: finding the missing rule"],
                qx: ["p2", "Phase 2 · Certification: finding the missing rule"]};
 const ansButtons = attr => ["yes", "no", "dk"].map(a =>
-  `<button class="ans ${a}" ${attr}="${a}"><span class="ico">${ICON[a]}</span>${LABEL[a]}<kbd>${KEY[a]}</kbd></button>`).join("");
+  `<button class="ans ${a}" ${attr}="${a}"><span class="ico">${SVG[a]}</span>${LABEL[a]}<kbd>${KEY[a]}</kbd></button>`).join("");
 function replay(el) { el.classList.remove("enter"); void el.offsetWidth; el.classList.add("enter"); }
 // paths are relative to the session's page /s/<code>/<n>/; a failed request is tried again (the server may be restarting)
 async function api(p, body) {
@@ -253,10 +270,10 @@ function table(el, attrs, rows, lhs, rhs) {
 function practice(k) {
   const p = PRACTICE[k], box = $("#practice");
   box.innerHTML = `<h2>Practice ${k + 1} of 2${TRY ? '<a class="skip" href="#" id="pskip">skip the practice</a>' : ""}</h2>
-    <div class="tablewrap"><table id="ptab"></table></div>
-    <p class="q" style="margin-top:14px">${p.text}</p>
+    <div class="pbody"><div class="tablewrap"><table id="ptab"></table></div>
+    <div class="pq"><p class="q">${p.text}</p>
     <div class="btns">${ansButtons("data-p")}</div>
-    <div class="fb" id="fb"></div>`;
+    <div class="fb" id="fb"></div></div></div>`;
   replay(box);
   table($("#ptab"), ORD.attrs, ORD.rows, p.lhs, p.rhs);
   if (TRY) $("#pskip").onclick = e => { e.preventDefault(); start(); };
@@ -264,8 +281,10 @@ function practice(k) {
     box.querySelectorAll("[data-p]").forEach(x => x.disabled = true);
     b.classList.add("picked");
     api("api/practice", {practice: k + 1, answer: b.dataset.p});
-    const fb = $("#fb"); fb.style.display = "block";
-    fb.innerHTML = esc(p.why) + `<p><button class="main" id="pnext">${k === 0 ? "Next practice question" : "Start"}${TRY ? '<kbd>Enter</kbd>' : ""}</button></p>`;
+    const fb = $("#fb"), go = k === 0 ? "Next practice question" : "Start";
+    fb.style.display = TRY ? "flex" : "block";               // a try: the explanation and the button on one line where they fit
+    fb.innerHTML = TRY ? `<span>${esc(p.why)}</span><button class="main" id="pnext">${go}<kbd>Enter</kbd></button>`
+                       : esc(p.why) + `<p><button class="main" id="pnext">${go}</button></p>`;
     $("#pnext").onclick = () => k === 0 ? practice(1) : start();
   });
 }
@@ -338,19 +357,19 @@ async function result() {
   const n = (x, w) => `${x} ${w}${x === 1 ? "" : "s"}`;
   $("#rsum").textContent = `${n(r.answers, "answer")}: ${r.yes} yes, ${r.no} no` + (r.dk ? `, ${r.dk} don't know` : "");
   if (!r.design) {
-    $("#rbadge").className = "badge part"; $("#rbadge").innerHTML = "&#9675;";
+    $("#rbadge").className = "badge part"; $("#rbadge").innerHTML = SVG.none;
     $("#rtitle").textContent = "No design yet";
     $("#rintro").textContent = "The try stopped before Cert3NF could build a design. Start another one whenever you like.";
   } else {
     const cert = r.certified;
-    $("#rbadge").className = "badge " + (cert ? "ok" : "part"); $("#rbadge").innerHTML = cert ? "&#10003;" : "&#9684;";
+    $("#rbadge").className = "badge " + (cert ? "ok" : "part"); $("#rbadge").innerHTML = cert ? SVG.yes : SVG.part;
     $("#rtitle").textContent = cert ? "Your answers certify this design" : "The design so far";
     $("#rintro").textContent = cert
       ? `Cert3NF synthesized this Third Normal Form design from the ${n(r.confirmed.length, "rule")} you confirmed, and your no answers rule out every other rule that would change it. Each schema is shown with its key underlined.`
       : `The try ended before the certificate was complete. This design rests on the ${n(r.confirmed.length, "rule")} you confirmed so far. Each schema is shown with its key underlined.`;
     $("#rdesign").innerHTML = r.design.map(s =>
       `<span class="schema">(${s.key.map(a => `<u>${esc(a)}</u>`).concat(s.other.map(esc)).join(", ")})</span>`).join("");
-    const chk = (ok, w) => `<span class="${ok ? "y" : "n"}">${ok ? "&#10003;" : "&#10007;"} ${w}</span>`;
+    const chk = (ok, w) => `<span class="${ok ? "y" : "n"}">${ok ? SVG.yes : SVG.no}${w}</span>`;
     $("#rchecks").innerHTML = "Checked against the documentation of the table: " +
       chk(r.lossless, "lossless") + chk(r.preserving, "dependency-preserving") + chk(r.nf3, "in 3NF");
   }
@@ -384,9 +403,8 @@ function bye() {
 
 if (TRY) {                                                  // a try from the start page, before anything loads
   document.body.classList.add("try");
-  $("#trynote").classList.remove("hidden");
   $("#studylen").classList.add("hidden"); $("#trylen").classList.remove("hidden");
-  $("#practnote").textContent = "Two practice questions on a small example follow; you can skip them.";
+  $("#practnote").textContent = "Two practice questions on a small example follow; you can skip them. This is a try: none of its answers are part of the study.";
   $("#byetext").innerHTML = 'This try is finished. <a href="/">Back to the start page</a>.';
 }
 (async () => {
@@ -398,7 +416,8 @@ if (TRY) {                                                  // a try from the st
     const many = TRY && META.docs.length > 2;     // a try folds a long list of files, so that the page needs no scrolling
     const fold = s => `<details class="docs"><summary>${s}${META.docs.length} files</summary>${links}</details>`;
     $("#docnote").classList.remove("hidden");
-    if (many) $("#docnote").innerHTML = fold("The documentation of the table: ") + "You can open it at any time, also with the link above the questions.";
+    const lead = "The documentation of the table, also linked above the questions: ";
+    if (TRY) $("#docnote").innerHTML = many ? fold(lead) : lead + links;
     else $("#doclinks").innerHTML = links;
     $("#docs").innerHTML = many ? fold("Documentation: ") : "Documentation: " + links;
   }

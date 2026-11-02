@@ -32,23 +32,24 @@
          cursor:pointer; font-weight:400; transition: border-color .15s, background .15s, transform .15s; }
   .opt:hover { border-color:#8fd3a5; transform: translateY(-1px); }
   .opt input { accent-color: var(--go2); width:18px; height:18px; margin:0; flex:none; }
-  .opt:has(input:checked) { border-color:#2da44e; background:var(--pick); }
+  .opt:has(input:checked) { border-color:#2da44e; background:var(--pick); box-shadow: 0 1px 2px rgba(26,127,55,.1), 0 3px 10px rgba(26,127,55,.14); }
   .opt > div { display:flex; flex-wrap:wrap; align-items:baseline; column-gap:10px; } .opt span { color:var(--muted); font-size:14px; }
   .gorow { display:flex; align-items:center; gap:14px; flex-wrap:wrap; margin-top:14px; } .gorow .go { margin-top:0; } .gorow p { margin:0; }
   .go { display:inline-flex; align-items:center; gap:8px; margin-top:14px; padding:8px 18px; border:none; border-radius:999px;
         font-weight:700; font-size:16px; color:#fff; background:linear-gradient(135deg, var(--go1), var(--go2));
-        box-shadow: 0 3px 0 rgba(10,60,28,.25), 0 8px 18px rgba(26,127,55,.25); transition: transform .12s, box-shadow .12s, filter .12s; }
-  .go:hover { transform: translateY(-2px); filter: brightness(1.05); box-shadow: 0 5px 0 rgba(10,60,28,.22), 0 12px 24px rgba(26,127,55,.3); }
-  .go:active { transform: translateY(1px) scale(.98); box-shadow: 0 1px 0 rgba(10,60,28,.25), 0 4px 10px rgba(26,127,55,.25); }
+        box-shadow: 0 1px 2px rgba(26,127,55,.22), 0 3px 10px rgba(26,127,55,.28); transition: transform .12s, box-shadow .12s, filter .12s; }
+  .go:hover { transform: translateY(-2px); filter: brightness(1.05); box-shadow: 0 2px 4px rgba(26,127,55,.2), 0 6px 18px rgba(26,127,55,.36); }
+  .go:active { transform: translateY(1px) scale(.98); box-shadow: 0 1px 2px rgba(26,127,55,.25), 0 2px 6px rgba(26,127,55,.24); }
   .go .arrow { display:inline-grid; place-items:center; width:20px; height:20px; border-radius:50%; background:rgba(255,255,255,.22); font-size:10px;
                animation: nudge 1.2s ease-in-out infinite; }
+  .go .arrow svg { display:block; width:10px; height:10px; margin-left:1px; }
   @keyframes nudge { 0%,100% { transform:translateX(0); } 50% { transform:translateX(3px); } }
   .go:disabled { filter: grayscale(.3) brightness(.95); cursor: progress; }
   /* the participants' Start: same shape in the study's navy, its arrow moves on hover only */
   .go.navy { background:linear-gradient(135deg, #3d5a7d, var(--btn));
-             box-shadow: 0 3px 0 rgba(14,24,36,.28), 0 8px 18px rgba(36,54,75,.22); }
-  .go.navy:hover { filter: brightness(1.15); box-shadow: 0 5px 0 rgba(14,24,36,.24), 0 12px 24px rgba(36,54,75,.28); }
-  .go.navy:active { box-shadow: 0 1px 0 rgba(14,24,36,.28), 0 4px 10px rgba(36,54,75,.22); }
+             box-shadow: 0 1px 2px rgba(36,54,75,.22), 0 3px 10px rgba(36,54,75,.28); }
+  .go.navy:hover { filter: brightness(1.15); box-shadow: 0 2px 4px rgba(36,54,75,.2), 0 6px 18px rgba(36,54,75,.36); }
+  .go.navy:active { box-shadow: 0 1px 2px rgba(36,54,75,.25), 0 2px 6px rgba(36,54,75,.24); }
   .go.navy .arrow { animation:none; } .go.navy:hover .arrow { animation: nudge 1.2s ease-in-out infinite; }
   .invited { padding:14px 22px; }
   .invited summary { cursor:pointer; font-weight:600; font-size:18px; width:fit-content; }
@@ -76,7 +77,7 @@
         <div><b>Mesh blocks</b><span>Australian statistical geography &middot; 17 attributes &middot; about 55 questions</span></div></label>
     </div>
     <div class="gorow">
-      <button class="go" type="submit">Start <span class="arrow">&#9654;</span></button>
+      <button class="go" type="submit">Start <span class="arrow"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 3.2l7 4.8-7 4.8z" fill="currentColor"/></svg></span></button>
       <p class="muted">The server sleeps when nobody uses it, so the first page can take up to a minute.</p>
     </div>
   </form><!--/try-->
@@ -92,7 +93,7 @@
     </div>
     <p class="muted">The code and the session are in your invitation. If you closed the page, enter them again: the session
        continues where you left it.</p>
-    <button class="go navy" type="submit">Start <span class="arrow">&#9654;</span></button>
+    <button class="go navy" type="submit">Start <span class="arrow"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 3.2l7 4.8-7 4.8z" fill="currentColor"/></svg></span></button>
     <p class="err" id="err"></p>
   </form></details>
 </main>
