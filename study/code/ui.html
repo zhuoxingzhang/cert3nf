@@ -22,13 +22,27 @@
   .q { font-size:19px; margin:4px 0 14px; }
   .q b.agree { color:var(--agree-ink); } .q b.rhs { color:var(--rhs-ink); }
   .btns { display:flex; gap:12px; flex-wrap:wrap; }
-  button { font:inherit; border-radius:8px; border:1px solid var(--btn); padding:10px 22px; cursor:pointer; background:#fff; color:var(--btn); }
-  button.main { background:var(--btn); color:#fff; min-width:120px; }
+  button { font:inherit; border-radius:999px; border:1px solid var(--btn); padding:8px 18px; cursor:pointer; background:#fff; color:var(--btn);
+           transition: transform .12s, box-shadow .12s, filter .12s, background .12s; }
+  button.main { border:none; font-weight:600; color:#fff; background:linear-gradient(135deg, #3d5a7d, var(--btn));
+                box-shadow: 0 2px 0 rgba(14,24,36,.25), 0 6px 14px rgba(36,54,75,.18); }
+  button.main:hover:not(:disabled) { transform: translateY(-2px); filter: brightness(1.15); box-shadow: 0 4px 0 rgba(14,24,36,.2), 0 10px 20px rgba(36,54,75,.24); }
+  button.main:active:not(:disabled) { transform: translateY(1px) scale(.97); }
+  button.main kbd { font:600 11px/1 ui-monospace, Consolas, monospace; padding:2px 5px; border-radius:4px; margin-left:8px;
+                    background:rgba(255,255,255,.2); vertical-align:1px; }
   button:disabled { opacity:.45; cursor:default; }
   .top { display:flex; justify-content:space-between; align-items:baseline; gap:12px; flex-wrap:wrap; }
   .legend span { display:inline-block; padding:1px 8px; border-radius:4px; margin-right:8px; font-size:13px; }
   .stop { margin-top:18px; text-align:right; }
-  .stop button { border-color:#9aa4b1; color:#5f6b7a; padding:6px 14px; font-size:14px; }
+  /* stop: a quiet pill that turns red on hover */
+  .stop button { display:inline-flex; align-items:center; gap:7px; border:none; color:#5f6b7a; padding:5px 14px 5px 6px; font-size:14px;
+                 font-weight:600; box-shadow: inset 0 0 0 1px #c5ccd6, 0 2px 6px rgba(0,0,0,.05); }
+  .stop .ico { display:inline-grid; place-items:center; width:20px; height:20px; border-radius:50%; background:#fde8e6; color:#c4372f;
+               font-size:10px; line-height:1; transition: background .12s, color .12s, transform .2s; }
+  .stop button:hover { transform: translateY(-2px); color:#b42318; background:#fff7f6;
+                       box-shadow: inset 0 0 0 1px #ef9a92, 0 8px 16px rgba(196,55,47,.14); }
+  .stop button:hover .ico { background:#c4372f; color:#fff; transform: scale(1.12); }
+  .stop button:active { transform: translateY(1px) scale(.97); }
   .fb { margin-top:10px; padding:10px 12px; border-radius:8px; background:#f1f6ee; border:1px solid #cfe3c4; display:none; }
   label { display:block; margin:10px 0 4px; } select, textarea { font:inherit; padding:6px; width:100%; max-width:520px; }
   .scale { display:flex; gap:14px; flex-wrap:wrap; } .scale label { display:inline; margin:0; }
@@ -123,7 +137,7 @@
       <button class="ans no" data-a="no"><span class="ico">&#10007;</span>No<kbd>N</kbd></button>
       <button class="ans dk" data-a="dk"><span class="ico">?</span>Don't know<kbd>D</kbd></button>
     </div>
-    <div class="stop"><button id="stopbtn">Stop the session</button></div>
+    <div class="stop"><button id="stopbtn"><span class="ico">&#9632;</span>Stop the session</button></div>
   </div>
 </section>
 
@@ -220,7 +234,7 @@ function practice(k) {
     b.classList.add("picked");
     api("api/practice", {practice: k + 1, answer: b.dataset.p});
     const fb = $("#fb"); fb.style.display = "block";
-    fb.innerHTML = esc(p.why) + `<p><button class="main" id="pnext">${k === 0 ? "Next practice question" : "Start"}${TRY ? ' <kbd style="font-size:11px;opacity:.8">Enter</kbd>' : ""}</button></p>`;
+    fb.innerHTML = esc(p.why) + `<p><button class="main" id="pnext">${k === 0 ? "Next practice question" : "Start"}${TRY ? '<kbd>Enter</kbd>' : ""}</button></p>`;
     $("#pnext").onclick = () => k === 0 ? practice(1) : start();
   });
 }

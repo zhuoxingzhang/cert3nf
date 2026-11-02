@@ -17,7 +17,6 @@
   input[type=text] { font:inherit; padding:8px 10px; width:160px; text-transform:uppercase; border:1px solid #aab3bf; border-radius:6px; }
   .sessions { display:flex; gap:18px; } .sessions label { display:inline; font-weight:400; margin:0; }
   button { font:inherit; border-radius:8px; border:1px solid var(--btn); padding:10px 22px; cursor:pointer; background:#fff; color:var(--btn); }
-  button.main { background:var(--btn); color:#fff; margin-top:16px; }
   .err { color:var(--err); min-height:1.5em; margin-top:8px; }
 
   /* the try: the first thing a visitor sees */
@@ -43,6 +42,12 @@
                animation: nudge 1.2s ease-in-out infinite; }
   @keyframes nudge { 0%,100% { transform:translateX(0); } 50% { transform:translateX(3px); } }
   .go:disabled { filter: grayscale(.3) brightness(.95); cursor: progress; }
+  /* the participants' Start: same shape in the study's navy, its arrow moves on hover only */
+  .go.navy { background:linear-gradient(135deg, #3d5a7d, var(--btn));
+             box-shadow: 0 3px 0 rgba(14,24,36,.28), 0 8px 18px rgba(36,54,75,.22); }
+  .go.navy:hover { filter: brightness(1.15); box-shadow: 0 5px 0 rgba(14,24,36,.24), 0 12px 24px rgba(36,54,75,.28); }
+  .go.navy:active { box-shadow: 0 1px 0 rgba(14,24,36,.28), 0 4px 10px rgba(36,54,75,.22); }
+  .go.navy .arrow { animation:none; } .go.navy:hover .arrow { animation: nudge 1.2s ease-in-out infinite; }
   .invited summary { cursor:pointer; font-weight:600; }
   @media (prefers-reduced-motion: reduce) { *, *::after { animation:none !important; transition:none !important; } }
 </style>
@@ -82,7 +87,7 @@
     </div>
     <p class="muted">The code and the session are in your invitation. If you closed the page, enter them again: the session
        continues where you left it.</p>
-    <button class="main" type="submit">Start</button>
+    <button class="go navy" type="submit">Start <span class="arrow">&#9654;</span></button>
     <p class="err" id="err"></p>
   </form>
 </main>
