@@ -1,5 +1,9 @@
 # Cert3NF
 
+[![Full version of the paper (PDF)](https://img.shields.io/badge/Full%20version%20of%20the%20paper-Cert3NF--full.pdf-b31b1b?style=for-the-badge)](Cert3NF-full.pdf)
+
+> **Full version of the paper: [Cert3NF-full.pdf](Cert3NF-full.pdf)**, with all proofs (Appendix A) and the details of the experiments (Appendix B).
+
 Code for *Confirming What Matters: Certified Third Normal Form Synthesis from Uncertain Functional Dependencies*.
 
 Python 3.11 with numpy (`pip install -r requirements.txt`).
