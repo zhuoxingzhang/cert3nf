@@ -355,6 +355,7 @@ function practice(k) {
                        : esc(why) + `<p><button class="main" id="pnext">${go}</button></p>`;
     $("#pnext").onclick = () => k === 0 ? practice(1) : start();
     $("#say").textContent = why; $("#pnext").focus({preventScroll: true});
+    fb.scrollIntoView({block: "nearest", behavior: "smooth"});   // a small screen: the explanation and its button in view
   });
 }
 
@@ -516,12 +517,15 @@ function bye() {
   ["#intro", "#ask", "#done"].forEach(s => $(s).classList.add("hidden")); $("#bye").classList.remove("hidden");
 }
 
-// a try on a laptop's screen: the same layout in proportion, no smaller than is readable.  Its tallest screen is 662 high
-// with Home in the margin, which takes a width of 1320, and 700 high with Home above the card
+// a try on a low screen of a laptop or a tablet: the same layout in proportion, no smaller than is readable (phones scroll).
+// Its tallest screen is 662 high with Home in the margin, which takes a width of 1320, and 700 high with Home above the card
+// (724 under the full width of the cards, as the text wraps earlier)
 function fit() {
-  const shrink = innerWidth >= 1056 && innerHeight < (innerWidth >= 1320 ? 662 : 700);
-  document.documentElement.style.zoom = shrink ? Math.max(.8, Math.min(innerHeight / 662, innerWidth / 1320)) : "";
-  document.body.classList.toggle("fitted", shrink);
+  const w = innerWidth, h = innerHeight - (matchMedia("(pointer:coarse)").matches ? 12 : 0);   // touch: taller fold lines
+  const inMargin = Math.min(h / 662, w / 1320), above = h / (w < 1100 ? 724 : 700);
+  const margin = w >= 1056 && inMargin > above, s = margin ? inMargin : above, shrink = w >= 940 && s < 1;
+  document.documentElement.style.zoom = shrink ? Math.max(.8, s) : "";
+  document.body.classList.toggle("fitted", shrink && margin);
 }
 if (TRY) {                                                  // a try from the start page, before anything loads
   document.body.classList.add("try");
