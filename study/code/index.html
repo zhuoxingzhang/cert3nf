@@ -29,9 +29,10 @@
   .dot { position:relative; width:8px; height:8px; border-radius:50%; background:#2da44e; }
   .dot::after { content:""; position:absolute; inset:0; border-radius:50%; background:#2da44e; animation:ping 1.8s ease-out infinite; }
   @keyframes ping { 0% { transform:scale(1); opacity:.8; } 80%,100% { transform:scale(2.8); opacity:0; } }
-  .tables { display:grid; gap:10px; margin:14px 0 4px; }
+  .tables { display:grid; gap:8px; margin:12px 0 4px; }
   .opt { display:flex; align-items:center; gap:12px; margin:0; padding:9px 12px; border:1px solid var(--line); border-radius:10px;
          cursor:pointer; font-weight:400; transition: border-color .15s, background .15s, transform .15s; }
+  .opt { padding:8px 12px; }
   .opt input { accent-color: var(--go2); width:18px; height:18px; margin:0; flex:none; }
   .opt:has(input:checked) { border-color:#2da44e; background:var(--pick); box-shadow: 0 2px 4px rgba(26,127,55,.12), 0 4px 16px rgba(26,127,55,.22); }
   .opt > div { display:flex; flex-wrap:wrap; align-items:baseline; column-gap:10px; } .opt span { color:var(--muted); font-size:14px; }
@@ -45,6 +46,21 @@
   .go .arrow svg { display:block; width:12px; height:12px; margin-left:2px; }
   @keyframes nudge { 0%,100% { transform:translateX(0); } 50% { transform:translateX(3px); } }
   .go:disabled { filter: grayscale(.3) brightness(.95); cursor: progress; }
+  /* the visitor's own table: a CSV and the columns of its key */
+  .own { margin:2px 0 0; padding:10px 12px 4px; border-radius:10px; background:#f8faf9; }
+  .pick { display:inline-flex; align-items:center; margin:0 10px 0 0; padding:5px 14px; border-radius:999px; background:#fff;
+          font-weight:600; font-size:14px; cursor:pointer; transition: transform .12s, box-shadow .12s;
+          box-shadow: inset 0 0 0 1px #c5ccd6, 0 1px 3px rgba(31,41,55,.08), 0 4px 14px rgba(31,41,55,.13); }
+  .pick:has(input:focus-visible) { outline:2px solid #174ea6; outline-offset:3px; }
+  .pick input { position:absolute; width:1px; height:1px; opacity:0; }
+  #fname { font-size:14px; color:var(--muted); }
+  .keys { display:flex; flex-wrap:wrap; align-items:center; gap:6px; margin:10px 0 2px; font-size:14px; }
+  .keys > span { color:var(--muted); margin-right:4px; }
+  .keys label { display:inline-flex; align-items:center; gap:5px; margin:0; font-weight:400; padding:2px 10px 2px 7px;
+                border:1px solid var(--line); border-radius:999px; background:#fff; cursor:pointer; }
+  .keys label:has(input:checked) { border-color:#2da44e; background:var(--pick); }
+  .keys input { accent-color: var(--go2); margin:0; }
+  .own .err { margin:6px 0 0; min-height:0; font-size:14px; }
   /* the participants' Start: same shape in the study's navy, its arrow moves on hover only */
   .go.navy { background:linear-gradient(135deg, #3d5a7d, var(--btn));
              box-shadow: 0 2px 5px rgba(36,54,75,.26), 0 4px 16px rgba(36,54,75,.4); }
@@ -65,6 +81,7 @@
     .go.navy:hover { filter: brightness(1.15); box-shadow: 0 3px 7px rgba(36,54,75,.26), 0 8px 26px rgba(36,54,75,.5); }
     .go.navy:hover .arrow { animation: nudge 1.2s ease-in-out infinite; }
     .invited summary:hover { color:var(--btn); text-decoration:underline; text-underline-offset:3px; }
+    .pick:hover { transform: translateY(-1px); box-shadow: inset 0 0 0 1px #9aa4b1, 0 3px 6px rgba(31,41,55,.1), 0 8px 22px rgba(31,41,55,.2); }
   }
   :is(button, a, summary, input, select, textarea, .tablewrap):focus-visible { outline:2px solid #174ea6; outline-offset:3px; }
   .opt:has(input:focus-visible) { outline:2px solid #1a7f37; outline-offset:2px; }
@@ -82,7 +99,7 @@
 
   <!--try--><form class="card try" method="post" action="/try" id="try">
     <div class="trytop"><h2>Try it</h2><div class="live"><span class="dot"></span>LIVE DEMO</div></div>
-    <p>Pick a table and answer yes or no. You can stop at any time and see the design your answers give.</p>
+    <p>Pick a table or your own, answer yes or no, and stop any time to see the design.</p>
     <div class="tables" role="radiogroup" aria-label="Table">
       <label class="opt"><input type="radio" name="table" value="1" checked>
         <div><b>Customers</b><span>Star Schema Benchmark &middot; 8&nbsp;attributes &middot; about&nbsp;30&nbsp;questions</span></div></label>
@@ -90,6 +107,14 @@
         <div><b>Store sales</b><span>TPC-DS &middot; 12&nbsp;attributes &middot; about&nbsp;30&nbsp;questions</span></div></label>
       <label class="opt"><input type="radio" name="table" value="3">
         <div><b>Mesh blocks</b><span>Australian statistical geography &middot; 17&nbsp;attributes &middot; about&nbsp;55&nbsp;questions</span></div></label>
+      <label class="opt"><input type="radio" name="table" value="own">
+        <div><b>Your own table</b><span>a CSV file with a header row &middot; up to 25&nbsp;columns and 50,000&nbsp;records</span></div></label>
+      <div class="own" id="own" hidden>
+        <label class="pick"><input type="file" id="file" accept=".csv,.tsv,.txt,text/csv" aria-describedby="uperr">Choose a CSV file</label><span id="fname">no file chosen</span>
+        <div class="keys" id="keys"></div>
+        <p class="muted" style="margin:8px 0 6px">The file stays on the server for at most a day, for your session only.</p>
+        <p class="err" id="uperr" role="alert"></p>
+      </div>
     </div>
     <div class="gorow">
       <button class="go" type="submit">Start <span class="arrow"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 2.6l8.6 5.4L5 13.4z" fill="currentColor" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg></span></button>
@@ -123,8 +148,50 @@ document.getElementById("enter").onsubmit = e => {
   }
   location.href = `/s/${code}/${sno}/`;
 };
-const t = document.getElementById("try");
-if (t) t.onsubmit = () => { const b = t.querySelector(".go"); b.disabled = true; b.firstChild.textContent = "Starting "; };
+const t = document.getElementById("try"), $ = s => document.querySelector(s);
+const own = () => t.querySelector("input[name=table]:checked").value === "own";
+if (t) {
+  t.querySelectorAll("input[name=table]").forEach(r => r.onchange = () => { $("#own").hidden = !own(); });
+  $("#own").hidden = !own();
+  // the header row of the chosen file, split as the server will split it, offers the columns of the key
+  const split = line => {
+    const d = [",", ";", "\t", "|"].reduce((x, y) => line.split(y).length > line.split(x).length ? y : x);
+    const out = []; let cur = "", inq = false;
+    for (let i = 0; i < line.length; i++) {
+      const c = line[i];
+      if (c === '"') { if (inq && line[i + 1] === '"') { cur += c; i++; } else inq = !inq; }
+      else if (c === d && !inq) { out.push(cur.trim()); cur = ""; } else cur += c;
+    }
+    return out.concat([cur.trim()]);
+  };
+  $("#file").onchange = async () => {
+    const f = $("#file").files[0]; $("#uperr").textContent = ""; $("#keys").innerHTML = "";
+    $("#fname").textContent = f ? f.name : "no file chosen";
+    if (!f) return;
+    const head = (await f.slice(0, 65536).text()).replace(/^\ufeff/, "").split(/\r?\n/)[0];
+    const esc = s => s.replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"})[c]);
+    $("#keys").innerHTML = "<span>Primary key, if the table has one:</span>" +
+      split(head).map(a => `<label><input type="checkbox" value="${esc(a)}">${esc(a)}</label>`).join("");
+  };
+  t.onsubmit = async e => {
+    const b = t.querySelector(".go");
+    if (!own()) { b.disabled = true; b.firstChild.textContent = "Starting "; return; }
+    e.preventDefault();
+    const f = $("#file").files[0];
+    if (!f) { $("#uperr").textContent = "Choose a CSV file first."; return; }
+    if (f.size > 10 * 2 ** 20) { $("#uperr").textContent = "The file is larger than 10 MB."; return; }
+    b.disabled = true; b.firstChild.textContent = "Uploading "; $("#uperr").textContent = "";
+    const key = [...document.querySelectorAll("#keys input:checked")].map(x => x.value);
+    try {
+      const r = await fetch("/upload", {method: "POST", headers: {"Content-Type": "application/json"},
+                                         body: JSON.stringify({name: f.name, csv: await f.text(), key})});
+      const j = await r.json();
+      if (j.go) { location.href = j.go; return; }
+      $("#uperr").textContent = j.error || "The upload failed.";
+    } catch (err) { $("#uperr").textContent = "The upload failed. Please try again."; }
+    b.disabled = false; b.firstChild.textContent = "Start ";
+  };
+}
 </script>
 </body>
 </html>

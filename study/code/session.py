@@ -16,7 +16,8 @@ questionnaire.  Usage: through server.py, or test_session.py.
 A demo session (a try from the start page, now that the study has ended) skips the block, runs the method in the
 trusting mode (variant v5: every premise asked once, so no fillers are needed) and ends with result() instead of the
 questionnaire: the method's output, the design of the confirmed FDs, and the answers that differ from the documented
-FDs.
+FDs.  A session on an uploaded table (upload.py) is a demo session with the statistics advisor (variant v5s) and no
+documented FDs.
 """
 import hashlib, itertools, json, os, queue, sys, threading, time
 from collections import deque
@@ -28,12 +29,14 @@ import auto_common as AC          # noqa: E402
 import drd                        # noqa: E402
 import v5                         # noqa: E402
 import v5study                    # noqa: E402
+import upload as U                # noqa: E402
 
 GAP, LIVE_MINUTES = 3, 40
 KINDS = {"disc_q": "disc", "max_asked": "max", "guess_q": "guess", "qx_q": "qx", "confirm_q": "confirm",
          "reask_q": "reask"}
 VARIANT = K.VARIANT
 DEMO_VARIANT = "v5"               # the trusting mode with the same advisor, for demo sessions
+UPLOAD_VARIANT = "v5s"            # the trusting mode with the statistics advisor, for an uploaded table
 LOCAL = threading.local()         # LOCAL.session: whom the method of this thread asks
 
 
@@ -53,10 +56,11 @@ def seeded(*tag):
     return int.from_bytes(hashlib.sha256(repr(tag).encode()).digest()[:8], "big")
 
 
-def kit_md5s(ds):
+def kit_md5s(ds, upload=None):
     files = {"v5study.py": os.path.join(K.HERE, "v5study.py"), "session.py": os.path.abspath(__file__),
              "common.py": os.path.join(K.HERE, "common.py"), "v5tol.py": os.path.join(K.CONFIRM, "v5tol.py"),
-             "v5.py": os.path.join(K.CONFIRM, "v5.py"), "prebuilt": os.path.join(K.PREBUILT, ds + ".pkl")}
+             "v5.py": os.path.join(K.CONFIRM, "v5.py"),
+             "prebuilt": os.path.join(upload, "block.pkl") if upload else os.path.join(K.PREBUILT, ds + ".pkl")}
     return {k: K.md5(p) for k, p in files.items()}
 
 
@@ -74,18 +78,26 @@ def status(path):
 
 
 class Session:
-    def __init__(self, participant, session_no, out_dir=None, live_minutes=LIVE_MINUTES, on_write=None, demo=False):
-        self.participant, self.session_no, self.demo = participant, session_no, demo
-        self.variant = DEMO_VARIANT if demo else VARIANT
-        self.condition, _, self.test = K.parse(participant)
-        self.ds = K.relation_of(participant, session_no)
-        self.rel, self.b, self.adv = K.prebuilt(self.ds)
-        with open(os.path.join(K.BLOCKS, f"block_{self.ds}.json"), encoding="utf-8") as fh:
-            blk = json.load(fh)
+    def __init__(self, participant, session_no, out_dir=None, live_minutes=LIVE_MINUTES, on_write=None, demo=False,
+                 upload=None):
+        self.participant, self.session_no, self.upload = participant, session_no, upload
+        self.demo = demo or upload is not None
+        if upload:                                       # an uploaded table (upload.py): the statistics advisor
+            self.variant, self.condition, self.test, self.ds = UPLOAD_VARIANT, None, True, "upload"
+            self.rel, self.b, self.adv, self.info = U.load(upload)
+            blk, self.block_md5 = {"questions": [], "fillers": []}, K.md5(os.path.join(upload, "block.pkl"))
+        else:
+            self.variant = DEMO_VARIANT if demo else VARIANT
+            self.condition, _, self.test = K.parse(participant)
+            self.ds = K.relation_of(participant, session_no)
+            self.rel, self.b, self.adv = K.prebuilt(self.ds)
+            self.info = None
+            with open(os.path.join(K.BLOCKS, f"block_{self.ds}.json"), encoding="utf-8") as fh:
+                blk = json.load(fh)
+            self.block_md5 = K.md5(os.path.join(K.BLOCKS, f"block_{self.ds}.json"))
         qs = blk["questions"]
         order = sorted(range(len(qs)), key=lambda j: seeded(participant, session_no, "order", j))
-        self.block = [] if demo else [qs[j] for j in order]
-        self.block_md5 = K.md5(os.path.join(K.BLOCKS, f"block_{self.ds}.json"))
+        self.block = [] if self.demo else [qs[j] for j in order]
         self.fillers, self.nfill = blk["fillers"], 0
         out_dir = out_dir or os.path.join(K.KIT, "sessions")
         os.makedirs(out_dir, exist_ok=True)
@@ -97,13 +109,13 @@ class Session:
         self.qin, self.qout, self.preload = queue.Queue(), queue.Queue(), deque()
         self.thread, self.done, self.closed = None, False, False
         self.lock = threading.RLock()
-        self.code = kit_md5s(self.ds)
+        self.code = kit_md5s(self.ds, upload)
         if os.path.exists(self.path):
             self.resume()
             return
         self.fh = open(self.path, "w", encoding="utf-8")
         self.write({"event": "start", "participant": participant, "condition": self.condition, "test": self.test,
-                    "relation": self.ds, "session_no": session_no, "variant": self.variant, "demo": demo,
+                    "relation": self.ds, "session_no": session_no, "variant": self.variant, "demo": self.demo,
                     "budget": v5.BUDGET,
                     "live_minutes": live_minutes, "gap": GAP, "block_md5": self.block_md5, "code": self.code,
                     "block_order": [q["id"] for q in self.block], "time": time.strftime("%Y-%m-%d %H:%M:%S")})
@@ -168,6 +180,10 @@ class Session:
             self.qout.put(("end", run_method(self, self.ds, self.b, self.adv, self.variant)))
         except Exception as e:                                # noqa: BLE001 (reported, the session ends)
             self.qout.put(("error", repr(e)))
+        finally:
+            if self.upload:                                   # judge() caches by relation name: keep no upload
+                for tag in ("reach", "gold"):
+                    v5study.C._SA.pop((self.b["name"], tag), None)
 
     def next_method(self):
         """the method's next question, or None once it has ended"""
@@ -286,7 +302,8 @@ class Session:
     def result(self):
         """what a demo session shows at its end: the counts, the method's verdict, the design that 3NF synthesis
         returns on sigma0 and the confirmed FDs (as in v5study's output, with a minimal key per schema and the
-        schemata of one key merged), its check against the documented FDs, and the answers that differ from them"""
+        schemata of one key merged), its check against the documented FDs, and the answers that differ from them;
+        for an uploaded table, the check against the confirmed FDs and the SQL types of the columns"""
         with self.lock:
             if not self.done:
                 return {"done": False}
@@ -297,7 +314,9 @@ class Session:
         res = {"done": True, "answers": len(ans), "stop_reason": end.get("stop_reason"),
                **{k: sum(r["answer"] == k for r in ans) for k in ("yes", "no", "dk")}}
         res["differ"] = [{"text": r["text"], "answer": r["answer"], "documented": "yes" if r["truth_full"] else "no"}
-                         for r in ans if r["answer"] != "dk" and (r["answer"] == "yes") != r["truth_full"]]
+                         for r in ans if r["answer"] != "dk" and r["truth_full"] is not None
+                         and (r["answer"] == "yes") != r["truth_full"]]
+        res["documented"] = not self.upload
         if not out:
             return res
         names, n, b = self.rel.names, self.rel.n, self.b
@@ -326,7 +345,8 @@ class Session:
             u = frozenset().union(*g)
             M.extend([u] if len(g) > 1 and AC.S.is_3nf(u, AC.S.proj(sa, u)) else g)
         M = [s for s in M if not any(s < t for t in M)]
-        gold = drd.E2.atomic_closure(b["R"], b["sigma0"] + b["gold"])        # the documented FDs, as in judge()
+        # checked against the documented FDs, as in judge(); an uploaded table has none, so against the confirmed ones
+        gold = sa if self.upload else drd.E2.atomic_closure(b["R"], b["sigma0"] + b["gold"])
         m = AC.S.metrics(b["R"], [list(s) for s in M], gold, gold)
         design = []
         for s in sorted(M, key=lambda s: (-len(s), sorted(s))):
@@ -335,4 +355,6 @@ class Session:
         res.update({"certified": out["certified"], "asked": out["questions"], "by_data": out["data_no"],
                     "confirmed": [[l, a] for l, a in out["certificate"]["yes"]], "design": design,
                     "lossless": m["lossless"], "preserving": m["u_str"] == 0, "nf3": m["nf3"]})
+        if self.upload:
+            res["types"] = self.info["types"]
         return res

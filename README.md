@@ -5,7 +5,7 @@
 
 > **Full version of the paper: [Cert3NF-full.pdf](Cert3NF-full.pdf)**, with all proofs (Appendix A) and the details of the experiments (Appendix B).
 >
-> **Live demo: [cert3nf.onrender.com](https://cert3nf.onrender.com)**, the web app of the human-designer study (`study/`). *Try it* on the start page opens a session of your own, in which you answer the questions that Cert3NF asks about one of the study's relations. The free server sleeps when idle, so the first page may take up to a minute to load.
+> **Live demo: [cert3nf.onrender.com](https://cert3nf.onrender.com)**, the web app of the human-designer study (`study/`). *Try it* on the start page opens a session of your own, in which you answer the questions that Cert3NF asks about one of the study's relations. You can also upload a CSV of your own and download the certified design as SQL. The free server sleeps when idle, so the first page may take up to a minute to load.
 
 Code for *Confirming What Matters: Certified Third Normal Form Synthesis from Uncertain Functional Dependencies*.
 

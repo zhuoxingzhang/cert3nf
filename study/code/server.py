@@ -11,6 +11,10 @@ at the same time.
                            and links to the official documents listed in docs/<relation>/links.json
   POST /try                a test session of its own for anyone who wants to try (code TP0x-xxxxxx, x the chosen
                            table), run as a demo session (session.py): no block, the trusting mode, a result page
+  POST /upload             a demo session on the visitor's own CSV (upload.py; code UP- and 16 hex digits): checked
+                           at once, mined in a process of its own (one at a time, at most BUILD_SECONDS and
+                           BUILD_MB), kept in
+                           uploads/<code>/ on the instance's disk for KEEP_HOURS and never sent anywhere
   /status                  for the experimenter: the state of every session (no answers), and a reset for the test
                            codes; the answers themselves are only in the private data repository
   /healthz                 for the uptime monitor (GET or HEAD)
@@ -24,18 +28,24 @@ Locally:   python server.py [--port 8765]
 On Render: render.yaml at the root of the repository; STUDY_GITHUB_REPO and STUDY_GITHUB_TOKEN set by hand for
            durable storage.
 """
-import argparse, html, json, mimetypes, os, random, re, secrets, signal, sys, threading, time, traceback
+import argparse, html, json, mimetypes, os, random, re, secrets, shutil, signal, subprocess, sys, threading, time
+import traceback
 import urllib.parse
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import common as K
 import session as S
+import upload as U
 from store import Store
 
 UI = os.path.join(K.HERE, "ui.html")
 INDEX = os.path.join(K.HERE, "index.html")
 DOCS = os.path.join(K.KIT, "docs")
 SESSIONS = os.path.join(K.KIT, "sessions")
+UPLOADS = os.path.join(K.KIT, "uploads")                       # outside sessions/, which store.py keeps
+BUILD_SECONDS, BUILD_MB, KEEP_HOURS = 180, 200, 24             # the free instance has 512 MB for everything
+BUILD = threading.Semaphore(1)                                 # one mining process at a time: the others wait
+CHECK = threading.Lock()                                       # one upload parsed at a time (about 100 MB for 10 MB)
 CODES = [c + n for c in K.CONDITIONS for n in sorted(K.ASSIGN)]
 TESTS = ["T" + c for c in CODES]
 IDLE, MAX_TRIES = 30 * 60, 10
@@ -47,12 +57,18 @@ CFG = {}
 
 
 def canonical(code):
-    """E01, TE01, TP02-1a2b3c from any letter case"""
+    """E01, TE01, TP02-1a2b3c, UP-0123456789abcdef from any letter case"""
     head, _, tail = code.partition("-")
     return head.upper() + ("-" + tail.lower() if tail else "")
 
 
+def is_upload(code):
+    return code.startswith("UP-")
+
+
 def valid(code, sno):
+    if is_upload(code):
+        return sno == 1 and re.fullmatch(r"UP-[0-9a-f]{16}", code) is not None and os.path.isdir(folder(code))
     try:
         K.parse(code)
         return sno in (1, 2)
@@ -61,11 +77,82 @@ def valid(code, sno):
 
 
 def folder(code):
+    if is_upload(code):
+        return os.path.join(UPLOADS, code)
     return os.path.join(SESSIONS, "test") if code.startswith("T") else SESSIONS
 
 
+def upload_state(code):
+    """ready, preparing or failed (with the message for the visitor) of an uploaded table"""
+    d = folder(code)
+    if os.path.exists(os.path.join(d, "block.pkl")):
+        return "ready", None
+    if os.path.exists(os.path.join(d, "error.txt")):
+        with open(os.path.join(d, "error.txt"), encoding="utf-8") as fh:
+            return "failed", fh.read()
+    return "preparing", None
+
+
+def rss_mb(pid):
+    """the resident memory of a process in MB on Linux, None elsewhere"""
+    try:
+        with open(f"/proc/{pid}/statm") as fh:
+            return int(fh.read().split()[1]) * os.sysconf("SC_PAGE_SIZE") / 2 ** 20
+    except (OSError, ValueError, AttributeError):
+        return None
+
+
+def build_upload(code):
+    """mine the uploaded table in a process of its own, after the builds before it; a build that runs longer than
+    BUILD_SECONDS or takes more than BUILD_MB is stopped, so that one table cannot take the server from the others"""
+    d = folder(code)
+    with BUILD:
+        env = dict(os.environ, OPENBLAS_NUM_THREADS="1", OMP_NUM_THREADS="1")
+        with open(os.path.join(d, "build.log"), "w", encoding="utf-8") as log:
+            p = subprocess.Popen([sys.executable, os.path.join(K.HERE, "upload.py"), d], stdout=log, stderr=log,
+                                 env=env)
+            t0, msg = time.time(), None
+            while p.poll() is None:
+                if time.time() - t0 > BUILD_SECONDS:
+                    msg = (f"Finding the rules of this table took longer than {BUILD_SECONDS // 60} minutes. "
+                           "A table with fewer columns or rows will be faster.")
+                elif (rss_mb(p.pid) or 0) > BUILD_MB:
+                    msg = ("Finding the rules of this table needs more memory than the demo has. "
+                           "A table with fewer columns or rows will fit.")
+                if msg:
+                    p.kill()
+                    p.wait()
+                    break
+                time.sleep(0.2)
+        if msg is None and p.returncode and not os.path.exists(os.path.join(d, "error.txt")):
+            with open(os.path.join(d, "build.log"), encoding="utf-8", errors="replace") as fh:
+                print("upload build failed", code, fh.read()[-2000:], flush=True)
+            msg = "Cert3NF could not analyse this table."
+        if msg:
+            with open(os.path.join(d, "error.txt"), "w", encoding="utf-8") as fh:
+                fh.write(msg)
+
+
+def sweep_uploads():
+    """delete the uploaded tables older than KEEP_HOURS, with their sessions"""
+    if not os.path.isdir(UPLOADS):
+        return
+    for code in os.listdir(UPLOADS):
+        d = os.path.join(UPLOADS, code)
+        if time.time() - os.path.getmtime(d) <= KEEP_HOURS * 3600:
+            continue
+        with LIVE_LOCK:
+            s = LIVE.pop((code, 1), None)
+            SEEN.pop((code, 1), None)
+        if s is not None:
+            s.stop("idle")
+            if s.fh is not None and not s.fh.closed:
+                s.fh.close()
+        shutil.rmtree(d, ignore_errors=True)
+
+
 def file_of(code, sno):
-    return os.path.join(folder(code), f"{code}_s{sno}_{K.relation_of(code, sno)}.jsonl")
+    return os.path.join(folder(code), f"{code}_s{sno}_{'upload' if is_upload(code) else K.relation_of(code, sno)}.jsonl")
 
 
 def is_try(code):
@@ -77,7 +164,8 @@ def session_for(code, sno):
         s = LIVE.get((code, sno))
         if s is None:
             s = S.Session(code, sno, folder(code), live_minutes=CFG["minutes"],
-                          on_write=None if is_try(code) else CFG["store"].changed, demo=is_try(code))
+                          on_write=None if is_try(code) else CFG["store"].changed, demo=is_try(code),
+                          upload=folder(code) if is_upload(code) else None)
             LIVE[(code, sno)] = s
         SEEN[(code, sno)] = time.time()
         return s
@@ -113,8 +201,10 @@ def meta(s):
                         docs += [{"name": x["name"], "href": x["url"]} for x in json.load(fh)]
                 elif not f.startswith(".") and f != "README.md":
                     docs.append({"name": f, "href": "docs/" + urllib.parse.quote(f)})
+    up = s.info or {}
     return {"session_no": s.session_no, "condition": s.condition, "relation": s.ds, "attributes": s.rel.names,
-            "sample": s.rel.sample, "rows": s.rel.rows, "docs": docs, "test": s.test, **s.progress()}
+            "sample": s.rel.sample, "rows": s.rel.rows, "docs": docs, "test": s.test, "title": up.get("title"),
+            "dropped": up.get("dropped", []), "key": up.get("key") if s.upload else s.b.get("key"), **s.progress()}
 
 
 def status_page():
@@ -185,6 +275,8 @@ class Handler(BaseHTTPRequestHandler):
 
     def body(self):
         n = int(self.headers.get("Content-Length") or 0)
+        if n > U.MAX_BYTES + 2 ** 20:
+            raise ValueError(f"The file is larger than {U.MAX_BYTES // 2 ** 20} MB.")
         raw = self.rfile.read(n) if n else b""
         if self.headers.get("Content-Type", "").startswith("application/x-www-form-urlencoded"):
             return {k: v[0] for k, v in urllib.parse.parse_qs(raw.decode()).items()}
@@ -192,7 +284,7 @@ class Handler(BaseHTTPRequestHandler):
 
     def session_path(self, path):
         """(code, n, rest) of /s/<code>/<n>/<rest>, or None"""
-        m = re.match(r"^/s/([A-Za-z]{1,2}[0-9]{2}(?:-[0-9A-Fa-f]{6})?)/([12])(/.*)?$", path)
+        m = re.match(r"^/s/([A-Za-z]{1,2}[0-9]{2}(?:-[0-9A-Fa-f]{6})?|[Uu][Pp]-[0-9A-Fa-f]{16})/([12])(/.*)?$", path)
         if not m:
             return None
         code, sno = canonical(m.group(1)), int(m.group(2))
@@ -234,6 +326,10 @@ class Handler(BaseHTTPRequestHandler):
             rest = rest[1:]
             if rest == "":
                 return self.page(UI)
+            if is_upload(code):
+                state, msg = upload_state(code)
+                if state != "ready":
+                    return self.send(200 if rest == "api/meta" else 409, {"state": state, "error": msg})
             s = session_for(code, sno)
             if rest == "api/meta":
                 return self.send(200, meta(s))
@@ -250,7 +346,29 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         path = urllib.parse.urlparse(self.path).path
-        b = self.body()
+        try:
+            b = self.body()
+        except ValueError as e:
+            self.close_connection = True                      # the body is not read
+            return self.send(413, {"error": str(e)})
+        if path == "/upload" and CFG["tries"]:
+            sweep_uploads()
+            if not release_tries(MAX_TRIES):
+                return self.send(503, {"error": "Many people are using Cert3NF right now. Please try again in a few "
+                                                "minutes."})
+            code = "UP-" + secrets.token_hex(8)
+            with CHECK:
+                try:
+                    d = U.check(str(b.pop("name", "") or "table.csv")[:120], str(b.pop("csv", "") or ""),
+                                [str(x) for x in b.get("key") or []])
+                except ValueError as e:
+                    return self.send(400, {"error": str(e)})
+                os.makedirs(folder(code))
+                with open(os.path.join(folder(code), "data.json"), "w", encoding="utf-8") as fh:
+                    json.dump(d, fh)
+                del d
+            threading.Thread(target=build_upload, args=(code,), daemon=True).start()
+            return self.send(200, {"go": f"/s/{code}/1/"})
         if path == "/try" and CFG["tries"]:
             if not release_tries(MAX_TRIES):
                 return self.send(503, BUSY, "text/html; charset=utf-8")
@@ -269,6 +387,8 @@ class Handler(BaseHTTPRequestHandler):
             return self.redirect("/status")
         sp = self.session_path(path)
         if sp and sp[2]:
+            if is_upload(sp[0]) and upload_state(sp[0])[0] != "ready":
+                return self.send(409, {"state": upload_state(sp[0])[0]})
             s = session_for(sp[0], sp[1])
             rest = sp[2][1:]
             if rest == "api/answer":

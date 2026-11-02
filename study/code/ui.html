@@ -40,6 +40,10 @@
   .legend span:nth-child(1) { color:var(--agree-ink); } .legend span:nth-child(2) { color:var(--rhs-ink); }
   .legend .free { background:#fff; box-shadow:inset 0 0 0 1px var(--line); }
   .keyhint { white-space:nowrap; }
+  .prep .bar { height:6px; border-radius:999px; background:#e6ebf1; overflow:hidden; margin:14px 0 4px; }
+  .prep .bar::after { content:""; display:block; width:35%; height:100%; border-radius:999px;
+                      background:linear-gradient(90deg, #6b8fbf, #24364b); animation: slide 1.4s ease-in-out infinite; }
+  @keyframes slide { 0% { transform:translateX(-100%); } 100% { transform:translateX(290%); } }
   .qrow { display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
   .stop { margin-left:auto; }
   /* stop: a quiet pill that turns red on hover */
@@ -127,7 +131,7 @@
   details.docs[open] summary { margin-bottom:2px; }
   .try .q { margin:2px 0 12px; }
   .pq .q { margin-top:14px; }
-  .try .pbody { display:flex; gap:12px 22px; align-items:flex-start; flex-wrap:wrap; }   /* the small practice table beside its question */
+  .try .pbody { display:flex; gap:12px 22px; align-items:stretch; flex-wrap:wrap; }   /* the small practice table beside its question */
   .try #intro p { margin:6px 0; }
   .try #intro ul { display:flex; flex-wrap:wrap; gap:2px 26px; list-style:none; margin:6px 0; padding:0 0 0 4px; }
   .try #intro li::before { content:""; display:inline-block; width:5px; height:5px; border-radius:50%; background:currentColor; margin:0 8px 3px 0; }
@@ -135,7 +139,9 @@
   .try .fb span { flex:1 1 320px; } .try .fb button { flex:none; }
   .try #intro li { padding-left:13px; text-indent:-13px; }
   .try #sample th.rhs, .try #sample td.rhs { position:sticky; right:0; z-index:1; } .try #sample th.rhs { z-index:2; }   /* phones: the asked column stays in view */
-  .try .pbody .tablewrap { flex:none; } .try .pq { flex:1; min-width:280px; } .try #intro .pq .q { margin:0 0 12px; }
+  .try .pbody .tablewrap { flex:none; display:flex; } .try #ptab { height:100%; }   /* table and question end level */
+  .try .pq { flex:1; min-width:280px; display:flex; flex-direction:column; } .try .pq .fb { flex:1 0 auto; }
+  .try #intro .pq .q { margin:0 0 12px; }
   @media (hover:hover) {                       /* hover effects only where a pointer hovers: on touch screens they stick to the last tap */
     button.main:hover:not([aria-disabled]) { transform: translateY(-2px); filter: brightness(1.15); box-shadow: 0 3px 7px rgba(36,54,75,.26), 0 8px 26px rgba(36,54,75,.5); }
     .stop button:hover { transform: translateY(-2px); color:#b42318; background:#fff7f6; box-shadow: inset 0 0 0 1px #ef9a92, 0 3px 6px rgba(196,55,47,.1), 0 8px 22px rgba(196,55,47,.32); }
@@ -167,6 +173,14 @@
 <p id="say" class="sr" aria-live="polite"></p>
 <nav class="home"><a href="/" title="Back to the start page"><svg class="mark" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><linearGradient id="c3n" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3d5a7d"/><stop offset="1" stop-color="#1f3047"/></linearGradient><linearGradient id="c3g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3ec266"/><stop offset="1" stop-color="#1a7f37"/></linearGradient></defs><rect x="2" y="2" width="31" height="31" rx="8" fill="url(#c3n)"/><rect x="7" y="8" width="6.5" height="4.2" rx="1.3" fill="#a9c8ff"/><rect x="15" y="8" width="6.5" height="4.2" rx="1.3" fill="#ffc88c"/><rect x="23" y="8" width="5" height="4.2" rx="1.3" fill="#fff" fill-opacity=".9"/><rect x="7" y="14.5" width="6.5" height="4.2" rx="1.3" fill="#a9c8ff" fill-opacity=".75"/><rect x="15" y="14.5" width="6.5" height="4.2" rx="1.3" fill="#ffc88c" fill-opacity=".75"/><rect x="23" y="14.5" width="5" height="4.2" rx="1.3" fill="#fff" fill-opacity=".65"/><rect x="7" y="21" width="6.5" height="4.2" rx="1.3" fill="#a9c8ff" fill-opacity=".5"/><rect x="15" y="21" width="6.5" height="4.2" rx="1.3" fill="#ffc88c" fill-opacity=".5"/><circle cx="30.5" cy="30.5" r="8" fill="url(#c3g)" stroke="#fff" stroke-width="2.4"/><path d="M26.7 30.7l2.6 2.6 5-5.4" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Home</a></nav>
 <p id="net" class="card hidden" style="background:#fff4e5;border-color:#f0c58a">The connection to the server was lost. Trying again&hellip; Your answers so far are kept.</p>
+
+<section id="prep" class="hidden prep">
+  <div class="card">
+    <h1 id="preptitle">Finding the rules of your table</h1>
+    <p id="preptext">Cert3NF mines every rule that holds on your records. This takes a few seconds to a minute.</p>
+    <div class="bar" id="prepbar"></div>
+  </div>
+</section>
 
 <section id="intro">
   <div class="card">
@@ -223,7 +237,7 @@
     <div class="schemata" id="rdesign"></div>
     <p class="checks" id="rchecks"></p>
     <div id="rdiffer"></div>
-    <p class="btns" style="margin-top:18px"><a class="ans yes" href="/"><span class="ico" data-i="again"></span>Try another table</a></p>
+    <p class="btns" style="margin-top:18px"><a class="ans yes" href="/"><span class="ico" data-i="again"></span>Try another table</a><button class="ans dk hidden" id="rsql"><span class="ico" data-i="down"></span>Download SQL</button></p>
   </div>
 </section>
 
@@ -259,7 +273,8 @@
 const $ = s => document.querySelector(s);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 let META = null, CUR = null, SHOWN = 0;
-const TRY = /^\/s\/T[EPU]0[1-3]-/.test(location.pathname);    // a try from the start page: a demo session
+const TRY = /^\/s\/(T[EPU]0[1-3]-|UP-)/i.test(location.pathname);   // a try or an upload from the start page: a demo
+const UPLOAD = /^\/s\/UP-/i.test(location.pathname);              // the visitor's own table (upload.py)
 const NAME = {ssb_customer: "Customers", tpcds_core: "Store sales", abs_mb: "Mesh blocks"};   // as on the start page
 const TYPICAL = {ssb_customer: 30, tpcds_core: 30, abs_mb: 55};   // questions when the answers match the documentation
 const STOP = TRY ? ["Stop and see the design", "Press again to see the design"] : ["Stop the session", "Press again to stop"];
@@ -271,7 +286,8 @@ const SVG = {yes: svg('<path d="M3.3 8.6l3 3 6.4-6.9"/>'),
              stop: svg('<rect x="2.6" y="2.6" width="10.8" height="10.8" rx="2" fill="currentColor" stroke="none"/>'),
              again: svg('<path d="M12.9 8.6A5 5 0 1 1 11.4 4.2"/><path d="M12 1.8v2.9H9.1"/>', 2),
              part: svg('<circle cx="8" cy="8" r="5.6"/><path d="M8 2.4a5.6 5.6 0 0 1 0 11.2z" fill="currentColor" stroke="none"/>', 1.8),
-             none: svg('<circle cx="8" cy="8" r="5.6"/>', 1.8)};
+             none: svg('<circle cx="8" cy="8" r="5.6"/>', 1.8),
+             down: svg('<path d="M8 2.4v8"/><path d="M4.6 7.4L8 10.8l3.4-3.4"/><path d="M3 13.6h10"/>', 2)};
 document.querySelectorAll("[data-i]").forEach(e => e.innerHTML = SVG[e.dataset.i]);
 const LABEL = {yes: "Yes", no: "No", dk: "Don't know"}, KEY = {yes: "Y", no: "N", dk: "D"};
 const PHASE = {disc: ["p1", "Phase 1 · Discovery: a candidate rule found in the data"],
@@ -410,15 +426,16 @@ async function result() {
   let r = await api("api/result");
   for (let k = 0; !r.done && k < 20; k++) { await new Promise(res => setTimeout(res, 500)); r = await api("api/result"); }
   const n = (x, w) => `${x} ${w}${x === 1 ? "" : "s"}`;
-  const rel = META.relation.replace(/^fresh_/, "");
-  $("#rsum").textContent = `${NAME[rel] || rel} · ${n(r.answers, "answer")}: ${r.yes} yes, ${r.no} no` + (r.dk ? `, ${r.dk} don't know` : "");
+  $("#rsum").textContent = `${title()} · ${n(r.answers, "answer")}: ${r.yes} yes, ${r.no} no` + (r.dk ? `, ${r.dk} don't know` : "");
   if (!r.design) {
     $("#rbadge").className = "badge part"; $("#rbadge").innerHTML = SVG.none;
     $("#rtitle").textContent = "No design yet";
     $("#rintro").textContent = "The try stopped before Cert3NF could build a design. Start another one whenever you like.";
   } else {
     const cert = r.certified, k = r.confirmed.length;
-    const from = k ? `the table's key and the ${n(k, "rule")} you confirmed` : "the table's key alone";
+    const key = META.key && META.key.length;
+    const from = key && k ? `the table's key and the ${n(k, "rule")} you confirmed` : key ? "the table's key alone"
+               : k ? `the ${n(k, "rule")} you confirmed` : null;
     const cause = {voluntary: "You stopped before the certificate was complete.",
                    time: "The try reached its 40-minute limit before the certificate was complete.",
                    idle: "The try was closed after 30 minutes without an answer."}[r.stop_reason]
@@ -427,12 +444,13 @@ async function result() {
     $("#rbadge").className = "badge " + (cert ? "ok" : "part"); $("#rbadge").innerHTML = cert ? SVG.yes : SVG.part;
     $("#rtitle").textContent = cert ? "Your answers certify this design" : "The design so far";
     $("#rintro").textContent = cert
-      ? `Cert3NF synthesized this design from ${from}. It is in Third Normal Form under these rules, and your answers and the stored records rule out every other rule that would change it. Keys are underlined.`
-      : `${cause} This design rests on ${from}. Keys are underlined.`;
+      ? (from ? `Cert3NF synthesized this design from ${from}. It is in Third Normal Form under these rules, and your answers and the stored records rule out every other rule that would change it. Keys are underlined.`
+              : "Your answers and the stored records rule out every candidate rule, so the table stays as it is. Its key is underlined.")
+      : `${cause} This design rests on ${from || "no rule yet"}. Keys are underlined.`;
     $("#rdesign").innerHTML = r.design.map(s =>
       `<span class="schema">(${s.key.map(a => `<u>${esc(a)}</u>`).concat(s.other.map(esc)).join(", ")})</span>`).join("");
     const chk = (ok, w) => `<span class="${ok ? "y" : "n"}">${ok ? SVG.yes : SVG.no}${ok ? "" : "not "}${w}</span>`;
-    $("#rchecks").innerHTML = "Under the documented rules of the table, the design is " +
+    $("#rchecks").innerHTML = (r.documented ? "Under the documented rules of the table" : "Under the rules you confirmed") + ", the design is " +
       chk(r.lossless, "lossless") + chk(r.preserving, "dependency-preserving") + chk(r.nf3, "in 3NF");
   }
   if (r.differ.length) {
@@ -440,12 +458,31 @@ async function result() {
     $("#rdiffer").innerHTML = `<details class="differ"><summary>${n(r.differ.length, "answer")} of yours ${r.differ.length === 1 ? "differs" : "differ"} from the documentation` +
       (fails ? `, hence the failed ${fails === 1 ? "check" : "checks"} above` : "") + "</summary><ul>" +
       r.differ.map(d => `<li><span>${esc(d.text)}</span><span class="tag ${d.answer}">you: ${d.answer}</span><span class="tag ${d.documented}">docs: ${d.documented}</span></li>`).join("") + "</ul></details>";
-  } else if (r.answers) {
+  } else if (r.answers && r.documented) {
     $("#rdiffer").innerHTML = "<p>Every answer of yours agrees with the documentation of the table.</p>";
   }
+  if (UPLOAD && r.design) { $("#rsql").classList.remove("hidden"); $("#rsql").onclick = () => sql(r); }
   $("#result").classList.remove("hidden");
   window.scrollTo({top: 0});
   $("#rtitle").tabIndex = -1; $("#rtitle").focus({preventScroll: true});   // screen readers start at the verdict
+}
+
+// the design of an uploaded table as SQL: one table per schema, named after the file, with the inferred column types
+function sql(r) {
+  const base = (META.title || "table").replace(/\.[^.]*$/, "").replace(/\W+/g, "_").replace(/^_|_$/g, "").toLowerCase() || "table";
+  const q = a => /^[A-Za-z_][A-Za-z0-9_]*$/.test(a) ? a : '"' + a.replace(/"/g, '""') + '"';
+  const out = [`-- Cert3NF design of ${META.title}: ${r.certified ? "certified" : "not certified"}, in Third Normal Form under the rules you confirmed`];
+  const used = {};
+  r.design.forEach(s => {                         // a table is named after its key
+    let t = (base + "_" + s.key.join("_")).replace(/\W+/g, "_").toLowerCase();
+    used[t] = (used[t] || 0) + 1;
+    if (used[t] > 1) t += "_" + used[t];
+    const cols = s.key.map(a => `  ${q(a)} ${r.types[a]} NOT NULL`).concat(s.other.map(a => `  ${q(a)} ${r.types[a]}`));
+    out.push(`CREATE TABLE ${t} (\n${cols.join(",\n")},\n  PRIMARY KEY (${s.key.map(q).join(", ")})\n);`);
+  });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([out.join("\n\n") + "\n"], {type: "text/plain"}));
+  a.download = base + "_3nf.sql"; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
 }
 
 function finish() {
@@ -470,6 +507,7 @@ if (TRY) {                                                  // a try from the st
   document.body.classList.add("try");
   $("#studylen").classList.add("hidden"); $("#trylen").classList.remove("hidden");
   $("#practnote").textContent = "Two practice questions on a small example follow. You can skip them.";
+  if (UPLOAD) { $("#intro").classList.add("hidden"); $("#prep").classList.remove("hidden"); }
   $("#rowsnote").textContent = "Every rule you are asked about holds on all stored records, so the rows never refute it: decide from what the attributes mean.";
   $("#stopbtn").lastChild.textContent = STOP[0];
   PRACTICE[1] = {lhs: ["Order", "Name"], rhs: "City", answer: "yes",
@@ -477,16 +515,26 @@ if (TRY) {                                                  // a try from the st
     why: "The answer is yes: two such records have the same order, whatever their dates, and an order belongs to one customer with one city."};
   $("#byetext").innerHTML = 'This try is finished. <a href="/">Back to the start page</a>.';
 }
+const title = () => { const rel = META.relation.replace(/^fresh_/, ""); return META.title || NAME[rel] || rel; };
 (async () => {
   META = await api("api/meta");
+  while (META.state === "preparing") { await new Promise(res => setTimeout(res, 1500)); META = await api("api/meta"); }
+  if (META.state === "failed") {
+    $("#preptitle").textContent = "Cert3NF could not use this table"; $("#prepbar").remove();
+    $("#preptext").innerHTML = esc(META.error || "") + ' <a href="/">Back to the start page</a>.';
+    return;
+  }
+  if (UPLOAD) { $("#prep").classList.add("hidden"); $("#intro").classList.remove("hidden"); }
   const rel = META.relation.replace(/^fresh_/, "");
-  if (TRY) { $("#relname").innerHTML = `${esc(NAME[rel] || rel)} <span class="muted">${esc(rel)}</span>`; document.title = "Cert3NF: " + (NAME[rel] || rel); }
+  if (UPLOAD) { $("#relname").textContent = title(); document.title = "Cert3NF: " + title(); }
+  else if (TRY) { $("#relname").innerHTML = `${esc(NAME[rel] || rel)} <span class="muted">${esc(rel)}</span>`; document.title = "Cert3NF: " + (NAME[rel] || rel); }
   else $("#relname").textContent = "Table: " + rel;
-  $("#rows").textContent = `Ten of the ${META.rows.toLocaleString("en")} records, drawn at random.`;
+  $("#rows").textContent = (META.sample.length < 10 ? `All ${META.rows} records.` : `Ten of the ${META.rows.toLocaleString("en")} records, drawn at random.`)
+    + (META.dropped.length ? ` Left out, as every record has the same value: ${META.dropped.join(", ")}.` : "");
   if (META.docs.length) {
     const links = META.docs.map(d => `<a class="doc" href="${esc(d.href)}" target="_blank" rel="noopener">${esc(d.name)}</a>`).join("");
-    const many = TRY && META.docs.length > 2;     // a try folds a long list of files, so that the page needs no scrolling
-    const fold = s => `<details class="docs"><summary>${s}${META.docs.length} files</summary>${links}</details>`;
+    const many = TRY;                             // a try folds its files into one line, so that the page needs no scrolling
+    const fold = s => `<details class="docs"><summary>${s}${META.docs.length} ${META.docs.length === 1 ? "file" : "files"}</summary>${links}</details>`;
     $("#docnote").classList.remove("hidden");
     const lead = "The documentation of the table, also linked above the questions: ";
     if (TRY) $("#docnote").innerHTML = many ? fold(lead) : lead + links;

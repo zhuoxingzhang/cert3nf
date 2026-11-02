@@ -1,0 +1,36 @@
+{
+ "pool": [
+  "food",
+  "hospital",
+  "pricepaid",
+  "ssb_customer",
+  "ssb_date",
+  "ssb_lineorder",
+  "ssb_part",
+  "ssb_supplier",
+  "tpcds_core",
+  "tpch_lineitem_orders",
+  "tpch_orders_customer",
+  "tpch_partsupp_part_supplier"
+ ],
+ "columns": [
+  0,
+  1,
+  2,
+  3,
+  4,
+  5,
+  6
+ ],
+ "weights": [
+  0.01045695503520861,
+  -1.0512707919291762,
+  0.21696834095439801,
+  -0.1483221769909844,
+  -0.07656027280066938,
+  -0.04267903901897967,
+  -0.03388123378165158
+ ],
+ "rho_min": 0.0001,
+ "check": "leaving out food reproduces auto_confirm.prior(kind learned)"
+}
