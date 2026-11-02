@@ -6,10 +6,11 @@ at the same time.
   /                        the start page (index.html): a participant code and session 1 or 2, or "try it"
   /s/<code>/<n>/           the session's page (ui.html): instructions, two practice questions, the questions, the
                            exit questionnaire; reopening it continues the session where it is
-  /s/<code>/<n>/api/...    meta, question, answer, stop, practice, questionnaire
+  /s/<code>/<n>/api/...    meta, question, answer, stop, practice, questionnaire, and result for a try
   /s/<code>/<n>/docs/<f>   the documentation of the relation (conditions E and P only): the files in docs/<relation>/,
                            and links to the official documents listed in docs/<relation>/links.json
-  POST /try                a test session of its own for anyone who wants to try (code TP0x-xxxxxx)
+  POST /try                a test session of its own for anyone who wants to try (code TP0x-xxxxxx, x the chosen
+                           table), run as a demo session (session.py): no block, the trusting mode, a result page
   /status                  for the experimenter: the state of every session (no answers), and a reset for the test
                            codes; the answers themselves are only in the private data repository
   /healthz                 for the uptime monitor (GET or HEAD)
@@ -73,7 +74,7 @@ def session_for(code, sno):
         s = LIVE.get((code, sno))
         if s is None:
             s = S.Session(code, sno, folder(code), live_minutes=CFG["minutes"],
-                          on_write=None if is_try(code) else CFG["store"].changed)
+                          on_write=None if is_try(code) else CFG["store"].changed, demo=is_try(code))
             LIVE[(code, sno)] = s
         SEEN[(code, sno)] = time.time()
         return s
@@ -235,6 +236,8 @@ class Handler(BaseHTTPRequestHandler):
                 return self.send(200, meta(s))
             if rest == "api/question":
                 return self.send(200, s.question())
+            if rest == "api/result" and s.demo:
+                return self.send(200, s.result())
             if rest.startswith("docs/") and s.condition in ("E", "P"):
                 f = os.path.join(DOCS, s.ds, os.path.basename(urllib.parse.unquote(rest[len("docs/"):])))
                 if os.path.isfile(f):
@@ -249,7 +252,8 @@ class Handler(BaseHTTPRequestHandler):
             if not release_tries(MAX_TRIES):
                 return self.send(503, "Many people are trying the study right now. Please try again in a few minutes.",
                                  "text/plain; charset=utf-8")
-            code = f"TP{random.choice(sorted(K.ASSIGN))}-{secrets.token_hex(3)}"
+            num = "0" + str(b.get("table", ""))                # the table chosen on the start page (R1, R2, R3)
+            code = f"TP{num if num in K.ASSIGN else random.choice(sorted(K.ASSIGN))}-{secrets.token_hex(3)}"
             return self.redirect(f"/s/{code}/1/")
         if path == "/status/reset":
             code, sno = b.get("code", ""), int(b.get("session", 0) or 0)

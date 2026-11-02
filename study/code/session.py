@@ -12,13 +12,20 @@ calling thread.  A session whose file exists continues from it (the server resta
 logged live answers again, must ask the same questions (asserted), and goes on with the next one; the block, the
 fillers and both clocks continue where the file ends.  A file with an end line is only completed by the
 questionnaire.  Usage: through server.py, or test_session.py.
+
+A demo session (a try from the start page, now that the study has ended) skips the block, runs the method in the
+trusting mode (variant v5: every premise asked once, so no fillers are needed) and ends with result() instead of the
+questionnaire: the method's output, the design of the confirmed FDs, and the answers that differ from the documented
+FDs.
 """
-import hashlib, json, os, queue, sys, threading, time
+import hashlib, itertools, json, os, queue, sys, threading, time
 from collections import deque
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import common as K
 
 K.setenv("full")
+import auto_common as AC          # noqa: E402
+import drd                        # noqa: E402
 import v5                         # noqa: E402
 import v5study                    # noqa: E402
 
@@ -26,6 +33,7 @@ GAP, LIVE_MINUTES = 3, 40
 KINDS = {"disc_q": "disc", "max_asked": "max", "guess_q": "guess", "qx_q": "qx", "confirm_q": "confirm",
          "reask_q": "reask"}
 VARIANT = K.VARIANT
+DEMO_VARIANT = "v5"               # the trusting mode with the same advisor, for demo sessions
 LOCAL = threading.local()         # LOCAL.session: whom the method of this thread asks
 
 
@@ -33,11 +41,11 @@ def _ask(z, a, k, kind):
     return LOCAL.session.ask(z, a, k, kind)
 
 
-def run_method(who, ds, b, adv):
+def run_method(who, ds, b, adv, variant=VARIANT):
     """v5study's run of a live session on relation ds, asking who.ask"""
     v5study.ASK = _ask
     LOCAL.session = who
-    _, eps_m = v5study.VARIANTS[VARIANT]
+    _, eps_m = v5study.VARIANTS[variant]
     return v5study.run(b, adv, v5.CAP, True, True, ds, 0, 0.0, eps_m, False, None, None, True, 0.0)
 
 
@@ -66,8 +74,9 @@ def status(path):
 
 
 class Session:
-    def __init__(self, participant, session_no, out_dir=None, live_minutes=LIVE_MINUTES, on_write=None):
-        self.participant, self.session_no = participant, session_no
+    def __init__(self, participant, session_no, out_dir=None, live_minutes=LIVE_MINUTES, on_write=None, demo=False):
+        self.participant, self.session_no, self.demo = participant, session_no, demo
+        self.variant = DEMO_VARIANT if demo else VARIANT
         self.condition, _, self.test = K.parse(participant)
         self.ds = K.relation_of(participant, session_no)
         self.rel, self.b, self.adv = K.prebuilt(self.ds)
@@ -75,7 +84,7 @@ class Session:
             blk = json.load(fh)
         qs = blk["questions"]
         order = sorted(range(len(qs)), key=lambda j: seeded(participant, session_no, "order", j))
-        self.block = [qs[j] for j in order]
+        self.block = [] if demo else [qs[j] for j in order]
         self.block_md5 = K.md5(os.path.join(K.BLOCKS, f"block_{self.ds}.json"))
         self.fillers, self.nfill = blk["fillers"], 0
         out_dir = out_dir or os.path.join(K.KIT, "sessions")
@@ -94,7 +103,8 @@ class Session:
             return
         self.fh = open(self.path, "w", encoding="utf-8")
         self.write({"event": "start", "participant": participant, "condition": self.condition, "test": self.test,
-                    "relation": self.ds, "session_no": session_no, "variant": VARIANT, "budget": v5.BUDGET,
+                    "relation": self.ds, "session_no": session_no, "variant": self.variant, "demo": demo,
+                    "budget": v5.BUDGET,
                     "live_minutes": live_minutes, "gap": GAP, "block_md5": self.block_md5, "code": self.code,
                     "block_order": [q["id"] for q in self.block], "time": time.strftime("%Y-%m-%d %H:%M:%S")})
 
@@ -155,7 +165,7 @@ class Session:
 
     def method(self):
         try:
-            self.qout.put(("end", run_method(self, self.ds, self.b, self.adv)))
+            self.qout.put(("end", run_method(self, self.ds, self.b, self.adv, self.variant)))
         except Exception as e:                                # noqa: BLE001 (reported, the session ends)
             self.qout.put(("error", repr(e)))
 
@@ -182,7 +192,8 @@ class Session:
                 self.cur = self.prepare()
             if self.cur is None:
                 return {"done": True}
-            return {k: self.cur[k] for k in ("qid", "i", "text", "lhs", "rhs", "form", "listed")}
+            keys = ("qid", "i", "text", "lhs", "rhs", "form", "listed") + (("kind",) if self.demo else ())
+            return {k: self.cur[k] for k in keys}
 
     def prepare(self):
         if self.block:
@@ -270,3 +281,46 @@ class Session:
             self.write({"event": "questionnaire", **data})
             self.closed = True
             self.fh.close()
+
+    # ---------------- the end of a demo session ----------------
+    def result(self):
+        """what a demo session shows at its end: the counts, the method's verdict, the design that 3NF synthesis
+        returns on sigma0 and the confirmed FDs (as in v5study's output, with a minimal key per schema), its check
+        against the documented FDs, and the answers that differ from them"""
+        with self.lock:
+            if not self.done:
+                return {"done": False}
+            recs = read(self.path)
+        ans = [r for r in recs if r["event"] == "answer"]
+        end = next((r for r in recs if r["event"] == "end"), {})
+        out = end.get("method")
+        res = {"done": True, "answers": len(ans), "stop_reason": end.get("stop_reason"),
+               **{k: sum(r["answer"] == k for r in ans) for k in ("yes", "no", "dk")}}
+        res["differ"] = [{"text": r["text"], "answer": r["answer"], "documented": "yes" if r["truth_full"] else "no"}
+                         for r in ans if r["answer"] != "dk" and (r["answer"] == "yes") != r["truth_full"]]
+        if not out:
+            return res
+        names, n, b = self.rel.names, self.rel.n, self.b
+        idx = {x: i for i, x in enumerate(names)}
+        yes = [AC.S.fd(tuple(sorted(idx[x] for x in l)), idx[a]) for l, a in out["certificate"]["yes"]]
+        inst = drd.Instance(b["R"], b["sigma0"], b["P"], {p: 0.5 for p in b["P"]}, list(b["truth"]), name=b["name"])
+        D = inst._synth(inst._atomic(b["sigma0"] + yes))[0]
+        F = [(K.mask(l), K.mask(r)) for l, r in b["sigma0"] + yes]
+
+        def key(s):                                             # a smallest key of schema s under the confirmed FDs
+            m = K.mask(s)
+            for k in range(len(s) + 1):
+                for c in itertools.combinations(sorted(s), k):
+                    if K.closure(K.mask(c), F) & m == m:
+                        return list(c)
+            return sorted(s)
+
+        design = []
+        for s in sorted(D, key=lambda s: (-len(s), sorted(s))):
+            k = key(s)
+            design.append({"key": [names[i] for i in k], "other": [names[i] for i in sorted(s) if i not in k]})
+        res.update({"certified": out["certified"], "asked": out["questions"], "by_data": out["data_no"],
+                    "confirmed": [[l, a] for l, a in out["certificate"]["yes"]], "design": design,
+                    "good": out["gold_good"], "lossless": out["gold_lossless"],
+                    "preserving": out["gold_preserving"], "nf3": out["gold_nf3"]})
+        return res

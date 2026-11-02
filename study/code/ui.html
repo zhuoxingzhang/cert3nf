@@ -34,6 +34,47 @@
   .scale { display:flex; gap:14px; flex-wrap:wrap; } .scale label { display:inline; margin:0; }
   .hidden { display:none; }
   a.doc { margin-right:14px; }
+
+  /* answer buttons: colour, icon and key per answer; a lift on hover, a press on click */
+  .ans { display:inline-flex; align-items:center; gap:7px; font-weight:600; font-size:15px; padding:7px 15px 7px 8px; border-radius:999px;
+         border:none; color:#fff; min-width:0; box-shadow: 0 2px 0 rgba(0,0,0,.14), 0 6px 14px rgba(0,0,0,.08);
+         transition: transform .12s, box-shadow .12s, filter .12s; }
+  .ans .ico { display:inline-grid; place-items:center; width:21px; height:21px; border-radius:50%;
+              background:rgba(255,255,255,.24); font-size:12px; line-height:1; }
+  .ans kbd { font:600 11px/1 ui-monospace, Consolas, monospace; padding:2px 5px; border-radius:4px; margin-left:1px;
+             background:rgba(255,255,255,.22); }
+  .ans.yes { background:linear-gradient(135deg, #34b85a, #1a7f37); }
+  .ans.no  { background:linear-gradient(135deg, #ef6a5e, #c4372f); }
+  .ans.dk  { background:#fff; color:#4a5565; box-shadow: inset 0 0 0 1px #c5ccd6; }
+  .ans.dk .ico { background:#eef1f5; } .ans.dk kbd { background:#eef1f5; }
+  .ans:hover:not(:disabled) { transform: translateY(-2px); filter: brightness(1.05); box-shadow: 0 4px 0 rgba(0,0,0,.12), 0 10px 20px rgba(0,0,0,.12); }
+  .ans.dk:hover:not(:disabled) { box-shadow: inset 0 0 0 1px #9aa4b1, 0 8px 16px rgba(0,0,0,.08); }
+  .ans:active:not(:disabled) { transform: translateY(1px) scale(.97); }
+  .ans.picked { animation: pop .28s ease; opacity:1 !important; }
+  @keyframes pop { 40% { transform: scale(1.08); } }
+  .enter { animation: rise .28s ease; }
+  @keyframes rise { from { opacity:0; transform: translateY(8px); } to { opacity:1; transform:none; } }
+  .keys { margin-top:10px; }
+  .phase { display:inline-block; font-size:13px; font-weight:600; border-radius:999px; padding:3px 11px; margin-bottom:8px; }
+  .phase.p1 { background:#e3eefb; color:#174ea6; } .phase.p2 { background:#e3f5e8; color:#1a7f37; }
+  .skip { font-size:14px; margin-left:12px; }
+
+  /* the result of a try */
+  .verdict { display:flex; align-items:center; gap:14px; margin-bottom:6px; }
+  .badge { flex:none; display:grid; place-items:center; width:44px; height:44px; border-radius:50%; font-size:22px; color:#fff; }
+  .badge.ok { background:linear-gradient(135deg, #34b85a, #1a7f37); animation: pop .5s ease; }
+  .badge.part { background:linear-gradient(135deg, #f0b44c, #d08700); }
+  .verdict h1 { margin:0; }
+  .schemata { display:flex; flex-wrap:wrap; gap:8px; margin:10px 0; }
+  .schema { border:1px solid var(--line); border-radius:8px; padding:5px 10px; font:13px ui-monospace, Consolas, monospace; background:#fafbfc; }
+  .schema u { text-decoration-thickness:2px; text-underline-offset:3px; }
+  .checks span { display:inline-block; margin:4px 8px 4px 0; padding:3px 10px; border-radius:999px; font-size:14px; }
+  .checks .y { background:#e3f5e8; color:#1a7f37; } .checks .n { background:#fde8e6; color:#b42318; }
+  .differ li { margin:6px 0; }
+  .tag { font-size:12px; font-weight:600; padding:1px 7px; border-radius:4px; margin-left:4px; }
+  .tag.yes { background:#e3f5e8; color:#1a7f37; } .tag.no { background:#fde8e6; color:#b42318; }
+  a.ans { text-decoration:none; }
+  @media (prefers-reduced-motion: reduce) { * { animation:none !important; transition:none !important; } }
 </style>
 </head>
 <body>
@@ -53,9 +94,11 @@
       <li><b>Don't know</b> if you cannot tell.</li>
     </ul>
     <p id="docnote" class="hidden">The documentation of the table: <span id="doclinks"></span><br>You can open it at any time, also with the links above the questions.</p>
-    <p>There are at most about 130 questions and at most about 55 minutes of answering. You can stop at any time
+    <p id="studylen">There are at most about 130 questions and at most about 55 minutes of answering. You can stop at any time
        with the Stop button, without giving a reason.</p>
-    <p class="muted">Two practice questions follow. They are not part of the study.</p>
+    <p class="hidden" id="trylen">Cert3NF asks until your answers certify a design, at most 100 questions. You can stop at
+       any time and see the design so far. Keys: <b>Y</b> yes, <b>N</b> no, <b>D</b> don't know.</p>
+    <p class="muted" id="practnote">Two practice questions follow. They are not part of the study.</p>
     <p class="muted hidden" id="trynote">This is a try: none of its answers are part of the study.</p>
   </div>
   <div class="card" id="practice"></div>
@@ -72,14 +115,26 @@
     <div class="tablewrap"><table id="sample"></table></div>
     <p class="muted" id="rows"></p>
   </div>
-  <div class="card">
+  <div class="card" id="qcard">
+    <span class="phase hidden" id="phase"></span>
     <p class="q" id="qtext"></p>
     <div class="btns">
-      <button class="main" data-a="yes">Yes</button>
-      <button class="main" data-a="no">No</button>
-      <button data-a="dk">Don't know</button>
+      <button class="ans yes" data-a="yes"><span class="ico">&#10003;</span>Yes<kbd>Y</kbd></button>
+      <button class="ans no" data-a="no"><span class="ico">&#10007;</span>No<kbd>N</kbd></button>
+      <button class="ans dk" data-a="dk"><span class="ico">?</span>Don't know<kbd>D</kbd></button>
     </div>
     <div class="stop"><button id="stopbtn">Stop the session</button></div>
+  </div>
+</section>
+
+<section id="result" class="hidden">
+  <div class="card enter">
+    <div class="verdict"><span class="badge" id="rbadge"></span><div><h1 id="rtitle"></h1><p class="muted" id="rsum"></p></div></div>
+    <p id="rintro"></p>
+    <div class="schemata" id="rdesign"></div>
+    <p class="checks" id="rchecks"></p>
+    <div id="rdiffer"></div>
+    <p class="btns" style="margin-top:18px"><a class="ans yes" href="/"><span class="ico">&#8635;</span>Try another table</a></p>
   </div>
 </section>
 
@@ -115,6 +170,15 @@
 const $ = s => document.querySelector(s);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 let META = null, CUR = null, SHOWN = 0;
+const TRY = /^\/s\/T[EPU]0[1-3]-/.test(location.pathname);    // a try from the start page: a demo session
+const ICON = {yes: "&#10003;", no: "&#10007;", dk: "?"}, LABEL = {yes: "Yes", no: "No", dk: "Don't know"}, KEY = {yes: "Y", no: "N", dk: "D"};
+const PHASE = {disc: ["p1", "Phase 1 · Discovery: a rule the design relies on"],
+               max: ["p2", "Phase 2 · Certification: a maximal set"],
+               guess: ["p2", "Phase 2 · Certification: finding the missing rule"],
+               qx: ["p2", "Phase 2 · Certification: finding the missing rule"]};
+const ansButtons = attr => ["yes", "no", "dk"].map(a =>
+  `<button class="ans ${a}" ${attr}="${a}"><span class="ico">${ICON[a]}</span>${LABEL[a]}<kbd>${KEY[a]}</kbd></button>`).join("");
+function replay(el) { el.classList.remove("enter"); void el.offsetWidth; el.classList.add("enter"); }
 // paths are relative to the session's page /s/<code>/<n>/; a failed request is tried again (the server may be restarting)
 async function api(p, body) {
   for (let k = 0; ; k++) {
@@ -143,16 +207,20 @@ function table(el, attrs, rows, lhs, rhs) {
 }
 function practice(k) {
   const p = PRACTICE[k], box = $("#practice");
-  box.innerHTML = `<h2>Practice ${k + 1} of 2</h2><div class="tablewrap"><table id="ptab"></table></div>
+  box.innerHTML = `<h2>Practice ${k + 1} of 2${TRY ? '<a class="skip" href="#" id="pskip">skip the practice</a>' : ""}</h2>
+    <div class="tablewrap"><table id="ptab"></table></div>
     <p class="q" style="margin-top:14px">${p.text}</p>
-    <div class="btns"><button class="main" data-p="yes">Yes</button><button class="main" data-p="no">No</button><button data-p="dk">Don't know</button></div>
+    <div class="btns">${ansButtons("data-p")}</div>
     <div class="fb" id="fb"></div>`;
+  replay(box);
   table($("#ptab"), ORD.attrs, ORD.rows, p.lhs, p.rhs);
+  if (TRY) $("#pskip").onclick = e => { e.preventDefault(); start(); };
   box.querySelectorAll("[data-p]").forEach(b => b.onclick = () => {
     box.querySelectorAll("[data-p]").forEach(x => x.disabled = true);
+    b.classList.add("picked");
     api("api/practice", {practice: k + 1, answer: b.dataset.p});
     const fb = $("#fb"); fb.style.display = "block";
-    fb.innerHTML = esc(p.why) + `<p><button class="main" id="pnext">${k === 0 ? "Next practice question" : "Start"}</button></p>`;
+    fb.innerHTML = esc(p.why) + `<p><button class="main" id="pnext">${k === 0 ? "Next practice question" : "Start"}${TRY ? ' <kbd style="font-size:11px;opacity:.8">Enter</kbd>' : ""}</button></p>`;
     $("#pnext").onclick = () => k === 0 ? practice(1) : start();
   });
 }
@@ -160,13 +228,27 @@ function practice(k) {
 // ---------- the session ----------
 async function start() {
   $("#intro").classList.add("hidden"); $("#ask").classList.remove("hidden");
+  $("#qtext").textContent = "Choosing the first question…";
+  document.querySelectorAll("[data-a]").forEach(b => b.disabled = true);
   next(await api("api/question"));
 }
 function next(q) {
   if (q.done) return finish();
   CUR = q; SHOWN = performance.now();
   $("#counter").textContent = "Question " + q.i;
-  table($("#sample"), META.attributes, META.sample, q.lhs, q.rhs);
+  const ph = TRY && PHASE[q.kind];
+  $("#phase").classList.toggle("hidden", !ph);
+  if (ph) { $("#phase").className = "phase " + ph[0]; $("#phase").textContent = ph[1]; }
+  document.querySelectorAll("[data-a]").forEach(b => b.classList.remove("picked"));
+  replay($("#qcard"));
+  if (TRY) {                       // in a try, the columns that the question names come first, so that wide tables need no scrolling
+    const named = q.form === "except" ? q.listed : q.listed.concat([q.rhs]);
+    const order = named.concat(META.attributes.filter(a => !named.includes(a))).map(a => META.attributes.indexOf(a));
+    table($("#sample"), order.map(j => META.attributes[j]), META.sample.map(r => order.map(j => r[j])), q.lhs, q.rhs);
+    $("#sample").parentElement.scrollLeft = 0;
+  } else {
+    table($("#sample"), META.attributes, META.sample, q.lhs, q.rhs);
+  }
   const lhs = new Set(q.lhs);
   const fmt = a => `<b class="${a === q.rhs ? "rhs" : (lhs.has(a) ? "agree" : "")}">${esc(a)}</b>`;
   const list = xs => xs.length === 1 ? fmt(xs[0]) : xs.slice(0, -1).map(fmt).join(", ") + " and " + fmt(xs[xs.length - 1]);
@@ -176,10 +258,13 @@ function next(q) {
                        : `Must all records agree on ${fmt(q.rhs)}?`);
   document.querySelectorAll("[data-a]").forEach(b => b.disabled = false);
   window.scrollTo({top: 0});
+  const card = $("#qcard").getBoundingClientRect();         // a try on a small screen: keep the question and its buttons in view
+  if (TRY && card.bottom > window.innerHeight) window.scrollTo({top: card.bottom - window.innerHeight + 16});
 }
 document.querySelectorAll("[data-a]").forEach(b => b.onclick = async () => {
   if (!CUR) return;
   document.querySelectorAll("[data-a]").forEach(x => x.disabled = true);
+  b.classList.add("picked");
   const q = CUR; CUR = null;
   next(await api("api/answer", {qid: q.qid, answer: b.dataset.a, rt_ms: Math.round(performance.now() - SHOWN)}));
 });
@@ -187,7 +272,55 @@ $("#stopbtn").onclick = async () => {
   if (!confirm("Stop the session now? Your answers so far are kept.")) return;
   await api("api/stop", {}); finish();
 };
+// ---------- keys: Y, N, D answer the question (or the practice question) on the screen, Enter goes on ----------
+document.addEventListener("keydown", e => {
+  if (e.ctrlKey || e.metaKey || e.altKey || /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) return;
+  const a = {y: "yes", n: "no", d: "dk"}[e.key.toLowerCase()];
+  const go = $("#pnext");
+  if (a) {
+    const b = document.querySelector(`#ask:not(.hidden) [data-a="${a}"]:not(:disabled), #intro:not(.hidden) [data-p="${a}"]:not(:disabled)`);
+    if (b) { e.preventDefault(); b.click(); }
+  } else if (e.key === "Enter" && go && !$("#intro").classList.contains("hidden")) {
+    e.preventDefault(); go.click();
+  }
+});
+
+// ---------- the end of a try: the design that the answers give ----------
+async function result() {
+  ["#intro", "#ask", "#done"].forEach(s => $(s).classList.add("hidden"));
+  let r = await api("api/result");
+  for (let k = 0; !r.done && k < 20; k++) { await new Promise(res => setTimeout(res, 500)); r = await api("api/result"); }
+  const n = (x, w) => `${x} ${w}${x === 1 ? "" : "s"}`;
+  $("#rsum").textContent = `${n(r.answers, "answer")}: ${r.yes} yes, ${r.no} no` + (r.dk ? `, ${r.dk} don't know` : "");
+  if (!r.design) {
+    $("#rbadge").className = "badge part"; $("#rbadge").innerHTML = "&#9675;";
+    $("#rtitle").textContent = "No design yet";
+    $("#rintro").textContent = "The try stopped before Cert3NF could build a design. Start another one whenever you like.";
+  } else {
+    const cert = r.certified;
+    $("#rbadge").className = "badge " + (cert ? "ok" : "part"); $("#rbadge").innerHTML = cert ? "&#10003;" : "&#9684;";
+    $("#rtitle").textContent = cert ? "Your answers certify this design" : "The design so far";
+    $("#rintro").textContent = cert
+      ? `Cert3NF synthesized this Third Normal Form design from the ${n(r.confirmed.length, "rule")} you confirmed, and your no answers rule out every other rule that would change it. Each schema is shown with its key underlined.`
+      : `The try ended before the certificate was complete. This design rests on the ${n(r.confirmed.length, "rule")} you confirmed so far. Each schema is shown with its key underlined.`;
+    $("#rdesign").innerHTML = r.design.map(s =>
+      `<span class="schema">(${s.key.map(a => `<u>${esc(a)}</u>`).concat(s.other.map(esc)).join(", ")})</span>`).join("");
+    const chk = (ok, w) => `<span class="${ok ? "y" : "n"}">${ok ? "&#10003;" : "&#10007;"} ${w}</span>`;
+    $("#rchecks").innerHTML = "Checked against the documentation of the table: " +
+      chk(r.lossless, "lossless") + chk(r.preserving, "dependency-preserving") + chk(r.nf3, "in 3NF");
+  }
+  if (r.differ.length) {
+    $("#rdiffer").innerHTML = `<p>${n(r.differ.length, "answer")} of yours ${r.differ.length === 1 ? "differs" : "differ"} from the documentation:</p><ul class="differ">` +
+      r.differ.map(d => `<li>${esc(d.text)} You: <span class="tag ${d.answer}">${d.answer}</span>, documentation: <span class="tag ${d.documented}">${d.documented}</span></li>`).join("") + "</ul>";
+  } else if (r.answers) {
+    $("#rdiffer").innerHTML = "<p>Every answer of yours agrees with the documentation of the table.</p>";
+  }
+  $("#result").classList.remove("hidden");
+  window.scrollTo({top: 0});
+}
+
 function finish() {
+  if (TRY) return result();
   $("#ask").classList.add("hidden"); $("#done").classList.remove("hidden");
   document.querySelectorAll(".scale").forEach(s => {
     s.innerHTML = [1,2,3,4,5].map(v => `<label><input type="radio" name="${s.dataset.name}" value="${v}"> ${v}</label>`).join("");
@@ -204,6 +337,12 @@ function bye() {
   ["#intro", "#ask", "#done"].forEach(s => $(s).classList.add("hidden")); $("#bye").classList.remove("hidden");
 }
 
+if (TRY) {                                                  // a try from the start page, before anything loads
+  $("#trynote").classList.remove("hidden");
+  $("#studylen").classList.add("hidden"); $("#trylen").classList.remove("hidden");
+  $("#practnote").textContent = "Two practice questions on a small example follow; you can skip them.";
+  $("#byetext").innerHTML = 'This try is finished. <a href="/">Back to the start page</a>.';
+}
 (async () => {
   META = await api("api/meta");
   $("#relname").textContent = "Table: " + META.relation.replace(/^fresh_/, "");
@@ -213,10 +352,6 @@ function bye() {
     $("#docnote").classList.remove("hidden");
     $("#doclinks").innerHTML = links;
     $("#docs").innerHTML = "Documentation: " + links;
-  }
-  if (/^\/s\/T[EPU]0[1-3]-/.test(location.pathname)) {      // a try from the start page
-    $("#trynote").classList.remove("hidden");
-    $("#byetext").innerHTML = 'This try is finished. <a href="/">Back to the start page</a>.';
   }
   if (META.state === "closed") return bye();               // reopened link: where the session is
   if (META.state === "ended") { $("#intro").classList.add("hidden"); return finish(); }

@@ -32,7 +32,7 @@ def replay(path):
     ds = start["relation"]
     _, b, adv = K.prebuilt(ds)
     who = Logged(live)
-    out = S.run_method(who, ds, b, adv)
+    out = S.run_method(who, ds, b, adv, start.get("variant", S.VARIANT))
     assert next(who.it, None) is None, "answers left over after the method ended"
     return start, end, out
 

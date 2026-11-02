@@ -26,6 +26,7 @@ Online: `render.yaml` describes a free Render web service.
 There are no passwords: a participant opens the site, enters the code of the invitation (E01 to U03) and the session number, or opens `/s/<code>/<session>/` directly, and reopening it continues the session.
 Codes starting with T are tests that are not part of the study, and "Try it" on the start page opens a try of its own whose files are not kept; since a try shows the study's tables, `STUDY_TRIES=0` removes it before the first real session.
 The study has ended, and the site stays online at https://cert3nf.onrender.com as a demo, where "Try it" is the way in.
+A try lets the visitor pick one of the three tables, skips the block of fixed questions, runs the method in its trusting mode (`eps_m = 0`), and ends with the design the answers give: its schemata with their keys, whether it is certified and in 3NF, and the answers that differ from the table's documented rules.
 No page of the site names the authors or the storage repository.
 `/status` lists every session's state and number of answers, never the answers themselves.
 A free instance sleeps after 15 minutes without a request, so an uptime monitor requests `/healthz` every 5 minutes.
