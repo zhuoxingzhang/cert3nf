@@ -46,10 +46,10 @@
   @keyframes slide { 0% { transform:translateX(-100%); } 100% { transform:translateX(290%); } }
   .qrow { display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
   .stop { margin-left:auto; }
-  /* stop: a quiet pill that turns red on hover */
-  .stop button { display:inline-flex; align-items:center; gap:7px; border:none; color:#5f6b7a; padding:5px 14px 5px 6px; font-size:14px;
+  /* stop: a quiet pill that turns red on hover, as tall as the answer buttons so that the row lines up */
+  .stop button { display:inline-flex; align-items:center; gap:7px; border:none; color:#5f6b7a; padding:7px 15px 7px 8px; font-size:15px;
                  font-weight:600; box-shadow: inset 0 0 0 1px #c5ccd6, 0 1px 3px rgba(31,41,55,.08), 0 4px 14px rgba(31,41,55,.13); }
-  .stop .ico { display:inline-grid; place-items:center; width:20px; height:20px; border-radius:50%; background:#fde8e6; color:#c4372f;
+  .stop .ico { display:inline-grid; place-items:center; width:21px; height:21px; border-radius:50%; background:#fde8e6; color:#c4372f;
                font-size:10px; line-height:1; transition: background .12s, color .12s, transform .2s; }
   .stop button.armed { color:#b42318; background:#fff7f6; box-shadow: inset 0 0 0 1px #ef9a92, 0 3px 6px rgba(196,55,47,.1), 0 8px 22px rgba(196,55,47,.32); }
   .stop button.armed .ico { background:#c4372f; color:#fff; }
