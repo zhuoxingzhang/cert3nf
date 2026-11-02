@@ -137,11 +137,11 @@
   .try #intro ul { display:flex; flex-wrap:wrap; gap:2px 26px; list-style:none; margin:6px 0; padding:0 0 0 4px; }
   .try #intro li::before { content:""; display:inline-block; width:5px; height:5px; border-radius:50%; background:currentColor; margin:0 8px 3px 0; }
   .try .fb { align-items:center; justify-content:space-between; gap:8px 16px; flex-wrap:wrap; }
-  .try .fb span { flex:1 1 320px; } .try .fb button { flex:none; }
+  .try .fb span { flex:1 1 320px; } .try .fb button { flex:0 1 auto; }
   .try #intro li { padding-left:13px; text-indent:-13px; }
   .try #sample th.rhs, .try #sample td.rhs { position:sticky; right:0; z-index:1; } .try #sample th.rhs { z-index:2; }   /* phones: the asked column stays in view */
   .try .pbody .tablewrap { flex:none; display:flex; } .try #ptab { height:100%; }   /* table and question end level */
-  .try .pq { flex:1; min-width:280px; display:flex; flex-direction:column; } .try .pq .fb { flex:1 0 auto; }
+  .try .pq { flex:1; min-width:min(280px, 100%); display:flex; flex-direction:column; } .try .pq .fb { flex:1 0 auto; }
   .try #intro .pq .q { margin:0 0 12px; }
   @media (hover:hover) {                       /* hover effects only where a pointer hovers: on touch screens they stick to the last tap */
     button.main:hover:not([aria-disabled]) { transform: translateY(-2px); filter: brightness(1.15); box-shadow: 0 3px 7px rgba(36,54,75,.26), 0 8px 26px rgba(36,54,75,.5); }
@@ -517,14 +517,19 @@ function bye() {
   ["#intro", "#ask", "#done"].forEach(s => $(s).classList.add("hidden")); $("#bye").classList.remove("hidden");
 }
 
-// a try on a low screen of a laptop or a tablet: the same layout in proportion, no smaller than is readable (phones scroll).
-// Its tallest screen is 662 high with Home in the margin, which takes a width of 1320, and 700 high with Home above the card
-// (724 under the full width of the cards, as the text wraps earlier)
+// a try keeps its layout at every size of screen and only changes in proportion.  A low screen of a laptop or a tablet shrinks
+// it, no smaller than is readable; phones scroll (their width or, on their side, their height is too small).  A big screen
+// enlarges it, as far as a page looks the same size as on 1080p.  tall: the height of its tallest screen with Home above the
+// card, at a width (measured; the text wraps earlier on a narrow one).  With Home in the margin, which takes a width of 1320, it is 662
+const tall = w => [[1100, 700], [1000, 724], [900, 772], [800, 820], [768, 848], [700, 921], [640, 1043], [600, 1087], [0, 1135]].find(t => w >= t[0])[1];
 function fit() {
-  const w = innerWidth, h = innerHeight - (matchMedia("(pointer:coarse)").matches ? 12 : 0);   // touch: taller fold lines
-  const inMargin = Math.min(h / 662, w / 1320), above = h / (w < 1100 ? 724 : 700);
-  const margin = w >= 1056 && inMargin > above, s = margin ? inMargin : above, shrink = w >= 940 && s < 1;
-  document.documentElement.style.zoom = shrink ? Math.max(.8, s) : "";
+  const w = innerWidth, h = innerHeight - (matchMedia("(pointer:coarse)").matches ? 12 : 0) - 1;   // touch: taller fold lines
+  let s = 1;
+  while (s > .8 && s * tall(w / s) > h) s -= .01;
+  const inMargin = Math.min(h / 662, w / 1320), margin = w >= 1056 && inMargin > s;
+  if (margin) s = inMargin;
+  const shrink = w >= 560 && innerHeight >= 480 && s < 1, big = .4 + .6 * Math.min(w / 1920, innerHeight / 950);
+  document.documentElement.style.zoom = shrink ? Math.max(.8, s) : big > 1 ? big : "";
   document.body.classList.toggle("fitted", shrink && margin);
 }
 if (TRY) {                                                  // a try from the start page, before anything loads

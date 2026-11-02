@@ -89,7 +89,7 @@
   .opt:has(input:focus-visible) { outline:2px solid #1a7f37; outline-offset:2px; }
   @media (pointer:coarse) { summary { padding:6px 0; } .go { touch-action:manipulation; } }
   @media (max-width:600px) { .keys { max-height:190px; } }  /* a phone scrolls the page anyway */
-  @media (min-width:940px) and (max-height:700px) { .keys { max-height:66px; } }   /* a low screen: two rows, so that the page needs less shrinking */
+  @media (min-width:700px) and (max-height:700px) { .keys { max-height:66px; } }   /* a low screen: two rows, so that the page needs less shrinking */
   @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation:none !important; transition:none !important; } }
 </style>
 </head>
@@ -155,11 +155,13 @@ if (enter) enter.onsubmit = e => {
 };
 const t = document.getElementById("try"), $ = s => document.querySelector(s);
 const own = () => t.querySelector("input[name=table]:checked").value === "own";
-// a low screen of a laptop or a tablet: the same layout in proportion until the page fits, no smaller than is readable (phones scroll)
+// the layout stays at every size of screen and only changes in proportion: a low screen of a laptop or a tablet shrinks it until
+// the page fits, no smaller than is readable (phones scroll); a big screen enlarges it, as far as a page looks the same size as on 1080p
 const fit = () => {
-  const r = document.documentElement;
+  const r = document.documentElement, big = .4 + .6 * Math.min(innerWidth / 1920, innerHeight / 950);
   r.style.zoom = "";
-  if (innerWidth >= 940 && r.scrollHeight > innerHeight) r.style.zoom = Math.max(.75, (innerHeight - 2) / r.scrollHeight);
+  if (innerWidth >= 560 && innerHeight >= 480 && r.scrollHeight > innerHeight) r.style.zoom = Math.max(.74, (innerHeight - 2) / r.scrollHeight);
+  else if (big > 1) r.style.zoom = big;
 };
 addEventListener("resize", fit);
 if (t) {
