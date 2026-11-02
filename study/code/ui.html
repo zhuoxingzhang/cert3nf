@@ -396,7 +396,8 @@ if (TRY) {                                                  // a try from the st
     const many = TRY && META.docs.length > 2;     // a try folds a long list of files, so that the page needs no scrolling
     const fold = s => `<details class="docs"><summary>${s}${META.docs.length} files</summary>${links}</details>`;
     $("#docnote").classList.remove("hidden");
-    $("#doclinks").innerHTML = many ? fold("") : links;
+    if (many) $("#docnote").innerHTML = fold("The documentation of the table: ") + "You can open it at any time, also with the link above the questions.";
+    else $("#doclinks").innerHTML = links;
     $("#docs").innerHTML = many ? fold("Documentation: ") : "Documentation: " + links;
   }
   if (TRY) $(".legend").append($("#rows"));
