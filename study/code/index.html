@@ -154,8 +154,15 @@ if (enter) enter.onsubmit = e => {
 };
 const t = document.getElementById("try"), $ = s => document.querySelector(s);
 const own = () => t.querySelector("input[name=table]:checked").value === "own";
+// a laptop's screen: the same layout in proportion until the page fits, no smaller than is readable
+const fit = () => {
+  const r = document.documentElement;
+  r.style.zoom = "";
+  if (innerWidth >= 1000 && r.scrollHeight > innerHeight) r.style.zoom = Math.max(.75, (innerHeight - 2) / r.scrollHeight);
+};
+addEventListener("resize", fit);
 if (t) {
-  t.querySelectorAll("input[name=table]").forEach(r => r.onchange = () => { $("#own").hidden = !own(); });
+  t.querySelectorAll("input[name=table]").forEach(r => r.onchange = () => { $("#own").hidden = !own(); fit(); });
   $("#own").hidden = !own();
   // the header row of the chosen file, split as the server will split it, offers the columns of the key
   const split = line => {
@@ -171,13 +178,14 @@ if (t) {
   $("#file").onchange = async () => {
     const f = $("#file").files[0]; $("#uperr").textContent = ""; $("#keys").innerHTML = "";
     $("#fname").textContent = f ? f.name : "no file chosen";
-    if (!f) return;
+    if (!f) return fit();
     const head = (await f.slice(0, 65536).text()).replace(/^\ufeff/, "").split(/\r?\n/)[0];
     const esc = s => s.replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"})[c]);
     requestAnimationFrame(() => t.querySelector(".gorow").scrollIntoView({block: "nearest", behavior: "smooth"}));
     $("#keys").innerHTML = "<span>Primary key, if the table has one:</span>" +
       split(head).filter((a, i, all) => a || i < all.length - 1)      // not the empty name after a delimiter at the end
         .map(a => `<label><input type="checkbox" value="${esc(a)}">${esc(a)}</label>`).join("");
+    fit();
   };
   addEventListener("pageshow", e => {             // back from a session: a page restored from the cache starts again
     if (e.persisted) { const b = t.querySelector(".go"); b.disabled = false; b.firstChild.textContent = "Start "; }
@@ -201,6 +209,7 @@ if (t) {
     b.disabled = false; b.firstChild.textContent = "Start ";
   };
 }
+fit();
 </script>
 </body>
 </html>

@@ -113,6 +113,7 @@
   .home .mark { display:block; width:22px; height:22px; transition: transform .2s; }
   .home a:active { transform: translateY(1px) scale(.97); }
   @media (min-width: 1320px) { .home { position:absolute; top:16px; left:16px; margin:0; } }   /* wide screens: in the empty margin */
+  .fitted .home { position:absolute; top:16px; left:16px; margin:0; }                           /* a try scaled to the screen: there too */
   /* folding: an SVG chevron that turns when open, instead of the small native triangle */
   summary { list-style:none; display:flex; align-items:center; gap:6px; }
   summary::-webkit-details-marker { display:none; }
@@ -465,6 +466,10 @@ async function result() {
     $("#rdiffer").innerHTML = `<details class="differ"><summary>${n(r.differ.length, "answer")} of yours ${r.differ.length === 1 ? "differs" : "differ"} from the documentation` +
       (fails ? `, hence the failed ${fails === 1 ? "check" : "checks"} above` : "") + "</summary><ul>" +
       r.differ.map(d => `<li><span>${esc(d.text)}</span><span class="tag ${d.answer}">you: ${d.answer}</span><span class="tag ${d.documented}">docs: ${d.documented}</span></li>`).join("") + "</ul></details>";
+    $("details.differ").ontoggle = e => {            // the list scrolls in what the page leaves free, not the page
+      const u = e.target.lastChild, p = document.documentElement;
+      u.style.maxHeight = ""; u.style.maxHeight = Math.max(120, u.offsetHeight - (p.scrollHeight - p.clientHeight) / (p.style.zoom || 1) - 1) + "px";
+    };
   } else if (r.answers && r.documented) {
     $("#rdiffer").innerHTML = "<p>Every answer of yours agrees with the documentation of the table.</p>";
   }
@@ -511,8 +516,16 @@ function bye() {
   ["#intro", "#ask", "#done"].forEach(s => $(s).classList.add("hidden")); $("#bye").classList.remove("hidden");
 }
 
+// a try on a laptop's screen: the same layout in proportion, no smaller than is readable.  Its tallest screen is 662 high
+// with Home in the margin, which takes a width of 1320, and 700 high with Home above the card
+function fit() {
+  const shrink = innerWidth >= 1056 && innerHeight < (innerWidth >= 1320 ? 662 : 700);
+  document.documentElement.style.zoom = shrink ? Math.max(.8, Math.min(innerHeight / 662, innerWidth / 1320)) : "";
+  document.body.classList.toggle("fitted", shrink);
+}
 if (TRY) {                                                  // a try from the start page, before anything loads
   document.body.classList.add("try");
+  addEventListener("resize", fit); fit();
   $("#studylen").classList.add("hidden"); $("#trylen").classList.remove("hidden");
   $("#practnote").textContent = "Two practice questions on a small example follow. You can skip them.";
   if (UPLOAD) { $("#intro").classList.add("hidden"); $("#prep").classList.remove("hidden"); }
