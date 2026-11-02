@@ -38,7 +38,7 @@ def staff():
     for e in range(150):
         rows.append(";".join([f"E{e}", f"Name {rnd.randint(0, 120)}", *rnd.choice(depts), str(rnd.randint(40, 90) * 1000)]))
     fds = [(["emp_id"], "name"), (["emp_id"], "dept_id"), (["emp_id"], "salary"), (["dept_id"], "dept_name"),
-           (["dept_id"], "building"), (["dept_id"], "floor")]
+           (["dept_id"], "building"), (["dept_id"], "floor"), (["dept_name"], "dept_id")]
     return "staff.csv", "\n".join(rows), [], fds
 
 
@@ -162,6 +162,9 @@ def main():
         keys = sorted(tuple(d["key"]) for d in o["design"])
         assert keys == [("city",), ("customer_id",), ("order_id",), ("order_id", "line"), ("product",)], keys
         print("orders.csv: certified, the textbook design", keys)
+        dept = [d for d in together[1][1]["design"] if "dept_name" in d["key"] + d["other"] and "emp_id" not in d["key"]]
+        assert together[1][1]["certified"] and [d["unique"] for d in dept] == [[["dept_name"]]], together[1][1]["design"]
+        print("staff.csv: the department schema has dept_id as its key and dept_name as a second key (UNIQUE in SQL)")
         bad = [{"name": "a.csv", "csv": "a\n1\n2\n", "key": []},
                {"name": "b.csv", "csv": "a,b\n1,x\n1,y\n2,y\n", "key": ["a"]},
                {"name": "c.csv", "csv": "a,b\n1,x\n2\n3,z\n", "key": []}]

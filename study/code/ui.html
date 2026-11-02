@@ -478,7 +478,8 @@ function sql(r) {
     used[t] = (used[t] || 0) + 1;
     if (used[t] > 1) t += "_" + used[t];
     const cols = s.key.map(a => `  ${q(a)} ${r.types[a]} NOT NULL`).concat(s.other.map(a => `  ${q(a)} ${r.types[a]}`));
-    out.push(`CREATE TABLE ${t} (\n${cols.join(",\n")},\n  PRIMARY KEY (${s.key.map(q).join(", ")})\n);`);
+    const keys = [`  PRIMARY KEY (${s.key.map(q).join(", ")})`].concat((s.unique || []).map(u => `  UNIQUE (${u.map(q).join(", ")})`));
+    out.push(`CREATE TABLE ${t} (\n${cols.concat(keys).join(",\n")}\n);`);
   });
   const a = document.createElement("a");
   a.href = URL.createObjectURL(new Blob([out.join("\n\n") + "\n"], {type: "text/plain"}));

@@ -303,7 +303,8 @@ class Session:
         """what a demo session shows at its end: the counts, the method's verdict, the design that 3NF synthesis
         returns on sigma0 and the confirmed FDs (as in v5study's output, with a minimal key per schema and the
         schemata of equivalent keys merged), its check against the documented FDs, and the answers that differ from them;
-        for an uploaded table, the check against the confirmed FDs and the SQL types of the columns"""
+        for an uploaded table, the check against the confirmed FDs and the SQL types of the columns; every schema lists
+        its other minimal keys, which the SQL declares UNIQUE"""
         with self.lock:
             if not self.done:
                 return {"done": False}
@@ -334,6 +335,15 @@ class Session:
                         return list(c)
             return sorted(s)
 
+        def keys(s):                                            # its minimal keys, smallest first (the first 20,000 sets)
+            m, out = K.mask(s), []
+            for c in itertools.islice(itertools.chain.from_iterable(
+                    itertools.combinations(sorted(s), k) for k in range(len(s) + 1)), 20000):
+                cm = K.mask(c)
+                if not any(K.mask(o) & cm == K.mask(o) for o in out) and K.closure(cm, F) & m == m:
+                    out.append(c)
+            return out
+
         # the synthesis keeps one schema per atomic FD; for display, schemata whose smallest keys determine each other
         # (as in Bernstein's synthesis) are merged where the merged schema stays in 3NF under the confirmed FDs, and the
         # checks are redone on that design
@@ -352,7 +362,8 @@ class Session:
         design = []
         for s in sorted(M, key=lambda s: (-len(s), sorted(s))):
             k = key(s)
-            design.append({"key": [names[i] for i in k], "other": [names[i] for i in sorted(s) if i not in k]})
+            design.append({"key": [names[i] for i in k], "other": [names[i] for i in sorted(s) if i not in k],
+                           "unique": [[names[i] for i in c] for c in keys(s) if list(c) != k]})
         res.update({"certified": out["certified"], "asked": out["questions"], "by_data": out["data_no"],
                     "confirmed": [[l, a] for l, a in out["certificate"]["yes"]], "design": design,
                     "lossless": m["lossless"], "preserving": m["u_str"] == 0, "nf3": m["nf3"]})
