@@ -5,7 +5,8 @@ trusting mode with the statistics advisor, since there are no LLM answers for an
   check(name, text, key)  parses the CSV (a header row; comma, semicolon, tab or bar), drops duplicate rows, checks the
                           limits and that no two rows agree on the key columns the visitor ticked; returns the instance
   build(folder)           run in a process of its own (python upload.py <folder>): drops the constant columns, mines all
-                          minimal FDs (e3/fdmine.py, exact), computes the features of every candidate as e3/build.py does,
+                          minimal FDs (e3/fdmine.py, exact), refuses more than MAX_CANDIDATES candidates, computes the
+                          features of every candidate as e3/build.py does,
                           and pickles (Rel, b, advisor) in the shape of common.prebuilt into <folder>/block.pkl: sigma0
                           from the key, no documented FDs, the learned prior with the weights of make_upload_prior.py
   load(folder)            a fresh copy of that triple for one session
@@ -19,6 +20,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import common as K
 
 MAX_COLS, MAX_ROWS, MAX_BYTES = 25, 50000, 10 * 2 ** 20
+MAX_CANDIDATES = 5000                # the advisor keeps about 3 KB per candidate in the server's memory
 SAMPLE = 10
 
 
@@ -50,6 +52,8 @@ def check(name, text, key):
     rows = [r for r in rows if any(c.strip() for c in r)]
     if len(rows) < 3:
         raise ValueError("The file needs a header row and at least two records.")
+    if rows[0] and not rows[0][-1].strip() and all(len(r) == len(rows[0]) and not r[-1].strip() for r in rows):
+        rows = [r[:-1] for r in rows]                   # a delimiter at the end of every line
     names = [c.strip() for c in rows[0]]
     if len(names) < 2 or len(names) > MAX_COLS:
         raise ValueError(f"The table needs between 2 and {MAX_COLS} columns; this one has {len(names)}.")
@@ -60,6 +64,8 @@ def check(name, text, key):
         k = len(rows[bad - 1])
         raise ValueError(f"Line {bad} has {k} value{'' if k == 1 else 's'}, but the header names {len(names)} columns.")
     data = list(dict.fromkeys(tuple(c.strip() for c in r) for r in rows[1:]))      # a relation is a set of rows
+    if len(data) < 2:
+        raise ValueError("The table needs at least two different records.")
     if len(data) > MAX_ROWS:
         raise ValueError(f"The table has {len(data):,} distinct records; the demo takes up to {MAX_ROWS:,}.")
     key = [k for k in names if k in set(key or ())]
@@ -72,6 +78,8 @@ def check(name, text, key):
 
 def sqltype(values):
     vs = [v for v in values if v != ""]
+    if any(re.fullmatch(r"0\d+", v) for v in vs):         # a code with leading zeros (zip, phone) stays text
+        return "TEXT"
     if vs and all(re.fullmatch(r"[+-]?\d{1,18}", v) for v in vs):
         return "INTEGER"
     if vs and all(re.fullmatch(r"[+-]?(\d+\.?\d*|\.\d+)([eE][+-]?\d+)?", v) for v in vs):
@@ -113,11 +121,17 @@ def build(folder):
         pr = json.load(fh)
     w = np.array(pr["weights"])
     P, X, fdn, implied0, distinct = [], {}, {}, [], {}
+    cand = []
     for z, a in sorted(fds, key=lambda f: (bin(f[0]).count("1"), f[0], f[1])):
         p = S.fd(fdmine.bits(z), a)
         if sigma0 and S.implies(sigma0, p):
             implied0.append(p)
-            continue
+        else:
+            cand.append((z, a, p))
+    if len(cand) > MAX_CANDIDATES:
+        raise ValueError(f"The records suggest {len(cand):,} candidate rules, more than the {MAX_CANDIDATES:,} the demo "
+                         "can ask about. A table with fewer columns, or with more records, has fewer.")
+    for z, a, p in cand:
         if z not in distinct:
             distinct[z] = len(np.unique(miner.labels(fdmine.bits(z))))
         lhs = [names[i] for i in fdmine.bits(z)]
@@ -127,10 +141,11 @@ def build(folder):
         P.append(p)
         X[p] = bench.features(f, n) + EST.name_features(f)
         fdn[p] = (lhs, names[a])
+    # the features only give the prior: b keeps none of them (X is empty), the advisor keeps about 3 KB per candidate
     pi = bench.clip({p: float(1 / (1 + np.exp(-np.dot(w, [X[p][c] for c in pr["columns"]])))) for p in P},
                     lo=pr["rho_min"])
     b = {"name": os.path.basename(folder), "R": list(range(len(names))), "names": names, "sigma0": sigma0,
-         "key": d["key"] or None, "gold": [], "P": P, "X": X, "truth": [], "true_out_of_scope": 0, "rows": n,
+         "key": d["key"] or None, "gold": [], "P": P, "X": {}, "truth": [], "true_out_of_scope": 0, "rows": n,
          "fdnames": fdn, "implied0": implied0}
     minfd = {}
     for l, r in P + implied0:

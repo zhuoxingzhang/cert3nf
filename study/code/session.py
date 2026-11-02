@@ -109,6 +109,7 @@ class Session:
         self.qin, self.qout, self.preload = queue.Queue(), queue.Queue(), deque()
         self.thread, self.done, self.closed = None, False, False
         self.lock = threading.RLock()
+        self.ended_result = None                               # result() of the ended session, computed once
         self.code = kit_md5s(self.ds, upload)
         if os.path.exists(self.path):
             self.resume()
@@ -304,11 +305,19 @@ class Session:
         returns on sigma0 and the confirmed FDs (as in v5study's output, with a minimal key per schema and the
         schemata of equivalent keys merged), its check against the documented FDs, and the answers that differ from them;
         for an uploaded table, the check against the confirmed FDs and the SQL types of the columns; every schema lists
-        its other minimal keys, which the SQL declares UNIQUE"""
+        its other minimal keys, which the SQL declares UNIQUE; computed once, when the session has ended"""
         with self.lock:
             if not self.done:
                 return {"done": False}
+            if self.ended_result is not None:
+                return self.ended_result
             recs = read(self.path)
+        res = self.compute_result(recs)
+        with self.lock:
+            self.ended_result = res
+        return res
+
+    def compute_result(self, recs):
         ans = [r for r in recs if r["event"] == "answer"]
         end = next((r for r in recs if r["event"] == "end"), {})
         out = end.get("method")
@@ -327,27 +336,22 @@ class Session:
         D = inst._synth(inst._atomic(b["sigma0"] + yes))[0]
         F = [(K.mask(l), K.mask(r)) for l, r in b["sigma0"] + yes]
 
-        def key(s):                                             # a smallest key of schema s under the confirmed FDs
-            m = K.mask(s)
-            for k in range(len(s) + 1):
-                for c in itertools.combinations(sorted(s), k):
-                    if K.closure(K.mask(c), F) & m == m:
-                        return list(c)
-            return sorted(s)
+        sa = drd.E2.atomic_closure(b["R"], b["sigma0"] + yes)
+        memo = {}
 
-        def keys(s):                                            # its minimal keys, smallest first (the first 20,000 sets)
-            m, out = K.mask(s), []
-            for c in itertools.islice(itertools.chain.from_iterable(
-                    itertools.combinations(sorted(s), k) for k in range(len(s) + 1)), 20000):
-                cm = K.mask(c)
-                if not any(K.mask(o) & cm == K.mask(o) for o in out) and K.closure(cm, F) & m == m:
-                    out.append(c)
-            return out
+        def keys(s):                                            # the minimal keys of schema s under the confirmed FDs
+            s = frozenset(s)                                    # (Lucchesi and Osborn), smallest first
+            if s not in memo:
+                memo[s] = sorted((sorted(k) for k in AC.S.B.minimal_keys(s, AC.S.proj(sa, s))),
+                                 key=lambda k: (len(k), k))
+            return memo[s]
+
+        def key(s):                                             # a smallest one
+            return keys(s)[0]
 
         # the synthesis keeps one schema per atomic FD; for display, schemata whose smallest keys determine each other
         # (as in Bernstein's synthesis) are merged where the merged schema stays in 3NF under the confirmed FDs, and the
         # checks are redone on that design
-        sa = drd.E2.atomic_closure(b["R"], b["sigma0"] + yes)
         groups = {}
         for s in D:
             groups.setdefault(K.closure(K.mask(key(s)), F), []).append(s)
@@ -363,10 +367,10 @@ class Session:
         for s in sorted(M, key=lambda s: (-len(s), sorted(s))):
             k = key(s)
             design.append({"key": [names[i] for i in k], "other": [names[i] for i in sorted(s) if i not in k],
-                           "unique": [[names[i] for i in c] for c in keys(s) if list(c) != k]})
+                           "unique": [[names[i] for i in c] for c in keys(s) if c != k]})
         res.update({"certified": out["certified"], "asked": out["questions"], "by_data": out["data_no"],
                     "confirmed": [[l, a] for l, a in out["certificate"]["yes"]], "design": design,
                     "lossless": m["lossless"], "preserving": m["u_str"] == 0, "nf3": m["nf3"]})
-        if self.upload:
-            res["types"] = self.info["types"]
+        res["types"] = (self.info["types"] if self.upload else      # a try's relation: the types of its sample rows
+                        {a: U.sqltype([r[j] for r in self.rel.sample]) for j, a in enumerate(names)})
         return res

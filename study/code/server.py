@@ -1,5 +1,5 @@
 """
-The web server of the study (README, "Online"), with the standard library only.  No passwords: a participant opens the
+The web server of the study and of the live demo (README), with the standard library only.  No passwords: a participant opens the
 site, enters the code the experimenter gave them and the session number, and answers; several participants can answer
 at the same time.
 
@@ -23,6 +23,8 @@ The codes are E01-E03, P01-P03, U01-U03; TE01 ... TU03 are the experimenter's ow
 part of the study, whose files go to sessions/test/.  Session files are kept by store.py, except those of the tries,
 which stay on the instance's disk.  A try idle for IDLE seconds is ended and released, and at most MAX_TRIES are kept.
 A try shows the relations of the study, so STUDY_TRIES=0 removes it before the first real session.
+The study has ended: unless STUDY_PARTICIPANTS=1, the participant and test codes, /status and the "I was invited" part
+of the start page are gone, and no session file is fetched from or put to the data repository.
 
 Locally:   python server.py [--port 8765]
 On Render: render.yaml at the root of the repository; STUDY_GITHUB_REPO and STUDY_GITHUB_TOKEN set by hand for
@@ -46,12 +48,16 @@ UPLOADS = os.path.join(K.KIT, "uploads")                       # outside session
 BUILD_SECONDS, BUILD_MB, KEEP_HOURS = 180, 200, 24             # the free instance has 512 MB for everything
 BUILD = threading.Semaphore(1)                                 # one mining process at a time: the others wait
 CHECK = threading.Lock()                                       # one upload parsed at a time (about 100 MB for 10 MB)
+WAITING = set()                                                # uploads whose build waits for the one before
 CODES = [c + n for c in K.CONDITIONS for n in sorted(K.ASSIGN)]
 TESTS = ["T" + c for c in CODES]
 IDLE, MAX_TRIES = 30 * 60, 10
 BUSY = ('<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">'
         '<title>Cert3NF</title><body style="font:16px/1.5 system-ui, sans-serif; max-width:640px; margin:15vh auto; padding:0 16px">'
         '<p>Many people are trying Cert3NF right now. Please try again in a few minutes.</p><p><a href="/">Back to the start page</a></p>')
+GONE = BUSY.replace("Many people are trying Cert3NF right now. Please try again in a few minutes.",
+                    "This session is no longer available: the demo keeps a session for a day, and a restart of the "
+                    "server clears it.").replace("Back to the start page", "Start a new one")
 LIVE, SEEN, LIVE_LOCK = {}, {}, threading.Lock()              # (code, n) -> Session, and when it was last used
 CFG = {}
 
@@ -67,6 +73,8 @@ def is_upload(code):
 
 
 def valid(code, sno):
+    if not is_try(code) and not CFG.get("participants"):
+        return False
     if is_upload(code):
         return sno == 1 and re.fullmatch(r"UP-[0-9a-f]{16}", code) is not None and os.path.isdir(folder(code))
     try:
@@ -106,7 +114,9 @@ def build_upload(code):
     """mine the uploaded table in a process of its own, after the builds before it; a build that runs longer than
     BUILD_SECONDS or takes more than BUILD_MB is stopped, so that one table cannot take the server from the others"""
     d = folder(code)
+    WAITING.add(code)
     with BUILD:
+        WAITING.discard(code)
         env = dict(os.environ, OPENBLAS_NUM_THREADS="1", OMP_NUM_THREADS="1")
         with open(os.path.join(d, "build.log"), "w", encoding="utf-8") as log:
             p = subprocess.Popen([sys.executable, os.path.join(K.HERE, "upload.py"), d], stdout=log, stderr=log,
@@ -313,10 +323,12 @@ class Handler(BaseHTTPRequestHandler):
                 page = fh.read()
             if not CFG["tries"]:
                 page = re.sub(r"<!--try-->.*?<!--/try-->", "", page, flags=re.S)
+            if not CFG["participants"]:
+                page = re.sub(r"<!--invited-->.*?<!--/invited-->", "", page, flags=re.S)
             return self.send(200, page, "text/html; charset=utf-8")
-        if path == "/status":
+        if path == "/status" and CFG["participants"]:
             return self.send(200, status_page(), "text/html; charset=utf-8")
-        if path.rstrip("/") == "/admin":                       # the earlier address of the status page
+        if path.rstrip("/") == "/admin" and CFG["participants"]:   # the earlier address of the status page
             return self.redirect("/status")
         sp = self.session_path(path)
         if sp:
@@ -329,7 +341,8 @@ class Handler(BaseHTTPRequestHandler):
             if is_upload(code):
                 state, msg = upload_state(code)
                 if state != "ready":
-                    return self.send(200 if rest == "api/meta" else 409, {"state": state, "error": msg})
+                    return self.send(200 if rest == "api/meta" else 409,
+                                     {"state": state, "error": msg, "queued": code in WAITING})
             s = session_for(code, sno)
             if rest == "api/meta":
                 return self.send(200, meta(s))
@@ -342,6 +355,8 @@ class Handler(BaseHTTPRequestHandler):
                 if os.path.isfile(f):
                     with open(f, "rb") as fh:
                         return self.send(200, fh.read(), mimetypes.guess_type(f)[0] or "application/octet-stream")
+        if path.startswith("/s/") and "/api/" not in path:      # an old link to a session page
+            return self.send(404, GONE, "text/html; charset=utf-8")
         return self.send(404, {"error": "not found"})
 
     def do_POST(self):
@@ -375,7 +390,7 @@ class Handler(BaseHTTPRequestHandler):
             num = "0" + str(b.get("table", ""))                # the table chosen on the start page (R1, R2, R3)
             code = f"TP{num if num in K.ASSIGN else random.choice(sorted(K.ASSIGN))}-{secrets.token_hex(3)}"
             return self.redirect(f"/s/{code}/1/")
-        if path == "/status/reset":
+        if path == "/status/reset" and CFG["participants"]:
             code, sno = b.get("code", ""), int(b.get("session", 0) or 0)
             if code in TESTS and sno in (1, 2):
                 with LIVE_LOCK:
@@ -417,10 +432,14 @@ def main():
     a = ap.parse_args()
     CFG["minutes"] = a.minutes
     CFG["tries"] = os.environ.get("STUDY_TRIES", "1") != "0"
-    store = Store(SESSIONS, os.environ.get("STUDY_GITHUB_REPO"), os.environ.get("STUDY_GITHUB_TOKEN"),
-                  os.environ.get("STUDY_GITHUB_BRANCH", "main"))
+    CFG["participants"] = os.environ.get("STUDY_PARTICIPANTS", "0") == "1"
+    if CFG["participants"]:
+        store = Store(SESSIONS, os.environ.get("STUDY_GITHUB_REPO"), os.environ.get("STUDY_GITHUB_TOKEN"),
+                      os.environ.get("STUDY_GITHUB_BRANCH", "main"))
+        print("fetched", store.fetch_all(), "session files;", "durable" if store.durable else "LOCAL DISK ONLY", flush=True)
+    else:                                                       # the demo alone: nothing to keep
+        store = Store(SESSIONS, None, None)
     CFG["store"] = store
-    print("fetched", store.fetch_all(), "session files;", "durable" if store.durable else "LOCAL DISK ONLY", flush=True)
     store.start()
     for ds in K.RELATIONS.values():
         K.prebuilt(ds)                                          # read the pickles once

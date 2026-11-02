@@ -58,7 +58,7 @@
   .fb.off { background:#fff7e8; border-color:#f3d39b; }   /* a practice answer that differs */
   label { display:block; margin:10px 0 4px; } select, textarea { font:inherit; padding:6px; width:100%; max-width:520px; }
   .scale { display:flex; gap:14px; flex-wrap:wrap; } .scale label { display:inline; margin:0; }
-  .hidden { display:none; }
+  .hidden { display:none !important; }
   a.doc { margin-right:14px; }
 
   /* answer buttons: colour, icon and key per answer; a lift on hover, a press on click */
@@ -296,6 +296,12 @@ const PHASE = {disc: ["p1", "Phase 1 · Discovery: a candidate rule found in the
                qx: ["p2", "Phase 2 · Certification: narrowing down the rule you just confirmed"]};
 const ansButtons = attr => ["yes", "no", "dk"].map(a =>
   `<button class="ans ${a}" ${attr}="${a}" aria-keyshortcuts="${KEY[a]}"><span class="ico">${SVG[a]}</span>${LABEL[a]}<kbd aria-hidden="true">${KEY[a]}</kbd></button>`).join("");
+// a try or an upload the server no longer has (kept for a day; a restart of the free server clears them)
+function gone() {
+  ["#intro", "#ask", "#prep", "#result", "#done"].forEach(s => $(s) && $(s).classList.add("hidden"));
+  $("#net").innerHTML = 'This session is no longer available: the demo keeps a session for a day, and a restart of the server clears it. <a href="/">Start a new one</a>.';
+  $("#net").classList.remove("hidden");
+}
 function replay(el) { el.classList.remove("enter"); void el.offsetWidth; el.classList.add("enter"); }
 // paths are relative to the session's page /s/<code>/<n>/; a failed request is tried again (the server may be restarting)
 async function api(p, body) {
@@ -303,6 +309,7 @@ async function api(p, body) {
     try {
       const r = await fetch(p, body ? {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(body)} : {});
       if (r.ok) { $("#net").classList.add("hidden"); return await r.json(); }
+      if (r.status === 404 && TRY) { gone(); return new Promise(() => {}); }
     } catch (e) {}
     $("#net").classList.remove("hidden");
     if (k === 0) $("#say").textContent = "Connection lost. Trying again.";
@@ -461,7 +468,7 @@ async function result() {
   } else if (r.answers && r.documented) {
     $("#rdiffer").innerHTML = "<p>Every answer of yours agrees with the documentation of the table.</p>";
   }
-  if (UPLOAD && r.design) { $("#rsql").classList.remove("hidden"); $("#rsql").onclick = () => sql(r); }
+  if (r.design && r.types) { $("#rsql").classList.remove("hidden"); $("#rsql").onclick = () => sql(r); }
   $("#result").classList.remove("hidden");
   window.scrollTo({top: 0});
   $("#rtitle").tabIndex = -1; $("#rtitle").focus({preventScroll: true});   // screen readers start at the verdict
@@ -469,9 +476,9 @@ async function result() {
 
 // the design of an uploaded table as SQL: one table per schema, named after the file, with the inferred column types
 function sql(r) {
-  const base = (META.title || "table").replace(/\.[^.]*$/, "").replace(/\W+/g, "_").replace(/^_|_$/g, "").toLowerCase() || "table";
+  const base = (META.title || META.relation.replace(/^fresh_/, "") || "table").replace(/\.[^.]*$/, "").replace(/\W+/g, "_").replace(/^_|_$/g, "").toLowerCase() || "table";
   const q = a => /^[A-Za-z_][A-Za-z0-9_]*$/.test(a) ? a : '"' + a.replace(/"/g, '""') + '"';
-  const out = [`-- Cert3NF design of ${META.title}: ${r.certified ? "certified" : "not certified"}, in Third Normal Form under the rules you confirmed`];
+  const out = [`-- Cert3NF design of ${title()}: ${r.certified ? "certified" : "not certified"}, in Third Normal Form under the rules you confirmed`];
   const used = {};
   r.design.forEach(s => {                         // a table is named after its key
     let t = (base + "_" + s.key.join("_")).replace(/\W+/g, "_").toLowerCase();
@@ -519,7 +526,11 @@ if (TRY) {                                                  // a try from the st
 const title = () => { const rel = META.relation.replace(/^fresh_/, ""); return META.title || NAME[rel] || rel; };
 (async () => {
   META = await api("api/meta");
-  while (META.state === "preparing") { await new Promise(res => setTimeout(res, 1500)); META = await api("api/meta"); }
+  const mining = $("#preptext").textContent;
+  while (META.state === "preparing") {
+    $("#preptext").textContent = META.queued ? "Another visitor's table is being analysed first. Yours follows, within a few minutes." : mining;
+    await new Promise(res => setTimeout(res, 1500)); META = await api("api/meta");
+  }
   if (META.state === "failed") {
     $("#preptitle").textContent = "Cert3NF could not use this table"; $("#prepbar").remove();
     $("#preptext").innerHTML = esc(META.error || "") + ' <a href="/">Back to the start page</a>.';

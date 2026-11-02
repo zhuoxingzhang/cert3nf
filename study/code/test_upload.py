@@ -172,6 +172,21 @@ def main():
             st, _, j = srv.call("/upload", b)
             assert st == 400 and j.get("error"), (b["name"], st, j)
         print("bad uploads: one column, a key with equal rows and a ragged line are refused with a message")
+        st, _, j = srv.call("/upload", {"name": "t.csv", "csv": "a,b,\n1,x,\n2,y,\n", "key": []})
+        assert st == 200, (st, j)
+        made.append(j["go"].split("/")[2])
+        rnd = random.Random(5)                    # 60 records of 20 small random columns: some 80,000 candidates
+        many = "\n".join([",".join(f"c{k}" for k in range(20))] + [",".join(str(rnd.randint(0, 3)) for _ in range(20))
+                                                                   for _ in range(60)])
+        st, _, j = srv.call("/upload", {"name": "many.csv", "csv": many, "key": []})
+        made.append(j["go"].split("/")[2])
+        for _ in range(300):
+            m = srv.call(j["go"] + "api/meta")[2]
+            if m.get("state") != "preparing":
+                break
+            time.sleep(0.2)
+        assert m.get("state") == "failed" and "candidate rules" in m.get("error", ""), m
+        print("a delimiter at the end of every line is accepted; a table with too many candidate rules is refused")
         try:                                   # the server answers 413 without reading the body and closes
             st = srv.call("/upload", {"name": "big.csv", "csv": "x" * (11 * 2 ** 20), "key": []})[0]
         except OSError:
@@ -181,6 +196,16 @@ def main():
         print("an upload over 10 MB is refused, and the server goes on")
         assert srv.call("/s/UP-0000000000000000/1/api/meta")[0] == 404, "an unknown upload is not found"
         print("an unknown upload code is not found")
+        for path in ("/s/E01/1/api/meta", "/s/TE01/1/api/meta", "/status"):
+            assert srv.call(path)[0] == 404, path
+        with urllib.request.urlopen(srv.base + "/", timeout=30) as r:
+            assert b"I was invited" not in r.read()
+        try:
+            urllib.request.urlopen(srv.base + "/s/UP-0000000000000000/1/", timeout=30)
+            raise AssertionError("an old link is found")
+        except urllib.error.HTTPError as e:
+            assert e.code == 404 and b"no longer available" in e.read()
+        print("the study has ended: participant codes, test codes and the status page are not found")
     finally:
         srv.stop()
         for code in made:
