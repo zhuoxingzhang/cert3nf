@@ -141,12 +141,12 @@ def cert_rows(dss, V, P, RB, U, label):
         full, sure = V["full"], V["sure"]
         base = full.get(("v5n", ds)) or sure.get(("v5n", ds))
         cells = []
-        for T in ("full", "sure"):
+        for T in ("full", "sure"):             # per truth: true candidates, price, the three variants, the posterior certificate
+            cells += [str(V[T][("v5n", ds)]["true"]), str(P[T][ds]["price"])]
             cells += [v5cell(V[T].get((v, ds)), T, U[T].get((v, ds))) for v in ("v5", "v5s", "v5n")]
             cells.append(refcell([RB[T][k] for k in RB[T] if k[0] == "rbhyb" and k[1] == ds], T))
         name = NAME.get(ds, ds.replace("fresh_", "")) + (" (A)" if ds in CLASS_A else "")
-        print(f"{name} & {base['candidates']:,} & {full[('v5n', ds)]['true']}/{sure[('v5n', ds)]['true']} & "
-              f"{P['full'][ds]['price']}/{P['sure'][ds]['price']} & " + " & ".join(cells) + r"\\")
+        print(f"{name} & {base['candidates']:,} & " + " & ".join(cells) + r"\\")
 
 
 def data_rows(dss, V):
