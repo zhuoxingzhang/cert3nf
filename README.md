@@ -68,6 +68,7 @@ DS=$(python -c "import auto_common as AC; print(','.join(AC.FRESH))")
 python v5.py --answers llm_fresh2_full_q35 --datasets $DS --out v5_fresh2/v5_full.jsonl                      # Table 3
 python v5.py --answers llm_fresh2_full_q35 --datasets $DS --budget 1000 --variants v5,v5s,v5n --out v5_unb/v5_full.jsonl   # Fig. 2
 python v5tol.py --answers llm_fresh2_full_q35 --datasets $DS --mech c [--rho 0.25] --out v5tol_fresh2/v5tol_full.jsonl   # Table 6
+python scripts/run_v5tol_unb.py --answers llm_fresh2_full_q35 --datasets $DS --budget 1000 --out v5tol_unb/v5tol_full.jsonl   # Fig. 2, careful mode
 CODES_DIR=../e3/codes python v5tau.py --answers llm_fresh2_full_q35 --datasets $DS --thetas 0,0.001,0.01,0.1 --budget 1000 --out tau.jsonl
 python auto_confirm.py run --answers llm_fresh2_full_q35 --models q35 --datasets $DS --variants rbhyb,rbhyb0,trust,clf,L1,A5,A9,upper,hyfd --out auto.jsonl   # Table 4
 python ec2hyb.py run --answers llm_fresh2_full_q35 --models q35 --datasets $DS --variants ec2hyb,ec2hyb0 --out ec2_results/results_ec2_full.jsonl   # Table 4
