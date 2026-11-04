@@ -1,2 +1,2 @@
 numpy>=1.26
-# optional: vllm (LLM answers, normalizer), pandas and pyarrow (unpacking some raw data)
+# optional: vllm (LLM answers, normalizer), pandas and pyarrow (unpacking some raw data), scipy (exact covers, cover_milp.py)

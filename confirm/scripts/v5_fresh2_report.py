@@ -155,7 +155,7 @@ def report(T, v5dir, answers, model="q35"):
     for r in rows(os.path.join(HERE, v5dir, f"v5_{T}.jsonl")):
         assert r["truth"] == T and r["oracle"] == "gold", (r["variant"], r["dataset"], r["truth"], r["oracle"])
         V[(r["variant"], r["dataset"])] = r
-    pp = os.path.join(HERE, v5dir, "price.json")
+    pp = os.path.join(HERE, v5dir, os.environ.get("PRICE_FILE", "price.json"))
     price = json.load(open(pp, encoding="utf-8")) if os.path.exists(pp) else {}
     RB, AU = {}, {}
     for f, by in (("results_rbhyb", RB), ("results", AU)):

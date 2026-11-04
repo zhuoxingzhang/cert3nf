@@ -76,7 +76,7 @@ python scripts/ec2_report.py > ec2_results/report.txt                           
 python auto_mars.py --model Qwen/Qwen3.5-9B --datasets $DS --out mars.jsonl                                  # normalizer
 gcc -O2 -o aexp aexp.c && python aexp.py --out aexp_full.jsonl [--max]                                       # attribute exploration
 python check_cert.py --results v5_fresh2/v5_full.jsonl --truth
-PRICE_FILE=price_min.json python scripts/paper_tables_v5.py                                                  # Tables 3, 4, 6, 8 and 9
+PRICE_FILE=price_gold.json python scripts/paper_tables_v5.py                                                 # Tables 3, 4, 6, 8 and 9
 ```
 
 Synthetic relations (Table 5): `e3/scale.py` generates them deterministically and writes their ground truth to `e3/truth/scale.json`; their mined candidates (up to 2 GB per relation) are not included.
@@ -92,4 +92,4 @@ python scale_run.py report --results scale/v5.jsonl --price scale/price.json --c
 ```
 
 `v5tau.py` reads the records that `python ../e3/dump_codes.py ../e3/codes $DS` encodes.
-The price of Thm. 4.4 comes from `cover_bounds.py`, `price_min.py` and `price_sets.py`, and every other number of the paper from a report in `confirm/scripts/`.
+The price of Thm. 4.4 comes from `price_gold.py`, which takes the FDs the simulated designer answers from, and from `cover_milp.py`, which finds a smallest cover exactly and needs `scipy`; every other number of the paper comes from a report in `confirm/scripts/`, run with `PRICE_FILE=price_gold.json`.

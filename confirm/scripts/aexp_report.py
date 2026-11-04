@@ -1,5 +1,5 @@
 """Report of design note item 44: attribute exploration (aexp.c) against the price of Thm. price (smallest F, held sets
-counted once, v5_fresh2/price_min.json) and the answers of v5, v5s and v5n without a budget (v5_unb, budget 1000).
+counted once, v5_fresh2/price_gold.json) and the answers of v5, v5s and v5n without a budget (v5_unb, budget 1000).
 Per truth and counterexample variant (min: the closure under Sigma*, pre-registered; max: the largest, exploratory):
 per relation the implication questions (yes, no), the unit yes/no answers they amount to, the closed sets visited and
 the time; a run stopped at the time limit gives lower bounds (marked >=).  Medians of unit / price and unit / v5 over
@@ -15,7 +15,7 @@ def load(f):
         return [json.loads(x) for x in fh if x.strip()]
 
 
-price = json.load(open("v5_fresh2/price_min.json", encoding="utf-8"))
+price = json.load(open(os.path.join("v5_fresh2", os.environ.get("PRICE_FILE", "price_gold.json")), encoding="utf-8"))
 for T in ("full", "sure"):
     unb = {}
     for r in load(f"v5_unb/v5_{T}.jsonl"):
