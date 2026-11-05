@@ -29,7 +29,7 @@ import drd                        # noqa: E402
 import v6fstudy                   # noqa: E402
 import upload as U                # noqa: E402
 
-GAP, LIVE_MINUTES = 3, 40
+GAP, LIVE_MINUTES = 3, 60
 KINDS = {"disc_q": "disc", "hone_q": "hone", "max_asked": "max", "guess_q": "guess", "reuse_q": "reuse", "qx_q": "qx",
          "confirm_q": "confirm", "reask_q": "reask"}
 VARIANT = "careful"               # the study: every premise is answered twice, since a person may err

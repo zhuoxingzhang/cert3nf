@@ -196,7 +196,7 @@
       <li><b>Don't know</b> if you cannot tell, which leaves the rule undecided.</li>
     </ul>
     <p id="docnote" class="hidden">The documentation of the table: <span id="doclinks"></span><br>You can open it at any time, also with the links above the questions.</p>
-    <p id="studylen">There are at most about 130 questions and at most about 55 minutes of answering. You can stop at any time
+    <p id="studylen">There are at most about 130 questions and at most about 75 minutes of answering. You can stop at any time
        with the Stop button, without giving a reason.</p>
     <p class="hidden" id="trylen">Cert3NF asks until your answers certify a design, at most 100 questions. You can stop at
        any time and see the design so far. <span class="keyhint">Keys: <b>Y</b> yes, <b>N</b> no, <b>D</b> don't know.</span></p>
@@ -448,7 +448,7 @@ async function result() {
     const from = key && k ? `the table's key and the ${n(k, "rule")} you confirmed` : key ? "the table's key alone"
                : k ? `the ${n(k, "rule")} you confirmed` : null;
     const cause = {voluntary: "You stopped before the certificate was complete.",
-                   time: "The try reached its 40-minute limit before the certificate was complete.",
+                   time: "The try reached its time limit before the certificate was complete.",
                    idle: "The try was closed after 30 minutes without an answer."}[r.stop_reason]
       || (r.dk ? `Your ${n(r.dk, "don't-know answer")} left rules undecided, so Cert3NF cannot certify the design.`
                : "The 100 questions ran out before the certificate was complete.");
