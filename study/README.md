@@ -1,8 +1,8 @@
 # The human-designer study and the live demo
 
 The web app of the study with human designers in the paper (Q4 and Appendix B), now the live demo at https://cert3nf.onrender.com.
-On the demo, *Try it* opens a session of your own on one of the study's three tables, or on a CSV that you upload, and ends with the design that your answers certify.
-The study has ended, so the site no longer accepts participants.
+On the demo, *Try it* opens a session of your own on one of three development tables, or on a CSV that you upload, and ends with the design that your answers certify.
+The study runs on three confirmatory relations (`code/common.py`, `RELATIONS`), three sessions per participant; with `STUDY_PARTICIPANTS=1` the site accepts participants and shows the study's start page, which names neither the method nor what it does, and no try.
 
 ## Layout
 

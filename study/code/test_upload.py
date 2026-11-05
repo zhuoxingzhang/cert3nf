@@ -212,8 +212,8 @@ def main():
             if code.startswith("UP-"):
                 shutil.rmtree(os.path.join(K.KIT, "uploads", code), ignore_errors=True)
             else:
-                for sno in (1, 2):
-                    for ds in K.RELATIONS.values():
+                for sno in K.SESSIONS:
+                    for ds in K.KIT_RELATIONS:
                         f = os.path.join(K.KIT, "sessions", "test", f"{code}_s{sno}_{ds}.jsonl")
                         if os.path.exists(f):
                             os.remove(f)

@@ -20,7 +20,7 @@ import common as K
 import session as S
 import replay as RP
 
-CASES = (("E01", 1), ("E01", 2), ("P02", 2))           # R1, R2, R3
+CASES = (("E01", 1), ("E01", 2), ("P02", 2), ("U03", 3))   # R1, R2, R3 and a third session (R2)
 MODES = ("exact", "dk", "err", "stop", "time")
 CLOCK = {"t_elapsed_s", "t_live_s", "rt_ms", "time", "minutes", "live_minutes_used"}
 

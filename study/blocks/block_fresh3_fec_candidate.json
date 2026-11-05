@@ -1,0 +1,842 @@
+{
+ "dataset": "fresh3_fec_candidate",
+ "attributes": [
+  "CAND_ID",
+  "CAND_PTY_AFFILIATION",
+  "CAND_ELECTION_YR",
+  "CAND_OFFICE_ST",
+  "CAND_OFFICE",
+  "CAND_OFFICE_DISTRICT",
+  "CAND_ICI",
+  "CAND_STATUS",
+  "CAND_PCC",
+  "CMTE_NM",
+  "CMTE_DSGN",
+  "CMTE_TP",
+  "CMTE_PTY_AFFILIATION",
+  "CMTE_FILING_FREQ",
+  "ORG_TP",
+  "CONNECTED_ORG_NM",
+  "CM_CAND_ID",
+  "CMTE_ST",
+  "CMTE_ZIP",
+  "CMTE_CITY"
+ ],
+ "generator": "ee9f0ee3f378",
+ "data_md5": "6493276978db",
+ "supplement_md5": "f06c4efe8bdc",
+ "supplement": [],
+ "pool_sizes": {
+  "cand/True": 11,
+  "cand/False": 707,
+  "max/True": 11,
+  "max/False": 11,
+  "qx/True": 35156,
+  "qx/False": 24128
+ },
+ "short": {},
+ "questions": [
+  {
+   "id": "b01",
+   "type": "cand",
+   "lhs": [
+    "CAND_PCC"
+   ],
+   "rhs": "CMTE_ZIP",
+   "form": "agree",
+   "listed": [
+    "CAND_PCC"
+   ],
+   "a_q": 2,
+   "text": "Must any two records that agree on CAND_PCC also agree on CMTE_ZIP?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": true
+  },
+  {
+   "id": "b02",
+   "type": "cand",
+   "lhs": [
+    "CAND_PCC"
+   ],
+   "rhs": "CMTE_PTY_AFFILIATION",
+   "form": "agree",
+   "listed": [
+    "CAND_PCC"
+   ],
+   "a_q": 2,
+   "text": "Must any two records that agree on CAND_PCC also agree on CMTE_PTY_AFFILIATION?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": true
+  },
+  {
+   "id": "b03",
+   "type": "cand",
+   "lhs": [
+    "CAND_PCC"
+   ],
+   "rhs": "CMTE_FILING_FREQ",
+   "form": "agree",
+   "listed": [
+    "CAND_PCC"
+   ],
+   "a_q": 2,
+   "text": "Must any two records that agree on CAND_PCC also agree on CMTE_FILING_FREQ?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": true
+  },
+  {
+   "id": "b04",
+   "type": "cand",
+   "lhs": [
+    "CMTE_ZIP"
+   ],
+   "rhs": "ORG_TP",
+   "form": "agree",
+   "listed": [
+    "CMTE_ZIP"
+   ],
+   "a_q": 2,
+   "text": "Must any two records that agree on CMTE_ZIP also agree on ORG_TP?",
+   "truth_full": false,
+   "truth_sure": false,
+   "truth_supp": false,
+   "minimal_on_data": true
+  },
+  {
+   "id": "b05",
+   "type": "cand",
+   "lhs": [
+    "CAND_ELECTION_YR",
+    "CAND_OFFICE_ST",
+    "CMTE_NM"
+   ],
+   "rhs": "CMTE_TP",
+   "form": "agree",
+   "listed": [
+    "CAND_ELECTION_YR",
+    "CAND_OFFICE_ST",
+    "CMTE_NM"
+   ],
+   "a_q": 4,
+   "text": "Must any two records that agree on CAND_ELECTION_YR, CAND_OFFICE_ST and CMTE_NM also agree on CMTE_TP?",
+   "truth_full": false,
+   "truth_sure": false,
+   "truth_supp": false,
+   "minimal_on_data": true
+  },
+  {
+   "id": "b06",
+   "type": "cand",
+   "lhs": [
+    "CAND_ELECTION_YR",
+    "CAND_ICI",
+    "CMTE_PTY_AFFILIATION",
+    "CM_CAND_ID",
+    "CMTE_CITY"
+   ],
+   "rhs": "CONNECTED_ORG_NM",
+   "form": "agree",
+   "listed": [
+    "CAND_ELECTION_YR",
+    "CAND_ICI",
+    "CMTE_PTY_AFFILIATION",
+    "CM_CAND_ID",
+    "CMTE_CITY"
+   ],
+   "a_q": 6,
+   "text": "Must any two records that agree on CAND_ELECTION_YR, CAND_ICI, CMTE_PTY_AFFILIATION, CM_CAND_ID and CMTE_CITY also agree on CONNECTED_ORG_NM?",
+   "truth_full": false,
+   "truth_sure": false,
+   "truth_supp": false,
+   "minimal_on_data": true
+  },
+  {
+   "id": "b07",
+   "type": "max",
+   "lhs": [
+    "CAND_PTY_AFFILIATION",
+    "CAND_ELECTION_YR",
+    "CAND_OFFICE_ST",
+    "CAND_OFFICE",
+    "CAND_OFFICE_DISTRICT",
+    "CAND_ICI",
+    "CAND_STATUS",
+    "CAND_PCC",
+    "CMTE_NM",
+    "CMTE_DSGN",
+    "CMTE_TP",
+    "CMTE_PTY_AFFILIATION",
+    "CMTE_FILING_FREQ",
+    "ORG_TP",
+    "CONNECTED_ORG_NM",
+    "CM_CAND_ID",
+    "CMTE_ST",
+    "CMTE_ZIP"
+   ],
+   "rhs": "CMTE_CITY",
+   "form": "except",
+   "listed": [
+    "CAND_ID",
+    "CMTE_CITY"
+   ],
+   "a_q": 3,
+   "text": "Must any two records that agree on all attributes except CAND_ID and CMTE_CITY also agree on CMTE_CITY?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": false
+  },
+  {
+   "id": "b08",
+   "type": "max",
+   "lhs": [
+    "CAND_PTY_AFFILIATION",
+    "CAND_ELECTION_YR",
+    "CAND_OFFICE_ST",
+    "CAND_OFFICE",
+    "CAND_OFFICE_DISTRICT",
+    "CAND_ICI",
+    "CAND_STATUS",
+    "CAND_PCC",
+    "CMTE_NM",
+    "CMTE_DSGN",
+    "CMTE_TP",
+    "CMTE_PTY_AFFILIATION",
+    "CMTE_FILING_FREQ",
+    "ORG_TP",
+    "CONNECTED_ORG_NM",
+    "CM_CAND_ID",
+    "CMTE_ZIP",
+    "CMTE_CITY"
+   ],
+   "rhs": "CMTE_ST",
+   "form": "except",
+   "listed": [
+    "CAND_ID",
+    "CMTE_ST"
+   ],
+   "a_q": 3,
+   "text": "Must any two records that agree on all attributes except CAND_ID and CMTE_ST also agree on CMTE_ST?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": false
+  },
+  {
+   "id": "b09",
+   "type": "max",
+   "lhs": [
+    "CAND_PTY_AFFILIATION",
+    "CAND_ELECTION_YR",
+    "CAND_OFFICE_ST",
+    "CAND_OFFICE",
+    "CAND_OFFICE_DISTRICT",
+    "CAND_ICI",
+    "CAND_STATUS",
+    "CAND_PCC",
+    "CMTE_NM",
+    "CMTE_DSGN",
+    "CMTE_PTY_AFFILIATION",
+    "CMTE_FILING_FREQ",
+    "ORG_TP",
+    "CONNECTED_ORG_NM",
+    "CM_CAND_ID",
+    "CMTE_ST",
+    "CMTE_ZIP",
+    "CMTE_CITY"
+   ],
+   "rhs": "CMTE_TP",
+   "form": "except",
+   "listed": [
+    "CAND_ID",
+    "CMTE_TP"
+   ],
+   "a_q": 3,
+   "text": "Must any two records that agree on all attributes except CAND_ID and CMTE_TP also agree on CMTE_TP?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": false
+  },
+  {
+   "id": "b10",
+   "type": "max",
+   "lhs": [
+    "CAND_PTY_AFFILIATION",
+    "CAND_ELECTION_YR",
+    "CAND_OFFICE_ST",
+    "CAND_OFFICE",
+    "CAND_OFFICE_DISTRICT",
+    "CAND_ICI",
+    "CAND_STATUS",
+    "CMTE_NM",
+    "CMTE_TP",
+    "CMTE_PTY_AFFILIATION",
+    "CMTE_FILING_FREQ",
+    "ORG_TP",
+    "CONNECTED_ORG_NM",
+    "CM_CAND_ID",
+    "CMTE_ST",
+    "CMTE_ZIP",
+    "CMTE_CITY"
+   ],
+   "rhs": "CMTE_DSGN",
+   "form": "except",
+   "listed": [
+    "CAND_ID",
+    "CAND_PCC",
+    "CMTE_DSGN"
+   ],
+   "a_q": 4,
+   "text": "Must any two records that agree on all attributes except CAND_ID, CAND_PCC and CMTE_DSGN also agree on CMTE_DSGN?",
+   "truth_full": false,
+   "truth_sure": false,
+   "truth_supp": false,
+   "minimal_on_data": false
+  },
+  {
+   "id": "b11",
+   "type": "max",
+   "lhs": [
+    "CAND_PTY_AFFILIATION",
+    "CAND_ELECTION_YR",
+    "CAND_OFFICE_ST",
+    "CAND_OFFICE",
+    "CAND_OFFICE_DISTRICT",
+    "CAND_ICI",
+    "CAND_STATUS",
+    "CMTE_DSGN",
+    "CMTE_TP",
+    "CMTE_PTY_AFFILIATION",
+    "CMTE_FILING_FREQ",
+    "ORG_TP",
+    "CONNECTED_ORG_NM",
+    "CM_CAND_ID",
+    "CMTE_ST",
+    "CMTE_ZIP",
+    "CMTE_CITY"
+   ],
+   "rhs": "CMTE_NM",
+   "form": "except",
+   "listed": [
+    "CAND_ID",
+    "CAND_PCC",
+    "CMTE_NM"
+   ],
+   "a_q": 4,
+   "text": "Must any two records that agree on all attributes except CAND_ID, CAND_PCC and CMTE_NM also agree on CMTE_NM?",
+   "truth_full": false,
+   "truth_sure": false,
+   "truth_supp": false,
+   "minimal_on_data": false
+  },
+  {
+   "id": "b12",
+   "type": "max",
+   "lhs": [
+    "CAND_PTY_AFFILIATION",
+    "CAND_ELECTION_YR",
+    "CAND_OFFICE_ST",
+    "CAND_OFFICE",
+    "CAND_OFFICE_DISTRICT",
+    "CAND_ICI",
+    "CAND_STATUS",
+    "CMTE_NM",
+    "CMTE_DSGN",
+    "CMTE_TP",
+    "CMTE_PTY_AFFILIATION",
+    "CMTE_FILING_FREQ",
+    "ORG_TP",
+    "CONNECTED_ORG_NM",
+    "CM_CAND_ID",
+    "CMTE_ZIP",
+    "CMTE_CITY"
+   ],
+   "rhs": "CMTE_ST",
+   "form": "except",
+   "listed": [
+    "CAND_ID",
+    "CAND_PCC",
+    "CMTE_ST"
+   ],
+   "a_q": 4,
+   "text": "Must any two records that agree on all attributes except CAND_ID, CAND_PCC and CMTE_ST also agree on CMTE_ST?",
+   "truth_full": false,
+   "truth_sure": false,
+   "truth_supp": false,
+   "minimal_on_data": false
+  },
+  {
+   "id": "b13",
+   "type": "qx",
+   "lhs": [
+    "CAND_PCC",
+    "CMTE_DSGN",
+    "ORG_TP"
+   ],
+   "rhs": "CM_CAND_ID",
+   "form": "agree",
+   "listed": [
+    "CAND_PCC",
+    "CMTE_DSGN",
+    "ORG_TP"
+   ],
+   "a_q": 4,
+   "text": "Must any two records that agree on CAND_PCC, CMTE_DSGN and ORG_TP also agree on CM_CAND_ID?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": false
+  },
+  {
+   "id": "b14",
+   "type": "qx",
+   "lhs": [
+    "CAND_PTY_AFFILIATION",
+    "CAND_OFFICE_ST",
+    "CAND_PCC",
+    "CMTE_DSGN"
+   ],
+   "rhs": "CMTE_PTY_AFFILIATION",
+   "form": "agree",
+   "listed": [
+    "CAND_PTY_AFFILIATION",
+    "CAND_OFFICE_ST",
+    "CAND_PCC",
+    "CMTE_DSGN"
+   ],
+   "a_q": 5,
+   "text": "Must any two records that agree on CAND_PTY_AFFILIATION, CAND_OFFICE_ST, CAND_PCC and CMTE_DSGN also agree on CMTE_PTY_AFFILIATION?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": false
+  },
+  {
+   "id": "b15",
+   "type": "qx",
+   "lhs": [
+    "CAND_OFFICE_ST",
+    "CAND_PCC",
+    "CMTE_NM",
+    "CMTE_TP",
+    "CM_CAND_ID"
+   ],
+   "rhs": "CMTE_PTY_AFFILIATION",
+   "form": "agree",
+   "listed": [
+    "CAND_OFFICE_ST",
+    "CAND_PCC",
+    "CMTE_NM",
+    "CMTE_TP",
+    "CM_CAND_ID"
+   ],
+   "a_q": 6,
+   "text": "Must any two records that agree on CAND_OFFICE_ST, CAND_PCC, CMTE_NM, CMTE_TP and CM_CAND_ID also agree on CMTE_PTY_AFFILIATION?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": false
+  },
+  {
+   "id": "b16",
+   "type": "qx",
+   "lhs": [
+    "CMTE_FILING_FREQ",
+    "CMTE_ST",
+    "CMTE_ZIP"
+   ],
+   "rhs": "ORG_TP",
+   "form": "agree",
+   "listed": [
+    "CMTE_FILING_FREQ",
+    "CMTE_ST",
+    "CMTE_ZIP"
+   ],
+   "a_q": 4,
+   "text": "Must any two records that agree on CMTE_FILING_FREQ, CMTE_ST and CMTE_ZIP also agree on ORG_TP?",
+   "truth_full": false,
+   "truth_sure": false,
+   "truth_supp": false,
+   "minimal_on_data": false
+  },
+  {
+   "id": "b17",
+   "type": "qx",
+   "lhs": [
+    "CAND_OFFICE_DISTRICT",
+    "CMTE_NM",
+    "CMTE_FILING_FREQ",
+    "CM_CAND_ID"
+   ],
+   "rhs": "CMTE_DSGN",
+   "form": "agree",
+   "listed": [
+    "CAND_OFFICE_DISTRICT",
+    "CMTE_NM",
+    "CMTE_FILING_FREQ",
+    "CM_CAND_ID"
+   ],
+   "a_q": 5,
+   "text": "Must any two records that agree on CAND_OFFICE_DISTRICT, CMTE_NM, CMTE_FILING_FREQ and CM_CAND_ID also agree on CMTE_DSGN?",
+   "truth_full": false,
+   "truth_sure": false,
+   "truth_supp": false,
+   "minimal_on_data": false
+  },
+  {
+   "id": "b18",
+   "type": "qx",
+   "lhs": [
+    "CAND_PTY_AFFILIATION",
+    "CAND_OFFICE_ST",
+    "CAND_ICI",
+    "CMTE_NM",
+    "CM_CAND_ID"
+   ],
+   "rhs": "CMTE_ST",
+   "form": "agree",
+   "listed": [
+    "CAND_PTY_AFFILIATION",
+    "CAND_OFFICE_ST",
+    "CAND_ICI",
+    "CMTE_NM",
+    "CM_CAND_ID"
+   ],
+   "a_q": 6,
+   "text": "Must any two records that agree on CAND_PTY_AFFILIATION, CAND_OFFICE_ST, CAND_ICI, CMTE_NM and CM_CAND_ID also agree on CMTE_ST?",
+   "truth_full": false,
+   "truth_sure": false,
+   "truth_supp": false,
+   "minimal_on_data": false
+  }
+ ],
+ "fillers": [
+  {
+   "id": "f01",
+   "type": "cand",
+   "lhs": [
+    "CAND_PCC"
+   ],
+   "rhs": "CMTE_TP",
+   "form": "agree",
+   "listed": [
+    "CAND_PCC"
+   ],
+   "a_q": 2,
+   "text": "Must any two records that agree on CAND_PCC also agree on CMTE_TP?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": true
+  },
+  {
+   "id": "f02",
+   "type": "cand",
+   "lhs": [
+    "CAND_PCC"
+   ],
+   "rhs": "CONNECTED_ORG_NM",
+   "form": "agree",
+   "listed": [
+    "CAND_PCC"
+   ],
+   "a_q": 2,
+   "text": "Must any two records that agree on CAND_PCC also agree on CONNECTED_ORG_NM?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": true
+  },
+  {
+   "id": "f03",
+   "type": "cand",
+   "lhs": [
+    "CMTE_NM"
+   ],
+   "rhs": "ORG_TP",
+   "form": "agree",
+   "listed": [
+    "CMTE_NM"
+   ],
+   "a_q": 2,
+   "text": "Must any two records that agree on CMTE_NM also agree on ORG_TP?",
+   "truth_full": false,
+   "truth_sure": false,
+   "truth_supp": false,
+   "minimal_on_data": true
+  },
+  {
+   "id": "f04",
+   "type": "cand",
+   "lhs": [
+    "CAND_STATUS",
+    "CMTE_DSGN",
+    "CMTE_TP",
+    "CM_CAND_ID",
+    "CMTE_ST"
+   ],
+   "rhs": "CONNECTED_ORG_NM",
+   "form": "agree",
+   "listed": [
+    "CAND_STATUS",
+    "CMTE_DSGN",
+    "CMTE_TP",
+    "CM_CAND_ID",
+    "CMTE_ST"
+   ],
+   "a_q": 6,
+   "text": "Must any two records that agree on CAND_STATUS, CMTE_DSGN, CMTE_TP, CM_CAND_ID and CMTE_ST also agree on CONNECTED_ORG_NM?",
+   "truth_full": false,
+   "truth_sure": false,
+   "truth_supp": false,
+   "minimal_on_data": true
+  },
+  {
+   "id": "f05",
+   "type": "max",
+   "lhs": [
+    "CAND_PTY_AFFILIATION",
+    "CAND_ELECTION_YR",
+    "CAND_OFFICE_ST",
+    "CAND_OFFICE",
+    "CAND_OFFICE_DISTRICT",
+    "CAND_ICI",
+    "CAND_STATUS",
+    "CAND_PCC",
+    "CMTE_DSGN",
+    "CMTE_TP",
+    "CMTE_PTY_AFFILIATION",
+    "CMTE_FILING_FREQ",
+    "ORG_TP",
+    "CONNECTED_ORG_NM",
+    "CM_CAND_ID",
+    "CMTE_ST",
+    "CMTE_ZIP",
+    "CMTE_CITY"
+   ],
+   "rhs": "CMTE_NM",
+   "form": "except",
+   "listed": [
+    "CAND_ID",
+    "CMTE_NM"
+   ],
+   "a_q": 3,
+   "text": "Must any two records that agree on all attributes except CAND_ID and CMTE_NM also agree on CMTE_NM?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": false
+  },
+  {
+   "id": "f06",
+   "type": "max",
+   "lhs": [
+    "CAND_PTY_AFFILIATION",
+    "CAND_ELECTION_YR",
+    "CAND_OFFICE_ST",
+    "CAND_OFFICE",
+    "CAND_OFFICE_DISTRICT",
+    "CAND_ICI",
+    "CAND_STATUS",
+    "CAND_PCC",
+    "CMTE_NM",
+    "CMTE_DSGN",
+    "CMTE_TP",
+    "CMTE_PTY_AFFILIATION",
+    "CMTE_FILING_FREQ",
+    "CONNECTED_ORG_NM",
+    "CM_CAND_ID",
+    "CMTE_ST",
+    "CMTE_ZIP",
+    "CMTE_CITY"
+   ],
+   "rhs": "ORG_TP",
+   "form": "except",
+   "listed": [
+    "CAND_ID",
+    "ORG_TP"
+   ],
+   "a_q": 3,
+   "text": "Must any two records that agree on all attributes except CAND_ID and ORG_TP also agree on ORG_TP?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": false
+  },
+  {
+   "id": "f07",
+   "type": "max",
+   "lhs": [
+    "CAND_PTY_AFFILIATION",
+    "CAND_ELECTION_YR",
+    "CAND_OFFICE_ST",
+    "CAND_OFFICE",
+    "CAND_OFFICE_DISTRICT",
+    "CAND_ICI",
+    "CAND_STATUS",
+    "CMTE_NM",
+    "CMTE_DSGN",
+    "CMTE_TP",
+    "CMTE_PTY_AFFILIATION",
+    "CMTE_FILING_FREQ",
+    "ORG_TP",
+    "CM_CAND_ID",
+    "CMTE_ST",
+    "CMTE_ZIP",
+    "CMTE_CITY"
+   ],
+   "rhs": "CONNECTED_ORG_NM",
+   "form": "except",
+   "listed": [
+    "CAND_ID",
+    "CAND_PCC",
+    "CONNECTED_ORG_NM"
+   ],
+   "a_q": 4,
+   "text": "Must any two records that agree on all attributes except CAND_ID, CAND_PCC and CONNECTED_ORG_NM also agree on CONNECTED_ORG_NM?",
+   "truth_full": false,
+   "truth_sure": false,
+   "truth_supp": false,
+   "minimal_on_data": false
+  },
+  {
+   "id": "f08",
+   "type": "max",
+   "lhs": [
+    "CAND_PTY_AFFILIATION",
+    "CAND_ELECTION_YR",
+    "CAND_OFFICE_ST",
+    "CAND_OFFICE",
+    "CAND_OFFICE_DISTRICT",
+    "CAND_ICI",
+    "CAND_STATUS",
+    "CMTE_NM",
+    "CMTE_DSGN",
+    "CMTE_TP",
+    "CMTE_PTY_AFFILIATION",
+    "CMTE_FILING_FREQ",
+    "ORG_TP",
+    "CONNECTED_ORG_NM",
+    "CMTE_ST",
+    "CMTE_ZIP",
+    "CMTE_CITY"
+   ],
+   "rhs": "CM_CAND_ID",
+   "form": "except",
+   "listed": [
+    "CAND_ID",
+    "CAND_PCC",
+    "CM_CAND_ID"
+   ],
+   "a_q": 4,
+   "text": "Must any two records that agree on all attributes except CAND_ID, CAND_PCC and CM_CAND_ID also agree on CM_CAND_ID?",
+   "truth_full": false,
+   "truth_sure": false,
+   "truth_supp": false,
+   "minimal_on_data": false
+  },
+  {
+   "id": "f09",
+   "type": "qx",
+   "lhs": [
+    "CAND_PCC",
+    "CMTE_NM",
+    "CMTE_TP"
+   ],
+   "rhs": "CM_CAND_ID",
+   "form": "agree",
+   "listed": [
+    "CAND_PCC",
+    "CMTE_NM",
+    "CMTE_TP"
+   ],
+   "a_q": 4,
+   "text": "Must any two records that agree on CAND_PCC, CMTE_NM and CMTE_TP also agree on CM_CAND_ID?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": false
+  },
+  {
+   "id": "f10",
+   "type": "qx",
+   "lhs": [
+    "CAND_OFFICE_DISTRICT",
+    "CAND_PCC",
+    "CMTE_NM",
+    "CONNECTED_ORG_NM",
+    "CMTE_CITY"
+   ],
+   "rhs": "CMTE_FILING_FREQ",
+   "form": "agree",
+   "listed": [
+    "CAND_OFFICE_DISTRICT",
+    "CAND_PCC",
+    "CMTE_NM",
+    "CONNECTED_ORG_NM",
+    "CMTE_CITY"
+   ],
+   "a_q": 6,
+   "text": "Must any two records that agree on CAND_OFFICE_DISTRICT, CAND_PCC, CMTE_NM, CONNECTED_ORG_NM and CMTE_CITY also agree on CMTE_FILING_FREQ?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": false
+  },
+  {
+   "id": "f11",
+   "type": "qx",
+   "lhs": [
+    "CAND_ELECTION_YR",
+    "CMTE_NM",
+    "CM_CAND_ID"
+   ],
+   "rhs": "CMTE_TP",
+   "form": "agree",
+   "listed": [
+    "CAND_ELECTION_YR",
+    "CMTE_NM",
+    "CM_CAND_ID"
+   ],
+   "a_q": 4,
+   "text": "Must any two records that agree on CAND_ELECTION_YR, CMTE_NM and CM_CAND_ID also agree on CMTE_TP?",
+   "truth_full": false,
+   "truth_sure": false,
+   "truth_supp": false,
+   "minimal_on_data": false
+  },
+  {
+   "id": "f12",
+   "type": "qx",
+   "lhs": [
+    "CAND_ELECTION_YR",
+    "CMTE_NM",
+    "CMTE_FILING_FREQ",
+    "CM_CAND_ID",
+    "CMTE_ST"
+   ],
+   "rhs": "CMTE_TP",
+   "form": "agree",
+   "listed": [
+    "CAND_ELECTION_YR",
+    "CMTE_NM",
+    "CMTE_FILING_FREQ",
+    "CM_CAND_ID",
+    "CMTE_ST"
+   ],
+   "a_q": 6,
+   "text": "Must any two records that agree on CAND_ELECTION_YR, CMTE_NM, CMTE_FILING_FREQ, CM_CAND_ID and CMTE_ST also agree on CMTE_TP?",
+   "truth_full": false,
+   "truth_sure": false,
+   "truth_supp": false,
+   "minimal_on_data": false
+  }
+ ]
+}

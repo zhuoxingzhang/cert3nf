@@ -86,7 +86,7 @@ def main():
     tmp = tempfile.mkdtemp(prefix="hs_store_")
     part, sno, mode = "TE02", 1, "err"
     whole = T.norm(T.run_case(part, sno, os.path.join(tmp, "whole", "test"), mode))
-    name = f"test/{part}_s{sno}_tpcds_core.jsonl"
+    name = f"test/{part}_s{sno}_{T.K.relation_of(part, sno)}.jsonl"
     key = f"sessions/{name}"
 
     # sync: 30 answers, then the instance dies
@@ -122,7 +122,7 @@ def main():
     T.drive(s, mode, cut=3)
     c.flush()
     s.fh.close()
-    alt = [p for p in FILES if p.startswith(f"sessions/test/{part}_s{sno}_tpcds_core.conflict-")]
+    alt = [p for p in FILES if p.startswith(f"sessions/test/{part}_s{sno}_{T.K.relation_of(part, sno)}.conflict-")]
     with open(stored, "rb") as fh:
         assert FILES[key] == fh.read() and len(alt) == 1 and "already in the repository" in c.last_error
     print("conflict: the stored session is kept, the new one is stored as", alt[0].rsplit("/", 1)[1])
@@ -133,16 +133,16 @@ def main():
     T.drive(s, "exact", cut=5)
     api, ST.API = ST.API, "http://127.0.0.1:9"
     d.flush()
-    assert d.state()["pending"] == 1 and d.last_error and "sessions/test/TU01_s1_ssb_customer.jsonl" not in FILES
+    assert d.state()["pending"] == 1 and d.last_error and f"sessions/test/TU01_s1_{T.K.relation_of('TU01', 1)}.jsonl" not in FILES
     ST.API = api
     d.flush()
-    assert d.state()["pending"] == 0 and "sessions/test/TU01_s1_ssb_customer.jsonl" in FILES
+    assert d.state()["pending"] == 0 and f"sessions/test/TU01_s1_{T.K.relation_of('TU01', 1)}.jsonl" in FILES
     print("offline: the file waited and was put once GitHub could be reached")
 
     # reset
     s.fh.close()
     d.delete(s.path)
-    assert "sessions/test/TU01_s1_ssb_customer.jsonl" not in FILES and not os.path.exists(s.path)
+    assert f"sessions/test/TU01_s1_{T.K.relation_of('TU01', 1)}.jsonl" not in FILES and not os.path.exists(s.path)
     print("reset: removed here and in the repository")
     srv.shutdown()
 

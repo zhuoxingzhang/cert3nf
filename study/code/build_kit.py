@@ -56,7 +56,7 @@ def build_pickles(method):
     man = {"python": platform.python_version(), "numpy": np.__version__, "variant": K.VARIANT,
            "answers": K.ANSWERS, "frozen": {m: method[m]["source_md5"] for m in ("confirm/v6f.py",)},
            "method": method, "relations": {}}
-    for ds in K.RELATIONS.values():
+    for ds in K.KIT_RELATIONS:
         path = os.path.join(K.PREBUILT, ds + ".pkl")
         with open(path, "wb") as fh:
             pickle.dump(K.build(ds), fh, protocol=5)

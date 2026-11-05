@@ -1,0 +1,770 @@
+{
+ "dataset": "fresh3_tpcc_customer",
+ "attributes": [
+  "C_D_ID",
+  "C_ID",
+  "C_LAST",
+  "C_DISCOUNT",
+  "C_CREDIT",
+  "C_STATE",
+  "C_ZIP",
+  "C_SINCE",
+  "D_NAME",
+  "D_STREET_1",
+  "D_STREET_2",
+  "D_CITY",
+  "D_STATE",
+  "D_TAX"
+ ],
+ "generator": "ee9f0ee3f378",
+ "data_md5": "f15616a1fa9d",
+ "supplement_md5": "f06c4efe8bdc",
+ "supplement": [],
+ "pool_sizes": {
+  "cand/True": 12,
+  "cand/False": 260,
+  "max/True": 12,
+  "max/False": 20,
+  "qx/True": 6072,
+  "qx/False": 15938
+ },
+ "short": {},
+ "questions": [
+  {
+   "id": "b01",
+   "type": "cand",
+   "lhs": [
+    "C_D_ID"
+   ],
+   "rhs": "D_CITY",
+   "form": "agree",
+   "listed": [
+    "C_D_ID"
+   ],
+   "a_q": 2,
+   "text": "Must any two records that agree on C_D_ID also agree on D_CITY?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": true
+  },
+  {
+   "id": "b02",
+   "type": "cand",
+   "lhs": [
+    "C_D_ID"
+   ],
+   "rhs": "D_TAX",
+   "form": "agree",
+   "listed": [
+    "C_D_ID"
+   ],
+   "a_q": 2,
+   "text": "Must any two records that agree on C_D_ID also agree on D_TAX?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": true
+  },
+  {
+   "id": "b03",
+   "type": "cand",
+   "lhs": [
+    "C_D_ID",
+    "C_ID"
+   ],
+   "rhs": "C_CREDIT",
+   "form": "agree",
+   "listed": [
+    "C_D_ID",
+    "C_ID"
+   ],
+   "a_q": 3,
+   "text": "Must any two records that agree on C_D_ID and C_ID also agree on C_CREDIT?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": true
+  },
+  {
+   "id": "b04",
+   "type": "cand",
+   "lhs": [
+    "D_STATE"
+   ],
+   "rhs": "C_D_ID",
+   "form": "agree",
+   "listed": [
+    "D_STATE"
+   ],
+   "a_q": 2,
+   "text": "Must any two records that agree on D_STATE also agree on C_D_ID?",
+   "truth_full": false,
+   "truth_sure": false,
+   "truth_supp": false,
+   "minimal_on_data": true
+  },
+  {
+   "id": "b05",
+   "type": "cand",
+   "lhs": [
+    "C_ID",
+    "D_NAME"
+   ],
+   "rhs": "C_DISCOUNT",
+   "form": "agree",
+   "listed": [
+    "C_ID",
+    "D_NAME"
+   ],
+   "a_q": 3,
+   "text": "Must any two records that agree on C_ID and D_NAME also agree on C_DISCOUNT?",
+   "truth_full": false,
+   "truth_sure": false,
+   "truth_supp": false,
+   "minimal_on_data": true
+  },
+  {
+   "id": "b06",
+   "type": "cand",
+   "lhs": [
+    "C_DISCOUNT",
+    "C_ZIP",
+    "D_NAME"
+   ],
+   "rhs": "C_ID",
+   "form": "agree",
+   "listed": [
+    "C_DISCOUNT",
+    "C_ZIP",
+    "D_NAME"
+   ],
+   "a_q": 4,
+   "text": "Must any two records that agree on C_DISCOUNT, C_ZIP and D_NAME also agree on C_ID?",
+   "truth_full": false,
+   "truth_sure": false,
+   "truth_supp": false,
+   "minimal_on_data": true
+  },
+  {
+   "id": "b07",
+   "type": "max",
+   "lhs": [
+    "C_D_ID",
+    "C_ID",
+    "C_LAST",
+    "C_DISCOUNT",
+    "C_CREDIT",
+    "C_STATE",
+    "C_ZIP",
+    "C_SINCE",
+    "D_NAME",
+    "D_STREET_1",
+    "D_STREET_2",
+    "D_CITY",
+    "D_TAX"
+   ],
+   "rhs": "D_STATE",
+   "form": "except",
+   "listed": [
+    "D_STATE"
+   ],
+   "a_q": 2,
+   "text": "Must any two records that agree on all attributes except D_STATE also agree on D_STATE?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": false
+  },
+  {
+   "id": "b08",
+   "type": "max",
+   "lhs": [
+    "C_D_ID",
+    "C_ID",
+    "C_LAST",
+    "C_DISCOUNT",
+    "C_CREDIT",
+    "C_STATE",
+    "C_ZIP",
+    "C_SINCE",
+    "D_NAME",
+    "D_STREET_2",
+    "D_CITY",
+    "D_STATE",
+    "D_TAX"
+   ],
+   "rhs": "D_STREET_1",
+   "form": "except",
+   "listed": [
+    "D_STREET_1"
+   ],
+   "a_q": 2,
+   "text": "Must any two records that agree on all attributes except D_STREET_1 also agree on D_STREET_1?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": false
+  },
+  {
+   "id": "b09",
+   "type": "max",
+   "lhs": [
+    "C_D_ID",
+    "C_ID",
+    "C_LAST",
+    "C_DISCOUNT",
+    "C_CREDIT",
+    "C_STATE",
+    "C_ZIP",
+    "C_SINCE",
+    "D_NAME",
+    "D_STREET_1",
+    "D_CITY",
+    "D_STATE",
+    "D_TAX"
+   ],
+   "rhs": "D_STREET_2",
+   "form": "except",
+   "listed": [
+    "D_STREET_2"
+   ],
+   "a_q": 2,
+   "text": "Must any two records that agree on all attributes except D_STREET_2 also agree on D_STREET_2?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": false
+  },
+  {
+   "id": "b10",
+   "type": "max",
+   "lhs": [
+    "C_D_ID",
+    "C_LAST",
+    "C_DISCOUNT",
+    "C_CREDIT",
+    "C_STATE",
+    "C_ZIP",
+    "C_SINCE",
+    "D_NAME",
+    "D_STREET_1",
+    "D_STREET_2",
+    "D_CITY",
+    "D_STATE",
+    "D_TAX"
+   ],
+   "rhs": "C_ID",
+   "form": "except",
+   "listed": [
+    "C_ID"
+   ],
+   "a_q": 2,
+   "text": "Must any two records that agree on all attributes except C_ID also agree on C_ID?",
+   "truth_full": false,
+   "truth_sure": false,
+   "truth_supp": false,
+   "minimal_on_data": false
+  },
+  {
+   "id": "b11",
+   "type": "max",
+   "lhs": [
+    "C_ID",
+    "C_LAST",
+    "C_DISCOUNT",
+    "C_CREDIT",
+    "C_STATE",
+    "C_ZIP",
+    "C_SINCE",
+    "D_NAME",
+    "D_STREET_1",
+    "D_STREET_2",
+    "D_CITY",
+    "D_STATE",
+    "D_TAX"
+   ],
+   "rhs": "C_D_ID",
+   "form": "except",
+   "listed": [
+    "C_D_ID"
+   ],
+   "a_q": 2,
+   "text": "Must any two records that agree on all attributes except C_D_ID also agree on C_D_ID?",
+   "truth_full": false,
+   "truth_sure": false,
+   "truth_supp": false,
+   "minimal_on_data": false
+  },
+  {
+   "id": "b12",
+   "type": "max",
+   "lhs": [
+    "C_ID",
+    "C_LAST",
+    "C_DISCOUNT",
+    "C_STATE",
+    "C_ZIP",
+    "C_SINCE",
+    "D_NAME",
+    "D_STREET_1",
+    "D_STREET_2",
+    "D_CITY",
+    "D_STATE",
+    "D_TAX"
+   ],
+   "rhs": "C_CREDIT",
+   "form": "except",
+   "listed": [
+    "C_D_ID",
+    "C_CREDIT"
+   ],
+   "a_q": 3,
+   "text": "Must any two records that agree on all attributes except C_D_ID and C_CREDIT also agree on C_CREDIT?",
+   "truth_full": false,
+   "truth_sure": false,
+   "truth_supp": false,
+   "minimal_on_data": false
+  },
+  {
+   "id": "b13",
+   "type": "qx",
+   "lhs": [
+    "C_D_ID",
+    "C_CREDIT",
+    "D_CITY"
+   ],
+   "rhs": "D_TAX",
+   "form": "agree",
+   "listed": [
+    "C_D_ID",
+    "C_CREDIT",
+    "D_CITY"
+   ],
+   "a_q": 4,
+   "text": "Must any two records that agree on C_D_ID, C_CREDIT and D_CITY also agree on D_TAX?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": false
+  },
+  {
+   "id": "b14",
+   "type": "qx",
+   "lhs": [
+    "C_D_ID",
+    "C_CREDIT",
+    "C_STATE",
+    "D_STREET_2"
+   ],
+   "rhs": "D_CITY",
+   "form": "agree",
+   "listed": [
+    "C_D_ID",
+    "C_CREDIT",
+    "C_STATE",
+    "D_STREET_2"
+   ],
+   "a_q": 5,
+   "text": "Must any two records that agree on C_D_ID, C_CREDIT, C_STATE and D_STREET_2 also agree on D_CITY?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": false
+  },
+  {
+   "id": "b15",
+   "type": "qx",
+   "lhs": [
+    "C_D_ID",
+    "C_ID",
+    "C_SINCE",
+    "D_STREET_2",
+    "D_STATE"
+   ],
+   "rhs": "C_ZIP",
+   "form": "agree",
+   "listed": [
+    "C_D_ID",
+    "C_ID",
+    "C_SINCE",
+    "D_STREET_2",
+    "D_STATE"
+   ],
+   "a_q": 6,
+   "text": "Must any two records that agree on C_D_ID, C_ID, C_SINCE, D_STREET_2 and D_STATE also agree on C_ZIP?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": false
+  },
+  {
+   "id": "b16",
+   "type": "qx",
+   "lhs": [
+    "C_LAST",
+    "C_ZIP",
+    "D_STATE"
+   ],
+   "rhs": "D_STREET_2",
+   "form": "agree",
+   "listed": [
+    "C_LAST",
+    "C_ZIP",
+    "D_STATE"
+   ],
+   "a_q": 4,
+   "text": "Must any two records that agree on C_LAST, C_ZIP and D_STATE also agree on D_STREET_2?",
+   "truth_full": false,
+   "truth_sure": false,
+   "truth_supp": false,
+   "minimal_on_data": false
+  },
+  {
+   "id": "b17",
+   "type": "qx",
+   "lhs": [
+    "C_LAST",
+    "C_DISCOUNT",
+    "C_CREDIT",
+    "D_STREET_2"
+   ],
+   "rhs": "D_TAX",
+   "form": "agree",
+   "listed": [
+    "C_LAST",
+    "C_DISCOUNT",
+    "C_CREDIT",
+    "D_STREET_2"
+   ],
+   "a_q": 5,
+   "text": "Must any two records that agree on C_LAST, C_DISCOUNT, C_CREDIT and D_STREET_2 also agree on D_TAX?",
+   "truth_full": false,
+   "truth_sure": false,
+   "truth_supp": false,
+   "minimal_on_data": false
+  },
+  {
+   "id": "b18",
+   "type": "qx",
+   "lhs": [
+    "C_D_ID",
+    "C_DISCOUNT",
+    "C_CREDIT",
+    "C_ZIP",
+    "D_STATE"
+   ],
+   "rhs": "C_STATE",
+   "form": "agree",
+   "listed": [
+    "C_D_ID",
+    "C_DISCOUNT",
+    "C_CREDIT",
+    "C_ZIP",
+    "D_STATE"
+   ],
+   "a_q": 6,
+   "text": "Must any two records that agree on C_D_ID, C_DISCOUNT, C_CREDIT, C_ZIP and D_STATE also agree on C_STATE?",
+   "truth_full": false,
+   "truth_sure": false,
+   "truth_supp": false,
+   "minimal_on_data": false
+  }
+ ],
+ "fillers": [
+  {
+   "id": "f01",
+   "type": "cand",
+   "lhs": [
+    "C_D_ID"
+   ],
+   "rhs": "D_STATE",
+   "form": "agree",
+   "listed": [
+    "C_D_ID"
+   ],
+   "a_q": 2,
+   "text": "Must any two records that agree on C_D_ID also agree on D_STATE?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": true
+  },
+  {
+   "id": "f02",
+   "type": "cand",
+   "lhs": [
+    "C_D_ID",
+    "C_ID"
+   ],
+   "rhs": "C_LAST",
+   "form": "agree",
+   "listed": [
+    "C_D_ID",
+    "C_ID"
+   ],
+   "a_q": 3,
+   "text": "Must any two records that agree on C_D_ID and C_ID also agree on C_LAST?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": true
+  },
+  {
+   "id": "f03",
+   "type": "cand",
+   "lhs": [
+    "D_NAME"
+   ],
+   "rhs": "D_TAX",
+   "form": "agree",
+   "listed": [
+    "D_NAME"
+   ],
+   "a_q": 2,
+   "text": "Must any two records that agree on D_NAME also agree on D_TAX?",
+   "truth_full": false,
+   "truth_sure": false,
+   "truth_supp": false,
+   "minimal_on_data": true
+  },
+  {
+   "id": "f04",
+   "type": "cand",
+   "lhs": [
+    "C_STATE",
+    "C_ZIP",
+    "C_SINCE"
+   ],
+   "rhs": "D_NAME",
+   "form": "agree",
+   "listed": [
+    "C_STATE",
+    "C_ZIP",
+    "C_SINCE"
+   ],
+   "a_q": 4,
+   "text": "Must any two records that agree on C_STATE, C_ZIP and C_SINCE also agree on D_NAME?",
+   "truth_full": false,
+   "truth_sure": false,
+   "truth_supp": false,
+   "minimal_on_data": true
+  },
+  {
+   "id": "f05",
+   "type": "max",
+   "lhs": [
+    "C_D_ID",
+    "C_ID",
+    "C_LAST",
+    "C_CREDIT",
+    "C_STATE",
+    "C_ZIP",
+    "C_SINCE",
+    "D_NAME",
+    "D_STREET_1",
+    "D_STREET_2",
+    "D_CITY",
+    "D_STATE",
+    "D_TAX"
+   ],
+   "rhs": "C_DISCOUNT",
+   "form": "except",
+   "listed": [
+    "C_DISCOUNT"
+   ],
+   "a_q": 2,
+   "text": "Must any two records that agree on all attributes except C_DISCOUNT also agree on C_DISCOUNT?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": false
+  },
+  {
+   "id": "f06",
+   "type": "max",
+   "lhs": [
+    "C_D_ID",
+    "C_ID",
+    "C_LAST",
+    "C_DISCOUNT",
+    "C_CREDIT",
+    "C_STATE",
+    "C_SINCE",
+    "D_NAME",
+    "D_STREET_1",
+    "D_STREET_2",
+    "D_CITY",
+    "D_STATE",
+    "D_TAX"
+   ],
+   "rhs": "C_ZIP",
+   "form": "except",
+   "listed": [
+    "C_ZIP"
+   ],
+   "a_q": 2,
+   "text": "Must any two records that agree on all attributes except C_ZIP also agree on C_ZIP?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": false
+  },
+  {
+   "id": "f07",
+   "type": "max",
+   "lhs": [
+    "C_ID",
+    "C_LAST",
+    "C_DISCOUNT",
+    "C_CREDIT",
+    "C_STATE",
+    "C_ZIP",
+    "C_SINCE",
+    "D_NAME",
+    "D_STREET_1",
+    "D_STREET_2",
+    "D_CITY",
+    "D_STATE"
+   ],
+   "rhs": "D_TAX",
+   "form": "except",
+   "listed": [
+    "C_D_ID",
+    "D_TAX"
+   ],
+   "a_q": 3,
+   "text": "Must any two records that agree on all attributes except C_D_ID and D_TAX also agree on D_TAX?",
+   "truth_full": false,
+   "truth_sure": false,
+   "truth_supp": false,
+   "minimal_on_data": false
+  },
+  {
+   "id": "f08",
+   "type": "max",
+   "lhs": [
+    "C_D_ID",
+    "C_LAST",
+    "C_DISCOUNT",
+    "C_CREDIT",
+    "C_STATE",
+    "C_SINCE",
+    "D_NAME",
+    "D_STREET_1",
+    "D_STREET_2",
+    "D_CITY",
+    "D_STATE",
+    "D_TAX"
+   ],
+   "rhs": "C_ZIP",
+   "form": "except",
+   "listed": [
+    "C_ID",
+    "C_ZIP"
+   ],
+   "a_q": 3,
+   "text": "Must any two records that agree on all attributes except C_ID and C_ZIP also agree on C_ZIP?",
+   "truth_full": false,
+   "truth_sure": false,
+   "truth_supp": false,
+   "minimal_on_data": false
+  },
+  {
+   "id": "f09",
+   "type": "qx",
+   "lhs": [
+    "C_D_ID",
+    "C_DISCOUNT",
+    "C_CREDIT"
+   ],
+   "rhs": "D_STATE",
+   "form": "agree",
+   "listed": [
+    "C_D_ID",
+    "C_DISCOUNT",
+    "C_CREDIT"
+   ],
+   "a_q": 4,
+   "text": "Must any two records that agree on C_D_ID, C_DISCOUNT and C_CREDIT also agree on D_STATE?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": false
+  },
+  {
+   "id": "f10",
+   "type": "qx",
+   "lhs": [
+    "C_D_ID",
+    "C_ID",
+    "C_ZIP",
+    "D_STREET_2",
+    "D_STATE"
+   ],
+   "rhs": "C_DISCOUNT",
+   "form": "agree",
+   "listed": [
+    "C_D_ID",
+    "C_ID",
+    "C_ZIP",
+    "D_STREET_2",
+    "D_STATE"
+   ],
+   "a_q": 6,
+   "text": "Must any two records that agree on C_D_ID, C_ID, C_ZIP, D_STREET_2 and D_STATE also agree on C_DISCOUNT?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": false
+  },
+  {
+   "id": "f11",
+   "type": "qx",
+   "lhs": [
+    "C_ZIP",
+    "D_STATE",
+    "D_TAX"
+   ],
+   "rhs": "D_STREET_1",
+   "form": "agree",
+   "listed": [
+    "C_ZIP",
+    "D_STATE",
+    "D_TAX"
+   ],
+   "a_q": 4,
+   "text": "Must any two records that agree on C_ZIP, D_STATE and D_TAX also agree on D_STREET_1?",
+   "truth_full": false,
+   "truth_sure": false,
+   "truth_supp": false,
+   "minimal_on_data": false
+  },
+  {
+   "id": "f12",
+   "type": "qx",
+   "lhs": [
+    "C_ZIP",
+    "C_SINCE",
+    "D_STREET_1",
+    "D_CITY",
+    "D_TAX"
+   ],
+   "rhs": "D_NAME",
+   "form": "agree",
+   "listed": [
+    "C_ZIP",
+    "C_SINCE",
+    "D_STREET_1",
+    "D_CITY",
+    "D_TAX"
+   ],
+   "a_q": 6,
+   "text": "Must any two records that agree on C_ZIP, C_SINCE, D_STREET_1, D_CITY and D_TAX also agree on D_NAME?",
+   "truth_full": false,
+   "truth_sure": false,
+   "truth_supp": false,
+   "minimal_on_data": false
+  }
+ ]
+}

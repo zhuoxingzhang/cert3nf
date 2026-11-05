@@ -95,11 +95,16 @@
 </head>
 <body>
 <main>
-  <div class="card">
+  <!--demo--><div class="card">
     <div class="brand"><svg class="mark" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><linearGradient id="c3n" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3d5a7d"/><stop offset="1" stop-color="#1f3047"/></linearGradient><linearGradient id="c3g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3ec266"/><stop offset="1" stop-color="#1a7f37"/></linearGradient></defs><rect x="2" y="2" width="31" height="31" rx="8" fill="url(#c3n)"/><rect x="7" y="8" width="6.5" height="4.2" rx="1.3" fill="#a9c8ff"/><rect x="15" y="8" width="6.5" height="4.2" rx="1.3" fill="#ffc88c"/><rect x="23" y="8" width="5" height="4.2" rx="1.3" fill="#fff" fill-opacity=".9"/><rect x="7" y="14.5" width="6.5" height="4.2" rx="1.3" fill="#a9c8ff" fill-opacity=".75"/><rect x="15" y="14.5" width="6.5" height="4.2" rx="1.3" fill="#ffc88c" fill-opacity=".75"/><rect x="23" y="14.5" width="5" height="4.2" rx="1.3" fill="#fff" fill-opacity=".65"/><rect x="7" y="21" width="6.5" height="4.2" rx="1.3" fill="#a9c8ff" fill-opacity=".5"/><rect x="15" y="21" width="6.5" height="4.2" rx="1.3" fill="#ffc88c" fill-opacity=".5"/><circle cx="30.5" cy="30.5" r="8" fill="url(#c3g)" stroke="#fff" stroke-width="2.4"/><path d="M26.7 30.7l2.6 2.6 5-5.4" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg><h1>Cert<span>3NF</span></h1></div>
     <p>Cert3NF asks which rules (functional dependencies) a table must obey: must two records that agree on some attributes
        also agree on another one? From your answers it designs the table in Third Normal Form and certifies the design.</p>
-  </div>
+  </div><!--/demo-->
+  <!--study--><div class="card">
+    <h1>Rules of a table</h1>
+    <p>A study on database design. You answer questions about the rules of a table:
+       must two records that agree on some attributes also agree on another one?</p>
+  </div><!--/study-->
 
   <!--try--><form class="card try" method="post" action="/try" id="try">
     <div class="trytop"><h2>Try it</h2><div class="live"><span class="dot"></span>LIVE DEMO</div></div>
@@ -134,6 +139,7 @@
     <div class="sessions" role="radiogroup" aria-label="Session">
       <label><input type="radio" name="sno" value="1" checked> 1 (first table)</label>
       <label><input type="radio" name="sno" value="2"> 2 (second table)</label>
+      <label><input type="radio" name="sno" value="3"> 3 (third table)</label>
     </div>
     <p class="muted">The code and the session are in your invitation. If you closed the page, enter them again: the session
        continues where you left it.</p>

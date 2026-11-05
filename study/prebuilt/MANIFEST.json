@@ -8,7 +8,7 @@
  },
  "method": {
   "confirm/v6f.py": {
-   "md5": "29d2a9842d75",
+   "md5": "924e6a4bae53",
    "source_md5": "e2a6af907596",
    "same_code": true
   },
@@ -18,7 +18,7 @@
    "same_code": true
   },
   "confirm/auto_confirm.py": {
-   "md5": "2f26d6319be9",
+   "md5": "bc7f48e0d512",
    "source_md5": "cf2a596a1578",
    "same_code": true
   },
@@ -33,7 +33,7 @@
    "same_code": true
   },
   "confirm/baseline_direct.py": {
-   "md5": "f1b7fb57c84b",
+   "md5": "12ecc0f822d9",
    "source_md5": "511e2326ed30",
    "same_code": false
   },
@@ -43,27 +43,27 @@
    "same_code": true
   },
   "confirm/drd.py": {
-   "md5": "7992d9b888e6",
+   "md5": "b59682881306",
    "source_md5": "b59682881306",
    "same_code": true
   },
   "confirm/estimators.py": {
-   "md5": "e6914d7bcb8b",
+   "md5": "e3f8de81ef96",
    "source_md5": "e3f8de81ef96",
    "same_code": true
   },
   "confirm/llm_rules.py": {
-   "md5": "8dc6b918351a",
+   "md5": "1f81a294f16b",
    "source_md5": "1f81a294f16b",
    "same_code": true
   },
   "confirm/price.py": {
-   "md5": "b24c6742b9cd",
+   "md5": "f78c1da06f03",
    "source_md5": "f98e52cbdfed",
    "same_code": true
   },
   "e2/e2_tpch.py": {
-   "md5": "f42123f597f6",
+   "md5": "1cd77654bb85",
    "source_md5": "89b411731ba0",
    "same_code": true
   },
@@ -73,12 +73,30 @@
    "same_code": true
   },
   "sensitivity_bruteforce.py": {
-   "md5": "1f9a81d00457",
+   "md5": "268f88ef709e",
    "source_md5": "434e1f4587d4",
    "same_code": false
   }
  },
  "relations": {
+  "fresh3_fec_candidate": {
+   "pkl": "e9311087ddd4",
+   "bytes": 2305442,
+   "data": "6493276978db",
+   "sample": "90308242cf91"
+  },
+  "fresh3_synthea_claims": {
+   "pkl": "3853d5dd045d",
+   "bytes": 646935,
+   "data": "281a1202060a",
+   "sample": "43f29cb3a918"
+  },
+  "fresh3_tpcc_customer": {
+   "pkl": "c899ca8daf41",
+   "bytes": 854137,
+   "data": "f15616a1fa9d",
+   "sample": "8a8bf405e45f"
+  },
   "ssb_customer": {
    "pkl": "72e8e18f8fd5",
    "bytes": 80407,
@@ -98,5 +116,6 @@
    "sample": "610811bf4764"
   }
  },
- "supplement": "c28876eacaf7"
+ "supplement": "f06c4efe8bdc",
+ "demo_pickles": "the three tables of the demo keep the pickles of eac92ea (a rebuild differs only by about 1e-13 in the advisor's rho)"
 }

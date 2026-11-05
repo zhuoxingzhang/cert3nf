@@ -5,14 +5,15 @@ the trusting mode (exact designer) and the careful mode (designer error 0, 0.02,
   same      v6fstudy.run with ASK unset gives v6f.run's output field for field
   hook      v6fstudy.run with ASK set to a person who answers as v6f's simulated designer gives the same output (the robust design
             of an uncertified run, fb_*, is not computed for a person)
-  stored    under CONFIRM_BATCH=1 and budget 1000, both reproduce the rows of confirm/v6f_runs/main_e2a6af907596_dev_<truth>.jsonl
+  stored    under CONFIRM_BATCH=3 and budget 1000, both reproduce the rows of the confirmatory runs, confirm/v6f_fresh3/main_<truth>.jsonl
+            (trusting) and err_<truth>.jsonl (careful, every designer error and seed)
   dk        a person who answers don't know at random (15%): every run ends within the budget, every certificate is exact, and no
             certificate leaves an undecided maximal set of H that holds on the data
   stop      a person who stops before the j-th answer: the run ends with j - 1 questions and no certificate
 auto_confirm caches the training relations of the first truth it sees, so each truth runs in its own process.
 Usage (STUDY_SOURCE, the confirm/ folder with all inputs; see common.py):
   python study/code/check_v6fstudy.py --truth full|sure [--quick]
-  CONFIRM_BATCH=1 python study/code/check_v6fstudy.py --truth full|sure --stored
+  CONFIRM_BATCH=3 python study/code/check_v6fstudy.py --truth full|sure --stored
 """
 import hashlib, json, os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -112,19 +113,24 @@ def compare(quick):
 
 
 def stored():
-    assert os.environ["CONFIRM_BATCH"] == "1", "the stored rows use the first pool"
+    assert os.environ["CONFIRM_BATCH"] == "3", "the stored rows of the study's relations use the pool of batch 3"
     v6f.BUDGET = v6fstudy.BUDGET = 1000
-    with open(os.path.join(K.SOURCE, "v6f_runs", f"main_e2a6af907596_dev_{TRUTH}.jsonl"), encoding="utf-8") as fh:
-        rows = {r["dataset"]: r for r in map(json.loads, fh) if r["variant"] == SPEC}
-    bad = 0
+
+    def rows(f):
+        with open(os.path.join(K.SOURCE, "v6f_fresh3", f), encoding="utf-8") as fh:
+            return [r for r in map(json.loads, fh) if r["variant"] == SPEC]
+    todo = [(r, 0.0, 0, False) for r in rows(f"main_{TRUTH}.jsonl")]
+    todo += [(r, r["designer_err"], r["seed"], True) for r in rows(f"err_{TRUTH}.jsonl") if r.get("careful")]
+    bad = n = 0
     for ds in K.RELATIONS.values():
-        r = rows[ds]
-        a, _ = run(v6f, ds, 0.0, 0, False)
-        s, _ = run(v6fstudy, ds, 0.0, 0, False)
-        d = [k for k in a if k != "secs" and a[k] != r.get(k)] + differ(a, s)
-        bad += bool(d)
-        print(f"stored {TRUTH} {ds}: questions {a['questions']} (stored {r['questions']})" + (f" DIFF {d}" if d else " same"))
-    print(f"stored: {bad} differ")
+        for r, err, seed, careful in [t for t in todo if t[0]["dataset"] == ds]:
+            a, _ = run(v6f, ds, err, seed, careful)
+            s, _ = run(v6fstudy, ds, err, seed, careful)
+            d = [k for k in a if k != "secs" and a[k] != r.get(k)] + differ(a, s)
+            bad, n = bad + bool(d), n + 1
+            print(f"stored {TRUTH} {ds} err {err} seed {seed} careful {int(careful)}: questions {a['questions']} (stored {r['questions']})"
+                  + (f" DIFF {d}" if d else " same"), flush=True)
+    print(f"stored: {n} runs, {bad} differ")
     return bad
 
 

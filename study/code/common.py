@@ -1,6 +1,7 @@
 """
 Shared pieces of the human-designer study (study/README.md): the three relations, the fixed assignment table, the
-truths, and how a question Z -> A is shown to a participant.
+truths, and how a question Z -> A is shown to a participant.  The study runs on three confirmatory relations, the
+demo's tries on three development relations, so that a try shows no table of the study.
 
 Questions are (Z, A) pairs of bit masks over the attributes of the data file, as in v6f.py.  A question is
 shown in the form that lists fewer attributes: "agree on Z" when |Z| <= n - |Z|, otherwise "agree on everything
@@ -30,8 +31,11 @@ CONFIRM = SOURCE if BUILD else METHOD
 if CONFIRM not in sys.path:
     sys.path.insert(0, CONFIRM)
 
-RELATIONS = {"R1": "ssb_customer", "R2": "tpcds_core", "R3": "fresh_abs_mb"}
-ASSIGN = {"01": ("R1", "R2"), "02": ("R2", "R3"), "03": ("R3", "R1")}     # README, the same for E, P, U
+RELATIONS = {"R1": "fresh3_fec_candidate", "R2": "fresh3_synthea_claims", "R3": "fresh3_tpcc_customer"}   # confirmatory
+ASSIGN = {"01": ("R1", "R2", "R3"), "02": ("R2", "R3", "R1"), "03": ("R3", "R1", "R2")}   # a Latin square, the same for E, P, U
+SESSIONS = (1, 2, 3)                      # one relation per session
+DEMO = {"R1": "ssb_customer", "R2": "tpcds_core", "R3": "fresh_abs_mb"}   # the tables of a try: development relations
+KIT_RELATIONS = list(RELATIONS.values()) + list(DEMO.values())          # prebuilt/
 CONDITIONS = ("E", "P", "U")
 ANSWERS = "llm_fresh_full_q35_ms"         # not read: the main form asks no model
 VARIANT = "v6s|lc+hone+kf+rl"             # the main form of the method: statistics only
@@ -56,9 +60,12 @@ def parse(participant):
 
 
 def relation_of(participant, session_no):
-    """the relation of a participant (E01, P02, ..., TE01) in session 1 or 2"""
+    """the relation of a participant (E01, P02, ..., TE01) in session 1, 2 or 3; a try (TP02-1a2b3c) has the table
+    chosen on the start page, a relation of the demo"""
     _, num, _ = parse(participant)
-    assert session_no in (1, 2), session_no
+    if "-" in participant:
+        return DEMO["R" + num[-1]]
+    assert session_no in SESSIONS, session_no
     return RELATIONS[ASSIGN[num][session_no - 1]]
 
 

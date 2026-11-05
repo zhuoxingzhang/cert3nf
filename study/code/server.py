@@ -3,14 +3,15 @@ The web server of the study and of the live demo (README), with the standard lib
 site, enters the code the experimenter gave them and the session number, and answers; several participants can answer
 at the same time.
 
-  /                        the start page (index.html): a participant code and session 1 or 2, or "try it"
+  /                        the start page (index.html): a participant code and session 1, 2 or 3, or "try it"
   /s/<code>/<n>/           the session's page (ui.html): instructions, two practice questions, the questions, the
                            exit questionnaire; reopening it continues the session where it is
   /s/<code>/<n>/api/...    meta, question, answer, stop, practice, questionnaire, and result for a try
   /s/<code>/<n>/docs/<f>   the documentation of the relation (conditions E and P only): the files in docs/<relation>/,
                            and links to the official documents listed in docs/<relation>/links.json
   POST /try                a test session of its own for anyone who wants to try (code TP0x-xxxxxx, x the chosen
-                           table), run as a demo session (session.py): no block, the trusting mode, a result page
+                           table of the demo, common.DEMO), run as a demo session (session.py): no block, the trusting
+                           mode, a result page
   POST /upload             a demo session on the visitor's own CSV (upload.py; code UP- and 16 hex digits): checked
                            at once, mined in a process of its own (one at a time, at most BUILD_SECONDS and
                            BUILD_MB), kept in
@@ -22,9 +23,10 @@ at the same time.
 The codes are E01-E03, P01-P03, U01-U03; TE01 ... TU03 are the experimenter's own tests and TP0x-xxxxxx the tries, not
 part of the study, whose files go to sessions/test/.  Session files are kept by store.py, except those of the tries,
 which stay on the instance's disk.  A try idle for IDLE seconds is ended and released, and at most MAX_TRIES are kept.
-A try shows the relations of the study, so STUDY_TRIES=0 removes it before the first real session.
-The study has ended: unless STUDY_PARTICIPANTS=1, the participant and test codes, /status and the "I was invited" part
-of the start page are gone, and no session file is fetched from or put to the data repository.
+A try shows development relations (common.DEMO), none of the study's.  Unless STUDY_PARTICIPANTS=1, the participant
+and test codes, /status and the "I was invited" part of the start page are gone, and no session file is fetched from or
+put to the data repository.  With STUDY_PARTICIPANTS=1 the start page is the study's, which names neither the method
+nor what it does, and has no try.
 
 Locally:   python server.py [--port 8765]
 On Render: render.yaml at the root of the repository; STUDY_GITHUB_REPO and STUDY_GITHUB_TOKEN set by hand for
@@ -79,7 +81,7 @@ def valid(code, sno):
         return sno == 1 and re.fullmatch(r"UP-[0-9a-f]{16}", code) is not None and os.path.isdir(folder(code))
     try:
         K.parse(code)
-        return sno in (1, 2)
+        return sno in K.SESSIONS
     except AssertionError:
         return False
 
@@ -231,7 +233,7 @@ def status_page():
                + (f"; last error {html.escape(err)}" if err else ""))
     trs = []
     for code in CODES + TESTS:
-        for sno in (1, 2):
+        for sno in K.SESSIONS:
             p = file_of(code, sno)
             state = S.status(p)
             n = sum(r["event"] == "answer" for r in S.read(p)) if state != "new" else 0
@@ -294,7 +296,7 @@ class Handler(BaseHTTPRequestHandler):
 
     def session_path(self, path):
         """(code, n, rest) of /s/<code>/<n>/<rest>, or None"""
-        m = re.match(r"^/s/([A-Za-z]{1,2}[0-9]{2}(?:-[0-9A-Fa-f]{6})?|[Uu][Pp]-[0-9A-Fa-f]{16})/([12])(/.*)?$", path)
+        m = re.match(r"^/s/([A-Za-z]{1,2}[0-9]{2}(?:-[0-9A-Fa-f]{6})?|[Uu][Pp]-[0-9A-Fa-f]{16})/([1-9])(/.*)?$", path)
         if not m:
             return None
         code, sno = canonical(m.group(1)), int(m.group(2))
@@ -321,10 +323,14 @@ class Handler(BaseHTTPRequestHandler):
         if path == "/":
             with open(INDEX, encoding="utf-8") as fh:
                 page = fh.read()
-            if not CFG["tries"]:
-                page = re.sub(r"<!--try-->.*?<!--/try-->", "", page, flags=re.S)
-            if not CFG["participants"]:
-                page = re.sub(r"<!--invited-->.*?<!--/invited-->", "", page, flags=re.S)
+            if CFG["participants"]:                              # the study's page: no method, no try
+                page = re.sub(r"<!--try-->.*?<!--/try-->|<!--demo-->.*?<!--/demo-->", "", page, flags=re.S)
+                page = page.replace("<title>Cert3NF: rules of a table</title>", "<title>Rules of a table</title>")
+                page = page.replace('<details class="card invited">', '<details class="card invited" open>')
+            else:
+                page = re.sub(r"<!--invited-->.*?<!--/invited-->|<!--study-->.*?<!--/study-->", "", page, flags=re.S)
+                if not CFG["tries"]:
+                    page = re.sub(r"<!--try-->.*?<!--/try-->", "", page, flags=re.S)
             return self.send(200, page, "text/html; charset=utf-8")
         if path == "/status" and CFG["participants"]:
             return self.send(200, status_page(), "text/html; charset=utf-8")
@@ -392,7 +398,7 @@ class Handler(BaseHTTPRequestHandler):
             return self.redirect(f"/s/{code}/1/")
         if path == "/status/reset" and CFG["participants"]:
             code, sno = b.get("code", ""), int(b.get("session", 0) or 0)
-            if code in TESTS and sno in (1, 2):
+            if code in TESTS and sno in K.SESSIONS:
                 with LIVE_LOCK:
                     old = LIVE.pop((code, sno), None)
                     SEEN.pop((code, sno), None)
@@ -441,7 +447,7 @@ def main():
         store = Store(SESSIONS, None, None)
     CFG["store"] = store
     store.start()
-    for ds in K.RELATIONS.values():
+    for ds in K.KIT_RELATIONS:
         K.prebuilt(ds)                                          # read the pickles once
 
     def bye(*_):

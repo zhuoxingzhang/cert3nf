@@ -1,0 +1,886 @@
+{
+ "dataset": "fresh3_synthea_claims",
+ "attributes": [
+  "Id",
+  "PATIENT ID",
+  "PROVIDER ID",
+  "PRIMARY PATIENT INSURANCE ID",
+  "SECONDARY PATIENT INSURANCE ID",
+  "DIAGNOSIS1",
+  "APPOINTMENT ID",
+  "CURRENT ILLNESS DATE",
+  "SERVICE DATE",
+  "SUPERVISING PROVIDER ID",
+  "STATUS1",
+  "STATUSP",
+  "OUTSTANDING1",
+  "OUTSTANDINGP",
+  "LASTBILLEDDATE1",
+  "HEALTHCARECLAIMTYPEID1",
+  "BIRTHDATE",
+  "GENDER",
+  "ORGANIZATION",
+  "NAME",
+  "OWNERSHIP",
+  "ENCOUNTERCLASS",
+  "CODE"
+ ],
+ "generator": "ee9f0ee3f378",
+ "data_md5": "281a1202060a",
+ "supplement_md5": "f06c4efe8bdc",
+ "supplement": [
+  {
+   "lhs": [
+    "APPOINTMENT ID"
+   ],
+   "rhs": [
+    "PATIENT ID",
+    "PROVIDER ID"
+   ],
+   "reason": "A claim's patient and provider are those of its encounter (APPOINTMENT ID), which the CSV File Data Dictionary suggests but does not state; holds on the data. The primary payer of the claim can differ from that of the encounter on the data and is left out."
+  }
+ ],
+ "pool_sizes": {
+  "cand/True": 7,
+  "cand/False": 189,
+  "max/True": 7,
+  "max/False": 13,
+  "qx/True": 43225,
+  "qx/False": 188527
+ },
+ "short": {},
+ "questions": [
+  {
+   "id": "b01",
+   "type": "cand",
+   "lhs": [
+    "PATIENT ID"
+   ],
+   "rhs": "BIRTHDATE",
+   "form": "agree",
+   "listed": [
+    "PATIENT ID"
+   ],
+   "a_q": 2,
+   "text": "Must any two records that agree on PATIENT ID also agree on BIRTHDATE?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": true
+  },
+  {
+   "id": "b02",
+   "type": "cand",
+   "lhs": [
+    "PRIMARY PATIENT INSURANCE ID"
+   ],
+   "rhs": "OWNERSHIP",
+   "form": "agree",
+   "listed": [
+    "PRIMARY PATIENT INSURANCE ID"
+   ],
+   "a_q": 2,
+   "text": "Must any two records that agree on PRIMARY PATIENT INSURANCE ID also agree on OWNERSHIP?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": true
+  },
+  {
+   "id": "b03",
+   "type": "cand",
+   "lhs": [
+    "PRIMARY PATIENT INSURANCE ID"
+   ],
+   "rhs": "NAME",
+   "form": "agree",
+   "listed": [
+    "PRIMARY PATIENT INSURANCE ID"
+   ],
+   "a_q": 2,
+   "text": "Must any two records that agree on PRIMARY PATIENT INSURANCE ID also agree on NAME?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": true
+  },
+  {
+   "id": "b04",
+   "type": "cand",
+   "lhs": [
+    "PROVIDER ID"
+   ],
+   "rhs": "HEALTHCARECLAIMTYPEID1",
+   "form": "agree",
+   "listed": [
+    "PROVIDER ID"
+   ],
+   "a_q": 2,
+   "text": "Must any two records that agree on PROVIDER ID also agree on HEALTHCARECLAIMTYPEID1?",
+   "truth_full": false,
+   "truth_sure": false,
+   "truth_supp": false,
+   "minimal_on_data": true
+  },
+  {
+   "id": "b05",
+   "type": "cand",
+   "lhs": [
+    "PATIENT ID",
+    "LASTBILLEDDATE1",
+    "CODE"
+   ],
+   "rhs": "HEALTHCARECLAIMTYPEID1",
+   "form": "agree",
+   "listed": [
+    "PATIENT ID",
+    "LASTBILLEDDATE1",
+    "CODE"
+   ],
+   "a_q": 4,
+   "text": "Must any two records that agree on PATIENT ID, LASTBILLEDDATE1 and CODE also agree on HEALTHCARECLAIMTYPEID1?",
+   "truth_full": false,
+   "truth_sure": false,
+   "truth_supp": false,
+   "minimal_on_data": true
+  },
+  {
+   "id": "b06",
+   "type": "cand",
+   "lhs": [
+    "PRIMARY PATIENT INSURANCE ID",
+    "SECONDARY PATIENT INSURANCE ID",
+    "CURRENT ILLNESS DATE",
+    "SERVICE DATE",
+    "ORGANIZATION"
+   ],
+   "rhs": "STATUSP",
+   "form": "agree",
+   "listed": [
+    "PRIMARY PATIENT INSURANCE ID",
+    "SECONDARY PATIENT INSURANCE ID",
+    "CURRENT ILLNESS DATE",
+    "SERVICE DATE",
+    "ORGANIZATION"
+   ],
+   "a_q": 6,
+   "text": "Must any two records that agree on PRIMARY PATIENT INSURANCE ID, SECONDARY PATIENT INSURANCE ID, CURRENT ILLNESS DATE, SERVICE DATE and ORGANIZATION also agree on STATUSP?",
+   "truth_full": false,
+   "truth_sure": false,
+   "truth_supp": false,
+   "minimal_on_data": true
+  },
+  {
+   "id": "b07",
+   "type": "max",
+   "lhs": [
+    "PATIENT ID",
+    "PROVIDER ID",
+    "PRIMARY PATIENT INSURANCE ID",
+    "SECONDARY PATIENT INSURANCE ID",
+    "DIAGNOSIS1",
+    "APPOINTMENT ID",
+    "CURRENT ILLNESS DATE",
+    "SERVICE DATE",
+    "SUPERVISING PROVIDER ID",
+    "STATUS1",
+    "STATUSP",
+    "OUTSTANDING1",
+    "OUTSTANDINGP",
+    "LASTBILLEDDATE1",
+    "HEALTHCARECLAIMTYPEID1",
+    "BIRTHDATE",
+    "GENDER",
+    "ORGANIZATION",
+    "OWNERSHIP",
+    "ENCOUNTERCLASS",
+    "CODE"
+   ],
+   "rhs": "NAME",
+   "form": "except",
+   "listed": [
+    "Id",
+    "NAME"
+   ],
+   "a_q": 3,
+   "text": "Must any two records that agree on all attributes except Id and NAME also agree on NAME?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": false
+  },
+  {
+   "id": "b08",
+   "type": "max",
+   "lhs": [
+    "PATIENT ID",
+    "PROVIDER ID",
+    "PRIMARY PATIENT INSURANCE ID",
+    "SECONDARY PATIENT INSURANCE ID",
+    "DIAGNOSIS1",
+    "APPOINTMENT ID",
+    "CURRENT ILLNESS DATE",
+    "SERVICE DATE",
+    "SUPERVISING PROVIDER ID",
+    "STATUS1",
+    "STATUSP",
+    "OUTSTANDING1",
+    "OUTSTANDINGP",
+    "LASTBILLEDDATE1",
+    "HEALTHCARECLAIMTYPEID1",
+    "BIRTHDATE",
+    "GENDER",
+    "NAME",
+    "OWNERSHIP",
+    "ENCOUNTERCLASS",
+    "CODE"
+   ],
+   "rhs": "ORGANIZATION",
+   "form": "except",
+   "listed": [
+    "Id",
+    "ORGANIZATION"
+   ],
+   "a_q": 3,
+   "text": "Must any two records that agree on all attributes except Id and ORGANIZATION also agree on ORGANIZATION?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": false
+  },
+  {
+   "id": "b09",
+   "type": "max",
+   "lhs": [
+    "PATIENT ID",
+    "PROVIDER ID",
+    "PRIMARY PATIENT INSURANCE ID",
+    "SECONDARY PATIENT INSURANCE ID",
+    "DIAGNOSIS1",
+    "APPOINTMENT ID",
+    "CURRENT ILLNESS DATE",
+    "SERVICE DATE",
+    "SUPERVISING PROVIDER ID",
+    "STATUS1",
+    "STATUSP",
+    "OUTSTANDING1",
+    "OUTSTANDINGP",
+    "LASTBILLEDDATE1",
+    "HEALTHCARECLAIMTYPEID1",
+    "BIRTHDATE",
+    "GENDER",
+    "ORGANIZATION",
+    "NAME",
+    "OWNERSHIP",
+    "CODE"
+   ],
+   "rhs": "ENCOUNTERCLASS",
+   "form": "except",
+   "listed": [
+    "Id",
+    "ENCOUNTERCLASS"
+   ],
+   "a_q": 3,
+   "text": "Must any two records that agree on all attributes except Id and ENCOUNTERCLASS also agree on ENCOUNTERCLASS?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": false
+  },
+  {
+   "id": "b10",
+   "type": "max",
+   "lhs": [
+    "PATIENT ID",
+    "PROVIDER ID",
+    "PRIMARY PATIENT INSURANCE ID",
+    "SECONDARY PATIENT INSURANCE ID",
+    "APPOINTMENT ID",
+    "CURRENT ILLNESS DATE",
+    "SERVICE DATE",
+    "SUPERVISING PROVIDER ID",
+    "STATUS1",
+    "STATUSP",
+    "OUTSTANDING1",
+    "OUTSTANDINGP",
+    "LASTBILLEDDATE1",
+    "HEALTHCARECLAIMTYPEID1",
+    "BIRTHDATE",
+    "GENDER",
+    "ORGANIZATION",
+    "NAME",
+    "OWNERSHIP",
+    "ENCOUNTERCLASS",
+    "CODE"
+   ],
+   "rhs": "DIAGNOSIS1",
+   "form": "except",
+   "listed": [
+    "Id",
+    "DIAGNOSIS1"
+   ],
+   "a_q": 3,
+   "text": "Must any two records that agree on all attributes except Id and DIAGNOSIS1 also agree on DIAGNOSIS1?",
+   "truth_full": false,
+   "truth_sure": false,
+   "truth_supp": false,
+   "minimal_on_data": false
+  },
+  {
+   "id": "b11",
+   "type": "max",
+   "lhs": [
+    "PATIENT ID",
+    "PROVIDER ID",
+    "PRIMARY PATIENT INSURANCE ID",
+    "SECONDARY PATIENT INSURANCE ID",
+    "DIAGNOSIS1",
+    "APPOINTMENT ID",
+    "CURRENT ILLNESS DATE",
+    "SERVICE DATE",
+    "STATUS1",
+    "STATUSP",
+    "OUTSTANDING1",
+    "OUTSTANDINGP",
+    "LASTBILLEDDATE1",
+    "HEALTHCARECLAIMTYPEID1",
+    "BIRTHDATE",
+    "GENDER",
+    "ORGANIZATION",
+    "NAME",
+    "OWNERSHIP",
+    "ENCOUNTERCLASS",
+    "CODE"
+   ],
+   "rhs": "SUPERVISING PROVIDER ID",
+   "form": "except",
+   "listed": [
+    "Id",
+    "SUPERVISING PROVIDER ID"
+   ],
+   "a_q": 3,
+   "text": "Must any two records that agree on all attributes except Id and SUPERVISING PROVIDER ID also agree on SUPERVISING PROVIDER ID?",
+   "truth_full": false,
+   "truth_sure": false,
+   "truth_supp": false,
+   "minimal_on_data": false
+  },
+  {
+   "id": "b12",
+   "type": "max",
+   "lhs": [
+    "PATIENT ID",
+    "PROVIDER ID",
+    "SECONDARY PATIENT INSURANCE ID",
+    "DIAGNOSIS1",
+    "APPOINTMENT ID",
+    "CURRENT ILLNESS DATE",
+    "SERVICE DATE",
+    "SUPERVISING PROVIDER ID",
+    "STATUS1",
+    "STATUSP",
+    "OUTSTANDING1",
+    "OUTSTANDINGP",
+    "LASTBILLEDDATE1",
+    "HEALTHCARECLAIMTYPEID1",
+    "BIRTHDATE",
+    "GENDER",
+    "ORGANIZATION",
+    "NAME",
+    "ENCOUNTERCLASS",
+    "CODE"
+   ],
+   "rhs": "OWNERSHIP",
+   "form": "except",
+   "listed": [
+    "Id",
+    "PRIMARY PATIENT INSURANCE ID",
+    "OWNERSHIP"
+   ],
+   "a_q": 4,
+   "text": "Must any two records that agree on all attributes except Id, PRIMARY PATIENT INSURANCE ID and OWNERSHIP also agree on OWNERSHIP?",
+   "truth_full": false,
+   "truth_sure": false,
+   "truth_supp": false,
+   "minimal_on_data": false
+  },
+  {
+   "id": "b13",
+   "type": "qx",
+   "lhs": [
+    "PRIMARY PATIENT INSURANCE ID",
+    "OUTSTANDINGP",
+    "BIRTHDATE"
+   ],
+   "rhs": "OWNERSHIP",
+   "form": "agree",
+   "listed": [
+    "PRIMARY PATIENT INSURANCE ID",
+    "OUTSTANDINGP",
+    "BIRTHDATE"
+   ],
+   "a_q": 4,
+   "text": "Must any two records that agree on PRIMARY PATIENT INSURANCE ID, OUTSTANDINGP and BIRTHDATE also agree on OWNERSHIP?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": false
+  },
+  {
+   "id": "b14",
+   "type": "qx",
+   "lhs": [
+    "PATIENT ID",
+    "APPOINTMENT ID",
+    "STATUSP",
+    "HEALTHCARECLAIMTYPEID1"
+   ],
+   "rhs": "CODE",
+   "form": "agree",
+   "listed": [
+    "PATIENT ID",
+    "APPOINTMENT ID",
+    "STATUSP",
+    "HEALTHCARECLAIMTYPEID1"
+   ],
+   "a_q": 5,
+   "text": "Must any two records that agree on PATIENT ID, APPOINTMENT ID, STATUSP and HEALTHCARECLAIMTYPEID1 also agree on CODE?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": false
+  },
+  {
+   "id": "b15",
+   "type": "qx",
+   "lhs": [
+    "PATIENT ID",
+    "SERVICE DATE",
+    "OUTSTANDINGP",
+    "OWNERSHIP",
+    "ENCOUNTERCLASS"
+   ],
+   "rhs": "GENDER",
+   "form": "agree",
+   "listed": [
+    "PATIENT ID",
+    "SERVICE DATE",
+    "OUTSTANDINGP",
+    "OWNERSHIP",
+    "ENCOUNTERCLASS"
+   ],
+   "a_q": 6,
+   "text": "Must any two records that agree on PATIENT ID, SERVICE DATE, OUTSTANDINGP, OWNERSHIP and ENCOUNTERCLASS also agree on GENDER?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": false
+  },
+  {
+   "id": "b16",
+   "type": "qx",
+   "lhs": [
+    "SECONDARY PATIENT INSURANCE ID",
+    "APPOINTMENT ID",
+    "STATUS1"
+   ],
+   "rhs": "DIAGNOSIS1",
+   "form": "agree",
+   "listed": [
+    "SECONDARY PATIENT INSURANCE ID",
+    "APPOINTMENT ID",
+    "STATUS1"
+   ],
+   "a_q": 4,
+   "text": "Must any two records that agree on SECONDARY PATIENT INSURANCE ID, APPOINTMENT ID and STATUS1 also agree on DIAGNOSIS1?",
+   "truth_full": false,
+   "truth_sure": false,
+   "truth_supp": false,
+   "minimal_on_data": false
+  },
+  {
+   "id": "b17",
+   "type": "qx",
+   "lhs": [
+    "PATIENT ID",
+    "HEALTHCARECLAIMTYPEID1",
+    "ORGANIZATION",
+    "NAME"
+   ],
+   "rhs": "PRIMARY PATIENT INSURANCE ID",
+   "form": "agree",
+   "listed": [
+    "PATIENT ID",
+    "HEALTHCARECLAIMTYPEID1",
+    "ORGANIZATION",
+    "NAME"
+   ],
+   "a_q": 5,
+   "text": "Must any two records that agree on PATIENT ID, HEALTHCARECLAIMTYPEID1, ORGANIZATION and NAME also agree on PRIMARY PATIENT INSURANCE ID?",
+   "truth_full": false,
+   "truth_sure": false,
+   "truth_supp": false,
+   "minimal_on_data": false
+  },
+  {
+   "id": "b18",
+   "type": "qx",
+   "lhs": [
+    "PROVIDER ID",
+    "APPOINTMENT ID",
+    "SERVICE DATE",
+    "LASTBILLEDDATE1",
+    "NAME"
+   ],
+   "rhs": "PRIMARY PATIENT INSURANCE ID",
+   "form": "agree",
+   "listed": [
+    "PROVIDER ID",
+    "APPOINTMENT ID",
+    "SERVICE DATE",
+    "LASTBILLEDDATE1",
+    "NAME"
+   ],
+   "a_q": 6,
+   "text": "Must any two records that agree on PROVIDER ID, APPOINTMENT ID, SERVICE DATE, LASTBILLEDDATE1 and NAME also agree on PRIMARY PATIENT INSURANCE ID?",
+   "truth_full": false,
+   "truth_sure": false,
+   "truth_supp": false,
+   "minimal_on_data": false
+  }
+ ],
+ "fillers": [
+  {
+   "id": "f01",
+   "type": "cand",
+   "lhs": [
+    "PROVIDER ID"
+   ],
+   "rhs": "ORGANIZATION",
+   "form": "agree",
+   "listed": [
+    "PROVIDER ID"
+   ],
+   "a_q": 2,
+   "text": "Must any two records that agree on PROVIDER ID also agree on ORGANIZATION?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": true
+  },
+  {
+   "id": "f02",
+   "type": "cand",
+   "lhs": [
+    "PATIENT ID"
+   ],
+   "rhs": "GENDER",
+   "form": "agree",
+   "listed": [
+    "PATIENT ID"
+   ],
+   "a_q": 2,
+   "text": "Must any two records that agree on PATIENT ID also agree on GENDER?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": true
+  },
+  {
+   "id": "f03",
+   "type": "cand",
+   "lhs": [
+    "APPOINTMENT ID"
+   ],
+   "rhs": "LASTBILLEDDATE1",
+   "form": "agree",
+   "listed": [
+    "APPOINTMENT ID"
+   ],
+   "a_q": 2,
+   "text": "Must any two records that agree on APPOINTMENT ID also agree on LASTBILLEDDATE1?",
+   "truth_full": false,
+   "truth_sure": false,
+   "truth_supp": false,
+   "minimal_on_data": true
+  },
+  {
+   "id": "f04",
+   "type": "cand",
+   "lhs": [
+    "PROVIDER ID",
+    "SECONDARY PATIENT INSURANCE ID",
+    "CURRENT ILLNESS DATE",
+    "SERVICE DATE",
+    "NAME"
+   ],
+   "rhs": "OUTSTANDINGP",
+   "form": "agree",
+   "listed": [
+    "PROVIDER ID",
+    "SECONDARY PATIENT INSURANCE ID",
+    "CURRENT ILLNESS DATE",
+    "SERVICE DATE",
+    "NAME"
+   ],
+   "a_q": 6,
+   "text": "Must any two records that agree on PROVIDER ID, SECONDARY PATIENT INSURANCE ID, CURRENT ILLNESS DATE, SERVICE DATE and NAME also agree on OUTSTANDINGP?",
+   "truth_full": false,
+   "truth_sure": false,
+   "truth_supp": false,
+   "minimal_on_data": true
+  },
+  {
+   "id": "f05",
+   "type": "max",
+   "lhs": [
+    "PATIENT ID",
+    "PROVIDER ID",
+    "PRIMARY PATIENT INSURANCE ID",
+    "SECONDARY PATIENT INSURANCE ID",
+    "DIAGNOSIS1",
+    "APPOINTMENT ID",
+    "CURRENT ILLNESS DATE",
+    "SERVICE DATE",
+    "SUPERVISING PROVIDER ID",
+    "STATUS1",
+    "STATUSP",
+    "OUTSTANDING1",
+    "OUTSTANDINGP",
+    "LASTBILLEDDATE1",
+    "HEALTHCARECLAIMTYPEID1",
+    "BIRTHDATE",
+    "ORGANIZATION",
+    "NAME",
+    "OWNERSHIP",
+    "ENCOUNTERCLASS",
+    "CODE"
+   ],
+   "rhs": "GENDER",
+   "form": "except",
+   "listed": [
+    "Id",
+    "GENDER"
+   ],
+   "a_q": 3,
+   "text": "Must any two records that agree on all attributes except Id and GENDER also agree on GENDER?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": false
+  },
+  {
+   "id": "f06",
+   "type": "max",
+   "lhs": [
+    "PATIENT ID",
+    "PROVIDER ID",
+    "PRIMARY PATIENT INSURANCE ID",
+    "SECONDARY PATIENT INSURANCE ID",
+    "DIAGNOSIS1",
+    "APPOINTMENT ID",
+    "CURRENT ILLNESS DATE",
+    "SERVICE DATE",
+    "SUPERVISING PROVIDER ID",
+    "STATUS1",
+    "STATUSP",
+    "OUTSTANDING1",
+    "OUTSTANDINGP",
+    "LASTBILLEDDATE1",
+    "HEALTHCARECLAIMTYPEID1",
+    "BIRTHDATE",
+    "GENDER",
+    "ORGANIZATION",
+    "NAME",
+    "OWNERSHIP",
+    "ENCOUNTERCLASS"
+   ],
+   "rhs": "CODE",
+   "form": "except",
+   "listed": [
+    "Id",
+    "CODE"
+   ],
+   "a_q": 3,
+   "text": "Must any two records that agree on all attributes except Id and CODE also agree on CODE?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": false
+  },
+  {
+   "id": "f07",
+   "type": "max",
+   "lhs": [
+    "PATIENT ID",
+    "PROVIDER ID",
+    "PRIMARY PATIENT INSURANCE ID",
+    "SECONDARY PATIENT INSURANCE ID",
+    "DIAGNOSIS1",
+    "APPOINTMENT ID",
+    "CURRENT ILLNESS DATE",
+    "SERVICE DATE",
+    "SUPERVISING PROVIDER ID",
+    "STATUS1",
+    "STATUSP",
+    "OUTSTANDINGP",
+    "LASTBILLEDDATE1",
+    "HEALTHCARECLAIMTYPEID1",
+    "BIRTHDATE",
+    "GENDER",
+    "ORGANIZATION",
+    "NAME",
+    "OWNERSHIP",
+    "ENCOUNTERCLASS",
+    "CODE"
+   ],
+   "rhs": "OUTSTANDING1",
+   "form": "except",
+   "listed": [
+    "Id",
+    "OUTSTANDING1"
+   ],
+   "a_q": 3,
+   "text": "Must any two records that agree on all attributes except Id and OUTSTANDING1 also agree on OUTSTANDING1?",
+   "truth_full": false,
+   "truth_sure": false,
+   "truth_supp": false,
+   "minimal_on_data": false
+  },
+  {
+   "id": "f08",
+   "type": "max",
+   "lhs": [
+    "PATIENT ID",
+    "PROVIDER ID",
+    "PRIMARY PATIENT INSURANCE ID",
+    "SECONDARY PATIENT INSURANCE ID",
+    "DIAGNOSIS1",
+    "CURRENT ILLNESS DATE",
+    "SERVICE DATE",
+    "SUPERVISING PROVIDER ID",
+    "STATUS1",
+    "STATUSP",
+    "OUTSTANDING1",
+    "OUTSTANDINGP",
+    "LASTBILLEDDATE1",
+    "HEALTHCARECLAIMTYPEID1",
+    "BIRTHDATE",
+    "GENDER",
+    "ORGANIZATION",
+    "NAME",
+    "OWNERSHIP",
+    "CODE"
+   ],
+   "rhs": "ENCOUNTERCLASS",
+   "form": "except",
+   "listed": [
+    "Id",
+    "APPOINTMENT ID",
+    "ENCOUNTERCLASS"
+   ],
+   "a_q": 4,
+   "text": "Must any two records that agree on all attributes except Id, APPOINTMENT ID and ENCOUNTERCLASS also agree on ENCOUNTERCLASS?",
+   "truth_full": false,
+   "truth_sure": false,
+   "truth_supp": false,
+   "minimal_on_data": false
+  },
+  {
+   "id": "f09",
+   "type": "qx",
+   "lhs": [
+    "PATIENT ID",
+    "PROVIDER ID",
+    "LASTBILLEDDATE1"
+   ],
+   "rhs": "GENDER",
+   "form": "agree",
+   "listed": [
+    "PATIENT ID",
+    "PROVIDER ID",
+    "LASTBILLEDDATE1"
+   ],
+   "a_q": 4,
+   "text": "Must any two records that agree on PATIENT ID, PROVIDER ID and LASTBILLEDDATE1 also agree on GENDER?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": false
+  },
+  {
+   "id": "f10",
+   "type": "qx",
+   "lhs": [
+    "PATIENT ID",
+    "SERVICE DATE",
+    "STATUSP",
+    "NAME",
+    "CODE"
+   ],
+   "rhs": "GENDER",
+   "form": "agree",
+   "listed": [
+    "PATIENT ID",
+    "SERVICE DATE",
+    "STATUSP",
+    "NAME",
+    "CODE"
+   ],
+   "a_q": 6,
+   "text": "Must any two records that agree on PATIENT ID, SERVICE DATE, STATUSP, NAME and CODE also agree on GENDER?",
+   "truth_full": true,
+   "truth_sure": true,
+   "truth_supp": true,
+   "minimal_on_data": false
+  },
+  {
+   "id": "f11",
+   "type": "qx",
+   "lhs": [
+    "CURRENT ILLNESS DATE",
+    "STATUS1",
+    "OWNERSHIP"
+   ],
+   "rhs": "OUTSTANDING1",
+   "form": "agree",
+   "listed": [
+    "CURRENT ILLNESS DATE",
+    "STATUS1",
+    "OWNERSHIP"
+   ],
+   "a_q": 4,
+   "text": "Must any two records that agree on CURRENT ILLNESS DATE, STATUS1 and OWNERSHIP also agree on OUTSTANDING1?",
+   "truth_full": false,
+   "truth_sure": false,
+   "truth_supp": false,
+   "minimal_on_data": false
+  },
+  {
+   "id": "f12",
+   "type": "qx",
+   "lhs": [
+    "PATIENT ID",
+    "CURRENT ILLNESS DATE",
+    "OUTSTANDINGP",
+    "HEALTHCARECLAIMTYPEID1",
+    "BIRTHDATE"
+   ],
+   "rhs": "STATUS1",
+   "form": "agree",
+   "listed": [
+    "PATIENT ID",
+    "CURRENT ILLNESS DATE",
+    "OUTSTANDINGP",
+    "HEALTHCARECLAIMTYPEID1",
+    "BIRTHDATE"
+   ],
+   "a_q": 6,
+   "text": "Must any two records that agree on PATIENT ID, CURRENT ILLNESS DATE, OUTSTANDINGP, HEALTHCARECLAIMTYPEID1 and BIRTHDATE also agree on STATUS1?",
+   "truth_full": false,
+   "truth_sure": false,
+   "truth_supp": false,
+   "minimal_on_data": false
+  }
+ ]
+}

@@ -1,5 +1,5 @@
 {
- "note": "FDs that the documented truth omits but that the hand check of the fixed blocks (2026-10-31) judges true in the domain. They only exclude disputed questions from the blocks and enter the analysis as a sensitivity truth; they change neither the truths of the paper nor what the method or the simulated designer knows.",
+ "note": "FDs that the documented truth omits but that the hand check of the fixed blocks (2026-10-31; batch 3 relations 2026-11-06) judges true in the domain and that hold on the data. For batch 3 the hand check went through the undocumented regularities that the documentation-only audit of e3/truth/fresh3.json lists, and kept those that hold on the data. They only exclude disputed questions from the blocks and enter the analysis as a sensitivity truth; they change neither the truths of the paper nor what the method or the simulated designer knows.",
  "datasets": {
   "fresh_abs_mb": [
    {"lhs": ["ASGS_LOCI_URI_2021"], "rhs": ["MB_CODE_2021"],
@@ -8,6 +8,12 @@
     "reason": "abs_greater-capital-city-statistical-areas.html: GCCSAs are named after their city or as Rest of <State>, and the special-purpose codes name their state, so names and codes correspond one to one, as the documented truth already states for the SA2, SA3, SA4 and state names."}
   ],
   "ssb_customer": [],
-  "tpcds_core": []
+  "tpcds_core": [],
+  "fresh3_fec_candidate": [],
+  "fresh3_synthea_claims": [
+   {"lhs": ["APPOINTMENT ID"], "rhs": ["PATIENT ID", "PROVIDER ID"],
+    "reason": "A claim's patient and provider are those of its encounter (APPOINTMENT ID), which the CSV File Data Dictionary suggests but does not state; holds on the data. The primary payer of the claim can differ from that of the encounter on the data and is left out."}
+  ],
+  "fresh3_tpcc_customer": []
  }
 }
