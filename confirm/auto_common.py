@@ -87,6 +87,13 @@ if os.environ.get("CONFIRM_BATCH") == "2":    # item 33: the 24 development rela
         _batch2 = list(json.load(_fh)["datasets"])
     DATASETS += [ds for ds in FRESH if ds not in _batch2]
     FRESH = [ds for ds in FRESH if ds in _batch2]
+if os.environ.get("CONFIRM_BATCH") == "3":    # the 36 relations of the three earlier pools are the pool; the third batch is
+    with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "e3", "truth", "fresh3.json"),
+              encoding="utf-8") as _fh:    # evaluated and trains nothing
+        _batch3 = json.load(_fh)["datasets"]
+    DECLARED.update({ds: spec.get("key") for ds, spec in _batch3.items()})
+    DATASETS += FRESH
+    FRESH = [ds for ds in _batch3 if os.path.exists(os.path.join(bench.E3, ds + ".json"))]
 SAMPLES =os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "e3", "samples")
 
 

@@ -277,7 +277,7 @@ let META = null, CUR = null, SHOWN = 0;
 const TRY = /^\/s\/(T[EPU]0[1-3]-|UP-)/i.test(location.pathname);   // a try or an upload from the start page: a demo
 const UPLOAD = /^\/s\/UP-/i.test(location.pathname);              // the visitor's own table (upload.py)
 const NAME = {ssb_customer: "Customers", tpcds_core: "Store sales", abs_mb: "Mesh blocks"};   // as on the start page
-const TYPICAL = {ssb_customer: 30, tpcds_core: 30, abs_mb: 55};   // questions when the answers match the documentation
+const TYPICAL = {ssb_customer: 15, tpcds_core: 30, abs_mb: 30};   // questions when the answers match the documentation
 const STOP = TRY ? ["Stop and see the design", "Press again to see the design"] : ["Stop the session", "Press again to stop"];
 // icons as SVG, drawn with the text colour, so that they look the same in every font
 const svg = (body, w = 2.2) => `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${body}</svg>`;
@@ -291,10 +291,12 @@ const SVG = {yes: svg('<path d="M3.3 8.6l3 3 6.4-6.9"/>'),
              down: svg('<path d="M8 2.4v8"/><path d="M4.6 7.4L8 10.8l3.4-3.4"/><path d="M3 13.6h10"/>', 2)};
 document.querySelectorAll("[data-i]").forEach(e => e.innerHTML = SVG[e.dataset.i]);
 const LABEL = {yes: "Yes", no: "No", dk: "Don't know"}, KEY = {yes: "Y", no: "N", dk: "D"};
-const PHASE = {disc: ["p1", "Phase 1 · Discovery: a candidate rule found in the data"],
-               max: ["p2", "Phase 2 · Certification: checking that no rule is missing"],
-               guess: ["p2", "Phase 2 · Certification: narrowing down the rule you just confirmed"],
-               qx: ["p2", "Phase 2 · Certification: narrowing down the rule you just confirmed"]};
+const PHASE = {disc: ["p1", "Candidate: a rule that the data suggest"],
+               hone: ["p1", "Candidate: a rule that the data suggest"],
+               max: ["p2", "Completeness: checking that no rule is missing"],
+               guess: ["p2", "Narrowing down: the rule behind your last yes"],
+               reuse: ["p2", "Narrowing down: the rule behind your last yes"],
+               qx: ["p2", "Narrowing down: the rule behind your last yes"]};
 const ansButtons = attr => ["yes", "no", "dk"].map(a =>
   `<button class="ans ${a}" ${attr}="${a}" aria-keyshortcuts="${KEY[a]}"><span class="ico">${SVG[a]}</span>${LABEL[a]}<kbd aria-hidden="true">${KEY[a]}</kbd></button>`).join("");
 // a try or an upload the server no longer has (kept for a day; a restart of the free server clears them)

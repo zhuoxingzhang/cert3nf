@@ -1,23 +1,22 @@
 """
 One session of the human-designer study (README).  First the 18 questions of the fixed block in
-the participant's order, then the live session, in which v5study (the tolerant mode of the frozen method) asks and the
+the participant's order, then the live session, in which v6fstudy (the careful mode of the frozen method) asks and the
 participant answers yes, no or don't know, until the method ends, the budget of 100 is used, the live part reaches
 its time limit, or the participant stops.  A question that the method asks again is shown only after at least GAP
 other questions; filler questions of the same relation fill the gap, and the method never reads their answers.
 
 Every shown question is one line of <participant>_s<n>_<relation>.jsonl, written once it is answered; the line
 "event": "end" holds the method's output, and replay.py recomputes it from the answers.  Several sessions run at
-once (server.py): each has its own method thread, and the hook v5study.ASK passes a question to the session of the
+once (server.py): each has its own method thread, and the hook v6fstudy.ASK passes a question to the session of the
 calling thread.  A session whose file exists continues from it (the server restarted): the method is given the
 logged live answers again, must ask the same questions (asserted), and goes on with the next one; the block, the
 fillers and both clocks continue where the file ends.  A file with an end line is only completed by the
 questionnaire.  Usage: through server.py, or test_session.py.
 
 A demo session (a try from the start page, now that the study has ended) skips the block, runs the method in the
-trusting mode (variant v5: every premise asked once, so no fillers are needed) and ends with result() instead of the
+trusting mode (every premise asked once, so no fillers are needed) and ends with result() instead of the
 questionnaire: the method's output, the design of the confirmed FDs, and the answers that differ from the documented
-FDs.  A session on an uploaded table (upload.py) is a demo session with the statistics advisor (variant v5s) and no
-documented FDs.
+FDs.  A session on an uploaded table (upload.py) is a demo session with no documented FDs.
 """
 import hashlib, itertools, json, os, queue, sys, threading, time
 from collections import deque
@@ -27,16 +26,15 @@ import common as K
 K.setenv("full")
 import auto_common as AC          # noqa: E402
 import drd                        # noqa: E402
-import v5                         # noqa: E402
-import v5study                    # noqa: E402
+import v6fstudy                   # noqa: E402
 import upload as U                # noqa: E402
 
 GAP, LIVE_MINUTES = 3, 40
-KINDS = {"disc_q": "disc", "max_asked": "max", "guess_q": "guess", "qx_q": "qx", "confirm_q": "confirm",
-         "reask_q": "reask"}
-VARIANT = K.VARIANT
-DEMO_VARIANT = "v5"               # the trusting mode with the same advisor, for demo sessions
-UPLOAD_VARIANT = "v5s"            # the trusting mode with the statistics advisor, for an uploaded table
+KINDS = {"disc_q": "disc", "hone_q": "hone", "max_asked": "max", "guess_q": "guess", "reuse_q": "reuse", "qx_q": "qx",
+         "confirm_q": "confirm", "reask_q": "reask"}
+VARIANT = "careful"               # the study: every premise is answered twice, since a person may err
+DEMO_VARIANT = "trusting"         # a demo session: every premise is asked once
+UPLOAD_VARIANT = "trusting"       # an uploaded table as well
 LOCAL = threading.local()         # LOCAL.session: whom the method of this thread asks
 
 
@@ -45,11 +43,13 @@ def _ask(z, a, k, kind):
 
 
 def run_method(who, ds, b, adv, variant=VARIANT):
-    """v5study's run of a live session on relation ds, asking who.ask"""
-    v5study.ASK = _ask
+    """v6fstudy's run of a live session on relation ds, asking who.ask: the main form, careful or trusting"""
+    assert variant in (VARIANT, DEMO_VARIANT), variant
+    v6fstudy.ASK = _ask
     LOCAL.session = who
-    _, eps_m = v5study.VARIANTS[variant]
-    return v5study.run(b, adv, v5.CAP, True, True, ds, 0, 0.0, eps_m, False, None, None, True, 0.0)
+    base, _, spec = K.VARIANT.partition("|")
+    advisor, _, cap, guess, mode, mcheap = v6fstudy.VARIANTS[base]
+    return v6fstudy.run(b, adv, cap, advisor, guess, mode, mcheap, tuple(spec.split("+")), careful=variant == VARIANT)
 
 
 def seeded(*tag):
@@ -57,9 +57,8 @@ def seeded(*tag):
 
 
 def kit_md5s(ds, upload=None):
-    files = {"v5study.py": os.path.join(K.HERE, "v5study.py"), "session.py": os.path.abspath(__file__),
-             "common.py": os.path.join(K.HERE, "common.py"), "v5tol.py": os.path.join(K.CONFIRM, "v5tol.py"),
-             "v5.py": os.path.join(K.CONFIRM, "v5.py"),
+    files = {"v6fstudy.py": os.path.join(K.HERE, "v6fstudy.py"), "session.py": os.path.abspath(__file__),
+             "common.py": os.path.join(K.HERE, "common.py"), "v6f.py": os.path.join(K.CONFIRM, "v6f.py"),
              "prebuilt": os.path.join(upload, "block.pkl") if upload else os.path.join(K.PREBUILT, ds + ".pkl")}
     return {k: K.md5(p) for k, p in files.items()}
 
@@ -117,7 +116,7 @@ class Session:
         self.fh = open(self.path, "w", encoding="utf-8")
         self.write({"event": "start", "participant": participant, "condition": self.condition, "test": self.test,
                     "relation": self.ds, "session_no": session_no, "variant": self.variant, "demo": self.demo,
-                    "budget": v5.BUDGET,
+                    "budget": v6fstudy.BUDGET,
                     "live_minutes": live_minutes, "gap": GAP, "block_md5": self.block_md5, "code": self.code,
                     "block_order": [q["id"] for q in self.block], "time": time.strftime("%Y-%m-%d %H:%M:%S")})
 
@@ -125,7 +124,7 @@ class Session:
         recs = read(self.path)
         start = recs[0]
         assert start["event"] == "start" and start["relation"] == self.ds and start["block_md5"] == self.block_md5
-        changed = [k for k in ("v5study.py", "v5.py", "prebuilt") if start["code"].get(k) != self.code[k]]
+        changed = [k for k in ("v6fstudy.py", "v6f.py", "prebuilt") if start["code"].get(k) != self.code[k]]
         assert not changed, ("the method changed since the session began", changed)
         ans = [r for r in recs if r["event"] == "answer"]
         self.done = any(r["event"] == "end" for r in recs)
@@ -165,7 +164,7 @@ class Session:
 
     # ---------------- the method ----------------
     def ask(self, z, a, k, kind):
-        """the hook of v5study, in the method's thread: a logged answer while resuming, else the participant's"""
+        """the hook of v6fstudy, in the method's thread: a logged answer while resuming, else the participant's"""
         if self.preload:
             key, ans = self.preload.popleft()
             assert key == (z, a), "resume: the method asks another question than the session file"
@@ -173,7 +172,7 @@ class Session:
             self.qout.put(("q", z, a, k, kind))
             ans = self.qin.get()
         if ans == "stop":
-            raise v5.Budget
+            raise v6fstudy.Budget
         return {"yes": True, "no": False, "dk": None}[ans]
 
     def method(self):
@@ -184,7 +183,7 @@ class Session:
         finally:
             if self.upload:                                   # judge() caches by relation name: keep no upload
                 for tag in ("reach", "gold"):
-                    v5study.C._SA.pop((self.b["name"], tag), None)
+                    v6fstudy.C._SA.pop((self.b["name"], tag), None)
 
     def next_method(self):
         """the method's next question, or None once it has ended"""
@@ -302,7 +301,7 @@ class Session:
     # ---------------- the end of a demo session ----------------
     def result(self):
         """what a demo session shows at its end: the counts, the method's verdict, the design that 3NF synthesis
-        returns on sigma0 and the confirmed FDs (as in v5study's output, with a minimal key per schema and the
+        returns on sigma0 and the confirmed FDs (as in v6fstudy's output, with a minimal key per schema and the
         schemata of equivalent keys merged), its check against the documented FDs, and the answers that differ from them;
         for an uploaded table, the check against the confirmed FDs and the SQL types of the columns; every schema lists
         its other minimal keys, which the SQL declares UNIQUE; computed once, when the session has ended"""

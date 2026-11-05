@@ -24,6 +24,7 @@ Raw data and LLM answers are not included; the scripts below download or recompu
 | `confirm/v5.py` | Cert3NF and its ablations (Tables 3 and 9, Fig. 2) |
 | `confirm/v5tol.py` | careful mode for a designer who errs: every premise asked twice (Table 6) |
 | `confirm/v5tau.py` | tolerance θ for data that violate true FDs |
+| `confirm/v6f.py` | Cert3NF with the question order of its latest evaluation, which the live demo runs |
 | `confirm/auto_confirm.py`, `confirm/auto_mars.py` | automatic methods and the posterior certificate (Table 4) |
 | `confirm/ec2hyb.py` | the posterior certificate with the questions of EC² (Table 4, rule C6) |
 | `confirm/aexp.c`, `confirm/aexp.py` | attribute exploration |

@@ -1,5 +1,5 @@
 """
-Recompute the method's run of a session from its log: v5study is run again with a person who gives the logged live
+Recompute the method's run of a session from its log: v6fstudy is run again with a person who gives the logged live
 answers in order (each must be asked for the same question as in the session); when the answers run out, a session
 that was stopped stops again.  The method is deterministic on one platform, so the output must equal the logged one
 (across platforms the certificate may pick another of several equivalent FDs, with the same questions).
@@ -9,7 +9,7 @@ import json, os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import common as K
 import session as S
-import v5                         # noqa: E402
+import v6fstudy                   # noqa: E402
 
 
 class Logged:
@@ -19,7 +19,7 @@ class Logged:
     def ask(self, z, a, k, kind):
         r = next(self.it, None)
         if r is None:
-            raise v5.Budget                                    # the session stopped here
+            raise v6fstudy.Budget                              # the session stopped here
         assert tuple(r["key"]) == (z, a), ("replay asks another question than the session", r["qid"])
         return {"yes": True, "no": False, "dk": None}[r["answer"]]
 

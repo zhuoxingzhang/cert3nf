@@ -1,8 +1,26 @@
-DIFF sure v5s fresh_abs_mb 0.0 0 False same: [] hook: [] stored: ['certificate'] 
-DIFF sure v5st fresh_abs_mb 0.0 0 False same: [] hook: [] stored: ['certificate'] 
-DIFF sure v5st fresh_abs_mb 0.02 1 False same: [] hook: [] stored: ['certificate'] 
-DIFF sure v5s fresh_abs_mb 0.02 1 False same: [] hook: [] stored: ['certificate'] 
-DIFF sure v5st fresh_abs_mb 0.05 0 False same: [] hook: [] stored: ['certificate'] 
-DIFF sure v5s fresh_abs_mb 0.05 0 False same: [] hook: [] stored: ['certificate'] 
-sure 93 runs compared
-same/hook/stored: 6 differing runs; dk runs 120, dk/stop failures 0
+sure ssb_customer   err 0.0 seed 0 careful 0: questions  11 certified True exact True wrong False
+sure tpcds_core     err 0.0 seed 0 careful 0: questions  64 certified True exact True wrong False
+sure fresh_abs_mb   err 0.0 seed 0 careful 0: questions  29 certified True exact True wrong False
+sure ssb_customer   err 0.0 seed 0 careful 1: questions  21 certified True exact True wrong False
+sure tpcds_core     err 0.0 seed 0 careful 1: questions  89 certified True exact True wrong False
+sure fresh_abs_mb   err 0.0 seed 0 careful 1: questions  56 certified True exact True wrong False
+sure ssb_customer   err 0.02 seed 0 careful 1: questions  26 certified True exact True wrong False
+sure ssb_customer   err 0.02 seed 1 careful 1: questions  21 certified True exact True wrong False
+sure ssb_customer   err 0.02 seed 2 careful 1: questions  21 certified True exact True wrong False
+sure ssb_customer   err 0.05 seed 0 careful 1: questions  27 certified True exact True wrong False
+sure ssb_customer   err 0.05 seed 1 careful 1: questions  46 certified True exact True wrong False
+sure ssb_customer   err 0.05 seed 2 careful 1: questions  22 certified True exact True wrong False
+sure tpcds_core     err 0.02 seed 0 careful 1: questions  89 certified True exact True wrong False
+sure tpcds_core     err 0.02 seed 1 careful 1: questions 100 certified False exact False wrong False
+sure tpcds_core     err 0.02 seed 2 careful 1: questions 100 certified False exact False wrong False
+sure tpcds_core     err 0.05 seed 0 careful 1: questions 100 certified False exact False wrong False
+sure tpcds_core     err 0.05 seed 1 careful 1: questions 100 certified False exact False wrong False
+sure tpcds_core     err 0.05 seed 2 careful 1: questions 100 certified False exact False wrong False
+sure fresh_abs_mb   err 0.02 seed 0 careful 1: questions  56 certified True exact True wrong False
+sure fresh_abs_mb   err 0.02 seed 1 careful 1: questions  57 certified True exact True wrong False
+sure fresh_abs_mb   err 0.02 seed 2 careful 1: questions  56 certified True exact True wrong False
+sure fresh_abs_mb   err 0.05 seed 0 careful 1: questions  57 certified True exact True wrong False
+sure fresh_abs_mb   err 0.05 seed 1 careful 1: questions 100 certified False exact False wrong False
+sure fresh_abs_mb   err 0.05 seed 2 careful 1: questions  64 certified True exact True wrong False
+same/hook: 24 runs, 0 differ
+dk runs 120, dk/stop failures 0

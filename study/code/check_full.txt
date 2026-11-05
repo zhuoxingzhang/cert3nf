@@ -1,15 +1,26 @@
-DIFF full v5 fresh_abs_mb 0.0 0 False same: [] hook: [] stored: ['certificate'] 
-DIFF full v5t fresh_abs_mb 0.0 0 False same: [] hook: [] stored: ['certificate'] 
-DIFF full v5t fresh_abs_mb 0.02 0 False same: [] hook: [] stored: ['certificate'] 
-DIFF full v5st fresh_abs_mb 0.02 0 False same: [] hook: [] stored: ['certificate'] 
-DIFF full v5 fresh_abs_mb 0.02 0 False same: [] hook: [] stored: ['certificate'] 
-DIFF full v5s fresh_abs_mb 0.02 0 False same: [] hook: [] stored: ['certificate'] 
-DIFF full v5t fresh_abs_mb 0.02 1 False same: [] hook: [] stored: ['certificate'] 
-DIFF full v5 fresh_abs_mb 0.02 1 False same: [] hook: [] stored: ['certificate'] 
-DIFF full v5t fresh_abs_mb 0.02 2 False same: [] hook: [] stored: ['certificate'] 
-DIFF full v5 fresh_abs_mb 0.02 2 False same: [] hook: [] stored: ['certificate'] 
-DIFF full v5t fresh_abs_mb 0.05 0 False same: [] hook: [] stored: ['certificate'] 
-DIFF full v5 fresh_abs_mb 0.05 0 False same: [] hook: [] stored: ['certificate'] 
-DIFF full v5t fresh_abs_mb 0.05 0 True same: [] hook: [] stored: ['certificate'] 
-full 93 runs compared
-same/hook/stored: 13 differing runs; dk runs 120, dk/stop failures 0
+full ssb_customer   err 0.0 seed 0 careful 0: questions  15 certified True exact True wrong False
+full tpcds_core     err 0.0 seed 0 careful 0: questions  28 certified True exact True wrong False
+full fresh_abs_mb   err 0.0 seed 0 careful 0: questions  29 certified True exact True wrong False
+full ssb_customer   err 0.0 seed 0 careful 1: questions  26 certified True exact True wrong False
+full tpcds_core     err 0.0 seed 0 careful 1: questions  45 certified True exact True wrong False
+full fresh_abs_mb   err 0.0 seed 0 careful 1: questions  56 certified True exact True wrong False
+full ssb_customer   err 0.02 seed 0 careful 1: questions  31 certified True exact True wrong False
+full ssb_customer   err 0.02 seed 1 careful 1: questions  26 certified True exact True wrong False
+full ssb_customer   err 0.02 seed 2 careful 1: questions  26 certified True exact True wrong False
+full ssb_customer   err 0.05 seed 0 careful 1: questions  35 certified True exact True wrong False
+full ssb_customer   err 0.05 seed 1 careful 1: questions  37 certified True exact True wrong False
+full ssb_customer   err 0.05 seed 2 careful 1: questions  27 certified True exact True wrong False
+full tpcds_core     err 0.02 seed 0 careful 1: questions  45 certified True exact True wrong False
+full tpcds_core     err 0.02 seed 1 careful 1: questions  45 certified True exact True wrong False
+full tpcds_core     err 0.02 seed 2 careful 1: questions  46 certified True exact True wrong False
+full tpcds_core     err 0.05 seed 0 careful 1: questions 100 certified False exact False wrong False
+full tpcds_core     err 0.05 seed 1 careful 1: questions  67 certified True exact True wrong False
+full tpcds_core     err 0.05 seed 2 careful 1: questions  45 certified True exact True wrong False
+full fresh_abs_mb   err 0.02 seed 0 careful 1: questions  56 certified True exact True wrong False
+full fresh_abs_mb   err 0.02 seed 1 careful 1: questions  57 certified True exact True wrong False
+full fresh_abs_mb   err 0.02 seed 2 careful 1: questions  56 certified True exact True wrong False
+full fresh_abs_mb   err 0.05 seed 0 careful 1: questions  57 certified True exact True wrong False
+full fresh_abs_mb   err 0.05 seed 1 careful 1: questions 100 certified False exact False wrong False
+full fresh_abs_mb   err 0.05 seed 2 careful 1: questions  65 certified True exact True wrong False
+same/hook: 24 runs, 0 differ
+dk runs 120, dk/stop failures 0

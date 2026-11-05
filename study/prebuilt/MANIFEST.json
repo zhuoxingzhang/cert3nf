@@ -1,30 +1,24 @@
 {
  "python": "3.12.6",
  "numpy": "2.5.0",
- "variant": "v5t",
+ "variant": "v6s|lc+hone+kf+rl",
  "answers": "llm_fresh_full_q35_ms",
  "frozen": {
-  "confirm/v5.py": "8e0e04aeb2ce",
-  "confirm/v5tol.py": "f3ec39c04c59"
+  "confirm/v6f.py": "e2a6af907596"
  },
  "method": {
-  "confirm/v5.py": {
-   "md5": "57fca422d318",
-   "source_md5": "8e0e04aeb2ce",
-   "same_code": true
-  },
-  "confirm/v5tol.py": {
-   "md5": "4a57b1100308",
-   "source_md5": "f3ec39c04c59",
+  "confirm/v6f.py": {
+   "md5": "29d2a9842d75",
+   "source_md5": "e2a6af907596",
    "same_code": true
   },
   "confirm/auto_common.py": {
-   "md5": "a3df4371f2f4",
-   "source_md5": "bf147b2f2abe",
+   "md5": "4a727d7483e8",
+   "source_md5": "c26b1a66dbf3",
    "same_code": true
   },
   "confirm/auto_confirm.py": {
-   "md5": "bc7f48e0d512",
+   "md5": "2f26d6319be9",
    "source_md5": "cf2a596a1578",
    "same_code": true
   },
@@ -39,7 +33,7 @@
    "same_code": true
   },
   "confirm/baseline_direct.py": {
-   "md5": "12ecc0f822d9",
+   "md5": "f1b7fb57c84b",
    "source_md5": "511e2326ed30",
    "same_code": false
   },
@@ -49,27 +43,27 @@
    "same_code": true
   },
   "confirm/drd.py": {
-   "md5": "b59682881306",
+   "md5": "7992d9b888e6",
    "source_md5": "b59682881306",
    "same_code": true
   },
   "confirm/estimators.py": {
-   "md5": "e3f8de81ef96",
+   "md5": "e6914d7bcb8b",
    "source_md5": "e3f8de81ef96",
    "same_code": true
   },
   "confirm/llm_rules.py": {
-   "md5": "1f81a294f16b",
+   "md5": "8dc6b918351a",
    "source_md5": "1f81a294f16b",
    "same_code": true
   },
   "confirm/price.py": {
-   "md5": "f78c1da06f03",
+   "md5": "b24c6742b9cd",
    "source_md5": "f98e52cbdfed",
    "same_code": true
   },
   "e2/e2_tpch.py": {
-   "md5": "1cd77654bb85",
+   "md5": "f42123f597f6",
    "source_md5": "89b411731ba0",
    "same_code": true
   },
@@ -79,30 +73,30 @@
    "same_code": true
   },
   "sensitivity_bruteforce.py": {
-   "md5": "268f88ef709e",
+   "md5": "1f9a81d00457",
    "source_md5": "434e1f4587d4",
    "same_code": false
   }
  },
  "relations": {
   "ssb_customer": {
-   "pkl": "29141b5929d8",
-   "bytes": 313253,
+   "pkl": "72e8e18f8fd5",
+   "bytes": 80407,
    "data": "9faa9fd326b1",
    "sample": "95eb1319d008"
   },
   "tpcds_core": {
-   "pkl": "3abae1cb4b28",
-   "bytes": 156740,
+   "pkl": "090dfcc1ce4b",
+   "bytes": 158348,
    "data": "edf1cb7ac561",
    "sample": "82e906a8978e"
   },
   "fresh_abs_mb": {
-   "pkl": "eccc0ccdd85b",
-   "bytes": 483986,
+   "pkl": "b7282025e5af",
+   "bytes": 252410,
    "data": "3731b235ac4f",
    "sample": "610811bf4764"
   }
  },
- "supplement": "5889003e8fbf"
+ "supplement": "c28876eacaf7"
 }

@@ -7,8 +7,8 @@ Builds what the study server needs beyond this repository's code (README, "Build
    sensitivity_bruteforce.py loads the synthesis engine from baselines.py in this repository.
    test_session.py --compare checks that sessions agree.
 2. prebuilt/<relation>.pkl: (Rel, the data of AC.load, the advisor) of each study relation under the full truth,
-   built from STUDY_SOURCE with all its inputs (the advisor's prior is trained on the other relations and uses the LLM
-   answers), so that the server needs neither (the build peaks near 530 MB, a session needs a few MB).
+   built from STUDY_SOURCE with all its inputs (the advisor's prior is trained on the other relations), so that the server
+   needs neither (a session needs a few MB).
 Writes prebuilt/MANIFEST.json (md5 of every pickle and input).
 Usage:  python build_kit.py
 """
@@ -18,7 +18,7 @@ os.environ["STUDY_BUILD"] = "1"
 import common as K
 
 SRC_ROOT = os.path.dirname(K.SOURCE)
-MODULES = [f"confirm/{f}" for f in ("v5.py", "v5tol.py", "auto_common.py", "auto_confirm.py", "auto_answer.py",
+MODULES = [f"confirm/{f}" for f in ("v6f.py", "auto_common.py", "auto_confirm.py", "auto_answer.py",
                                     "auto_noisy.py", "baseline_direct.py", "bench.py", "drd.py", "estimators.py",
                                     "llm_rules.py", "price.py")]
 MODULES += ["e2/e2_tpch.py", "o3_lossiness_check.py", "sensitivity_bruteforce.py"]
@@ -54,7 +54,7 @@ def build_pickles(method):
     import numpy as np
     os.makedirs(K.PREBUILT, exist_ok=True)
     man = {"python": platform.python_version(), "numpy": np.__version__, "variant": K.VARIANT,
-           "answers": K.ANSWERS, "frozen": {m: method[m]["source_md5"] for m in ("confirm/v5.py", "confirm/v5tol.py")},
+           "answers": K.ANSWERS, "frozen": {m: method[m]["source_md5"] for m in ("confirm/v6f.py",)},
            "method": method, "relations": {}}
     for ds in K.RELATIONS.values():
         path = os.path.join(K.PREBUILT, ds + ".pkl")

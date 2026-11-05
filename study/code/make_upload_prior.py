@@ -1,19 +1,22 @@
 """
 The learned prior of an uploaded table (upload.py): the logistic regression of bench.estimate (kind "learned", the
 seven data features of a candidate) fitted on every relation of the training pool, which each relation of the paper
-uses with itself left out; an upload is none of them, so it uses all of them.  Checks on one pool relation that the
-weights fitted without it give the method's own prior (auto_confirm.prior), then writes prebuilt/upload_prior.json.
+uses with itself left out; an upload is none of them, so it uses all of them.  So does h0, the rate of v6f.class_rate
+with which the latent class of a left-hand side starts.  Checks on one pool relation that the weights fitted without it
+give the method's own prior (auto_confirm.prior), then writes prebuilt/upload_prior.json.
 Usage:  python study/code/make_upload_prior.py
 """
 import json, os, sys
 import numpy as np
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+os.environ["STUDY_BUILD"] = "1"      # the method in STUDY_SOURCE, with the whole pool
 import common as K
 
 K.setenv("full")
 import auto_common as AC          # noqa: E402
 import auto_confirm as C          # noqa: E402
 import bench                      # noqa: E402
+import v6f                        # noqa: E402
 
 COLS = list(range(7))
 
@@ -36,11 +39,11 @@ def main():
     got = prior(weights([bs[d] for d in pool if d != probe]), bs[probe])
     assert max(abs(want[p] - got[p]) for p in want) < 1e-12, "the refit differs from auto_confirm.prior"
     w = weights([bs[d] for d in pool])
-    out = {"pool": pool, "columns": COLS, "weights": [float(x) for x in w], "rho_min": C.RHO_MIN,
+    out = {"pool": pool, "columns": COLS, "weights": [float(x) for x in w], "rho_min": C.RHO_MIN, "h0": v6f.class_rate("upload"),
            "check": f"leaving out {probe} reproduces auto_confirm.prior(kind learned)"}
     with open(os.path.join(K.PREBUILT, "upload_prior.json"), "w", encoding="utf-8") as fh:
         json.dump(out, fh, indent=1)
-    print("pool", len(pool), "relations; weights", np.round(w, 3).tolist())
+    print("pool", len(pool), "relations; weights", np.round(w, 3).tolist(), "h0", round(out["h0"], 4))
 
 
 if __name__ == "__main__":

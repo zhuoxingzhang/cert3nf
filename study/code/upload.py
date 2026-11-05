@@ -100,7 +100,7 @@ def build(folder):
     import fdmine
     import bench
     import estimators as EST
-    import v5
+    import v6f
     S = bench.S
     with open(os.path.join(folder, "data.json"), encoding="utf-8") as fh:
         d = json.load(fh)
@@ -154,8 +154,11 @@ def build(folder):
     rel = UploadRel(names, [(K.mask(l), K.mask(r)) for l, r in sigma0], minfd, sample, n)
     info = {"title": d["name"], "dropped": dropped, "key": [a for a in d["key"] if a in idx],
             "types": {a: sqltype(cols[j]) for a, j in zip(names, keep)}, "candidates": len(P)}
+    adv = v6f.Advisor(P, pi, None, True)
+    adv.__class__ = v6f.LCAdvisor                      # as v6f.one builds it
+    adv.attach(pr["h0"], [K.mask(p[0]) for p in P])
     with open(os.path.join(folder, "block.tmp"), "wb") as fh:
-        pickle.dump((rel, b, v5.Advisor(P, pi, None, True)), fh)
+        pickle.dump((rel, b, adv), fh)
     with open(os.path.join(folder, "info.json"), "w", encoding="utf-8") as fh:
         json.dump(info, fh)
     os.replace(os.path.join(folder, "block.tmp"), os.path.join(folder, "block.pkl"))

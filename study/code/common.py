@@ -2,13 +2,13 @@
 Shared pieces of the human-designer study (study/README.md): the three relations, the fixed assignment table, the
 truths, and how a question Z -> A is shown to a participant.
 
-Questions are (Z, A) pairs of bit masks over the attributes of the data file, as in v5.py and v5tol.py.  A question is
+Questions are (Z, A) pairs of bit masks over the attributes of the data file, as in v6f.py.  A question is
 shown in the form that lists fewer attributes: "agree on Z" when |Z| <= n - |Z|, otherwise "agree on everything
-except R - Z" (R - Z contains A).  a(q) = min(|Z|, n - |Z|) + 1, the attrs statistic of v5.
+except R - Z" (R - Z contains A).  a(q) = min(|Z|, n - |Z|) + 1, the attrs statistic of the method.
 
 Two places of the method.  Sessions, the server and replay import it from this repository's confirm/ and take each
 relation, its data and its advisor from prebuilt/<relation>.pkl, so that the server needs neither the other relations
-nor the LLM answers.  The build steps (make_block, check_v5study, build_kit) set STUDY_BUILD=1 and import it from
+nor the LLM answers.  The build steps (make_block, check_v6fstudy, build_kit, make_upload_prior) set STUDY_BUILD=1 and import it from
 STUDY_SOURCE, a confirm/ folder with all its inputs including the LLM answers (default: ../paper1/confirm next to this
 repository, the authors' working copy, whose code equals confirm/ up to comments; build_kit.py checks this).
 """
@@ -20,6 +20,10 @@ REPO = os.path.dirname(KIT)
 BLOCKS = os.path.join(KIT, "blocks")
 PREBUILT = os.path.join(KIT, "prebuilt")
 BUILD = os.environ.get("STUDY_BUILD") == "1"
+if BUILD:                                                   # the pool of the prior: the 36 relations before the last
+    os.environ.setdefault("CONFIRM_BATCH", "3")             # confirmatory batch, the relation itself left out
+else:
+    os.environ.pop("CONFIRM_BATCH", None)                   # a session reads no pool
 SOURCE = os.environ.get("STUDY_SOURCE") or os.path.join(os.path.dirname(REPO), "paper1", "confirm")   # build steps
 METHOD = os.path.join(REPO, "confirm")
 CONFIRM = SOURCE if BUILD else METHOD
@@ -29,16 +33,15 @@ if CONFIRM not in sys.path:
 RELATIONS = {"R1": "ssb_customer", "R2": "tpcds_core", "R3": "fresh_abs_mb"}
 ASSIGN = {"01": ("R1", "R2"), "02": ("R2", "R3"), "03": ("R3", "R1")}     # README, the same for E, P, U
 CONDITIONS = ("E", "P", "U")
-ANSWERS = "llm_fresh_full_q35_ms"         # the advisor of the live session: full truth, the settings of item 34
-VARIANT = "v5t"                           # the tolerant mode (mechanism c), statistics and LLM advisor
+ANSWERS = "llm_fresh_full_q35_ms"         # not read: the main form asks no model
+VARIANT = "v6s|lc+hone+kf+rl"             # the main form of the method: statistics only
 SAMPLES = os.path.join(os.path.dirname(SOURCE), "e3", "samples")      # build steps only
 
 
 def setenv(truth):
-    """the environment of the item-34 runs (CONFIRM_BATCH unset: the development pool of v5_dev)"""
+    """the environment of the method's runs"""
     os.environ["CONFIRM_ORACLE"] = "gold"
     os.environ["CONFIRM_TRUTH"] = truth
-    os.environ.pop("CONFIRM_BATCH", None)
 
 
 def parse(participant):
@@ -160,16 +163,18 @@ _PICKLES = {}
 
 
 def build(ds):
-    """(Rel, the data b of AC.load, the advisor of VARIANT) of relation ds under the full truth, from STUDY_SOURCE"""
+    """(Rel, the data b of AC.load, the advisor of VARIANT, as v6f.one builds it) of relation ds under the full truth, from
+    STUDY_SOURCE"""
     assert BUILD, "building needs STUDY_BUILD=1 (STUDY_SOURCE with all inputs)"
     import auto_common as AC
-    import v5
-    import v5study
+    import v6f
     rel = Rel(ds)
     setenv("full")
     b = AC.load(ds)
-    llm, _ = v5study.VARIANTS[VARIANT]
-    return rel, b, v5.advisor_for(b, os.path.join(SOURCE, ANSWERS), "q35", llm, True)[0]
+    adv = v6f.advisor_for(b, os.path.join(SOURCE, ANSWERS), "q35", False, True)[0]
+    adv.__class__ = v6f.LCAdvisor
+    adv.attach(v6f.class_rate(ds), [mask(p[0]) for p in b["P"]])
+    return rel, b, adv
 
 
 def prebuilt(ds):
