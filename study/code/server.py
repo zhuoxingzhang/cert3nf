@@ -434,7 +434,8 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--port", type=int, default=int(os.environ.get("PORT", 8765)))
     ap.add_argument("--host", default="0.0.0.0" if os.environ.get("PORT") else "127.0.0.1")
-    ap.add_argument("--minutes", type=float, default=S.LIVE_MINUTES)
+    ap.add_argument("--minutes", type=float, default=float(os.environ["STUDY_MINUTES"]) if os.environ.get("STUDY_MINUTES")
+                    else S.LIVE_MINUTES, help="a time limit of the live part (default STUDY_MINUTES, else none)")
     a = ap.parse_args()
     CFG["minutes"] = a.minutes
     CFG["tries"] = os.environ.get("STUDY_TRIES", "1") != "0"

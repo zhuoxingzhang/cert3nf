@@ -1,8 +1,8 @@
 """
 One session of the human-designer study (README).  First the 18 questions of the fixed block in
 the participant's order, then the live session, in which v6fstudy (the careful mode of the frozen method) asks and the
-participant answers yes, no or don't know, until the method ends, the budget of 100 is used, the live part reaches
-its time limit, or the participant stops.  A question that the method asks again is shown only after at least GAP
+participant answers yes, no or don't know, until the method ends, the budget of 100 is used, or the participant stops;
+the live part has no time limit (server.py --minutes sets one).  A question that the method asks again is shown only after at least GAP
 other questions; filler questions of the same relation fill the gap, and the method never reads their answers.
 
 Every shown question is one line of <participant>_s<n>_<relation>.jsonl, written once it is answered; the line
@@ -29,7 +29,7 @@ import drd                        # noqa: E402
 import v6fstudy                   # noqa: E402
 import upload as U                # noqa: E402
 
-GAP, LIVE_MINUTES = 3, 60
+GAP, LIVE_MINUTES = 3, None       # the study stops the live part at the budget of 100, not at a time
 KINDS = {"disc_q": "disc", "hone_q": "hone", "max_asked": "max", "guess_q": "guess", "reuse_q": "reuse", "qx_q": "qx",
          "confirm_q": "confirm", "reask_q": "reask"}
 VARIANT = "careful"               # the study: every premise is answered twice, since a person may err
@@ -224,7 +224,7 @@ class Session:
         p = self.next_method()
         if p is None:
             return None
-        if time.time() - self.live_t0 >= 60 * self.live_minutes:
+        if self.live_minutes is not None and time.time() - self.live_t0 >= 60 * self.live_minutes:
             return self.stop_method("time")
         _, z, a, k, kind = p
         if (z, a) in self.recent:

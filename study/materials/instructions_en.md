@@ -17,8 +17,7 @@ what the values look like. Answer
 (Conditions E and P only.) The documentation of the table: (links). You can open it at any time, also with the links
 above the questions.
 
-There are at most about 130 questions and at most about 55 minutes of answering. You can stop at any time with the
-Stop button, without giving a reason.
+There are at most about 130 questions. You can stop at any time with the Stop button, without giving a reason.
 
 ## Two practice questions (not part of the study)
 
