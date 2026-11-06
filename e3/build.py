@@ -45,6 +45,9 @@ if os.path.exists(os.path.join(HERE, "truth", "fresh.json")):  # the confirmator
 if os.path.exists(os.path.join(HERE, "truth", "fresh2.json")):  # the second confirmatory batch (item 33), same tooling
     with open(os.path.join(HERE, "truth", "fresh2.json"), encoding="utf-8") as _fh:
         FAMILIES["fresh2"] = list(json.load(_fh)["datasets"])
+if os.path.exists(os.path.join(HERE, "truth", "fresh3.json")):  # the third confirmatory batch, same tooling
+    with open(os.path.join(HERE, "truth", "fresh3.json"), encoding="utf-8") as _fh:
+        FAMILIES["fresh3"] = list(json.load(_fh)["datasets"])
 FAMILY = {ds: fam for fam, dss in FAMILIES.items() for ds in dss}
 CTU_CAP = 2000     # labeled false FDs kept per ctu relation (stage json)
 INSTANCE = {
@@ -59,6 +62,8 @@ INSTANCE = {
     "fresh": {"generator": "public data fixed before download for the confirmatory evaluation, joined by fresh.py"},
     "fresh2": {"generator": "public data fixed before download for the second confirmatory evaluation (item 33), "
                             "converted by unpack_fresh2.py and joined by fresh.py"},
+    "fresh3": {"generator": "public data fixed before download for the third confirmatory evaluation, "
+                            "converted by unpack_fresh3.py and joined by fresh.py"},
 }
 
 
@@ -112,7 +117,7 @@ def instances(tbl_dir, wanted):
         elif FAMILY[d] == "ctu":
             import ctu
             out[d] = ctu.instance(d, truth_spec(d)[1])
-        elif FAMILY[d] in ("fresh", "fresh2"):
+        elif FAMILY[d] in ("fresh", "fresh2", "fresh3"):
             import fresh
             out[d] = fresh.instance(d, truth_spec(d)[1])
     return {d: out[d] for d in wanted}

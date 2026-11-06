@@ -1,0 +1,1 @@
+{"dataset": "fresh3_tpcc_stock", "truth": "sure", "oracle": "gold", "attributes": 17, "counterexample": "min", "data_fds": 238, "finished": 1, "visited": 65538, "yes": 1, "no": 65529, "unit": 589730, "unit_yes": 16, "basis": 1, "counterexamples": 65529, "equivalent": 1, "secs": 1.7, "wall": 1.7}

@@ -1,0 +1,1 @@
+{"dataset": "fresh3_tpcc_customer", "truth": "full", "oracle": "gold", "attributes": 14, "counterexample": "min", "data_fds": 272, "finished": 1, "visited": 8259, "yes": 2, "no": 8176, "unit": 50440, "unit_yes": 12, "basis": 2, "counterexamples": 8176, "equivalent": 1, "secs": 0.0, "wall": 0.0}

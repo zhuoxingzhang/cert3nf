@@ -114,6 +114,8 @@ def build(spec):
         idx = {}
         for rec in tabs[r]:
             k = tuple(rec[c] for c in j["key"])
+            if not all(k):      # never matched (a join looks up only complete references): the empty rows of the ONSPD lookups
+                continue
             assert k not in idx, f"key {j['key']} of {r} is not unique: {k}"
             idx[k] = rec
         index[id(j)] = idx

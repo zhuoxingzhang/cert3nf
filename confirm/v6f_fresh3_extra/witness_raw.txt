@@ -1,0 +1,98 @@
+== truth full
+relation                      gold unreach violated witness  examples of witness failures
+fresh3_tpcc_order_line          23       1        1       0  
+fresh3_tpcc_stock               16       0        0       0  
+fresh3_tpcc_customer            12       0        0       0  
+fresh3_twitter_tweets            4       0        0       0  
+fresh3_synthea_encounters       23       0        0       0  
+fresh3_synthea_claims           22       0        0       0  
+fresh3_synthea_claims_transactions    21       0        0       0  
+fresh3_hgnc                     94      22       22       0  
+fresh3_gleif                    24       0        0       0  
+fresh3_onspd                    61      21       21       0  
+fresh3_fec_candidate            30       0        0       0  
+fresh3_fec_committee            27       0        0       0  
+fresh3_fec_linkage              43       0        0       0  
+fresh3_ourairports_airports     77       1        1       0  
+fresh3_ourairports_navaids      53      19       19       0  
+fresh3_ourairports_frequencies    69       1        1       0  
+fresh3_nppes_npidata            23       0        0       0  
+fresh3_companieshouse           24       0        0       0  
+fresh3_openpayments_general     35       3        3       0  
+fresh3_openpayments_profile     27       0        0       0  
+fresh3_stackexchange_posts      35       0        0       0  
+fresh3_stackexchange_users       7       0        0       0  
+fresh3_stackexchange_postlinks    42       0        0       0  
+== truth sure
+relation                      gold unreach violated witness  examples of witness failures
+fresh3_tpcc_order_line          21       0        0       0  
+fresh3_tpcc_stock               16       0        0       0  
+fresh3_tpcc_customer            12       0        0       0  
+fresh3_twitter_tweets            4       0        0       0  
+fresh3_synthea_encounters       23       0        0       0  
+fresh3_synthea_claims           22       0        0       0  
+fresh3_synthea_claims_transactions    21       0        0       0  
+fresh3_hgnc                     46       0        0       0  
+fresh3_gleif                    24       0        0       0  
+fresh3_onspd                    44       7        7       0  
+fresh3_fec_candidate            30       0        0       0  
+fresh3_fec_committee            27       0        0       0  
+fresh3_fec_linkage              41       0        0       0  
+fresh3_ourairports_airports     76       0        0       0  
+fresh3_ourairports_navaids      53      19       19       0  
+fresh3_ourairports_frequencies    68       0        0       0  
+fresh3_nppes_npidata            23       0        0       0  
+fresh3_companieshouse           24       0        0       0  
+fresh3_openpayments_general     34       3        3       0  
+fresh3_openpayments_profile     27       0        0       0  
+fresh3_stackexchange_posts      35       0        0       0  
+fresh3_stackexchange_users       7       0        0       0  
+fresh3_stackexchange_postlinks    42       0        0       0  
+== documented FDs violated by the data, truth full
+   fresh3_tpcc_order_line 1  OL_O_ID,O_ENTRY_D -> OL_DELIVERY_D
+   fresh3_tpcc_stock    0  
+   fresh3_tpcc_customer 0  
+   fresh3_twitter_tweets 0  
+   fresh3_synthea_encounters 0  
+   fresh3_synthea_claims 0  
+   fresh3_synthea_claims_transactions 0  
+   fresh3_hgnc          22  agr -> hgnc_id; agr -> symbol; agr -> name; agr -> locus_group; agr -> locus_type; agr -> location; agr -> gene_family; agr -> gene_family_id; agr -> date_approved_reserved; agr -> date_symbol_changed; agr -> date_name_changed; agr -> date_modified; agr -> entrez_id; agr -> ensembl_gene_id; agr -> vega_id; agr -> ucsc_id; agr -> refseq_accession; agr -> ccds_id; agr -> uniprot_ids; agr -> omim_id; agr -> mgd_id; agr -> rgd_id
+   fresh3_gleif         0  
+   fresh3_onspd         21  OA11CD -> SICBL26CD; OA11CD -> ICB26CD; LSOA11CD -> SICBL26CD; LSOA11CD -> ICB26CD; SICBL26CD -> ICB26CD; LAD26CD -> CTRY26CD; LAD26CD -> CTRY25NM; CTY26CD -> CTRY26CD; CTY26CD -> CTRY25NM; PCON24CD -> CTRY26CD; PCON24CD -> CTRY25NM; PFA23CD -> CTRY26CD; PFA23CD -> CTRY25NM; OA11CD -> CTRY26CD; OA11CD -> CTRY25NM; LSOA11CD -> CTRY26CD; LSOA11CD -> CTRY25NM; LAD26CD -> RGN26CD; LAD26CD -> ITL25CD; OA11CD -> ITL25CD; CTRY26CD,IMD20IND -> LSOA11CD
+   fresh3_fec_candidate 0  
+   fresh3_fec_committee 0  
+   fresh3_fec_linkage   0  
+   fresh3_ourairports_airports 1  icao_code -> gps_code
+   fresh3_ourairports_navaids 19  filename -> id; filename -> ident; filename -> frequency_khz; filename -> latitude_deg; filename -> longitude_deg; filename -> elevation_ft; filename -> dme_frequency_khz; filename -> dme_channel; filename -> dme_latitude_deg; filename -> dme_longitude_deg; filename -> dme_elevation_ft; filename -> slaved_variation_deg; filename -> magnetic_variation_deg; filename -> usageType; filename -> power; filename -> associated_airport; filename -> airport_name; filename -> airport_type; filename -> airport_iso_country
+   fresh3_ourairports_frequencies 1  airport_icao_code -> airport_gps_code
+   fresh3_nppes_npidata 0  
+   fresh3_companieshouse 0  
+   fresh3_openpayments_general 3  Teaching_Hospital_ID -> Teaching_Hospital_Name; Teaching_Hospital_CCN -> Teaching_Hospital_Name; Applicable_Manufacturer_or_Applicable_GPO_Making_Payment_ID -> Applicable_Manufacturer_or_Applicable_GPO_Making_Payment_Name
+   fresh3_openpayments_profile 0  
+   fresh3_stackexchange_posts 0  
+   fresh3_stackexchange_users 0  
+   fresh3_stackexchange_postlinks 0  
+== documented FDs violated by the data, truth sure
+   fresh3_tpcc_order_line 0  
+   fresh3_tpcc_stock    0  
+   fresh3_tpcc_customer 0  
+   fresh3_twitter_tweets 0  
+   fresh3_synthea_encounters 0  
+   fresh3_synthea_claims 0  
+   fresh3_synthea_claims_transactions 0  
+   fresh3_hgnc          0  
+   fresh3_gleif         0  
+   fresh3_onspd         7  OA11CD -> SICBL26CD; OA11CD -> ICB26CD; LSOA11CD -> SICBL26CD; LSOA11CD -> ICB26CD; SICBL26CD -> ICB26CD; LAD26CD -> CTRY26CD; LAD26CD -> CTRY25NM
+   fresh3_fec_candidate 0  
+   fresh3_fec_committee 0  
+   fresh3_fec_linkage   0  
+   fresh3_ourairports_airports 0  
+   fresh3_ourairports_navaids 19  filename -> id; filename -> ident; filename -> frequency_khz; filename -> latitude_deg; filename -> longitude_deg; filename -> elevation_ft; filename -> dme_frequency_khz; filename -> dme_channel; filename -> dme_latitude_deg; filename -> dme_longitude_deg; filename -> dme_elevation_ft; filename -> slaved_variation_deg; filename -> magnetic_variation_deg; filename -> usageType; filename -> power; filename -> associated_airport; filename -> airport_name; filename -> airport_type; filename -> airport_iso_country
+   fresh3_ourairports_frequencies 0  
+   fresh3_nppes_npidata 0  
+   fresh3_companieshouse 0  
+   fresh3_openpayments_general 3  Teaching_Hospital_ID -> Teaching_Hospital_Name; Teaching_Hospital_CCN -> Teaching_Hospital_Name; Applicable_Manufacturer_or_Applicable_GPO_Making_Payment_ID -> Applicable_Manufacturer_or_Applicable_GPO_Making_Payment_Name
+   fresh3_openpayments_profile 0  
+   fresh3_stackexchange_posts 0  
+   fresh3_stackexchange_users 0  
+   fresh3_stackexchange_postlinks 0  

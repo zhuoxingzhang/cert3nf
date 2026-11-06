@@ -1,0 +1,524 @@
+{
+ "dataset": "fresh3_tpcc_stock",
+ "family": "fresh3",
+ "truth_kind": "documented (confirmatory, batch 3)",
+ "source": "the relations of the third confirmatory batch, specified from publisher documentation (e3/truth/docs/fresh3/) by three subagents that never saw data, mined FDs or model answers; parts A (TPC-C, Epinions, Twitter, Synthea), B (HGNC, GLEIF, ONSPD, FEC, OurAirports), C (NPPES, Companies House, Open Payments, Stack Exchange)",
+ "rule": "part A: part A: Sigma* is the set of FDs that the publisher documentation implies among the attributes of each relation, projected and closed over the dropped columns, each with a verbatim quote; sure when the quoted text states it (a declared primary key, unique constraint or foreign key to a declared key in the pinned DDL, a ':key:' row or a 'Foreign key to' row of the Synthea data dictionary), unsure when it needs an inference the text does not spell out. For the three BenchBase benchmarks the DDL at the pinned commit is the specification of the generated data (scale factor 1, loaded and never executed); a dependency that the TPC-C specification or the OLTP-Bench paper states and the DDL neither declares nor contradicts is recorded with sure: false, quoting both; the TPC-C population rules (clause 4.3.3.1) make the warehouse ids and several other columns constant at one warehouse, and these constants are dropped as rule 1 asks, the declared keys being projected onto the kept columns with both quotes (a projected key stays sure, since a key minus a documented constant is a key, and key is null because the declared key is not wholly among the attributes); a root without a declared key keeps key null and only the foreign-key dependencies. For Synthea the CSV File Data Dictionary is the specification. Dependencies the documentation hints at but does not state (code -> description, random strings that happen to be unique, accidental equalities of generated data, counts and conditional constants) are listed under undocumented_regularities and are not part of Sigma*. Written from the documentation alone, before any data file was opened. part B: Sigma* is the set of FDs that the publisher documentation implies among the attributes of each relation, projected and closed over the dropped columns, each with a verbatim quote (file name and section or page) and a one-sentence justification; sure when the quoted text states it (a declared key or unique identifier of the root such as 'list each LEI only once', 'one record for each candidate', 'Unique link ID' or 'the actual internal OurAirports primary key is id', a foreign key or look-up reference to a table with a declared key, an allocation 'via lookup' from one geography to another, a stated derivation of one column from another, a stated containment such as 'each consists of a grouping of OAs'); unsure when it needs an inference the text does not spell out (a country read off a per-country code range, a nesting stated in the past tense or for another vintage, a copy of a master's value in a linkage file), when the text is ambiguous, or when the left-hand side can be empty or unresolved (an optional ISO 3166-2 region, a reserved ELF code, a dangling look-up) so that the dependency holds among non-empty values only. Plausible, common-knowledge or value-level implications (ISSUED implies ACTIVE, a ZIP code implies a state) and documented non-dependencies (a pseudo code shared by every district of a country, a gps_code 'not guaranteed to be globally unique', 'the same frequency may appear multiple times for an airport') are listed under undocumented_regularities and are not part of Sigma*. Columns are named exactly as the documentation spells them (GLEIF: the Golden Copy CSV element paths of the Data Dictionary; ONSPD: the field names of Annex A of the August 2026 user guide; FEC: the header files; OurAirports and HGNC: the dictionary / archive page); where two tables share a name the looked-up column is prefixed (CN_, CM_, airport_, region_, country_). Many-to-one joins only, along keys the documentation declares; one relation per documented root table, named fresh3_<source>_<root> where a source has several; the GLEIF code lists were not written because their CSV headers are undocumented and the ELF code is not a row key of the ELF list. Written from the documentation alone, before any data file was opened. part C: Sigma* is the set of FDs that the publisher documentation implies among the attributes of each relation, projected and closed over the dropped columns, each with a verbatim quote naming the file and the section or page; sure when the quoted text states it (a declared key or unique identifier of the root, a declared unique identifier of an entity determining that entity's other documented attributes, a foreign key or link to a table with a declared key; a table that the schema documentation marks as the parent table of foreign keys that reference it by its Id counts as having Id declared), unsure when it needs an inference the text does not spell out (the justification says which); both directions of an identifier pair get the same standard. Plausible or common-knowledge dependencies (postal geography, company law, one profile per NPI, one badge class per badge name), documented conditional-emptiness statements and documented non-dependencies are listed under undocumented_regularities and are not part of Sigma*. A relation whose documentation declares no key of the root gets key null (the NPPES reference files, whose rows are 'associated with an NPI record' without a declared key of their own; Stack Exchange Comments, Votes, Badges, PostHistory, whose Id FD is kept with sure false), so that item 61 (b) 2 can exclude it by rule. Relations have at most 25 attributes, many-to-one joins only along keys the documentation declares (a file in two roles is two tables), columns named exactly as the documentation spells them, and no person name, street address, telephone, e-mail or licence number. Written from the documentation alone, before any data file was opened.",
+ "instance": {
+  "generator": "public data fixed before download for the third confirmatory evaluation, converted by unpack_fresh3.py and joined by fresh.py",
+  "rows": 100000,
+  "construction": "BenchBase (benchbase at commit 33c00473807ebd49304d114a6d769d2d2b2bbb34), benchmark tpcc, generated into SQLite at scale factor 1 (config/sqlite/sample_tpcc_config.xml, whose comment reads 'Scale factor is the number of warehouses in TPCC', with <scalefactor>1</scalefactor> as in the sample; --create=true --load=true and no --execute, so every table holds the initial population of clause 4.3.3.1 of the specification; the DDL BenchBase applies for SQLite is ddl-generic.sql, which spells the tables and columns in upper case, while ddl-postgres.sql spells the same names in lower case; SQLite identifiers are case-insensitive, so each table is exported under its lower-case name and the columns under the spelling of ddl-generic.sql), every table exported to benchbase/tpcc/<table>.csv: stock (root, 100,000 rows: clause 4.3.3.1 '100,000 rows in the STOCK table') left-joined to item on S_I_ID = I_ID; the declared reference S_W_ID to warehouse is not joined (one constant row); all columns of stock and item are kept except the constants; dropped as documented constants of one warehouse or of the initial population the warehouse-id columns (OL_W_ID, OL_SUPPLY_W_ID, NO_W_ID, O_W_ID, C_W_ID, D_W_ID, S_W_ID) and the whole warehouse table (one row), OL_QUANTITY, O_ALL_LOCAL, C_MIDDLE, C_CREDIT_LIM, C_BALANCE, C_YTD_PAYMENT, C_PAYMENT_CNT, C_DELIVERY_CNT, D_YTD, D_NEXT_O_ID, S_YTD, S_ORDER_CNT, S_REMOTE_CNT; because every declared key contains a dropped warehouse id, key is null and the truth carries the projected keys; the ids of the joined tables equal the join columns; timestamps are relative to the load time, so the generated database is kept as the snapshot.",
+  "cleaning": {
+   "records": 100000,
+   "records_after_deduplication": 100000,
+   "sampled_from": null,
+   "kept": 100000,
+   "repaired_for": "the sure FDs of Sigma*",
+   "removed_per_fd": {},
+   "missing_values": "empty and missing references become '?', kept as a value (null = null)"
+  }
+ },
+ "attributes": [
+  "S_I_ID",
+  "S_QUANTITY",
+  "S_DIST_01",
+  "S_DIST_02",
+  "S_DIST_03",
+  "S_DIST_04",
+  "S_DIST_05",
+  "S_DIST_06",
+  "S_DIST_07",
+  "S_DIST_08",
+  "S_DIST_09",
+  "S_DIST_10",
+  "S_DATA",
+  "I_IM_ID",
+  "I_NAME",
+  "I_PRICE",
+  "I_DATA"
+ ],
+ "dropped_constant_columns": [],
+ "distinct_values": {
+  "S_I_ID": 100000,
+  "S_QUANTITY": 91,
+  "S_DIST_01": 100000,
+  "S_DIST_02": 100000,
+  "S_DIST_03": 100000,
+  "S_DIST_04": 100000,
+  "S_DIST_05": 100000,
+  "S_DIST_06": 100000,
+  "S_DIST_07": 100000,
+  "S_DIST_08": 100000,
+  "S_DIST_09": 100000,
+  "S_DIST_10": 100000,
+  "S_DATA": 100000,
+  "I_IM_ID": 9997,
+  "I_NAME": 100000,
+  "I_PRICE": 9900,
+  "I_DATA": 100000
+ },
+ "truth": [
+  {
+   "lhs": [
+    "S_I_ID"
+   ],
+   "rhs": [
+    "S_QUANTITY",
+    "S_DIST_01",
+    "S_DIST_02",
+    "S_DIST_03",
+    "S_DIST_04",
+    "S_DIST_05",
+    "S_DIST_06",
+    "S_DIST_07",
+    "S_DIST_08",
+    "S_DIST_09",
+    "S_DIST_10",
+    "S_DATA"
+   ],
+   "sure": true,
+   "clause": "benchbase_tpcc_ddl-generic.sql, CREATE TABLE STOCK: \"PRIMARY KEY (S_W_ID, S_I_ID)\"; benchbase_tpcc_ddl-postgres.sql, CREATE TABLE stock: \"PRIMARY KEY (s_w_id, s_i_id)\"; tpcc_v5.11.0.pdf, clause 1.3 STOCK Table Layout (p. 17): \"Primary Key: (S_W_ID, S_I_ID)\"; benchbase_tpcc_sample_sqlite_config.xml: \"<!-- Scale factor is the number of warehouses in TPCC -->\" and \"<scalefactor>1</scalefactor>\"; tpcc_v5.11.0.pdf, clause 4.3.3.1 (p. 65): \"1 row in the WAREHOUSE table for each configured warehouse with:\" \"W_ID unique within [number_of_configured_warehouses]\"; tpcc_v5.11.0.pdf, clause 4.3.3.1 (p. 66): \"S_W_ID = W_ID\" and \"100,000 rows in the STOCK table with:\" \"S_I_ID unique within [100,000]\"",
+   "justification": "(S_W_ID, S_I_ID) is the declared primary key of stock; at scale factor 1 S_W_ID is the single warehouse and is dropped as a constant, so S_I_ID is a key of the root and the right-hand side are its other columns.",
+   "audit": {
+    "verdicts": {
+     "S_QUANTITY": "TRUE",
+     "S_DIST_01": "TRUE",
+     "S_DIST_02": "TRUE",
+     "S_DIST_03": "TRUE",
+     "S_DIST_04": "TRUE",
+     "S_DIST_05": "TRUE",
+     "S_DIST_06": "TRUE",
+     "S_DIST_07": "TRUE",
+     "S_DIST_08": "TRUE",
+     "S_DIST_09": "TRUE",
+     "S_DIST_10": "TRUE",
+     "S_DATA": "TRUE"
+    },
+    "quote": "benchbase_tpcc_ddl-generic.sql, CREATE TABLE STOCK: \"S_W_ID INT NOT NULL REFERENCES WAREHOUSE (W_ID),\" \"PRIMARY KEY (S_W_ID, S_I_ID)\" ‖ benchbase_tpcc_ddl-postgres.sql, CREATE TABLE stock: \"FOREIGN KEY (s_w_id) REFERENCES warehouse (w_id) ON DELETE CASCADE,\" \"PRIMARY KEY (s_w_id, s_i_id)\" ‖ tpcc_v5.11.0.pdf, clause 1.3 STOCK Table Layout (p. 17): \"Primary Key: (S_W_ID, S_I_ID)\" and \"S_W_ID Foreign Key, references W_ID\" ‖ benchbase_tpcc_sample_sqlite_config.xml: \"<!-- Scale factor is the number of warehouses in TPCC -->\" and \"<scalefactor>1</scalefactor>\" ‖ benchbase_tpcc_ddl-generic.sql, CREATE TABLE WAREHOUSE: \"PRIMARY KEY (W_ID)\" ‖ tpcc_v5.11.0.pdf, clause 4.3.3.1 (p. 65): \"1 row in the WAREHOUSE table for each configured warehouse with:\" \"W_ID unique within [number_of_configured_warehouses]\" ‖ tpcc_v5.11.0.pdf, clause 4.3.3.1 (p. 66): \"100,000 rows in the STOCK table with:\" \"S_I_ID unique within [100,000]\" \"S_W_ID = W_ID\"",
+    "source": "tpcc_v5.11.0.pdf, clause 1.3 (p. 17) and clause 4.3.3.1 (pp. 65-66); benchbase_tpcc_ddl-generic.sql; benchbase_tpcc_ddl-postgres.sql; benchbase_tpcc_sample_sqlite_config.xml"
+   }
+  },
+  {
+   "lhs": [
+    "S_I_ID"
+   ],
+   "rhs": [
+    "I_IM_ID",
+    "I_NAME",
+    "I_PRICE",
+    "I_DATA"
+   ],
+   "sure": true,
+   "clause": "benchbase_tpcc_ddl-generic.sql, CREATE TABLE STOCK: \"S_I_ID       INT           NOT NULL REFERENCES ITEM (I_ID)\"; benchbase_tpcc_ddl-postgres.sql, CREATE TABLE stock: \"FOREIGN KEY (s_i_id) REFERENCES item (i_id) ON DELETE CASCADE\"; tpcc_v5.11.0.pdf, clause 1.3 STOCK Table Layout (p. 17): \"S_I_ID Foreign Key, references I_ID\"; benchbase_tpcc_ddl-generic.sql, CREATE TABLE ITEM: \"PRIMARY KEY (I_ID)\"; benchbase_tpcc_ddl-postgres.sql, CREATE TABLE item: \"PRIMARY KEY (i_id)\"; tpcc_v5.11.0.pdf, clause 1.3 ITEM Table Layout (p. 17): \"Primary Key: I_ID\"",
+   "justification": "S_I_ID of the stock row (the root itself) references the declared primary key of item, so S_I_ID identifies one item and its columns.",
+   "audit": {
+    "verdicts": {
+     "I_IM_ID": "TRUE",
+     "I_NAME": "TRUE",
+     "I_PRICE": "TRUE",
+     "I_DATA": "TRUE"
+    },
+    "quote": "benchbase_tpcc_ddl-generic.sql, CREATE TABLE STOCK: \"S_I_ID INT NOT NULL REFERENCES ITEM (I_ID),\" ‖ benchbase_tpcc_ddl-postgres.sql, CREATE TABLE stock: \"FOREIGN KEY (s_i_id) REFERENCES item (i_id) ON DELETE CASCADE,\" ‖ tpcc_v5.11.0.pdf, clause 1.3 STOCK Table Layout (p. 17): \"S_I_ID Foreign Key, references I_ID\" ‖ benchbase_tpcc_ddl-generic.sql, CREATE TABLE ITEM: \"PRIMARY KEY (I_ID)\" ‖ benchbase_tpcc_ddl-postgres.sql, CREATE TABLE item: \"PRIMARY KEY (i_id)\" ‖ tpcc_v5.11.0.pdf, clause 1.3 ITEM Table Layout (p. 17): \"Primary Key: I_ID\"",
+    "source": "tpcc_v5.11.0.pdf, clause 1.3 (p. 17) and clause 4.3.3.1 (pp. 65-66); benchbase_tpcc_ddl-generic.sql; benchbase_tpcc_ddl-postgres.sql; benchbase_tpcc_sample_sqlite_config.xml"
+   }
+  }
+ ],
+ "truth_counts": {
+  "fds": 2,
+  "single_rhs": 16,
+  "sure_single_rhs": 16
+ },
+ "random_columns": null,
+ "truth_fds_violated_by_data": [],
+ "gold_design": null,
+ "gold_design_note": "No normalized design is published; the 3NF designs of Sigma* are synthesized.",
+ "truth_design": {
+  "keys": [
+   [
+    "S_I_ID"
+   ]
+  ],
+  "atomic_closure": 16,
+  "synthesis": [
+   [
+    "I_DATA",
+    "S_I_ID"
+   ],
+   [
+    "I_IM_ID",
+    "S_I_ID"
+   ],
+   [
+    "I_NAME",
+    "S_I_ID"
+   ],
+   [
+    "I_PRICE",
+    "S_I_ID"
+   ],
+   [
+    "S_DATA",
+    "S_I_ID"
+   ],
+   [
+    "S_DIST_01",
+    "S_I_ID"
+   ],
+   [
+    "S_DIST_02",
+    "S_I_ID"
+   ],
+   [
+    "S_DIST_03",
+    "S_I_ID"
+   ],
+   [
+    "S_DIST_04",
+    "S_I_ID"
+   ],
+   [
+    "S_DIST_05",
+    "S_I_ID"
+   ],
+   [
+    "S_DIST_06",
+    "S_I_ID"
+   ],
+   [
+    "S_DIST_07",
+    "S_I_ID"
+   ],
+   [
+    "S_DIST_08",
+    "S_I_ID"
+   ],
+   [
+    "S_DIST_09",
+    "S_I_ID"
+   ],
+   [
+    "S_DIST_10",
+    "S_I_ID"
+   ],
+   [
+    "S_I_ID",
+    "S_QUANTITY"
+   ]
+  ],
+  "iconf": [
+   [
+    "I_DATA",
+    "S_I_ID"
+   ],
+   [
+    "I_IM_ID",
+    "S_I_ID"
+   ],
+   [
+    "I_NAME",
+    "S_I_ID"
+   ],
+   [
+    "I_PRICE",
+    "S_I_ID"
+   ],
+   [
+    "S_DATA",
+    "S_I_ID"
+   ],
+   [
+    "S_DIST_01",
+    "S_I_ID"
+   ],
+   [
+    "S_DIST_02",
+    "S_I_ID"
+   ],
+   [
+    "S_DIST_03",
+    "S_I_ID"
+   ],
+   [
+    "S_DIST_04",
+    "S_I_ID"
+   ],
+   [
+    "S_DIST_05",
+    "S_I_ID"
+   ],
+   [
+    "S_DIST_06",
+    "S_I_ID"
+   ],
+   [
+    "S_DIST_07",
+    "S_I_ID"
+   ],
+   [
+    "S_DIST_08",
+    "S_I_ID"
+   ],
+   [
+    "S_DIST_09",
+    "S_I_ID"
+   ],
+   [
+    "S_DIST_10",
+    "S_I_ID"
+   ],
+   [
+    "S_I_ID",
+    "S_QUANTITY"
+   ]
+  ]
+ },
+ "mined": {
+  "algorithm": "fdmine.py: exact discovery of all minimal FDs in the style of HyFD (no HyFD binary was available); the complete set of minimal FDs is unique, so it equals HyFD's output",
+  "file": "mined/fresh3_tpcc_stock-fds.txt",
+  "seconds": 0.5,
+  "count": 238,
+  "implied_by_truth": 16,
+  "accidental": 222,
+  "implied_by_sure_truth": 16
+ },
+ "fds": [
+  {"lhs": ["S_DIST_01"], "rhs": "S_I_ID", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "i", "id"]},
+  {"lhs": ["S_DIST_02"], "rhs": "S_I_ID", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "i", "id"]},
+  {"lhs": ["S_DIST_03"], "rhs": "S_I_ID", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "i", "id"]},
+  {"lhs": ["S_DIST_04"], "rhs": "S_I_ID", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "i", "id"]},
+  {"lhs": ["S_DIST_05"], "rhs": "S_I_ID", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "i", "id"]},
+  {"lhs": ["S_DIST_06"], "rhs": "S_I_ID", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "i", "id"]},
+  {"lhs": ["S_DIST_07"], "rhs": "S_I_ID", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "i", "id"]},
+  {"lhs": ["S_DIST_08"], "rhs": "S_I_ID", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "i", "id"]},
+  {"lhs": ["S_DIST_09"], "rhs": "S_I_ID", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "i", "id"]},
+  {"lhs": ["S_DIST_10"], "rhs": "S_I_ID", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "i", "id"]},
+  {"lhs": ["S_DATA"], "rhs": "S_I_ID", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "data"]], "rhs_tokens": ["s", "i", "id"]},
+  {"lhs": ["I_NAME"], "rhs": "S_I_ID", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["i", "name"]], "rhs_tokens": ["s", "i", "id"]},
+  {"lhs": ["I_DATA"], "rhs": "S_I_ID", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["i", "data"]], "rhs_tokens": ["s", "i", "id"]},
+  {"lhs": ["S_I_ID"], "rhs": "S_QUANTITY", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 91, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.00091, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "i", "id"]], "rhs_tokens": ["s", "quantity"]},
+  {"lhs": ["S_DIST_01"], "rhs": "S_QUANTITY", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 91, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.00091, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "quantity"]},
+  {"lhs": ["S_DIST_02"], "rhs": "S_QUANTITY", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 91, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.00091, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "quantity"]},
+  {"lhs": ["S_DIST_03"], "rhs": "S_QUANTITY", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 91, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.00091, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "quantity"]},
+  {"lhs": ["S_DIST_04"], "rhs": "S_QUANTITY", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 91, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.00091, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "quantity"]},
+  {"lhs": ["S_DIST_05"], "rhs": "S_QUANTITY", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 91, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.00091, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "quantity"]},
+  {"lhs": ["S_DIST_06"], "rhs": "S_QUANTITY", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 91, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.00091, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "quantity"]},
+  {"lhs": ["S_DIST_07"], "rhs": "S_QUANTITY", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 91, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.00091, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "quantity"]},
+  {"lhs": ["S_DIST_08"], "rhs": "S_QUANTITY", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 91, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.00091, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "quantity"]},
+  {"lhs": ["S_DIST_09"], "rhs": "S_QUANTITY", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 91, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.00091, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "quantity"]},
+  {"lhs": ["S_DIST_10"], "rhs": "S_QUANTITY", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 91, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.00091, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "quantity"]},
+  {"lhs": ["S_DATA"], "rhs": "S_QUANTITY", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 91, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.00091, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "data"]], "rhs_tokens": ["s", "quantity"]},
+  {"lhs": ["I_NAME"], "rhs": "S_QUANTITY", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 91, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.00091, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["i", "name"]], "rhs_tokens": ["s", "quantity"]},
+  {"lhs": ["I_DATA"], "rhs": "S_QUANTITY", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 91, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.00091, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["i", "data"]], "rhs_tokens": ["s", "quantity"]},
+  {"lhs": ["S_I_ID"], "rhs": "S_DIST_01", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "i", "id"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_02"], "rhs": "S_DIST_01", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_03"], "rhs": "S_DIST_01", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_04"], "rhs": "S_DIST_01", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_05"], "rhs": "S_DIST_01", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_06"], "rhs": "S_DIST_01", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_07"], "rhs": "S_DIST_01", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_08"], "rhs": "S_DIST_01", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_09"], "rhs": "S_DIST_01", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_10"], "rhs": "S_DIST_01", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DATA"], "rhs": "S_DIST_01", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "data"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["I_NAME"], "rhs": "S_DIST_01", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["i", "name"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["I_DATA"], "rhs": "S_DIST_01", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["i", "data"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_I_ID"], "rhs": "S_DIST_02", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "i", "id"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_01"], "rhs": "S_DIST_02", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_03"], "rhs": "S_DIST_02", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_04"], "rhs": "S_DIST_02", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_05"], "rhs": "S_DIST_02", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_06"], "rhs": "S_DIST_02", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_07"], "rhs": "S_DIST_02", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_08"], "rhs": "S_DIST_02", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_09"], "rhs": "S_DIST_02", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_10"], "rhs": "S_DIST_02", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DATA"], "rhs": "S_DIST_02", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "data"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["I_NAME"], "rhs": "S_DIST_02", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["i", "name"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["I_DATA"], "rhs": "S_DIST_02", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["i", "data"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_I_ID"], "rhs": "S_DIST_03", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "i", "id"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_01"], "rhs": "S_DIST_03", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_02"], "rhs": "S_DIST_03", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_04"], "rhs": "S_DIST_03", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_05"], "rhs": "S_DIST_03", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_06"], "rhs": "S_DIST_03", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_07"], "rhs": "S_DIST_03", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_08"], "rhs": "S_DIST_03", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_09"], "rhs": "S_DIST_03", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_10"], "rhs": "S_DIST_03", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DATA"], "rhs": "S_DIST_03", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "data"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["I_NAME"], "rhs": "S_DIST_03", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["i", "name"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["I_DATA"], "rhs": "S_DIST_03", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["i", "data"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_I_ID"], "rhs": "S_DIST_04", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "i", "id"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_01"], "rhs": "S_DIST_04", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_02"], "rhs": "S_DIST_04", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_03"], "rhs": "S_DIST_04", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_05"], "rhs": "S_DIST_04", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_06"], "rhs": "S_DIST_04", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_07"], "rhs": "S_DIST_04", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_08"], "rhs": "S_DIST_04", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_09"], "rhs": "S_DIST_04", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_10"], "rhs": "S_DIST_04", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DATA"], "rhs": "S_DIST_04", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "data"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["I_NAME"], "rhs": "S_DIST_04", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["i", "name"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["I_DATA"], "rhs": "S_DIST_04", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["i", "data"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_I_ID"], "rhs": "S_DIST_05", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "i", "id"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_01"], "rhs": "S_DIST_05", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_02"], "rhs": "S_DIST_05", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_03"], "rhs": "S_DIST_05", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_04"], "rhs": "S_DIST_05", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_06"], "rhs": "S_DIST_05", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_07"], "rhs": "S_DIST_05", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_08"], "rhs": "S_DIST_05", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_09"], "rhs": "S_DIST_05", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_10"], "rhs": "S_DIST_05", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DATA"], "rhs": "S_DIST_05", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "data"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["I_NAME"], "rhs": "S_DIST_05", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["i", "name"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["I_DATA"], "rhs": "S_DIST_05", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["i", "data"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_I_ID"], "rhs": "S_DIST_06", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "i", "id"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_01"], "rhs": "S_DIST_06", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_02"], "rhs": "S_DIST_06", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_03"], "rhs": "S_DIST_06", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_04"], "rhs": "S_DIST_06", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_05"], "rhs": "S_DIST_06", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_07"], "rhs": "S_DIST_06", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_08"], "rhs": "S_DIST_06", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_09"], "rhs": "S_DIST_06", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_10"], "rhs": "S_DIST_06", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DATA"], "rhs": "S_DIST_06", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "data"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["I_NAME"], "rhs": "S_DIST_06", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["i", "name"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["I_DATA"], "rhs": "S_DIST_06", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["i", "data"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_I_ID"], "rhs": "S_DIST_07", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "i", "id"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_01"], "rhs": "S_DIST_07", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_02"], "rhs": "S_DIST_07", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_03"], "rhs": "S_DIST_07", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_04"], "rhs": "S_DIST_07", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_05"], "rhs": "S_DIST_07", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_06"], "rhs": "S_DIST_07", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_08"], "rhs": "S_DIST_07", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_09"], "rhs": "S_DIST_07", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_10"], "rhs": "S_DIST_07", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DATA"], "rhs": "S_DIST_07", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "data"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["I_NAME"], "rhs": "S_DIST_07", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["i", "name"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["I_DATA"], "rhs": "S_DIST_07", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["i", "data"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_I_ID"], "rhs": "S_DIST_08", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "i", "id"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_01"], "rhs": "S_DIST_08", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_02"], "rhs": "S_DIST_08", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_03"], "rhs": "S_DIST_08", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_04"], "rhs": "S_DIST_08", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_05"], "rhs": "S_DIST_08", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_06"], "rhs": "S_DIST_08", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_07"], "rhs": "S_DIST_08", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_09"], "rhs": "S_DIST_08", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_10"], "rhs": "S_DIST_08", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DATA"], "rhs": "S_DIST_08", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "data"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["I_NAME"], "rhs": "S_DIST_08", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["i", "name"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["I_DATA"], "rhs": "S_DIST_08", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["i", "data"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_I_ID"], "rhs": "S_DIST_09", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "i", "id"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_01"], "rhs": "S_DIST_09", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_02"], "rhs": "S_DIST_09", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_03"], "rhs": "S_DIST_09", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_04"], "rhs": "S_DIST_09", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_05"], "rhs": "S_DIST_09", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_06"], "rhs": "S_DIST_09", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_07"], "rhs": "S_DIST_09", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_08"], "rhs": "S_DIST_09", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_10"], "rhs": "S_DIST_09", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DATA"], "rhs": "S_DIST_09", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "data"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["I_NAME"], "rhs": "S_DIST_09", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["i", "name"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["I_DATA"], "rhs": "S_DIST_09", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["i", "data"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_I_ID"], "rhs": "S_DIST_10", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "i", "id"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_01"], "rhs": "S_DIST_10", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_02"], "rhs": "S_DIST_10", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_03"], "rhs": "S_DIST_10", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_04"], "rhs": "S_DIST_10", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_05"], "rhs": "S_DIST_10", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_06"], "rhs": "S_DIST_10", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_07"], "rhs": "S_DIST_10", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_08"], "rhs": "S_DIST_10", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DIST_09"], "rhs": "S_DIST_10", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_DATA"], "rhs": "S_DIST_10", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "data"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["I_NAME"], "rhs": "S_DIST_10", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["i", "name"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["I_DATA"], "rhs": "S_DIST_10", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["i", "data"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_I_ID"], "rhs": "S_DATA", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "i", "id"]], "rhs_tokens": ["s", "data"]},
+  {"lhs": ["S_DIST_01"], "rhs": "S_DATA", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "data"]},
+  {"lhs": ["S_DIST_02"], "rhs": "S_DATA", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "data"]},
+  {"lhs": ["S_DIST_03"], "rhs": "S_DATA", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "data"]},
+  {"lhs": ["S_DIST_04"], "rhs": "S_DATA", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "data"]},
+  {"lhs": ["S_DIST_05"], "rhs": "S_DATA", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "data"]},
+  {"lhs": ["S_DIST_06"], "rhs": "S_DATA", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "data"]},
+  {"lhs": ["S_DIST_07"], "rhs": "S_DATA", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "data"]},
+  {"lhs": ["S_DIST_08"], "rhs": "S_DATA", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "data"]},
+  {"lhs": ["S_DIST_09"], "rhs": "S_DATA", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "data"]},
+  {"lhs": ["S_DIST_10"], "rhs": "S_DATA", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["s", "data"]},
+  {"lhs": ["I_NAME"], "rhs": "S_DATA", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["i", "name"]], "rhs_tokens": ["s", "data"]},
+  {"lhs": ["I_DATA"], "rhs": "S_DATA", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["i", "data"]], "rhs_tokens": ["s", "data"]},
+  {"lhs": ["S_I_ID"], "rhs": "I_IM_ID", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 9997, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.09997, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "i", "id"]], "rhs_tokens": ["i", "im", "id"]},
+  {"lhs": ["S_DIST_01"], "rhs": "I_IM_ID", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 9997, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.09997, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["i", "im", "id"]},
+  {"lhs": ["S_DIST_02"], "rhs": "I_IM_ID", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 9997, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.09997, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["i", "im", "id"]},
+  {"lhs": ["S_DIST_03"], "rhs": "I_IM_ID", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 9997, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.09997, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["i", "im", "id"]},
+  {"lhs": ["S_DIST_04"], "rhs": "I_IM_ID", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 9997, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.09997, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["i", "im", "id"]},
+  {"lhs": ["S_DIST_05"], "rhs": "I_IM_ID", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 9997, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.09997, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["i", "im", "id"]},
+  {"lhs": ["S_DIST_06"], "rhs": "I_IM_ID", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 9997, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.09997, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["i", "im", "id"]},
+  {"lhs": ["S_DIST_07"], "rhs": "I_IM_ID", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 9997, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.09997, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["i", "im", "id"]},
+  {"lhs": ["S_DIST_08"], "rhs": "I_IM_ID", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 9997, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.09997, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["i", "im", "id"]},
+  {"lhs": ["S_DIST_09"], "rhs": "I_IM_ID", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 9997, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.09997, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["i", "im", "id"]},
+  {"lhs": ["S_DIST_10"], "rhs": "I_IM_ID", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 9997, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.09997, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["i", "im", "id"]},
+  {"lhs": ["S_DATA"], "rhs": "I_IM_ID", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 9997, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.09997, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "data"]], "rhs_tokens": ["i", "im", "id"]},
+  {"lhs": ["I_NAME"], "rhs": "I_IM_ID", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 9997, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.09997, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["i", "name"]], "rhs_tokens": ["i", "im", "id"]},
+  {"lhs": ["I_DATA"], "rhs": "I_IM_ID", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 9997, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.09997, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["i", "data"]], "rhs_tokens": ["i", "im", "id"]},
+  {"lhs": ["S_I_ID"], "rhs": "I_NAME", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "i", "id"]], "rhs_tokens": ["i", "name"]},
+  {"lhs": ["S_DIST_01"], "rhs": "I_NAME", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["i", "name"]},
+  {"lhs": ["S_DIST_02"], "rhs": "I_NAME", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["i", "name"]},
+  {"lhs": ["S_DIST_03"], "rhs": "I_NAME", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["i", "name"]},
+  {"lhs": ["S_DIST_04"], "rhs": "I_NAME", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["i", "name"]},
+  {"lhs": ["S_DIST_05"], "rhs": "I_NAME", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["i", "name"]},
+  {"lhs": ["S_DIST_06"], "rhs": "I_NAME", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["i", "name"]},
+  {"lhs": ["S_DIST_07"], "rhs": "I_NAME", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["i", "name"]},
+  {"lhs": ["S_DIST_08"], "rhs": "I_NAME", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["i", "name"]},
+  {"lhs": ["S_DIST_09"], "rhs": "I_NAME", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["i", "name"]},
+  {"lhs": ["S_DIST_10"], "rhs": "I_NAME", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["i", "name"]},
+  {"lhs": ["S_DATA"], "rhs": "I_NAME", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "data"]], "rhs_tokens": ["i", "name"]},
+  {"lhs": ["I_DATA"], "rhs": "I_NAME", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["i", "data"]], "rhs_tokens": ["i", "name"]},
+  {"lhs": ["S_I_ID"], "rhs": "I_PRICE", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 9900, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.099, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "i", "id"]], "rhs_tokens": ["i", "price"]},
+  {"lhs": ["S_DIST_01"], "rhs": "I_PRICE", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 9900, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.099, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["i", "price"]},
+  {"lhs": ["S_DIST_02"], "rhs": "I_PRICE", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 9900, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.099, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["i", "price"]},
+  {"lhs": ["S_DIST_03"], "rhs": "I_PRICE", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 9900, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.099, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["i", "price"]},
+  {"lhs": ["S_DIST_04"], "rhs": "I_PRICE", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 9900, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.099, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["i", "price"]},
+  {"lhs": ["S_DIST_05"], "rhs": "I_PRICE", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 9900, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.099, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["i", "price"]},
+  {"lhs": ["S_DIST_06"], "rhs": "I_PRICE", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 9900, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.099, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["i", "price"]},
+  {"lhs": ["S_DIST_07"], "rhs": "I_PRICE", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 9900, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.099, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["i", "price"]},
+  {"lhs": ["S_DIST_08"], "rhs": "I_PRICE", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 9900, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.099, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["i", "price"]},
+  {"lhs": ["S_DIST_09"], "rhs": "I_PRICE", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 9900, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.099, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["i", "price"]},
+  {"lhs": ["S_DIST_10"], "rhs": "I_PRICE", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 9900, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.099, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["i", "price"]},
+  {"lhs": ["S_DATA"], "rhs": "I_PRICE", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 9900, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.099, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "data"]], "rhs_tokens": ["i", "price"]},
+  {"lhs": ["I_NAME"], "rhs": "I_PRICE", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 9900, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.099, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["i", "name"]], "rhs_tokens": ["i", "price"]},
+  {"lhs": ["I_DATA"], "rhs": "I_PRICE", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 9900, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.099, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["i", "data"]], "rhs_tokens": ["i", "price"]},
+  {"lhs": ["S_I_ID"], "rhs": "I_DATA", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "i", "id"]], "rhs_tokens": ["i", "data"]},
+  {"lhs": ["S_DIST_01"], "rhs": "I_DATA", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["i", "data"]},
+  {"lhs": ["S_DIST_02"], "rhs": "I_DATA", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["i", "data"]},
+  {"lhs": ["S_DIST_03"], "rhs": "I_DATA", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["i", "data"]},
+  {"lhs": ["S_DIST_04"], "rhs": "I_DATA", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["i", "data"]},
+  {"lhs": ["S_DIST_05"], "rhs": "I_DATA", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["i", "data"]},
+  {"lhs": ["S_DIST_06"], "rhs": "I_DATA", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["i", "data"]},
+  {"lhs": ["S_DIST_07"], "rhs": "I_DATA", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["i", "data"]},
+  {"lhs": ["S_DIST_08"], "rhs": "I_DATA", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["i", "data"]},
+  {"lhs": ["S_DIST_09"], "rhs": "I_DATA", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["i", "data"]},
+  {"lhs": ["S_DIST_10"], "rhs": "I_DATA", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "dist"]], "rhs_tokens": ["i", "data"]},
+  {"lhs": ["S_DATA"], "rhs": "I_DATA", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "data"]], "rhs_tokens": ["i", "data"]},
+  {"lhs": ["I_NAME"], "rhs": "I_DATA", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["i", "name"]], "rhs_tokens": ["i", "data"]},
+  {"lhs": ["S_QUANTITY", "I_IM_ID", "I_PRICE"], "rhs": "S_I_ID", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "quantity"], ["i", "im", "id"], ["i", "price"]], "rhs_tokens": ["s", "i", "id"]},
+  {"lhs": ["S_QUANTITY", "I_IM_ID", "I_PRICE"], "rhs": "S_DIST_01", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "quantity"], ["i", "im", "id"], ["i", "price"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_QUANTITY", "I_IM_ID", "I_PRICE"], "rhs": "S_DIST_02", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "quantity"], ["i", "im", "id"], ["i", "price"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_QUANTITY", "I_IM_ID", "I_PRICE"], "rhs": "S_DIST_03", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "quantity"], ["i", "im", "id"], ["i", "price"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_QUANTITY", "I_IM_ID", "I_PRICE"], "rhs": "S_DIST_04", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "quantity"], ["i", "im", "id"], ["i", "price"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_QUANTITY", "I_IM_ID", "I_PRICE"], "rhs": "S_DIST_05", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "quantity"], ["i", "im", "id"], ["i", "price"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_QUANTITY", "I_IM_ID", "I_PRICE"], "rhs": "S_DIST_06", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "quantity"], ["i", "im", "id"], ["i", "price"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_QUANTITY", "I_IM_ID", "I_PRICE"], "rhs": "S_DIST_07", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "quantity"], ["i", "im", "id"], ["i", "price"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_QUANTITY", "I_IM_ID", "I_PRICE"], "rhs": "S_DIST_08", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "quantity"], ["i", "im", "id"], ["i", "price"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_QUANTITY", "I_IM_ID", "I_PRICE"], "rhs": "S_DIST_09", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "quantity"], ["i", "im", "id"], ["i", "price"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_QUANTITY", "I_IM_ID", "I_PRICE"], "rhs": "S_DIST_10", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "quantity"], ["i", "im", "id"], ["i", "price"]], "rhs_tokens": ["s", "dist"]},
+  {"lhs": ["S_QUANTITY", "I_IM_ID", "I_PRICE"], "rhs": "S_DATA", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "quantity"], ["i", "im", "id"], ["i", "price"]], "rhs_tokens": ["s", "data"]},
+  {"lhs": ["S_QUANTITY", "I_IM_ID", "I_PRICE"], "rhs": "I_NAME", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "quantity"], ["i", "im", "id"], ["i", "price"]], "rhs_tokens": ["i", "name"]},
+  {"lhs": ["S_QUANTITY", "I_IM_ID", "I_PRICE"], "rhs": "I_DATA", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 100000, "distinct_rhs": 100000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["s", "quantity"], ["i", "im", "id"], ["i", "price"]], "rhs_tokens": ["i", "data"]}
+ ]
+}

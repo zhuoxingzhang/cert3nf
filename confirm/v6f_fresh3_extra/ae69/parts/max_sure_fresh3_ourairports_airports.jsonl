@@ -1,0 +1,1 @@
+{"dataset": "fresh3_ourairports_airports", "truth": "sure", "oracle": "gold", "attributes": 24, "counterexample": "max", "data_fds": 580, "finished": 1, "visited": 151560, "yes": 7, "no": 19, "unit": 310, "unit_yes": 60, "basis": 7, "counterexamples": 19, "equivalent": 1, "secs": 0.0, "wall": 0.0}

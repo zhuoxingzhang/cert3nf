@@ -1,0 +1,1 @@
+{"dataset": "fresh3_hgnc", "truth": "full", "oracle": "gold", "attributes": 24, "counterexample": "min", "data_fds": 784, "finished": 1, "visited": 617222, "yes": 198, "no": 541737, "unit": 2560149, "unit_yes": 236, "basis": 198, "counterexamples": 541737, "equivalent": 0, "secs": 150.4, "wall": 150.5}

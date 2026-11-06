@@ -1,0 +1,165 @@
+{
+ "dataset": "fresh3_twitter_tweets",
+ "family": "fresh3",
+ "truth_kind": "documented (confirmatory, batch 3)",
+ "source": "the relations of the third confirmatory batch, specified from publisher documentation (e3/truth/docs/fresh3/) by three subagents that never saw data, mined FDs or model answers; parts A (TPC-C, Epinions, Twitter, Synthea), B (HGNC, GLEIF, ONSPD, FEC, OurAirports), C (NPPES, Companies House, Open Payments, Stack Exchange)",
+ "rule": "part A: part A: Sigma* is the set of FDs that the publisher documentation implies among the attributes of each relation, projected and closed over the dropped columns, each with a verbatim quote; sure when the quoted text states it (a declared primary key, unique constraint or foreign key to a declared key in the pinned DDL, a ':key:' row or a 'Foreign key to' row of the Synthea data dictionary), unsure when it needs an inference the text does not spell out. For the three BenchBase benchmarks the DDL at the pinned commit is the specification of the generated data (scale factor 1, loaded and never executed); a dependency that the TPC-C specification or the OLTP-Bench paper states and the DDL neither declares nor contradicts is recorded with sure: false, quoting both; the TPC-C population rules (clause 4.3.3.1) make the warehouse ids and several other columns constant at one warehouse, and these constants are dropped as rule 1 asks, the declared keys being projected onto the kept columns with both quotes (a projected key stays sure, since a key minus a documented constant is a key, and key is null because the declared key is not wholly among the attributes); a root without a declared key keeps key null and only the foreign-key dependencies. For Synthea the CSV File Data Dictionary is the specification. Dependencies the documentation hints at but does not state (code -> description, random strings that happen to be unique, accidental equalities of generated data, counts and conditional constants) are listed under undocumented_regularities and are not part of Sigma*. Written from the documentation alone, before any data file was opened. part B: Sigma* is the set of FDs that the publisher documentation implies among the attributes of each relation, projected and closed over the dropped columns, each with a verbatim quote (file name and section or page) and a one-sentence justification; sure when the quoted text states it (a declared key or unique identifier of the root such as 'list each LEI only once', 'one record for each candidate', 'Unique link ID' or 'the actual internal OurAirports primary key is id', a foreign key or look-up reference to a table with a declared key, an allocation 'via lookup' from one geography to another, a stated derivation of one column from another, a stated containment such as 'each consists of a grouping of OAs'); unsure when it needs an inference the text does not spell out (a country read off a per-country code range, a nesting stated in the past tense or for another vintage, a copy of a master's value in a linkage file), when the text is ambiguous, or when the left-hand side can be empty or unresolved (an optional ISO 3166-2 region, a reserved ELF code, a dangling look-up) so that the dependency holds among non-empty values only. Plausible, common-knowledge or value-level implications (ISSUED implies ACTIVE, a ZIP code implies a state) and documented non-dependencies (a pseudo code shared by every district of a country, a gps_code 'not guaranteed to be globally unique', 'the same frequency may appear multiple times for an airport') are listed under undocumented_regularities and are not part of Sigma*. Columns are named exactly as the documentation spells them (GLEIF: the Golden Copy CSV element paths of the Data Dictionary; ONSPD: the field names of Annex A of the August 2026 user guide; FEC: the header files; OurAirports and HGNC: the dictionary / archive page); where two tables share a name the looked-up column is prefixed (CN_, CM_, airport_, region_, country_). Many-to-one joins only, along keys the documentation declares; one relation per documented root table, named fresh3_<source>_<root> where a source has several; the GLEIF code lists were not written because their CSV headers are undocumented and the ELF code is not a row key of the ELF list. Written from the documentation alone, before any data file was opened. part C: Sigma* is the set of FDs that the publisher documentation implies among the attributes of each relation, projected and closed over the dropped columns, each with a verbatim quote naming the file and the section or page; sure when the quoted text states it (a declared key or unique identifier of the root, a declared unique identifier of an entity determining that entity's other documented attributes, a foreign key or link to a table with a declared key; a table that the schema documentation marks as the parent table of foreign keys that reference it by its Id counts as having Id declared), unsure when it needs an inference the text does not spell out (the justification says which); both directions of an identifier pair get the same standard. Plausible or common-knowledge dependencies (postal geography, company law, one profile per NPI, one badge class per badge name), documented conditional-emptiness statements and documented non-dependencies are listed under undocumented_regularities and are not part of Sigma*. A relation whose documentation declares no key of the root gets key null (the NPPES reference files, whose rows are 'associated with an NPI record' without a declared key of their own; Stack Exchange Comments, Votes, Badges, PostHistory, whose Id FD is kept with sure false), so that item 61 (b) 2 can exclude it by rule. Relations have at most 25 attributes, many-to-one joins only along keys the documentation declares (a file in two roles is two tables), columns named exactly as the documentation spells them, and no person name, street address, telephone, e-mail or licence number. Written from the documentation alone, before any data file was opened.",
+ "instance": {
+  "generator": "public data fixed before download for the third confirmatory evaluation, converted by unpack_fresh3.py and joined by fresh.py",
+  "rows": 20000,
+  "construction": "BenchBase (benchbase at commit 33c00473807ebd49304d114a6d769d2d2b2bbb34), benchmark twitter, generated into SQLite at scale factor 1 (config/sqlite/sample_twitter_config.xml, whose comment reads 'Scalefactor in Twitter scales by *500 the number of users', with <scalefactor>1</scalefactor> as in the sample; --create=true --load=true and no --execute; the DDL BenchBase applies for SQLite is ddl-sqlite.sql ('Adapted for sqlite'), whose table and column names are those of ddl-generic.sql and ddl-postgres.sql but which declares no primary key on tweets), every table exported to benchbase/twitter/<table>.csv with the DDL column names: tweets (root) left-joined to user_profiles on uid = uid; all nine columns of the two tables are kept; dropped only the uid of user_profiles, which equals the join column; follows, followers (many-to-many) and added_tweets (filled by the InsertTweet transaction, which is not run) are joined only where named; the number of rows of the root at scale factor 1 is not documented (500 users); dates are relative to the load time, so the generated database is kept as the snapshot.",
+  "cleaning": {
+   "records": 20000,
+   "records_after_deduplication": 20000,
+   "sampled_from": null,
+   "kept": 20000,
+   "repaired_for": "the sure FDs of Sigma*",
+   "removed_per_fd": {},
+   "missing_values": "empty and missing references become '?', kept as a value (null = null)"
+  }
+ },
+ "attributes": [
+  "id",
+  "uid",
+  "text",
+  "name",
+  "email"
+ ],
+ "dropped_constant_columns": [
+  "createdate",
+  "partitionid",
+  "partitionid2",
+  "followers"
+ ],
+ "distinct_values": {
+  "id": 20000,
+  "uid": 500,
+  "text": 20000,
+  "name": 500,
+  "email": 500
+ },
+ "truth": [
+  {
+   "lhs": [
+    "id"
+   ],
+   "rhs": [
+    "uid",
+    "text"
+   ],
+   "sure": true,
+   "clause": "benchbase_twitter_ddl-generic.sql, CREATE TABLE tweets: \"PRIMARY KEY (id)\"; benchbase_twitter_ddl-postgres.sql, CREATE TABLE tweets: \"PRIMARY KEY (id)\"; oltpbench_pvldb_p277-difallah.pdf, section 6.4 (p. 283): \"we use the Twitter benchmark but configure its workload mixture to only execute transactions that retrieve a single tweet message via a primary key look-up\" and \"a Zipfian distribution on the tweet's primary keys\"; benchbase_twitter_ddl-sqlite.sql, CREATE TABLE tweets (\"-- Adapted for sqlite\"): \"id         bigint    NOT NULL,\" with no PRIMARY KEY clause",
+   "justification": "id is the declared primary key of tweets in the generic and PostgreSQL DDLs at the pinned commit and the paper calls it the tweet's primary key; the SQLite dialect DDL that built the database omits the constraint without contradicting it, and the right-hand side are the other columns of tweets (createdate is nullable).",
+   "audit": {
+    "verdicts": {
+     "uid": "TRUE",
+     "text": "TRUE",
+     "createdate": "TRUE"
+    },
+    "quote": "benchbase_twitter_ddl-generic.sql, CREATE TABLE tweets: \"id bigint NOT NULL,\" ... \"PRIMARY KEY (id)\" ‖ benchbase_twitter_ddl-postgres.sql, CREATE TABLE tweets: \"id bigint NOT NULL,\" ... \"PRIMARY KEY (id)\" ‖ oltpbench_pvldb_p277-difallah.pdf, section 6.4 (p. 283): \"we use the Twitter benchmark but configure its workload mixture to only execute transactions that retrieve a single tweet message via a primary key look-up\" and \"a Zipfian distribution on the tweet's primary keys\" ‖ benchbase_twitter_ddl-sqlite.sql, header \"-- Adapted for sqlite\" and CREATE TABLE tweets: \"id bigint NOT NULL,\" with no PRIMARY KEY clause",
+    "source": "benchbase_twitter_ddl-generic.sql; benchbase_twitter_ddl-postgres.sql; benchbase_twitter_ddl-sqlite.sql; oltpbench_pvldb_p277-difallah.pdf, section 6.4, p. 283"
+   }
+  },
+  {
+   "lhs": [
+    "uid"
+   ],
+   "rhs": [
+    "name",
+    "email"
+   ],
+   "sure": true,
+   "clause": "benchbase_twitter_ddl-sqlite.sql, CREATE TABLE tweets: \"uid        int       NOT NULL REFERENCES user_profiles (uid),\"; benchbase_twitter_ddl-sqlite.sql, CREATE TABLE user_profiles: \"PRIMARY KEY (uid)\"; benchbase_twitter_ddl-generic.sql, CREATE TABLE user_profiles: \"PRIMARY KEY (uid)\"; benchbase_twitter_ddl-postgres.sql, CREATE TABLE tweets: \"FOREIGN KEY (uid) REFERENCES user_profiles (uid) ON DELETE CASCADE,\"",
+   "justification": "uid of the tweet references the declared primary key uid of user_profiles, so it identifies one user row and its columns (all five are nullable, DEFAULT NULL).",
+   "audit": {
+    "verdicts": {
+     "name": "TRUE",
+     "email": "TRUE",
+     "partitionid": "TRUE",
+     "partitionid2": "TRUE",
+     "followers": "TRUE"
+    },
+    "quote": "benchbase_twitter_ddl-sqlite.sql, CREATE TABLE tweets: \"uid int NOT NULL REFERENCES user_profiles (uid),\" ‖ benchbase_twitter_ddl-generic.sql, CREATE TABLE tweets: \"uid int NOT NULL REFERENCES user_profiles (uid),\" ‖ benchbase_twitter_ddl-postgres.sql, CREATE TABLE tweets: \"FOREIGN KEY (uid) REFERENCES user_profiles (uid) ON DELETE CASCADE,\" ‖ benchbase_twitter_ddl-sqlite.sql, CREATE TABLE user_profiles: \"PRIMARY KEY (uid)\" ‖ benchbase_twitter_ddl-generic.sql, CREATE TABLE user_profiles: \"PRIMARY KEY (uid)\" ‖ benchbase_twitter_ddl-postgres.sql, CREATE TABLE user_profiles: \"PRIMARY KEY (uid)\"",
+    "source": "benchbase_twitter_ddl-generic.sql; benchbase_twitter_ddl-postgres.sql; benchbase_twitter_ddl-sqlite.sql"
+   }
+  }
+ ],
+ "truth_counts": {
+  "fds": 2,
+  "single_rhs": 4,
+  "sure_single_rhs": 4
+ },
+ "random_columns": null,
+ "truth_fds_violated_by_data": [],
+ "gold_design": null,
+ "gold_design_note": "No normalized design is published; the 3NF designs of Sigma* are synthesized.",
+ "truth_design": {
+  "keys": [
+   [
+    "id"
+   ]
+  ],
+  "atomic_closure": 6,
+  "synthesis": [
+   [
+    "email",
+    "uid"
+   ],
+   [
+    "id",
+    "text"
+   ],
+   [
+    "id",
+    "uid"
+   ],
+   [
+    "name",
+    "uid"
+   ]
+  ],
+  "iconf": [
+   [
+    "email",
+    "uid"
+   ],
+   [
+    "id",
+    "text"
+   ],
+   [
+    "id",
+    "uid"
+   ],
+   [
+    "name",
+    "uid"
+   ]
+  ]
+ },
+ "mined": {
+  "algorithm": "fdmine.py: exact discovery of all minimal FDs in the style of HyFD (no HyFD binary was available); the complete set of minimal FDs is unique, so it equals HyFD's output",
+  "file": "mined/fresh3_twitter_tweets-fds.txt",
+  "seconds": 0.0,
+  "count": 14,
+  "implied_by_truth": 6,
+  "accidental": 8,
+  "implied_by_sure_truth": 6
+ },
+ "fds": [
+  {"lhs": ["text"], "rhs": "id", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 20000, "distinct_rhs": 20000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["text"]], "rhs_tokens": ["id"]},
+  {"lhs": ["id"], "rhs": "uid", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 20000, "distinct_rhs": 500, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.025, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["id"]], "rhs_tokens": ["uid"]},
+  {"lhs": ["text"], "rhs": "uid", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 20000, "distinct_rhs": 500, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.025, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["text"]], "rhs_tokens": ["uid"]},
+  {"lhs": ["name"], "rhs": "uid", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 500, "distinct_rhs": 500, "lhs_distinct_ratio": 0.025, "rhs_distinct_ratio": 0.025, "redundancy": 19500, "redundancy_wl": 20000, "lhs_unique": false, "lhs_tokens": [["name"]], "rhs_tokens": ["uid"]},
+  {"lhs": ["email"], "rhs": "uid", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 500, "distinct_rhs": 500, "lhs_distinct_ratio": 0.025, "rhs_distinct_ratio": 0.025, "redundancy": 19500, "redundancy_wl": 20000, "lhs_unique": false, "lhs_tokens": [["email"]], "rhs_tokens": ["uid"]},
+  {"lhs": ["id"], "rhs": "text", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 20000, "distinct_rhs": 20000, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["id"]], "rhs_tokens": ["text"]},
+  {"lhs": ["id"], "rhs": "name", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 20000, "distinct_rhs": 500, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.025, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["id"]], "rhs_tokens": ["name"]},
+  {"lhs": ["uid"], "rhs": "name", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 500, "distinct_rhs": 500, "lhs_distinct_ratio": 0.025, "rhs_distinct_ratio": 0.025, "redundancy": 19500, "redundancy_wl": 20000, "lhs_unique": false, "lhs_tokens": [["uid"]], "rhs_tokens": ["name"]},
+  {"lhs": ["text"], "rhs": "name", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 20000, "distinct_rhs": 500, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.025, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["text"]], "rhs_tokens": ["name"]},
+  {"lhs": ["email"], "rhs": "name", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 500, "distinct_rhs": 500, "lhs_distinct_ratio": 0.025, "rhs_distinct_ratio": 0.025, "redundancy": 19500, "redundancy_wl": 20000, "lhs_unique": false, "lhs_tokens": [["email"]], "rhs_tokens": ["name"]},
+  {"lhs": ["id"], "rhs": "email", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 20000, "distinct_rhs": 500, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.025, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["id"]], "rhs_tokens": ["email"]},
+  {"lhs": ["uid"], "rhs": "email", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 500, "distinct_rhs": 500, "lhs_distinct_ratio": 0.025, "rhs_distinct_ratio": 0.025, "redundancy": 19500, "redundancy_wl": 20000, "lhs_unique": false, "lhs_tokens": [["uid"]], "rhs_tokens": ["email"]},
+  {"lhs": ["text"], "rhs": "email", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 20000, "distinct_rhs": 500, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.025, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["text"]], "rhs_tokens": ["email"]},
+  {"lhs": ["name"], "rhs": "email", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 500, "distinct_rhs": 500, "lhs_distinct_ratio": 0.025, "rhs_distinct_ratio": 0.025, "redundancy": 19500, "redundancy_wl": 20000, "lhs_unique": false, "lhs_tokens": [["name"]], "rhs_tokens": ["email"]}
+ ]
+}

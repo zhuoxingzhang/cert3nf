@@ -1,0 +1,147 @@
+{
+ "truth": "full",
+ "models": [
+  "q35",
+  "gptoss"
+ ],
+ "strata": {
+  "fresh3_tpcc_order_line|full": [
+   1225,
+   1855,
+   332,
+   8665
+  ],
+  "fresh3_tpcc_stock|full": [
+   3,
+   21,
+   12,
+   202
+  ],
+  "fresh3_tpcc_customer|full": [
+   28,
+   52,
+   8,
+   184
+  ],
+  "fresh3_twitter_tweets|full": [
+   2,
+   1,
+   0,
+   7
+  ],
+  "fresh3_synthea_encounters|full": [
+   54,
+   64,
+   50,
+   467
+  ],
+  "fresh3_synthea_claims|full": [
+   24,
+   11,
+   35,
+   131
+  ],
+  "fresh3_synthea_claims_transactions|full": [
+   75,
+   42,
+   37,
+   88
+  ],
+  "fresh3_hgnc|full": [
+   295,
+   112,
+   146,
+   207
+  ],
+  "fresh3_gleif|full": [
+   696,
+   841,
+   556,
+   1904
+  ],
+  "fresh3_onspd|full": [
+   174,
+   42,
+   28,
+   66
+  ],
+  "fresh3_fec_candidate|full": [
+   233,
+   185,
+   125,
+   170
+  ],
+  "fresh3_fec_committee|full": [
+   180,
+   236,
+   123,
+   320
+  ],
+  "fresh3_fec_linkage|full": [
+   195,
+   196,
+   92,
+   171
+  ],
+  "fresh3_ourairports_airports|full": [
+   308,
+   129,
+   20,
+   98
+  ],
+  "fresh3_ourairports_navaids|full": [
+   2238,
+   1659,
+   320,
+   1050
+  ],
+  "fresh3_ourairports_frequencies|full": [
+   971,
+   306,
+   73,
+   222
+  ],
+  "fresh3_nppes_npidata|full": [
+   91,
+   85,
+   33,
+   118
+  ],
+  "fresh3_companieshouse|full": [
+   81,
+   167,
+   87,
+   658
+  ],
+  "fresh3_openpayments_general|full": [
+   320,
+   145,
+   30,
+   246
+  ],
+  "fresh3_openpayments_profile|full": [
+   28,
+   23,
+   2,
+   69
+  ],
+  "fresh3_stackexchange_posts|full": [
+   7,
+   18,
+   6,
+   1019
+  ],
+  "fresh3_stackexchange_users|full": [
+   1,
+   1,
+   0,
+   16
+  ],
+  "fresh3_stackexchange_postlinks|full": [
+   20,
+   48,
+   104,
+   1063
+  ]
+ }
+}

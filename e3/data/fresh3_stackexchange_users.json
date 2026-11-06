@@ -1,0 +1,187 @@
+{
+ "dataset": "fresh3_stackexchange_users",
+ "family": "fresh3",
+ "truth_kind": "documented (confirmatory, batch 3)",
+ "source": "the relations of the third confirmatory batch, specified from publisher documentation (e3/truth/docs/fresh3/) by three subagents that never saw data, mined FDs or model answers; parts A (TPC-C, Epinions, Twitter, Synthea), B (HGNC, GLEIF, ONSPD, FEC, OurAirports), C (NPPES, Companies House, Open Payments, Stack Exchange)",
+ "rule": "part A: part A: Sigma* is the set of FDs that the publisher documentation implies among the attributes of each relation, projected and closed over the dropped columns, each with a verbatim quote; sure when the quoted text states it (a declared primary key, unique constraint or foreign key to a declared key in the pinned DDL, a ':key:' row or a 'Foreign key to' row of the Synthea data dictionary), unsure when it needs an inference the text does not spell out. For the three BenchBase benchmarks the DDL at the pinned commit is the specification of the generated data (scale factor 1, loaded and never executed); a dependency that the TPC-C specification or the OLTP-Bench paper states and the DDL neither declares nor contradicts is recorded with sure: false, quoting both; the TPC-C population rules (clause 4.3.3.1) make the warehouse ids and several other columns constant at one warehouse, and these constants are dropped as rule 1 asks, the declared keys being projected onto the kept columns with both quotes (a projected key stays sure, since a key minus a documented constant is a key, and key is null because the declared key is not wholly among the attributes); a root without a declared key keeps key null and only the foreign-key dependencies. For Synthea the CSV File Data Dictionary is the specification. Dependencies the documentation hints at but does not state (code -> description, random strings that happen to be unique, accidental equalities of generated data, counts and conditional constants) are listed under undocumented_regularities and are not part of Sigma*. Written from the documentation alone, before any data file was opened. part B: Sigma* is the set of FDs that the publisher documentation implies among the attributes of each relation, projected and closed over the dropped columns, each with a verbatim quote (file name and section or page) and a one-sentence justification; sure when the quoted text states it (a declared key or unique identifier of the root such as 'list each LEI only once', 'one record for each candidate', 'Unique link ID' or 'the actual internal OurAirports primary key is id', a foreign key or look-up reference to a table with a declared key, an allocation 'via lookup' from one geography to another, a stated derivation of one column from another, a stated containment such as 'each consists of a grouping of OAs'); unsure when it needs an inference the text does not spell out (a country read off a per-country code range, a nesting stated in the past tense or for another vintage, a copy of a master's value in a linkage file), when the text is ambiguous, or when the left-hand side can be empty or unresolved (an optional ISO 3166-2 region, a reserved ELF code, a dangling look-up) so that the dependency holds among non-empty values only. Plausible, common-knowledge or value-level implications (ISSUED implies ACTIVE, a ZIP code implies a state) and documented non-dependencies (a pseudo code shared by every district of a country, a gps_code 'not guaranteed to be globally unique', 'the same frequency may appear multiple times for an airport') are listed under undocumented_regularities and are not part of Sigma*. Columns are named exactly as the documentation spells them (GLEIF: the Golden Copy CSV element paths of the Data Dictionary; ONSPD: the field names of Annex A of the August 2026 user guide; FEC: the header files; OurAirports and HGNC: the dictionary / archive page); where two tables share a name the looked-up column is prefixed (CN_, CM_, airport_, region_, country_). Many-to-one joins only, along keys the documentation declares; one relation per documented root table, named fresh3_<source>_<root> where a source has several; the GLEIF code lists were not written because their CSV headers are undocumented and the ELF code is not a row key of the ELF list. Written from the documentation alone, before any data file was opened. part C: Sigma* is the set of FDs that the publisher documentation implies among the attributes of each relation, projected and closed over the dropped columns, each with a verbatim quote naming the file and the section or page; sure when the quoted text states it (a declared key or unique identifier of the root, a declared unique identifier of an entity determining that entity's other documented attributes, a foreign key or link to a table with a declared key; a table that the schema documentation marks as the parent table of foreign keys that reference it by its Id counts as having Id declared), unsure when it needs an inference the text does not spell out (the justification says which); both directions of an identifier pair get the same standard. Plausible or common-knowledge dependencies (postal geography, company law, one profile per NPI, one badge class per badge name), documented conditional-emptiness statements and documented non-dependencies are listed under undocumented_regularities and are not part of Sigma*. A relation whose documentation declares no key of the root gets key null (the NPPES reference files, whose rows are 'associated with an NPI record' without a declared key of their own; Stack Exchange Comments, Votes, Badges, PostHistory, whose Id FD is kept with sure false), so that item 61 (b) 2 can exclude it by rule. Relations have at most 25 attributes, many-to-one joins only along keys the documentation declares (a file in two roles is two tables), columns named exactly as the documentation spells them, and no person name, street address, telephone, e-mail or licence number. Written from the documentation alone, before any data file was opened.",
+ "instance": {
+  "generator": "public data fixed before download for the third confirmatory evaluation, converted by unpack_fresh3.py and joined by fresh.py",
+  "rows": 33730,
+  "construction": "Root Users = stackexchange/3dprinting/Users.csv (Users.xml of the 2024-04-02 dump of 3dprinting.stackexchange.com, see fresh3_stackexchange_posts), no join and no filter; 8 of the 15 documented columns kept; dropped: DisplayName, EmailHash (always NULL), ProfileImageUrl, WebsiteUrl, Location, AboutMe (personal or free text) and Age (no longer in the dump). References: Users references no other table; it is file 7 of 8 in the readme's list and table 2 in the schema post. The key Id is declared only as the target of the foreign keys (no explicit \"primary key\" text).",
+  "cleaning": {
+   "records": 33730,
+   "records_after_deduplication": 33730,
+   "sampled_from": null,
+   "kept": 33730,
+   "repaired_for": "the sure FDs of Sigma*",
+   "removed_per_fd": {},
+   "missing_values": "empty and missing references become '?', kept as a value (null = null)"
+  }
+ },
+ "attributes": [
+  "Id",
+  "Reputation",
+  "CreationDate",
+  "LastAccessDate",
+  "Views",
+  "UpVotes",
+  "DownVotes",
+  "AccountId"
+ ],
+ "dropped_constant_columns": [],
+ "distinct_values": {
+  "Id": 33730,
+  "Reputation": 412,
+  "CreationDate": 33730,
+  "LastAccessDate": 33730,
+  "Views": 114,
+  "UpVotes": 119,
+  "DownVotes": 32,
+  "AccountId": 33729
+ },
+ "truth": [
+  {
+   "lhs": [
+    "Id"
+   ],
+   "rhs": [
+    "Reputation",
+    "CreationDate",
+    "LastAccessDate",
+    "Views",
+    "UpVotes",
+    "DownVotes",
+    "AccountId"
+   ],
+   "sure": true,
+   "clause": "e3/truth/docs/fresh3/stackexchange_meta_2677_answers.json, answer 2678 (the schema documentation, field body): \"About this list: foreign key fields are formatted as links to their parent table\"; Posts list: \"<a href=\\\"https://data.stackexchange.com/stackoverflow/query/472607?table=users\\\" rel=\\\"nofollow noreferrer\\\"><code>OwnerUserId</code></a> <em>(only present if user has not been deleted; always -1 for tag wiki entries, i.e. the community user owns them)</em>\"; Users list: \"<code>Id</code>\", \"<code>Reputation</code>\", \"<code>CreationDate</code>\"; e3/truth/docs/fresh3/stackexchange_archive_readme.txt, Posts.xml: \"- OwnerDisplayName: populated if a user has been removed and no longer referenced by user Id or if the user was anonymous\"; Users.xml: \"- Id\"; Comments list: \"<a href=\\\"https://data.stackexchange.com/stackoverflow/query/472607?table=users\\\" rel=\\\"nofollow noreferrer\\\"><code>UserId</code></a>\" \"<em>(Optional. Absent if user has been deleted)</em>\"",
+   "justification": "Users is the parent table of the foreign keys OwnerUserId, LastEditorUserId and UserId, which reference a user by its user Id, so Id is the key of Users and determines its other columns.",
+   "audit": {
+    "verdicts": {
+     "Reputation": "TRUE",
+     "CreationDate": "TRUE",
+     "LastAccessDate": "TRUE",
+     "Views": "TRUE",
+     "UpVotes": "TRUE",
+     "DownVotes": "TRUE",
+     "AccountId": "TRUE"
+    },
+    "quote": "\"About this list: foreign key fields are formatted as links to their parent table\" ‖ <a href=\"https://data.stackexchange.com/stackoverflow/query/472607?table=users\" rel=\"nofollow noreferrer\"><code>OwnerUserId</code></a> <em>(only present if user has not been deleted; always -1 for tag wiki entries, i.e. the community user owns them)</em> ‖ <a href=\"https://data.stackexchange.com/stackoverflow/query/472607?table=users\" rel=\"nofollow noreferrer\"><code>LastEditorUserId</code></a> ‖ <a href=\"https://data.stackexchange.com/stackoverflow/query/472607?table=users\" rel=\"nofollow noreferrer\"><code>UserId</code></a> <em>(Optional. Absent if user has been deleted)</em> ‖ \"Users - Id - Reputation - CreationDate - DisplayName - LastAccessDate (Datetime user last loaded a page; updated every 30 min at most) ... - AccountId (User's Stack Exchange Network profile ID); NULL if the user has hidden this community in their profile\" ‖ \"OwnerDisplayName: populated if a user has been removed and no longer referenced by user Id or if the user was anonymous\" ‖ \"Users.xml - Id - Reputation - CreationDate\"",
+    "source": "e3/truth/docs/fresh3/stackexchange_meta_2677_answers.json, answer 2678 (field body; the schema documentation), \"About this list\", the Posts list, the Comments list and the Users list; e3/truth/docs/fresh3/stackexchange_archive_readme.txt, Posts.xml and Users.xml"
+   }
+  }
+ ],
+ "truth_counts": {
+  "fds": 1,
+  "single_rhs": 7,
+  "sure_single_rhs": 7
+ },
+ "random_columns": null,
+ "truth_fds_violated_by_data": [],
+ "gold_design": null,
+ "gold_design_note": "No normalized design is published; the 3NF designs of Sigma* are synthesized.",
+ "truth_design": {
+  "keys": [
+   [
+    "Id"
+   ]
+  ],
+  "atomic_closure": 7,
+  "synthesis": [
+   [
+    "AccountId",
+    "Id"
+   ],
+   [
+    "CreationDate",
+    "Id"
+   ],
+   [
+    "DownVotes",
+    "Id"
+   ],
+   [
+    "Id",
+    "LastAccessDate"
+   ],
+   [
+    "Id",
+    "Reputation"
+   ],
+   [
+    "Id",
+    "UpVotes"
+   ],
+   [
+    "Id",
+    "Views"
+   ]
+  ],
+  "iconf": [
+   [
+    "AccountId",
+    "Id"
+   ],
+   [
+    "CreationDate",
+    "Id"
+   ],
+   [
+    "DownVotes",
+    "Id"
+   ],
+   [
+    "Id",
+    "LastAccessDate"
+   ],
+   [
+    "Id",
+    "Reputation"
+   ],
+   [
+    "Id",
+    "UpVotes"
+   ],
+   [
+    "Id",
+    "Views"
+   ]
+  ]
+ },
+ "mined": {
+  "algorithm": "fdmine.py: exact discovery of all minimal FDs in the style of HyFD (no HyFD binary was available); the complete set of minimal FDs is unique, so it equals HyFD's output",
+  "file": "mined/fresh3_stackexchange_users-fds.txt",
+  "seconds": 0.1,
+  "count": 25,
+  "implied_by_truth": 7,
+  "accidental": 18,
+  "implied_by_sure_truth": 7
+ },
+ "fds": [
+  {"lhs": ["CreationDate"], "rhs": "Id", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 33730, "distinct_rhs": 33730, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["creation", "date"]], "rhs_tokens": ["id"]},
+  {"lhs": ["LastAccessDate"], "rhs": "Id", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 33730, "distinct_rhs": 33730, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["last", "access", "date"]], "rhs_tokens": ["id"]},
+  {"lhs": ["Id"], "rhs": "Reputation", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 33730, "distinct_rhs": 412, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.012215, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["id"]], "rhs_tokens": ["reputation"]},
+  {"lhs": ["CreationDate"], "rhs": "Reputation", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 33730, "distinct_rhs": 412, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.012215, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["creation", "date"]], "rhs_tokens": ["reputation"]},
+  {"lhs": ["LastAccessDate"], "rhs": "Reputation", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 33730, "distinct_rhs": 412, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.012215, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["last", "access", "date"]], "rhs_tokens": ["reputation"]},
+  {"lhs": ["AccountId"], "rhs": "Reputation", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 33729, "distinct_rhs": 412, "lhs_distinct_ratio": 0.99997, "rhs_distinct_ratio": 0.012215, "redundancy": 1, "redundancy_wl": 2, "lhs_unique": false, "lhs_tokens": [["account", "id"]], "rhs_tokens": ["reputation"]},
+  {"lhs": ["Id"], "rhs": "CreationDate", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 33730, "distinct_rhs": 33730, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["id"]], "rhs_tokens": ["creation", "date"]},
+  {"lhs": ["LastAccessDate"], "rhs": "CreationDate", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 33730, "distinct_rhs": 33730, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["last", "access", "date"]], "rhs_tokens": ["creation", "date"]},
+  {"lhs": ["Id"], "rhs": "LastAccessDate", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 33730, "distinct_rhs": 33730, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["id"]], "rhs_tokens": ["last", "access", "date"]},
+  {"lhs": ["CreationDate"], "rhs": "LastAccessDate", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 33730, "distinct_rhs": 33730, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.0, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["creation", "date"]], "rhs_tokens": ["last", "access", "date"]},
+  {"lhs": ["Id"], "rhs": "Views", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 33730, "distinct_rhs": 114, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.00338, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["id"]], "rhs_tokens": ["views"]},
+  {"lhs": ["CreationDate"], "rhs": "Views", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 33730, "distinct_rhs": 114, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.00338, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["creation", "date"]], "rhs_tokens": ["views"]},
+  {"lhs": ["LastAccessDate"], "rhs": "Views", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 33730, "distinct_rhs": 114, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.00338, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["last", "access", "date"]], "rhs_tokens": ["views"]},
+  {"lhs": ["AccountId"], "rhs": "Views", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 33729, "distinct_rhs": 114, "lhs_distinct_ratio": 0.99997, "rhs_distinct_ratio": 0.00338, "redundancy": 1, "redundancy_wl": 2, "lhs_unique": false, "lhs_tokens": [["account", "id"]], "rhs_tokens": ["views"]},
+  {"lhs": ["Id"], "rhs": "UpVotes", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 33730, "distinct_rhs": 119, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.003528, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["id"]], "rhs_tokens": ["up", "votes"]},
+  {"lhs": ["CreationDate"], "rhs": "UpVotes", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 33730, "distinct_rhs": 119, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.003528, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["creation", "date"]], "rhs_tokens": ["up", "votes"]},
+  {"lhs": ["LastAccessDate"], "rhs": "UpVotes", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 33730, "distinct_rhs": 119, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.003528, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["last", "access", "date"]], "rhs_tokens": ["up", "votes"]},
+  {"lhs": ["AccountId"], "rhs": "UpVotes", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 33729, "distinct_rhs": 119, "lhs_distinct_ratio": 0.99997, "rhs_distinct_ratio": 0.003528, "redundancy": 1, "redundancy_wl": 2, "lhs_unique": false, "lhs_tokens": [["account", "id"]], "rhs_tokens": ["up", "votes"]},
+  {"lhs": ["Id"], "rhs": "DownVotes", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 33730, "distinct_rhs": 32, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.000949, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["id"]], "rhs_tokens": ["down", "votes"]},
+  {"lhs": ["CreationDate"], "rhs": "DownVotes", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 33730, "distinct_rhs": 32, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.000949, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["creation", "date"]], "rhs_tokens": ["down", "votes"]},
+  {"lhs": ["LastAccessDate"], "rhs": "DownVotes", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 33730, "distinct_rhs": 32, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.000949, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["last", "access", "date"]], "rhs_tokens": ["down", "votes"]},
+  {"lhs": ["AccountId"], "rhs": "DownVotes", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 33729, "distinct_rhs": 32, "lhs_distinct_ratio": 0.99997, "rhs_distinct_ratio": 0.000949, "redundancy": 1, "redundancy_wl": 2, "lhs_unique": false, "lhs_tokens": [["account", "id"]], "rhs_tokens": ["down", "votes"]},
+  {"lhs": ["Id"], "rhs": "AccountId", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 33730, "distinct_rhs": 33729, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.99997, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["id"]], "rhs_tokens": ["account", "id"]},
+  {"lhs": ["CreationDate"], "rhs": "AccountId", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 33730, "distinct_rhs": 33729, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.99997, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["creation", "date"]], "rhs_tokens": ["account", "id"]},
+  {"lhs": ["LastAccessDate"], "rhs": "AccountId", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 33730, "distinct_rhs": 33729, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.99997, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["last", "access", "date"]], "rhs_tokens": ["account", "id"]}
+ ]
+}

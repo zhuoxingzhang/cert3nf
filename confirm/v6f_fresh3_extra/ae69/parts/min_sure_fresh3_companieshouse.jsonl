@@ -1,0 +1,1 @@
+{"dataset": "fresh3_companieshouse", "truth": "sure", "oracle": "gold", "attributes": 25, "counterexample": "min", "data_fds": 1018, "finished": 0, "visited": 5177344, "yes": 0, "no": 1553968, "unit": 2048192, "unit_yes": 0, "basis": 0, "counterexamples": 1553968, "equivalent": 0, "secs": 7420.3, "wall": 7421.6}

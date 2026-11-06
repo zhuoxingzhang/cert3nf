@@ -1,0 +1,1 @@
+{"dataset": "fresh3_nppes_npidata", "truth": "sure", "oracle": "gold", "attributes": 24, "counterexample": "min", "data_fds": 350, "finished": 0, "visited": 2293760, "yes": 0, "no": 2126088, "unit": 4241984, "unit_yes": 0, "basis": 0, "counterexamples": 2126088, "equivalent": 0, "secs": 7256.0, "wall": 7257.3}

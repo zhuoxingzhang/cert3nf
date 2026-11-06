@@ -1,0 +1,2 @@
+all truths: 46 strata, 65696 candidates answered by both; both wrong 14643, first only 12541, second only 4375, both right 34137; error rates 0.414 vs 0.289
+  Mantel-Haenszel odds ratio 5.39, 95% interval [5.16, 5.63]; pooled 9.11

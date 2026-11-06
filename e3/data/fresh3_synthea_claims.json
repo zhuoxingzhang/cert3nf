@@ -1,0 +1,634 @@
+{
+ "dataset": "fresh3_synthea_claims",
+ "family": "fresh3",
+ "truth_kind": "documented (confirmatory, batch 3)",
+ "source": "the relations of the third confirmatory batch, specified from publisher documentation (e3/truth/docs/fresh3/) by three subagents that never saw data, mined FDs or model answers; parts A (TPC-C, Epinions, Twitter, Synthea), B (HGNC, GLEIF, ONSPD, FEC, OurAirports), C (NPPES, Companies House, Open Payments, Stack Exchange)",
+ "rule": "part A: part A: Sigma* is the set of FDs that the publisher documentation implies among the attributes of each relation, projected and closed over the dropped columns, each with a verbatim quote; sure when the quoted text states it (a declared primary key, unique constraint or foreign key to a declared key in the pinned DDL, a ':key:' row or a 'Foreign key to' row of the Synthea data dictionary), unsure when it needs an inference the text does not spell out. For the three BenchBase benchmarks the DDL at the pinned commit is the specification of the generated data (scale factor 1, loaded and never executed); a dependency that the TPC-C specification or the OLTP-Bench paper states and the DDL neither declares nor contradicts is recorded with sure: false, quoting both; the TPC-C population rules (clause 4.3.3.1) make the warehouse ids and several other columns constant at one warehouse, and these constants are dropped as rule 1 asks, the declared keys being projected onto the kept columns with both quotes (a projected key stays sure, since a key minus a documented constant is a key, and key is null because the declared key is not wholly among the attributes); a root without a declared key keeps key null and only the foreign-key dependencies. For Synthea the CSV File Data Dictionary is the specification. Dependencies the documentation hints at but does not state (code -> description, random strings that happen to be unique, accidental equalities of generated data, counts and conditional constants) are listed under undocumented_regularities and are not part of Sigma*. Written from the documentation alone, before any data file was opened. part B: Sigma* is the set of FDs that the publisher documentation implies among the attributes of each relation, projected and closed over the dropped columns, each with a verbatim quote (file name and section or page) and a one-sentence justification; sure when the quoted text states it (a declared key or unique identifier of the root such as 'list each LEI only once', 'one record for each candidate', 'Unique link ID' or 'the actual internal OurAirports primary key is id', a foreign key or look-up reference to a table with a declared key, an allocation 'via lookup' from one geography to another, a stated derivation of one column from another, a stated containment such as 'each consists of a grouping of OAs'); unsure when it needs an inference the text does not spell out (a country read off a per-country code range, a nesting stated in the past tense or for another vintage, a copy of a master's value in a linkage file), when the text is ambiguous, or when the left-hand side can be empty or unresolved (an optional ISO 3166-2 region, a reserved ELF code, a dangling look-up) so that the dependency holds among non-empty values only. Plausible, common-knowledge or value-level implications (ISSUED implies ACTIVE, a ZIP code implies a state) and documented non-dependencies (a pseudo code shared by every district of a country, a gps_code 'not guaranteed to be globally unique', 'the same frequency may appear multiple times for an airport') are listed under undocumented_regularities and are not part of Sigma*. Columns are named exactly as the documentation spells them (GLEIF: the Golden Copy CSV element paths of the Data Dictionary; ONSPD: the field names of Annex A of the August 2026 user guide; FEC: the header files; OurAirports and HGNC: the dictionary / archive page); where two tables share a name the looked-up column is prefixed (CN_, CM_, airport_, region_, country_). Many-to-one joins only, along keys the documentation declares; one relation per documented root table, named fresh3_<source>_<root> where a source has several; the GLEIF code lists were not written because their CSV headers are undocumented and the ELF code is not a row key of the ELF list. Written from the documentation alone, before any data file was opened. part C: Sigma* is the set of FDs that the publisher documentation implies among the attributes of each relation, projected and closed over the dropped columns, each with a verbatim quote naming the file and the section or page; sure when the quoted text states it (a declared key or unique identifier of the root, a declared unique identifier of an entity determining that entity's other documented attributes, a foreign key or link to a table with a declared key; a table that the schema documentation marks as the parent table of foreign keys that reference it by its Id counts as having Id declared), unsure when it needs an inference the text does not spell out (the justification says which); both directions of an identifier pair get the same standard. Plausible or common-knowledge dependencies (postal geography, company law, one profile per NPI, one badge class per badge name), documented conditional-emptiness statements and documented non-dependencies are listed under undocumented_regularities and are not part of Sigma*. A relation whose documentation declares no key of the root gets key null (the NPPES reference files, whose rows are 'associated with an NPI record' without a declared key of their own; Stack Exchange Comments, Votes, Badges, PostHistory, whose Id FD is kept with sure false), so that item 61 (b) 2 can exclude it by rule. Relations have at most 25 attributes, many-to-one joins only along keys the documentation declares (a file in two roles is two tables), columns named exactly as the documentation spells them, and no person name, street address, telephone, e-mail or licence number. Written from the documentation alone, before any data file was opened.",
+ "instance": {
+  "generator": "public data fixed before download for the third confirmatory evaluation, converted by unpack_fresh3.py and joined by fresh.py",
+  "rows": 153806,
+  "construction": "Synthea v4.0.0 (tag commit 0185c09ea9d10a822c6f5f3ef9bdcbcbe960c813), run as run_synthea -s 0 -p 1000 with no state or city argument (synthea_README_v4.0.0.md: \"run_synthea [-s seed] [-p populationSize] [state [city]]\"; the default state, Massachusetts: \"defaults with Massachusetts Census data\") and exporter.csv.export = true, every other property at its v4.0.0 default (synthea_properties_v4.0.0.properties; the clinician seed at its default), the files of output/csv as written with the exporter's headers (the dictionary's column names in upper case, Id as written; a multi-word name such as 'Patient ID' is written here as 'PATIENT ID' and must be mapped by the unpack step if the exporter spells it otherwise): claims (root) left-joined to patients on PATIENT ID = Id, to providers on PROVIDER ID = Id, to payers on PRIMARY PATIENT INSURANCE ID = Id (role primary_payer) and to encounters on APPOINTMENT ID = Id; dropped from claims DEPARTMENT ID and PATIENT DEPARTMENT ID (placeholders), DIAGNOSIS2 to DIAGNOSIS8, STATUS2, OUTSTANDING2, LASTBILLEDDATE2, LASTBILLEDDATEP and HEALTHCARECLAIMTYPEID2 for room; from the joined files every column but the named ones; the Id columns of the joined files equal the join columns; a column name shared by two joined tables is prefixed by its role; the generated output of this run is the snapshot.",
+  "cleaning": {
+   "records": 153806,
+   "records_after_deduplication": 153806,
+   "sampled_from": null,
+   "kept": 153806,
+   "repaired_for": "the sure FDs of Sigma*",
+   "removed_per_fd": {},
+   "missing_values": "empty and missing references become '?', kept as a value (null = null)"
+  }
+ },
+ "attributes": [
+  "Id",
+  "PATIENT ID",
+  "PROVIDER ID",
+  "PRIMARY PATIENT INSURANCE ID",
+  "SECONDARY PATIENT INSURANCE ID",
+  "DIAGNOSIS1",
+  "APPOINTMENT ID",
+  "CURRENT ILLNESS DATE",
+  "SERVICE DATE",
+  "SUPERVISING PROVIDER ID",
+  "STATUS1",
+  "STATUSP",
+  "OUTSTANDING1",
+  "OUTSTANDINGP",
+  "LASTBILLEDDATE1",
+  "HEALTHCARECLAIMTYPEID1",
+  "BIRTHDATE",
+  "GENDER",
+  "ORGANIZATION",
+  "NAME",
+  "OWNERSHIP",
+  "ENCOUNTERCLASS",
+  "CODE"
+ ],
+ "dropped_constant_columns": [
+  "REFERRING PROVIDER ID",
+  "SPECIALITY"
+ ],
+ "distinct_values": {
+  "Id": 153806,
+  "PATIENT ID": 1210,
+  "PROVIDER ID": 773,
+  "PRIMARY PATIENT INSURANCE ID": 10,
+  "SECONDARY PATIENT INSURANCE ID": 3,
+  "DIAGNOSIS1": 442,
+  "APPOINTMENT ID": 80771,
+  "CURRENT ILLNESS DATE": 65082,
+  "SERVICE DATE": 78502,
+  "SUPERVISING PROVIDER ID": 773,
+  "STATUS1": 2,
+  "STATUSP": 2,
+  "OUTSTANDING1": 15,
+  "OUTSTANDINGP": 14,
+  "LASTBILLEDDATE1": 80597,
+  "HEALTHCARECLAIMTYPEID1": 2,
+  "BIRTHDATE": 983,
+  "GENDER": 2,
+  "ORGANIZATION": 773,
+  "NAME": 10,
+  "OWNERSHIP": 3,
+  "ENCOUNTERCLASS": 10,
+  "CODE": 55
+ },
+ "truth": [
+  {
+   "lhs": [
+    "Id"
+   ],
+   "rhs": [
+    "PATIENT ID",
+    "PROVIDER ID",
+    "PRIMARY PATIENT INSURANCE ID",
+    "SECONDARY PATIENT INSURANCE ID",
+    "DIAGNOSIS1",
+    "APPOINTMENT ID",
+    "CURRENT ILLNESS DATE",
+    "SERVICE DATE",
+    "SUPERVISING PROVIDER ID",
+    "STATUS1",
+    "STATUSP",
+    "OUTSTANDING1",
+    "OUTSTANDINGP",
+    "LASTBILLEDDATE1",
+    "HEALTHCARECLAIMTYPEID1"
+   ],
+   "sure": true,
+   "clause": "synthea_wiki_CSV-File-Data-Dictionary.md, section Claims: \"| :key: | Id | UUID | `true` | Primary Key. Unique Identifier of the claim. |\"",
+   "justification": "Id is the declared primary key of claims.csv, and the right-hand side are its other kept columns (several are not required and may be empty).",
+   "audit": {
+    "verdicts": {
+     "PATIENT ID": "TRUE",
+     "PROVIDER ID": "TRUE",
+     "PRIMARY PATIENT INSURANCE ID": "TRUE",
+     "SECONDARY PATIENT INSURANCE ID": "TRUE",
+     "DIAGNOSIS1": "TRUE",
+     "REFERRING PROVIDER ID": "TRUE",
+     "APPOINTMENT ID": "TRUE",
+     "CURRENT ILLNESS DATE": "TRUE",
+     "SERVICE DATE": "TRUE",
+     "SUPERVISING PROVIDER ID": "TRUE",
+     "STATUS1": "TRUE",
+     "STATUSP": "TRUE",
+     "OUTSTANDING1": "TRUE",
+     "OUTSTANDINGP": "TRUE",
+     "LASTBILLEDDATE1": "TRUE",
+     "HEALTHCARECLAIMTYPEID1": "TRUE"
+    },
+    "quote": "synthea_wiki_CSV-File-Data-Dictionary.md, section Claims: \"| :key: | Id | UUID | `true` | Primary Key. Unique Identifier of the claim. |\"",
+    "source": "synthea_wiki_CSV-File-Data-Dictionary.md, section Claims"
+   }
+  },
+  {
+   "lhs": [
+    "PATIENT ID"
+   ],
+   "rhs": [
+    "BIRTHDATE",
+    "GENDER"
+   ],
+   "sure": true,
+   "clause": "synthea_wiki_CSV-File-Data-Dictionary.md, section Claims: \"| :old_key: | Patient ID | UUID | `true` | Foreign key to the Patient. |\"; synthea_wiki_CSV-File-Data-Dictionary.md, section Patients: \"| :key: | Id | UUID | `true` | Primary Key. Unique Identifier of the patient. |\"",
+   "justification": "PATIENT ID references the declared primary key Id of patients.csv, so it identifies one patient row and its columns.",
+   "audit": {
+    "verdicts": {
+     "BIRTHDATE": "TRUE",
+     "GENDER": "TRUE"
+    },
+    "quote": "synthea_wiki_CSV-File-Data-Dictionary.md, section Claims: \"| :old_key: | Patient ID | UUID | `true` | Foreign key to the Patient. |\" ‖ synthea_wiki_CSV-File-Data-Dictionary.md, section Patients: \"| :key: | Id | UUID | `true` | Primary Key. Unique Identifier of the patient. |\"",
+    "source": "synthea_wiki_CSV-File-Data-Dictionary.md, sections Claims and Patients"
+   }
+  },
+  {
+   "lhs": [
+    "PROVIDER ID"
+   ],
+   "rhs": [
+    "ORGANIZATION"
+   ],
+   "sure": true,
+   "clause": "synthea_wiki_CSV-File-Data-Dictionary.md, section Claims: \"| :old_key: | Provider ID | UUID | `true` | Foreign key to the Provider. |\"; synthea_wiki_CSV-File-Data-Dictionary.md, section Providers: \"| :key: | Id | UUID | `true` | Primary key of the Provider/Clinician. |\"",
+   "justification": "PROVIDER ID references the declared primary key Id of providers.csv, so it identifies one provider row and its columns.",
+   "audit": {
+    "verdicts": {
+     "SPECIALITY": "TRUE",
+     "ORGANIZATION": "TRUE"
+    },
+    "quote": "synthea_wiki_CSV-File-Data-Dictionary.md, section Claims: \"| :old_key: | Provider ID | UUID | `true` | Foreign key to the Provider. |\" ‖ synthea_wiki_CSV-File-Data-Dictionary.md, section Providers: \"| :key: | Id | UUID | `true` | Primary key of the Provider/Clinician. |\"",
+    "source": "synthea_wiki_CSV-File-Data-Dictionary.md, sections Claims and Providers"
+   }
+  },
+  {
+   "lhs": [
+    "PRIMARY PATIENT INSURANCE ID"
+   ],
+   "rhs": [
+    "NAME",
+    "OWNERSHIP"
+   ],
+   "sure": true,
+   "clause": "synthea_wiki_CSV-File-Data-Dictionary.md, section Claims: \"| :old_key: | Primary Patient Insurance ID | UUID | `false` | Foreign key to the primary Payer. |\"; synthea_wiki_CSV-File-Data-Dictionary.md, section Payers: \"| :key: | Id | UUID | `true` | Primary key of the Payer (e.g. Insurance). |\"",
+   "justification": "PRIMARY PATIENT INSURANCE ID references the declared primary key Id of payers.csv, so it identifies one payer row and its columns (the reference is not required and may be empty).",
+   "audit": {
+    "verdicts": {
+     "NAME": "TRUE",
+     "OWNERSHIP": "TRUE"
+    },
+    "quote": "synthea_wiki_CSV-File-Data-Dictionary.md, section Claims: \"| :old_key: | Primary Patient Insurance ID | UUID | `false` | Foreign key to the primary Payer. |\" ‖ synthea_wiki_CSV-File-Data-Dictionary.md, section Payers: \"| :key: | Id | UUID | `true` | Primary key of the Payer (e.g. Insurance). |\"",
+    "source": "synthea_wiki_CSV-File-Data-Dictionary.md, sections Claims and Payers"
+   }
+  },
+  {
+   "lhs": [
+    "APPOINTMENT ID"
+   ],
+   "rhs": [
+    "ENCOUNTERCLASS",
+    "CODE"
+   ],
+   "sure": true,
+   "clause": "synthea_wiki_CSV-File-Data-Dictionary.md, section Claims: \"| :old_key: | Appointment ID | UUID | `false` | Foreign key to the Encounter. |\"; synthea_wiki_CSV-File-Data-Dictionary.md, section Encounters: \"| :key: | Id | UUID | `true` | Primary Key. Unique Identifier of the encounter. |\"",
+   "justification": "APPOINTMENT ID references the declared primary key Id of encounters.csv, so it identifies one encounter row and its columns.",
+   "audit": {
+    "verdicts": {
+     "ENCOUNTERCLASS": "TRUE",
+     "CODE": "TRUE"
+    },
+    "quote": "synthea_wiki_CSV-File-Data-Dictionary.md, section Claims: \"| :old_key: | Appointment ID | UUID | `false` | Foreign key to the Encounter. |\" ‖ synthea_wiki_CSV-File-Data-Dictionary.md, section Encounters: \"| :key: | Id | UUID | `true` | Primary Key. Unique Identifier of the encounter. |\"",
+    "source": "synthea_wiki_CSV-File-Data-Dictionary.md, sections Claims and Encounters"
+   }
+  }
+ ],
+ "truth_counts": {
+  "fds": 5,
+  "single_rhs": 22,
+  "sure_single_rhs": 22
+ },
+ "random_columns": null,
+ "truth_fds_violated_by_data": [],
+ "gold_design": null,
+ "gold_design_note": "No normalized design is published; the 3NF designs of Sigma* are synthesized.",
+ "truth_design": {
+  "keys": [
+   [
+    "Id"
+   ]
+  ],
+  "atomic_closure": 29,
+  "synthesis": [
+   [
+    "APPOINTMENT ID",
+    "CODE"
+   ],
+   [
+    "APPOINTMENT ID",
+    "ENCOUNTERCLASS"
+   ],
+   [
+    "APPOINTMENT ID",
+    "Id"
+   ],
+   [
+    "BIRTHDATE",
+    "PATIENT ID"
+   ],
+   [
+    "CURRENT ILLNESS DATE",
+    "Id"
+   ],
+   [
+    "DIAGNOSIS1",
+    "Id"
+   ],
+   [
+    "GENDER",
+    "PATIENT ID"
+   ],
+   [
+    "HEALTHCARECLAIMTYPEID1",
+    "Id"
+   ],
+   [
+    "Id",
+    "LASTBILLEDDATE1"
+   ],
+   [
+    "Id",
+    "OUTSTANDING1"
+   ],
+   [
+    "Id",
+    "OUTSTANDINGP"
+   ],
+   [
+    "Id",
+    "PATIENT ID"
+   ],
+   [
+    "Id",
+    "PRIMARY PATIENT INSURANCE ID"
+   ],
+   [
+    "Id",
+    "PROVIDER ID"
+   ],
+   [
+    "Id",
+    "SECONDARY PATIENT INSURANCE ID"
+   ],
+   [
+    "Id",
+    "SERVICE DATE"
+   ],
+   [
+    "Id",
+    "STATUS1"
+   ],
+   [
+    "Id",
+    "STATUSP"
+   ],
+   [
+    "Id",
+    "SUPERVISING PROVIDER ID"
+   ],
+   [
+    "NAME",
+    "PRIMARY PATIENT INSURANCE ID"
+   ],
+   [
+    "ORGANIZATION",
+    "PROVIDER ID"
+   ],
+   [
+    "OWNERSHIP",
+    "PRIMARY PATIENT INSURANCE ID"
+   ]
+  ],
+  "iconf": [
+   [
+    "APPOINTMENT ID",
+    "CODE"
+   ],
+   [
+    "APPOINTMENT ID",
+    "ENCOUNTERCLASS"
+   ],
+   [
+    "APPOINTMENT ID",
+    "Id"
+   ],
+   [
+    "BIRTHDATE",
+    "PATIENT ID"
+   ],
+   [
+    "CURRENT ILLNESS DATE",
+    "Id"
+   ],
+   [
+    "DIAGNOSIS1",
+    "Id"
+   ],
+   [
+    "GENDER",
+    "PATIENT ID"
+   ],
+   [
+    "HEALTHCARECLAIMTYPEID1",
+    "Id"
+   ],
+   [
+    "Id",
+    "LASTBILLEDDATE1"
+   ],
+   [
+    "Id",
+    "OUTSTANDING1"
+   ],
+   [
+    "Id",
+    "OUTSTANDINGP"
+   ],
+   [
+    "Id",
+    "PATIENT ID"
+   ],
+   [
+    "Id",
+    "PRIMARY PATIENT INSURANCE ID"
+   ],
+   [
+    "Id",
+    "PROVIDER ID"
+   ],
+   [
+    "Id",
+    "SECONDARY PATIENT INSURANCE ID"
+   ],
+   [
+    "Id",
+    "SERVICE DATE"
+   ],
+   [
+    "Id",
+    "STATUS1"
+   ],
+   [
+    "Id",
+    "STATUSP"
+   ],
+   [
+    "Id",
+    "SUPERVISING PROVIDER ID"
+   ],
+   [
+    "NAME",
+    "PRIMARY PATIENT INSURANCE ID"
+   ],
+   [
+    "ORGANIZATION",
+    "PROVIDER ID"
+   ],
+   [
+    "OWNERSHIP",
+    "PRIMARY PATIENT INSURANCE ID"
+   ]
+  ]
+ },
+ "mined": {
+  "algorithm": "fdmine.py: exact discovery of all minimal FDs in the style of HyFD (no HyFD binary was available); the complete set of minimal FDs is unique, so it equals HyFD's output",
+  "file": "mined/fresh3_synthea_claims-fds.txt",
+  "seconds": 2.7,
+  "count": 223,
+  "implied_by_truth": 29,
+  "accidental": 194,
+  "implied_by_sure_truth": 29
+ },
+ "fds": [
+  {"lhs": ["Id"], "rhs": "PATIENT ID", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 153806, "distinct_rhs": 1210, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.007867, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["id"]], "rhs_tokens": ["patient", "id"]},
+  {"lhs": ["APPOINTMENT ID"], "rhs": "PATIENT ID", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 80771, "distinct_rhs": 1210, "lhs_distinct_ratio": 0.525149, "rhs_distinct_ratio": 0.007867, "redundancy": 73035, "redundancy_wl": 106527, "lhs_unique": false, "lhs_tokens": [["appointment", "id"]], "rhs_tokens": ["patient", "id"]},
+  {"lhs": ["Id"], "rhs": "PROVIDER ID", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 153806, "distinct_rhs": 773, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.005026, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["id"]], "rhs_tokens": ["provider", "id"]},
+  {"lhs": ["APPOINTMENT ID"], "rhs": "PROVIDER ID", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 80771, "distinct_rhs": 773, "lhs_distinct_ratio": 0.525149, "rhs_distinct_ratio": 0.005026, "redundancy": 73035, "redundancy_wl": 106527, "lhs_unique": false, "lhs_tokens": [["appointment", "id"]], "rhs_tokens": ["provider", "id"]},
+  {"lhs": ["SUPERVISING PROVIDER ID"], "rhs": "PROVIDER ID", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 773, "distinct_rhs": 773, "lhs_distinct_ratio": 0.005026, "rhs_distinct_ratio": 0.005026, "redundancy": 153033, "redundancy_wl": 153732, "lhs_unique": false, "lhs_tokens": [["supervising", "provider", "id"]], "rhs_tokens": ["provider", "id"]},
+  {"lhs": ["ORGANIZATION"], "rhs": "PROVIDER ID", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 773, "distinct_rhs": 773, "lhs_distinct_ratio": 0.005026, "rhs_distinct_ratio": 0.005026, "redundancy": 153033, "redundancy_wl": 153732, "lhs_unique": false, "lhs_tokens": [["organization"]], "rhs_tokens": ["provider", "id"]},
+  {"lhs": ["Id"], "rhs": "PRIMARY PATIENT INSURANCE ID", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 153806, "distinct_rhs": 10, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 6.5e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["id"]], "rhs_tokens": ["primary", "patient", "insurance", "id"]},
+  {"lhs": ["NAME"], "rhs": "PRIMARY PATIENT INSURANCE ID", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 10, "distinct_rhs": 10, "lhs_distinct_ratio": 6.5e-05, "rhs_distinct_ratio": 6.5e-05, "redundancy": 153796, "redundancy_wl": 153806, "lhs_unique": false, "lhs_tokens": [["name"]], "rhs_tokens": ["primary", "patient", "insurance", "id"]},
+  {"lhs": ["Id"], "rhs": "SECONDARY PATIENT INSURANCE ID", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 153806, "distinct_rhs": 3, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 2e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["id"]], "rhs_tokens": ["secondary", "patient", "insurance", "id"]},
+  {"lhs": ["Id"], "rhs": "DIAGNOSIS1", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 153806, "distinct_rhs": 442, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.002874, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["id"]], "rhs_tokens": ["diagnosis"]},
+  {"lhs": ["APPOINTMENT ID"], "rhs": "DIAGNOSIS1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 80771, "distinct_rhs": 442, "lhs_distinct_ratio": 0.525149, "rhs_distinct_ratio": 0.002874, "redundancy": 73035, "redundancy_wl": 106527, "lhs_unique": false, "lhs_tokens": [["appointment", "id"]], "rhs_tokens": ["diagnosis"]},
+  {"lhs": ["Id"], "rhs": "APPOINTMENT ID", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 153806, "distinct_rhs": 80771, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.525149, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["id"]], "rhs_tokens": ["appointment", "id"]},
+  {"lhs": ["Id"], "rhs": "CURRENT ILLNESS DATE", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 153806, "distinct_rhs": 65082, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.423143, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["id"]], "rhs_tokens": ["current", "illness", "date"]},
+  {"lhs": ["APPOINTMENT ID"], "rhs": "CURRENT ILLNESS DATE", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 80771, "distinct_rhs": 65082, "lhs_distinct_ratio": 0.525149, "rhs_distinct_ratio": 0.423143, "redundancy": 73035, "redundancy_wl": 106527, "lhs_unique": false, "lhs_tokens": [["appointment", "id"]], "rhs_tokens": ["current", "illness", "date"]},
+  {"lhs": ["Id"], "rhs": "SERVICE DATE", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 153806, "distinct_rhs": 78502, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.510396, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["id"]], "rhs_tokens": ["service", "date"]},
+  {"lhs": ["APPOINTMENT ID"], "rhs": "SERVICE DATE", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 80771, "distinct_rhs": 78502, "lhs_distinct_ratio": 0.525149, "rhs_distinct_ratio": 0.510396, "redundancy": 73035, "redundancy_wl": 106527, "lhs_unique": false, "lhs_tokens": [["appointment", "id"]], "rhs_tokens": ["service", "date"]},
+  {"lhs": ["Id"], "rhs": "SUPERVISING PROVIDER ID", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 153806, "distinct_rhs": 773, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.005026, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["id"]], "rhs_tokens": ["supervising", "provider", "id"]},
+  {"lhs": ["PROVIDER ID"], "rhs": "SUPERVISING PROVIDER ID", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 773, "distinct_rhs": 773, "lhs_distinct_ratio": 0.005026, "rhs_distinct_ratio": 0.005026, "redundancy": 153033, "redundancy_wl": 153732, "lhs_unique": false, "lhs_tokens": [["provider", "id"]], "rhs_tokens": ["supervising", "provider", "id"]},
+  {"lhs": ["APPOINTMENT ID"], "rhs": "SUPERVISING PROVIDER ID", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 80771, "distinct_rhs": 773, "lhs_distinct_ratio": 0.525149, "rhs_distinct_ratio": 0.005026, "redundancy": 73035, "redundancy_wl": 106527, "lhs_unique": false, "lhs_tokens": [["appointment", "id"]], "rhs_tokens": ["supervising", "provider", "id"]},
+  {"lhs": ["ORGANIZATION"], "rhs": "SUPERVISING PROVIDER ID", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 773, "distinct_rhs": 773, "lhs_distinct_ratio": 0.005026, "rhs_distinct_ratio": 0.005026, "redundancy": 153033, "redundancy_wl": 153732, "lhs_unique": false, "lhs_tokens": [["organization"]], "rhs_tokens": ["supervising", "provider", "id"]},
+  {"lhs": ["Id"], "rhs": "STATUS1", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 153806, "distinct_rhs": 2, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.3e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["id"]], "rhs_tokens": ["status"]},
+  {"lhs": ["APPOINTMENT ID"], "rhs": "STATUS1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 80771, "distinct_rhs": 2, "lhs_distinct_ratio": 0.525149, "rhs_distinct_ratio": 1.3e-05, "redundancy": 73035, "redundancy_wl": 106527, "lhs_unique": false, "lhs_tokens": [["appointment", "id"]], "rhs_tokens": ["status"]},
+  {"lhs": ["STATUSP"], "rhs": "STATUS1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 2, "distinct_rhs": 2, "lhs_distinct_ratio": 1.3e-05, "rhs_distinct_ratio": 1.3e-05, "redundancy": 153804, "redundancy_wl": 153806, "lhs_unique": false, "lhs_tokens": [["statusp"]], "rhs_tokens": ["status"]},
+  {"lhs": ["OUTSTANDING1"], "rhs": "STATUS1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 15, "distinct_rhs": 2, "lhs_distinct_ratio": 9.8e-05, "rhs_distinct_ratio": 1.3e-05, "redundancy": 153791, "redundancy_wl": 153799, "lhs_unique": false, "lhs_tokens": [["outstanding"]], "rhs_tokens": ["status"]},
+  {"lhs": ["OUTSTANDINGP"], "rhs": "STATUS1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 14, "distinct_rhs": 2, "lhs_distinct_ratio": 9.1e-05, "rhs_distinct_ratio": 1.3e-05, "redundancy": 153792, "redundancy_wl": 153800, "lhs_unique": false, "lhs_tokens": [["outstandingp"]], "rhs_tokens": ["status"]},
+  {"lhs": ["LASTBILLEDDATE1"], "rhs": "STATUS1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 80597, "distinct_rhs": 2, "lhs_distinct_ratio": 0.524017, "rhs_distinct_ratio": 1.3e-05, "redundancy": 73209, "redundancy_wl": 106725, "lhs_unique": false, "lhs_tokens": [["lastbilleddate"]], "rhs_tokens": ["status"]},
+  {"lhs": ["Id"], "rhs": "STATUSP", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 153806, "distinct_rhs": 2, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.3e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["id"]], "rhs_tokens": ["statusp"]},
+  {"lhs": ["APPOINTMENT ID"], "rhs": "STATUSP", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 80771, "distinct_rhs": 2, "lhs_distinct_ratio": 0.525149, "rhs_distinct_ratio": 1.3e-05, "redundancy": 73035, "redundancy_wl": 106527, "lhs_unique": false, "lhs_tokens": [["appointment", "id"]], "rhs_tokens": ["statusp"]},
+  {"lhs": ["STATUS1"], "rhs": "STATUSP", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 2, "distinct_rhs": 2, "lhs_distinct_ratio": 1.3e-05, "rhs_distinct_ratio": 1.3e-05, "redundancy": 153804, "redundancy_wl": 153806, "lhs_unique": false, "lhs_tokens": [["status"]], "rhs_tokens": ["statusp"]},
+  {"lhs": ["OUTSTANDING1"], "rhs": "STATUSP", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 15, "distinct_rhs": 2, "lhs_distinct_ratio": 9.8e-05, "rhs_distinct_ratio": 1.3e-05, "redundancy": 153791, "redundancy_wl": 153799, "lhs_unique": false, "lhs_tokens": [["outstanding"]], "rhs_tokens": ["statusp"]},
+  {"lhs": ["OUTSTANDINGP"], "rhs": "STATUSP", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 14, "distinct_rhs": 2, "lhs_distinct_ratio": 9.1e-05, "rhs_distinct_ratio": 1.3e-05, "redundancy": 153792, "redundancy_wl": 153800, "lhs_unique": false, "lhs_tokens": [["outstandingp"]], "rhs_tokens": ["statusp"]},
+  {"lhs": ["LASTBILLEDDATE1"], "rhs": "STATUSP", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 80597, "distinct_rhs": 2, "lhs_distinct_ratio": 0.524017, "rhs_distinct_ratio": 1.3e-05, "redundancy": 73209, "redundancy_wl": 106725, "lhs_unique": false, "lhs_tokens": [["lastbilleddate"]], "rhs_tokens": ["statusp"]},
+  {"lhs": ["Id"], "rhs": "OUTSTANDING1", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 153806, "distinct_rhs": 15, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 9.8e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["id"]], "rhs_tokens": ["outstanding"]},
+  {"lhs": ["APPOINTMENT ID"], "rhs": "OUTSTANDING1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 80771, "distinct_rhs": 15, "lhs_distinct_ratio": 0.525149, "rhs_distinct_ratio": 9.8e-05, "redundancy": 73035, "redundancy_wl": 106527, "lhs_unique": false, "lhs_tokens": [["appointment", "id"]], "rhs_tokens": ["outstanding"]},
+  {"lhs": ["LASTBILLEDDATE1"], "rhs": "OUTSTANDING1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 80597, "distinct_rhs": 15, "lhs_distinct_ratio": 0.524017, "rhs_distinct_ratio": 9.8e-05, "redundancy": 73209, "redundancy_wl": 106725, "lhs_unique": false, "lhs_tokens": [["lastbilleddate"]], "rhs_tokens": ["outstanding"]},
+  {"lhs": ["Id"], "rhs": "OUTSTANDINGP", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 153806, "distinct_rhs": 14, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 9.1e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["id"]], "rhs_tokens": ["outstandingp"]},
+  {"lhs": ["APPOINTMENT ID"], "rhs": "OUTSTANDINGP", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 80771, "distinct_rhs": 14, "lhs_distinct_ratio": 0.525149, "rhs_distinct_ratio": 9.1e-05, "redundancy": 73035, "redundancy_wl": 106527, "lhs_unique": false, "lhs_tokens": [["appointment", "id"]], "rhs_tokens": ["outstandingp"]},
+  {"lhs": ["OUTSTANDING1"], "rhs": "OUTSTANDINGP", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 15, "distinct_rhs": 14, "lhs_distinct_ratio": 9.8e-05, "rhs_distinct_ratio": 9.1e-05, "redundancy": 153791, "redundancy_wl": 153799, "lhs_unique": false, "lhs_tokens": [["outstanding"]], "rhs_tokens": ["outstandingp"]},
+  {"lhs": ["LASTBILLEDDATE1"], "rhs": "OUTSTANDINGP", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 80597, "distinct_rhs": 14, "lhs_distinct_ratio": 0.524017, "rhs_distinct_ratio": 9.1e-05, "redundancy": 73209, "redundancy_wl": 106725, "lhs_unique": false, "lhs_tokens": [["lastbilleddate"]], "rhs_tokens": ["outstandingp"]},
+  {"lhs": ["Id"], "rhs": "LASTBILLEDDATE1", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 153806, "distinct_rhs": 80597, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.524017, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["id"]], "rhs_tokens": ["lastbilleddate"]},
+  {"lhs": ["APPOINTMENT ID"], "rhs": "LASTBILLEDDATE1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 80771, "distinct_rhs": 80597, "lhs_distinct_ratio": 0.525149, "rhs_distinct_ratio": 0.524017, "redundancy": 73035, "redundancy_wl": 106527, "lhs_unique": false, "lhs_tokens": [["appointment", "id"]], "rhs_tokens": ["lastbilleddate"]},
+  {"lhs": ["Id"], "rhs": "HEALTHCARECLAIMTYPEID1", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 153806, "distinct_rhs": 2, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.3e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["id"]], "rhs_tokens": ["healthcareclaimtypeid"]},
+  {"lhs": ["PROVIDER ID"], "rhs": "HEALTHCARECLAIMTYPEID1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 773, "distinct_rhs": 2, "lhs_distinct_ratio": 0.005026, "rhs_distinct_ratio": 1.3e-05, "redundancy": 153033, "redundancy_wl": 153732, "lhs_unique": false, "lhs_tokens": [["provider", "id"]], "rhs_tokens": ["healthcareclaimtypeid"]},
+  {"lhs": ["APPOINTMENT ID"], "rhs": "HEALTHCARECLAIMTYPEID1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 80771, "distinct_rhs": 2, "lhs_distinct_ratio": 0.525149, "rhs_distinct_ratio": 1.3e-05, "redundancy": 73035, "redundancy_wl": 106527, "lhs_unique": false, "lhs_tokens": [["appointment", "id"]], "rhs_tokens": ["healthcareclaimtypeid"]},
+  {"lhs": ["SUPERVISING PROVIDER ID"], "rhs": "HEALTHCARECLAIMTYPEID1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 773, "distinct_rhs": 2, "lhs_distinct_ratio": 0.005026, "rhs_distinct_ratio": 1.3e-05, "redundancy": 153033, "redundancy_wl": 153732, "lhs_unique": false, "lhs_tokens": [["supervising", "provider", "id"]], "rhs_tokens": ["healthcareclaimtypeid"]},
+  {"lhs": ["ORGANIZATION"], "rhs": "HEALTHCARECLAIMTYPEID1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 773, "distinct_rhs": 2, "lhs_distinct_ratio": 0.005026, "rhs_distinct_ratio": 1.3e-05, "redundancy": 153033, "redundancy_wl": 153732, "lhs_unique": false, "lhs_tokens": [["organization"]], "rhs_tokens": ["healthcareclaimtypeid"]},
+  {"lhs": ["Id"], "rhs": "BIRTHDATE", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 153806, "distinct_rhs": 983, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.006391, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["id"]], "rhs_tokens": ["birthdate"]},
+  {"lhs": ["PATIENT ID"], "rhs": "BIRTHDATE", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 1210, "distinct_rhs": 983, "lhs_distinct_ratio": 0.007867, "rhs_distinct_ratio": 0.006391, "redundancy": 152596, "redundancy_wl": 153806, "lhs_unique": false, "lhs_tokens": [["patient", "id"]], "rhs_tokens": ["birthdate"]},
+  {"lhs": ["APPOINTMENT ID"], "rhs": "BIRTHDATE", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 80771, "distinct_rhs": 983, "lhs_distinct_ratio": 0.525149, "rhs_distinct_ratio": 0.006391, "redundancy": 73035, "redundancy_wl": 106527, "lhs_unique": false, "lhs_tokens": [["appointment", "id"]], "rhs_tokens": ["birthdate"]},
+  {"lhs": ["Id"], "rhs": "GENDER", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 153806, "distinct_rhs": 2, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.3e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["id"]], "rhs_tokens": ["gender"]},
+  {"lhs": ["PATIENT ID"], "rhs": "GENDER", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 1210, "distinct_rhs": 2, "lhs_distinct_ratio": 0.007867, "rhs_distinct_ratio": 1.3e-05, "redundancy": 152596, "redundancy_wl": 153806, "lhs_unique": false, "lhs_tokens": [["patient", "id"]], "rhs_tokens": ["gender"]},
+  {"lhs": ["APPOINTMENT ID"], "rhs": "GENDER", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 80771, "distinct_rhs": 2, "lhs_distinct_ratio": 0.525149, "rhs_distinct_ratio": 1.3e-05, "redundancy": 73035, "redundancy_wl": 106527, "lhs_unique": false, "lhs_tokens": [["appointment", "id"]], "rhs_tokens": ["gender"]},
+  {"lhs": ["Id"], "rhs": "ORGANIZATION", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 153806, "distinct_rhs": 773, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.005026, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["id"]], "rhs_tokens": ["organization"]},
+  {"lhs": ["PROVIDER ID"], "rhs": "ORGANIZATION", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 773, "distinct_rhs": 773, "lhs_distinct_ratio": 0.005026, "rhs_distinct_ratio": 0.005026, "redundancy": 153033, "redundancy_wl": 153732, "lhs_unique": false, "lhs_tokens": [["provider", "id"]], "rhs_tokens": ["organization"]},
+  {"lhs": ["APPOINTMENT ID"], "rhs": "ORGANIZATION", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 80771, "distinct_rhs": 773, "lhs_distinct_ratio": 0.525149, "rhs_distinct_ratio": 0.005026, "redundancy": 73035, "redundancy_wl": 106527, "lhs_unique": false, "lhs_tokens": [["appointment", "id"]], "rhs_tokens": ["organization"]},
+  {"lhs": ["SUPERVISING PROVIDER ID"], "rhs": "ORGANIZATION", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 773, "distinct_rhs": 773, "lhs_distinct_ratio": 0.005026, "rhs_distinct_ratio": 0.005026, "redundancy": 153033, "redundancy_wl": 153732, "lhs_unique": false, "lhs_tokens": [["supervising", "provider", "id"]], "rhs_tokens": ["organization"]},
+  {"lhs": ["Id"], "rhs": "NAME", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 153806, "distinct_rhs": 10, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 6.5e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["id"]], "rhs_tokens": ["name"]},
+  {"lhs": ["PRIMARY PATIENT INSURANCE ID"], "rhs": "NAME", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 10, "distinct_rhs": 10, "lhs_distinct_ratio": 6.5e-05, "rhs_distinct_ratio": 6.5e-05, "redundancy": 153796, "redundancy_wl": 153806, "lhs_unique": false, "lhs_tokens": [["primary", "patient", "insurance", "id"]], "rhs_tokens": ["name"]},
+  {"lhs": ["Id"], "rhs": "OWNERSHIP", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 153806, "distinct_rhs": 3, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 2e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["id"]], "rhs_tokens": ["ownership"]},
+  {"lhs": ["PRIMARY PATIENT INSURANCE ID"], "rhs": "OWNERSHIP", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 10, "distinct_rhs": 3, "lhs_distinct_ratio": 6.5e-05, "rhs_distinct_ratio": 2e-05, "redundancy": 153796, "redundancy_wl": 153806, "lhs_unique": false, "lhs_tokens": [["primary", "patient", "insurance", "id"]], "rhs_tokens": ["ownership"]},
+  {"lhs": ["NAME"], "rhs": "OWNERSHIP", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 10, "distinct_rhs": 3, "lhs_distinct_ratio": 6.5e-05, "rhs_distinct_ratio": 2e-05, "redundancy": 153796, "redundancy_wl": 153806, "lhs_unique": false, "lhs_tokens": [["name"]], "rhs_tokens": ["ownership"]},
+  {"lhs": ["Id"], "rhs": "ENCOUNTERCLASS", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 153806, "distinct_rhs": 10, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 6.5e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["id"]], "rhs_tokens": ["encounterclass"]},
+  {"lhs": ["APPOINTMENT ID"], "rhs": "ENCOUNTERCLASS", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 80771, "distinct_rhs": 10, "lhs_distinct_ratio": 0.525149, "rhs_distinct_ratio": 6.5e-05, "redundancy": 73035, "redundancy_wl": 106527, "lhs_unique": false, "lhs_tokens": [["appointment", "id"]], "rhs_tokens": ["encounterclass"]},
+  {"lhs": ["Id"], "rhs": "CODE", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 153806, "distinct_rhs": 55, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.000358, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["id"]], "rhs_tokens": ["code"]},
+  {"lhs": ["APPOINTMENT ID"], "rhs": "CODE", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 80771, "distinct_rhs": 55, "lhs_distinct_ratio": 0.525149, "rhs_distinct_ratio": 0.000358, "redundancy": 73035, "redundancy_wl": 106527, "lhs_unique": false, "lhs_tokens": [["appointment", "id"]], "rhs_tokens": ["code"]},
+  {"lhs": ["PROVIDER ID", "LASTBILLEDDATE1"], "rhs": "SERVICE DATE", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 80667, "distinct_rhs": 78502, "lhs_distinct_ratio": 0.524472, "rhs_distinct_ratio": 0.510396, "redundancy": 73139, "redundancy_wl": 106649, "lhs_unique": false, "lhs_tokens": [["provider", "id"], ["lastbilleddate"]], "rhs_tokens": ["service", "date"]},
+  {"lhs": ["DIAGNOSIS1", "LASTBILLEDDATE1"], "rhs": "SERVICE DATE", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 80725, "distinct_rhs": 78502, "lhs_distinct_ratio": 0.524849, "rhs_distinct_ratio": 0.510396, "redundancy": 73081, "redundancy_wl": 106584, "lhs_unique": false, "lhs_tokens": [["diagnosis"], ["lastbilleddate"]], "rhs_tokens": ["service", "date"]},
+  {"lhs": ["CURRENT ILLNESS DATE", "LASTBILLEDDATE1"], "rhs": "SERVICE DATE", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 80667, "distinct_rhs": 78502, "lhs_distinct_ratio": 0.524472, "rhs_distinct_ratio": 0.510396, "redundancy": 73139, "redundancy_wl": 106676, "lhs_unique": false, "lhs_tokens": [["current", "illness", "date"], ["lastbilleddate"]], "rhs_tokens": ["service", "date"]},
+  {"lhs": ["SUPERVISING PROVIDER ID", "LASTBILLEDDATE1"], "rhs": "SERVICE DATE", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 80667, "distinct_rhs": 78502, "lhs_distinct_ratio": 0.524472, "rhs_distinct_ratio": 0.510396, "redundancy": 73139, "redundancy_wl": 106649, "lhs_unique": false, "lhs_tokens": [["supervising", "provider", "id"], ["lastbilleddate"]], "rhs_tokens": ["service", "date"]},
+  {"lhs": ["LASTBILLEDDATE1", "ORGANIZATION"], "rhs": "SERVICE DATE", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 80667, "distinct_rhs": 78502, "lhs_distinct_ratio": 0.524472, "rhs_distinct_ratio": 0.510396, "redundancy": 73139, "redundancy_wl": 106649, "lhs_unique": false, "lhs_tokens": [["lastbilleddate"], ["organization"]], "rhs_tokens": ["service", "date"]},
+  {"lhs": ["PATIENT ID", "SERVICE DATE"], "rhs": "STATUS1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 80364, "distinct_rhs": 2, "lhs_distinct_ratio": 0.522502, "rhs_distinct_ratio": 1.3e-05, "redundancy": 73442, "redundancy_wl": 107048, "lhs_unique": false, "lhs_tokens": [["patient", "id"], ["service", "date"]], "rhs_tokens": ["status"]},
+  {"lhs": ["DIAGNOSIS1", "SERVICE DATE"], "rhs": "STATUS1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 80242, "distinct_rhs": 2, "lhs_distinct_ratio": 0.521709, "rhs_distinct_ratio": 1.3e-05, "redundancy": 73564, "redundancy_wl": 107157, "lhs_unique": false, "lhs_tokens": [["diagnosis"], ["service", "date"]], "rhs_tokens": ["status"]},
+  {"lhs": ["CURRENT ILLNESS DATE", "CODE"], "rhs": "STATUS1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 67469, "distinct_rhs": 2, "lhs_distinct_ratio": 0.438663, "rhs_distinct_ratio": 1.3e-05, "redundancy": 86337, "redundancy_wl": 116012, "lhs_unique": false, "lhs_tokens": [["current", "illness", "date"], ["code"]], "rhs_tokens": ["status"]},
+  {"lhs": ["SERVICE DATE", "CODE"], "rhs": "STATUS1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 79630, "distinct_rhs": 2, "lhs_distinct_ratio": 0.51773, "rhs_distinct_ratio": 1.3e-05, "redundancy": 74176, "redundancy_wl": 107930, "lhs_unique": false, "lhs_tokens": [["service", "date"], ["code"]], "rhs_tokens": ["status"]},
+  {"lhs": ["PATIENT ID", "SERVICE DATE"], "rhs": "STATUSP", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 80364, "distinct_rhs": 2, "lhs_distinct_ratio": 0.522502, "rhs_distinct_ratio": 1.3e-05, "redundancy": 73442, "redundancy_wl": 107048, "lhs_unique": false, "lhs_tokens": [["patient", "id"], ["service", "date"]], "rhs_tokens": ["statusp"]},
+  {"lhs": ["DIAGNOSIS1", "SERVICE DATE"], "rhs": "STATUSP", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 80242, "distinct_rhs": 2, "lhs_distinct_ratio": 0.521709, "rhs_distinct_ratio": 1.3e-05, "redundancy": 73564, "redundancy_wl": 107157, "lhs_unique": false, "lhs_tokens": [["diagnosis"], ["service", "date"]], "rhs_tokens": ["statusp"]},
+  {"lhs": ["CURRENT ILLNESS DATE", "CODE"], "rhs": "STATUSP", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 67469, "distinct_rhs": 2, "lhs_distinct_ratio": 0.438663, "rhs_distinct_ratio": 1.3e-05, "redundancy": 86337, "redundancy_wl": 116012, "lhs_unique": false, "lhs_tokens": [["current", "illness", "date"], ["code"]], "rhs_tokens": ["statusp"]},
+  {"lhs": ["SERVICE DATE", "CODE"], "rhs": "STATUSP", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 79630, "distinct_rhs": 2, "lhs_distinct_ratio": 0.51773, "rhs_distinct_ratio": 1.3e-05, "redundancy": 74176, "redundancy_wl": 107930, "lhs_unique": false, "lhs_tokens": [["service", "date"], ["code"]], "rhs_tokens": ["statusp"]},
+  {"lhs": ["PATIENT ID", "SERVICE DATE"], "rhs": "OUTSTANDING1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 80364, "distinct_rhs": 15, "lhs_distinct_ratio": 0.522502, "rhs_distinct_ratio": 9.8e-05, "redundancy": 73442, "redundancy_wl": 107048, "lhs_unique": false, "lhs_tokens": [["patient", "id"], ["service", "date"]], "rhs_tokens": ["outstanding"]},
+  {"lhs": ["DIAGNOSIS1", "SERVICE DATE"], "rhs": "OUTSTANDING1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 80242, "distinct_rhs": 15, "lhs_distinct_ratio": 0.521709, "rhs_distinct_ratio": 9.8e-05, "redundancy": 73564, "redundancy_wl": 107157, "lhs_unique": false, "lhs_tokens": [["diagnosis"], ["service", "date"]], "rhs_tokens": ["outstanding"]},
+  {"lhs": ["CURRENT ILLNESS DATE", "STATUS1"], "rhs": "OUTSTANDING1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 65237, "distinct_rhs": 15, "lhs_distinct_ratio": 0.424151, "rhs_distinct_ratio": 9.8e-05, "redundancy": 88569, "redundancy_wl": 117896, "lhs_unique": false, "lhs_tokens": [["current", "illness", "date"], ["status"]], "rhs_tokens": ["outstanding"]},
+  {"lhs": ["SERVICE DATE", "STATUS1"], "rhs": "OUTSTANDING1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 78528, "distinct_rhs": 15, "lhs_distinct_ratio": 0.510565, "rhs_distinct_ratio": 9.8e-05, "redundancy": 75278, "redundancy_wl": 108838, "lhs_unique": false, "lhs_tokens": [["service", "date"], ["status"]], "rhs_tokens": ["outstanding"]},
+  {"lhs": ["CURRENT ILLNESS DATE", "STATUSP"], "rhs": "OUTSTANDING1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 65237, "distinct_rhs": 15, "lhs_distinct_ratio": 0.424151, "rhs_distinct_ratio": 9.8e-05, "redundancy": 88569, "redundancy_wl": 117896, "lhs_unique": false, "lhs_tokens": [["current", "illness", "date"], ["statusp"]], "rhs_tokens": ["outstanding"]},
+  {"lhs": ["SERVICE DATE", "STATUSP"], "rhs": "OUTSTANDING1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 78528, "distinct_rhs": 15, "lhs_distinct_ratio": 0.510565, "rhs_distinct_ratio": 9.8e-05, "redundancy": 75278, "redundancy_wl": 108838, "lhs_unique": false, "lhs_tokens": [["service", "date"], ["statusp"]], "rhs_tokens": ["outstanding"]},
+  {"lhs": ["PROVIDER ID", "OUTSTANDINGP"], "rhs": "OUTSTANDING1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 932, "distinct_rhs": 15, "lhs_distinct_ratio": 0.00606, "rhs_distinct_ratio": 9.8e-05, "redundancy": 152874, "redundancy_wl": 153604, "lhs_unique": false, "lhs_tokens": [["provider", "id"], ["outstandingp"]], "rhs_tokens": ["outstanding"]},
+  {"lhs": ["DIAGNOSIS1", "OUTSTANDINGP"], "rhs": "OUTSTANDING1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 513, "distinct_rhs": 15, "lhs_distinct_ratio": 0.003335, "rhs_distinct_ratio": 9.8e-05, "redundancy": 153293, "redundancy_wl": 153650, "lhs_unique": false, "lhs_tokens": [["diagnosis"], ["outstandingp"]], "rhs_tokens": ["outstanding"]},
+  {"lhs": ["CURRENT ILLNESS DATE", "OUTSTANDINGP"], "rhs": "OUTSTANDING1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 65237, "distinct_rhs": 15, "lhs_distinct_ratio": 0.424151, "rhs_distinct_ratio": 9.8e-05, "redundancy": 88569, "redundancy_wl": 117896, "lhs_unique": false, "lhs_tokens": [["current", "illness", "date"], ["outstandingp"]], "rhs_tokens": ["outstanding"]},
+  {"lhs": ["SERVICE DATE", "OUTSTANDINGP"], "rhs": "OUTSTANDING1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 78528, "distinct_rhs": 15, "lhs_distinct_ratio": 0.510565, "rhs_distinct_ratio": 9.8e-05, "redundancy": 75278, "redundancy_wl": 108838, "lhs_unique": false, "lhs_tokens": [["service", "date"], ["outstandingp"]], "rhs_tokens": ["outstanding"]},
+  {"lhs": ["SUPERVISING PROVIDER ID", "OUTSTANDINGP"], "rhs": "OUTSTANDING1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 932, "distinct_rhs": 15, "lhs_distinct_ratio": 0.00606, "rhs_distinct_ratio": 9.8e-05, "redundancy": 152874, "redundancy_wl": 153604, "lhs_unique": false, "lhs_tokens": [["supervising", "provider", "id"], ["outstandingp"]], "rhs_tokens": ["outstanding"]},
+  {"lhs": ["OUTSTANDINGP", "ORGANIZATION"], "rhs": "OUTSTANDING1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 932, "distinct_rhs": 15, "lhs_distinct_ratio": 0.00606, "rhs_distinct_ratio": 9.8e-05, "redundancy": 152874, "redundancy_wl": 153604, "lhs_unique": false, "lhs_tokens": [["outstandingp"], ["organization"]], "rhs_tokens": ["outstanding"]},
+  {"lhs": ["OUTSTANDINGP", "ENCOUNTERCLASS"], "rhs": "OUTSTANDING1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 24, "distinct_rhs": 15, "lhs_distinct_ratio": 0.000156, "rhs_distinct_ratio": 9.8e-05, "redundancy": 153782, "redundancy_wl": 153799, "lhs_unique": false, "lhs_tokens": [["outstandingp"], ["encounterclass"]], "rhs_tokens": ["outstanding"]},
+  {"lhs": ["CURRENT ILLNESS DATE", "CODE"], "rhs": "OUTSTANDING1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 67469, "distinct_rhs": 15, "lhs_distinct_ratio": 0.438663, "rhs_distinct_ratio": 9.8e-05, "redundancy": 86337, "redundancy_wl": 116012, "lhs_unique": false, "lhs_tokens": [["current", "illness", "date"], ["code"]], "rhs_tokens": ["outstanding"]},
+  {"lhs": ["SERVICE DATE", "CODE"], "rhs": "OUTSTANDING1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 79630, "distinct_rhs": 15, "lhs_distinct_ratio": 0.51773, "rhs_distinct_ratio": 9.8e-05, "redundancy": 74176, "redundancy_wl": 107930, "lhs_unique": false, "lhs_tokens": [["service", "date"], ["code"]], "rhs_tokens": ["outstanding"]},
+  {"lhs": ["OUTSTANDINGP", "CODE"], "rhs": "OUTSTANDING1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 68, "distinct_rhs": 15, "lhs_distinct_ratio": 0.000442, "rhs_distinct_ratio": 9.8e-05, "redundancy": 153738, "redundancy_wl": 153797, "lhs_unique": false, "lhs_tokens": [["outstandingp"], ["code"]], "rhs_tokens": ["outstanding"]},
+  {"lhs": ["PATIENT ID", "SERVICE DATE"], "rhs": "OUTSTANDINGP", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 80364, "distinct_rhs": 14, "lhs_distinct_ratio": 0.522502, "rhs_distinct_ratio": 9.1e-05, "redundancy": 73442, "redundancy_wl": 107048, "lhs_unique": false, "lhs_tokens": [["patient", "id"], ["service", "date"]], "rhs_tokens": ["outstandingp"]},
+  {"lhs": ["DIAGNOSIS1", "SERVICE DATE"], "rhs": "OUTSTANDINGP", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 80242, "distinct_rhs": 14, "lhs_distinct_ratio": 0.521709, "rhs_distinct_ratio": 9.1e-05, "redundancy": 73564, "redundancy_wl": 107157, "lhs_unique": false, "lhs_tokens": [["diagnosis"], ["service", "date"]], "rhs_tokens": ["outstandingp"]},
+  {"lhs": ["CURRENT ILLNESS DATE", "STATUS1"], "rhs": "OUTSTANDINGP", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 65237, "distinct_rhs": 14, "lhs_distinct_ratio": 0.424151, "rhs_distinct_ratio": 9.1e-05, "redundancy": 88569, "redundancy_wl": 117896, "lhs_unique": false, "lhs_tokens": [["current", "illness", "date"], ["status"]], "rhs_tokens": ["outstandingp"]},
+  {"lhs": ["SERVICE DATE", "STATUS1"], "rhs": "OUTSTANDINGP", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 78528, "distinct_rhs": 14, "lhs_distinct_ratio": 0.510565, "rhs_distinct_ratio": 9.1e-05, "redundancy": 75278, "redundancy_wl": 108838, "lhs_unique": false, "lhs_tokens": [["service", "date"], ["status"]], "rhs_tokens": ["outstandingp"]},
+  {"lhs": ["CURRENT ILLNESS DATE", "STATUSP"], "rhs": "OUTSTANDINGP", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 65237, "distinct_rhs": 14, "lhs_distinct_ratio": 0.424151, "rhs_distinct_ratio": 9.1e-05, "redundancy": 88569, "redundancy_wl": 117896, "lhs_unique": false, "lhs_tokens": [["current", "illness", "date"], ["statusp"]], "rhs_tokens": ["outstandingp"]},
+  {"lhs": ["SERVICE DATE", "STATUSP"], "rhs": "OUTSTANDINGP", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 78528, "distinct_rhs": 14, "lhs_distinct_ratio": 0.510565, "rhs_distinct_ratio": 9.1e-05, "redundancy": 75278, "redundancy_wl": 108838, "lhs_unique": false, "lhs_tokens": [["service", "date"], ["statusp"]], "rhs_tokens": ["outstandingp"]},
+  {"lhs": ["CURRENT ILLNESS DATE", "CODE"], "rhs": "OUTSTANDINGP", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 67469, "distinct_rhs": 14, "lhs_distinct_ratio": 0.438663, "rhs_distinct_ratio": 9.1e-05, "redundancy": 86337, "redundancy_wl": 116012, "lhs_unique": false, "lhs_tokens": [["current", "illness", "date"], ["code"]], "rhs_tokens": ["outstandingp"]},
+  {"lhs": ["SERVICE DATE", "CODE"], "rhs": "OUTSTANDINGP", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 79630, "distinct_rhs": 14, "lhs_distinct_ratio": 0.51773, "rhs_distinct_ratio": 9.1e-05, "redundancy": 74176, "redundancy_wl": 107930, "lhs_unique": false, "lhs_tokens": [["service", "date"], ["code"]], "rhs_tokens": ["outstandingp"]},
+  {"lhs": ["PROVIDER ID", "CURRENT ILLNESS DATE"], "rhs": "BIRTHDATE", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 67203, "distinct_rhs": 983, "lhs_distinct_ratio": 0.436934, "rhs_distinct_ratio": 0.006391, "redundancy": 86603, "redundancy_wl": 116078, "lhs_unique": false, "lhs_tokens": [["provider", "id"], ["current", "illness", "date"]], "rhs_tokens": ["birthdate"]},
+  {"lhs": ["PROVIDER ID", "SERVICE DATE"], "rhs": "BIRTHDATE", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 79929, "distinct_rhs": 983, "lhs_distinct_ratio": 0.519674, "rhs_distinct_ratio": 0.006391, "redundancy": 73877, "redundancy_wl": 107527, "lhs_unique": false, "lhs_tokens": [["provider", "id"], ["service", "date"]], "rhs_tokens": ["birthdate"]},
+  {"lhs": ["CURRENT ILLNESS DATE", "SUPERVISING PROVIDER ID"], "rhs": "BIRTHDATE", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 67203, "distinct_rhs": 983, "lhs_distinct_ratio": 0.436934, "rhs_distinct_ratio": 0.006391, "redundancy": 86603, "redundancy_wl": 116078, "lhs_unique": false, "lhs_tokens": [["current", "illness", "date"], ["supervising", "provider", "id"]], "rhs_tokens": ["birthdate"]},
+  {"lhs": ["SERVICE DATE", "SUPERVISING PROVIDER ID"], "rhs": "BIRTHDATE", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 79929, "distinct_rhs": 983, "lhs_distinct_ratio": 0.519674, "rhs_distinct_ratio": 0.006391, "redundancy": 73877, "redundancy_wl": 107527, "lhs_unique": false, "lhs_tokens": [["service", "date"], ["supervising", "provider", "id"]], "rhs_tokens": ["birthdate"]},
+  {"lhs": ["PROVIDER ID", "LASTBILLEDDATE1"], "rhs": "BIRTHDATE", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 80667, "distinct_rhs": 983, "lhs_distinct_ratio": 0.524472, "rhs_distinct_ratio": 0.006391, "redundancy": 73139, "redundancy_wl": 106649, "lhs_unique": false, "lhs_tokens": [["provider", "id"], ["lastbilleddate"]], "rhs_tokens": ["birthdate"]},
+  {"lhs": ["DIAGNOSIS1", "LASTBILLEDDATE1"], "rhs": "BIRTHDATE", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 80725, "distinct_rhs": 983, "lhs_distinct_ratio": 0.524849, "rhs_distinct_ratio": 0.006391, "redundancy": 73081, "redundancy_wl": 106584, "lhs_unique": false, "lhs_tokens": [["diagnosis"], ["lastbilleddate"]], "rhs_tokens": ["birthdate"]},
+  {"lhs": ["CURRENT ILLNESS DATE", "LASTBILLEDDATE1"], "rhs": "BIRTHDATE", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 80667, "distinct_rhs": 983, "lhs_distinct_ratio": 0.524472, "rhs_distinct_ratio": 0.006391, "redundancy": 73139, "redundancy_wl": 106676, "lhs_unique": false, "lhs_tokens": [["current", "illness", "date"], ["lastbilleddate"]], "rhs_tokens": ["birthdate"]},
+  {"lhs": ["SERVICE DATE", "LASTBILLEDDATE1"], "rhs": "BIRTHDATE", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 80608, "distinct_rhs": 983, "lhs_distinct_ratio": 0.524089, "rhs_distinct_ratio": 0.006391, "redundancy": 73198, "redundancy_wl": 106710, "lhs_unique": false, "lhs_tokens": [["service", "date"], ["lastbilleddate"]], "rhs_tokens": ["birthdate"]},
+  {"lhs": ["SUPERVISING PROVIDER ID", "LASTBILLEDDATE1"], "rhs": "BIRTHDATE", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 80667, "distinct_rhs": 983, "lhs_distinct_ratio": 0.524472, "rhs_distinct_ratio": 0.006391, "redundancy": 73139, "redundancy_wl": 106649, "lhs_unique": false, "lhs_tokens": [["supervising", "provider", "id"], ["lastbilleddate"]], "rhs_tokens": ["birthdate"]},
+  {"lhs": ["CURRENT ILLNESS DATE", "GENDER"], "rhs": "BIRTHDATE", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 65086, "distinct_rhs": 983, "lhs_distinct_ratio": 0.423169, "rhs_distinct_ratio": 0.006391, "redundancy": 88720, "redundancy_wl": 118079, "lhs_unique": false, "lhs_tokens": [["current", "illness", "date"], ["gender"]], "rhs_tokens": ["birthdate"]},
+  {"lhs": ["SERVICE DATE", "GENDER"], "rhs": "BIRTHDATE", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 78507, "distinct_rhs": 983, "lhs_distinct_ratio": 0.510429, "rhs_distinct_ratio": 0.006391, "redundancy": 75299, "redundancy_wl": 108865, "lhs_unique": false, "lhs_tokens": [["service", "date"], ["gender"]], "rhs_tokens": ["birthdate"]},
+  {"lhs": ["CURRENT ILLNESS DATE", "ORGANIZATION"], "rhs": "BIRTHDATE", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 67203, "distinct_rhs": 983, "lhs_distinct_ratio": 0.436934, "rhs_distinct_ratio": 0.006391, "redundancy": 86603, "redundancy_wl": 116078, "lhs_unique": false, "lhs_tokens": [["current", "illness", "date"], ["organization"]], "rhs_tokens": ["birthdate"]},
+  {"lhs": ["SERVICE DATE", "ORGANIZATION"], "rhs": "BIRTHDATE", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 79929, "distinct_rhs": 983, "lhs_distinct_ratio": 0.519674, "rhs_distinct_ratio": 0.006391, "redundancy": 73877, "redundancy_wl": 107527, "lhs_unique": false, "lhs_tokens": [["service", "date"], ["organization"]], "rhs_tokens": ["birthdate"]},
+  {"lhs": ["LASTBILLEDDATE1", "ORGANIZATION"], "rhs": "BIRTHDATE", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 80667, "distinct_rhs": 983, "lhs_distinct_ratio": 0.524472, "rhs_distinct_ratio": 0.006391, "redundancy": 73139, "redundancy_wl": 106649, "lhs_unique": false, "lhs_tokens": [["lastbilleddate"], ["organization"]], "rhs_tokens": ["birthdate"]},
+  {"lhs": ["CURRENT ILLNESS DATE", "ENCOUNTERCLASS"], "rhs": "BIRTHDATE", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 67183, "distinct_rhs": 983, "lhs_distinct_ratio": 0.436804, "rhs_distinct_ratio": 0.006391, "redundancy": 86623, "redundancy_wl": 116290, "lhs_unique": false, "lhs_tokens": [["current", "illness", "date"], ["encounterclass"]], "rhs_tokens": ["birthdate"]},
+  {"lhs": ["SERVICE DATE", "ENCOUNTERCLASS"], "rhs": "BIRTHDATE", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 79473, "distinct_rhs": 983, "lhs_distinct_ratio": 0.516709, "rhs_distinct_ratio": 0.006391, "redundancy": 74333, "redundancy_wl": 108139, "lhs_unique": false, "lhs_tokens": [["service", "date"], ["encounterclass"]], "rhs_tokens": ["birthdate"]},
+  {"lhs": ["PROVIDER ID", "CURRENT ILLNESS DATE"], "rhs": "GENDER", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 67203, "distinct_rhs": 2, "lhs_distinct_ratio": 0.436934, "rhs_distinct_ratio": 1.3e-05, "redundancy": 86603, "redundancy_wl": 116078, "lhs_unique": false, "lhs_tokens": [["provider", "id"], ["current", "illness", "date"]], "rhs_tokens": ["gender"]},
+  {"lhs": ["PROVIDER ID", "SERVICE DATE"], "rhs": "GENDER", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 79929, "distinct_rhs": 2, "lhs_distinct_ratio": 0.519674, "rhs_distinct_ratio": 1.3e-05, "redundancy": 73877, "redundancy_wl": 107527, "lhs_unique": false, "lhs_tokens": [["provider", "id"], ["service", "date"]], "rhs_tokens": ["gender"]},
+  {"lhs": ["CURRENT ILLNESS DATE", "SUPERVISING PROVIDER ID"], "rhs": "GENDER", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 67203, "distinct_rhs": 2, "lhs_distinct_ratio": 0.436934, "rhs_distinct_ratio": 1.3e-05, "redundancy": 86603, "redundancy_wl": 116078, "lhs_unique": false, "lhs_tokens": [["current", "illness", "date"], ["supervising", "provider", "id"]], "rhs_tokens": ["gender"]},
+  {"lhs": ["SERVICE DATE", "SUPERVISING PROVIDER ID"], "rhs": "GENDER", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 79929, "distinct_rhs": 2, "lhs_distinct_ratio": 0.519674, "rhs_distinct_ratio": 1.3e-05, "redundancy": 73877, "redundancy_wl": 107527, "lhs_unique": false, "lhs_tokens": [["service", "date"], ["supervising", "provider", "id"]], "rhs_tokens": ["gender"]},
+  {"lhs": ["PROVIDER ID", "LASTBILLEDDATE1"], "rhs": "GENDER", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 80667, "distinct_rhs": 2, "lhs_distinct_ratio": 0.524472, "rhs_distinct_ratio": 1.3e-05, "redundancy": 73139, "redundancy_wl": 106649, "lhs_unique": false, "lhs_tokens": [["provider", "id"], ["lastbilleddate"]], "rhs_tokens": ["gender"]},
+  {"lhs": ["DIAGNOSIS1", "LASTBILLEDDATE1"], "rhs": "GENDER", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 80725, "distinct_rhs": 2, "lhs_distinct_ratio": 0.524849, "rhs_distinct_ratio": 1.3e-05, "redundancy": 73081, "redundancy_wl": 106584, "lhs_unique": false, "lhs_tokens": [["diagnosis"], ["lastbilleddate"]], "rhs_tokens": ["gender"]},
+  {"lhs": ["CURRENT ILLNESS DATE", "LASTBILLEDDATE1"], "rhs": "GENDER", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 80667, "distinct_rhs": 2, "lhs_distinct_ratio": 0.524472, "rhs_distinct_ratio": 1.3e-05, "redundancy": 73139, "redundancy_wl": 106676, "lhs_unique": false, "lhs_tokens": [["current", "illness", "date"], ["lastbilleddate"]], "rhs_tokens": ["gender"]},
+  {"lhs": ["SERVICE DATE", "LASTBILLEDDATE1"], "rhs": "GENDER", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 80608, "distinct_rhs": 2, "lhs_distinct_ratio": 0.524089, "rhs_distinct_ratio": 1.3e-05, "redundancy": 73198, "redundancy_wl": 106710, "lhs_unique": false, "lhs_tokens": [["service", "date"], ["lastbilleddate"]], "rhs_tokens": ["gender"]},
+  {"lhs": ["SUPERVISING PROVIDER ID", "LASTBILLEDDATE1"], "rhs": "GENDER", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 80667, "distinct_rhs": 2, "lhs_distinct_ratio": 0.524472, "rhs_distinct_ratio": 1.3e-05, "redundancy": 73139, "redundancy_wl": 106649, "lhs_unique": false, "lhs_tokens": [["supervising", "provider", "id"], ["lastbilleddate"]], "rhs_tokens": ["gender"]},
+  {"lhs": ["CURRENT ILLNESS DATE", "BIRTHDATE"], "rhs": "GENDER", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 65086, "distinct_rhs": 2, "lhs_distinct_ratio": 0.423169, "rhs_distinct_ratio": 1.3e-05, "redundancy": 88720, "redundancy_wl": 118079, "lhs_unique": false, "lhs_tokens": [["current", "illness", "date"], ["birthdate"]], "rhs_tokens": ["gender"]},
+  {"lhs": ["SERVICE DATE", "BIRTHDATE"], "rhs": "GENDER", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 78507, "distinct_rhs": 2, "lhs_distinct_ratio": 0.510429, "rhs_distinct_ratio": 1.3e-05, "redundancy": 75299, "redundancy_wl": 108865, "lhs_unique": false, "lhs_tokens": [["service", "date"], ["birthdate"]], "rhs_tokens": ["gender"]},
+  {"lhs": ["LASTBILLEDDATE1", "BIRTHDATE"], "rhs": "GENDER", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 80605, "distinct_rhs": 2, "lhs_distinct_ratio": 0.524069, "rhs_distinct_ratio": 1.3e-05, "redundancy": 73201, "redundancy_wl": 106715, "lhs_unique": false, "lhs_tokens": [["lastbilleddate"], ["birthdate"]], "rhs_tokens": ["gender"]},
+  {"lhs": ["CURRENT ILLNESS DATE", "ORGANIZATION"], "rhs": "GENDER", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 67203, "distinct_rhs": 2, "lhs_distinct_ratio": 0.436934, "rhs_distinct_ratio": 1.3e-05, "redundancy": 86603, "redundancy_wl": 116078, "lhs_unique": false, "lhs_tokens": [["current", "illness", "date"], ["organization"]], "rhs_tokens": ["gender"]},
+  {"lhs": ["SERVICE DATE", "ORGANIZATION"], "rhs": "GENDER", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 79929, "distinct_rhs": 2, "lhs_distinct_ratio": 0.519674, "rhs_distinct_ratio": 1.3e-05, "redundancy": 73877, "redundancy_wl": 107527, "lhs_unique": false, "lhs_tokens": [["service", "date"], ["organization"]], "rhs_tokens": ["gender"]},
+  {"lhs": ["LASTBILLEDDATE1", "ORGANIZATION"], "rhs": "GENDER", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 80667, "distinct_rhs": 2, "lhs_distinct_ratio": 0.524472, "rhs_distinct_ratio": 1.3e-05, "redundancy": 73139, "redundancy_wl": 106649, "lhs_unique": false, "lhs_tokens": [["lastbilleddate"], ["organization"]], "rhs_tokens": ["gender"]},
+  {"lhs": ["CURRENT ILLNESS DATE", "ENCOUNTERCLASS"], "rhs": "GENDER", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 67183, "distinct_rhs": 2, "lhs_distinct_ratio": 0.436804, "rhs_distinct_ratio": 1.3e-05, "redundancy": 86623, "redundancy_wl": 116290, "lhs_unique": false, "lhs_tokens": [["current", "illness", "date"], ["encounterclass"]], "rhs_tokens": ["gender"]},
+  {"lhs": ["SERVICE DATE", "ENCOUNTERCLASS"], "rhs": "GENDER", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 79473, "distinct_rhs": 2, "lhs_distinct_ratio": 0.516709, "rhs_distinct_ratio": 1.3e-05, "redundancy": 74333, "redundancy_wl": 108139, "lhs_unique": false, "lhs_tokens": [["service", "date"], ["encounterclass"]], "rhs_tokens": ["gender"]},
+  {"lhs": ["LASTBILLEDDATE1", "CODE"], "rhs": "GENDER", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 80703, "distinct_rhs": 2, "lhs_distinct_ratio": 0.524706, "rhs_distinct_ratio": 1.3e-05, "redundancy": 73103, "redundancy_wl": 106607, "lhs_unique": false, "lhs_tokens": [["lastbilleddate"], ["code"]], "rhs_tokens": ["gender"]},
+  {"lhs": ["DIAGNOSIS1", "LASTBILLEDDATE1"], "rhs": "ENCOUNTERCLASS", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 80725, "distinct_rhs": 10, "lhs_distinct_ratio": 0.524849, "rhs_distinct_ratio": 6.5e-05, "redundancy": 73081, "redundancy_wl": 106584, "lhs_unique": false, "lhs_tokens": [["diagnosis"], ["lastbilleddate"]], "rhs_tokens": ["encounterclass"]},
+  {"lhs": ["PATIENT ID", "DIAGNOSIS1", "LASTBILLEDDATE1"], "rhs": "PROVIDER ID", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 80761, "distinct_rhs": 773, "lhs_distinct_ratio": 0.525084, "rhs_distinct_ratio": 0.005026, "redundancy": 73045, "redundancy_wl": 106546, "lhs_unique": false, "lhs_tokens": [["patient", "id"], ["diagnosis"], ["lastbilleddate"]], "rhs_tokens": ["provider", "id"]},
+  {"lhs": ["PATIENT ID", "DIAGNOSIS1", "SERVICE DATE"], "rhs": "CURRENT ILLNESS DATE", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 80668, "distinct_rhs": 65082, "lhs_distinct_ratio": 0.524479, "rhs_distinct_ratio": 0.423143, "redundancy": 73138, "redundancy_wl": 106649, "lhs_unique": false, "lhs_tokens": [["patient", "id"], ["diagnosis"], ["service", "date"]], "rhs_tokens": ["current", "illness", "date"]},
+  {"lhs": ["PATIENT ID", "DIAGNOSIS1", "LASTBILLEDDATE1"], "rhs": "CURRENT ILLNESS DATE", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 80761, "distinct_rhs": 65082, "lhs_distinct_ratio": 0.525084, "rhs_distinct_ratio": 0.423143, "redundancy": 73045, "redundancy_wl": 106546, "lhs_unique": false, "lhs_tokens": [["patient", "id"], ["diagnosis"], ["lastbilleddate"]], "rhs_tokens": ["current", "illness", "date"]},
+  {"lhs": ["PATIENT ID", "SERVICE DATE", "CODE"], "rhs": "CURRENT ILLNESS DATE", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 80759, "distinct_rhs": 65082, "lhs_distinct_ratio": 0.525071, "rhs_distinct_ratio": 0.423143, "redundancy": 73047, "redundancy_wl": 106547, "lhs_unique": false, "lhs_tokens": [["patient", "id"], ["service", "date"], ["code"]], "rhs_tokens": ["current", "illness", "date"]},
+  {"lhs": ["PATIENT ID", "LASTBILLEDDATE1", "CODE"], "rhs": "CURRENT ILLNESS DATE", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 80764, "distinct_rhs": 65082, "lhs_distinct_ratio": 0.525103, "rhs_distinct_ratio": 0.423143, "redundancy": 73042, "redundancy_wl": 106538, "lhs_unique": false, "lhs_tokens": [["patient", "id"], ["lastbilleddate"], ["code"]], "rhs_tokens": ["current", "illness", "date"]},
+  {"lhs": ["PATIENT ID", "LASTBILLEDDATE1", "ENCOUNTERCLASS"], "rhs": "SERVICE DATE", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 80710, "distinct_rhs": 78502, "lhs_distinct_ratio": 0.524752, "rhs_distinct_ratio": 0.510396, "redundancy": 73096, "redundancy_wl": 106603, "lhs_unique": false, "lhs_tokens": [["patient", "id"], ["lastbilleddate"], ["encounterclass"]], "rhs_tokens": ["service", "date"]},
+  {"lhs": ["LASTBILLEDDATE1", "BIRTHDATE", "ENCOUNTERCLASS"], "rhs": "SERVICE DATE", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 80643, "distinct_rhs": 78502, "lhs_distinct_ratio": 0.524316, "rhs_distinct_ratio": 0.510396, "redundancy": 73163, "redundancy_wl": 106673, "lhs_unique": false, "lhs_tokens": [["lastbilleddate"], ["birthdate"], ["encounterclass"]], "rhs_tokens": ["service", "date"]},
+  {"lhs": ["PATIENT ID", "LASTBILLEDDATE1", "CODE"], "rhs": "SERVICE DATE", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 80764, "distinct_rhs": 78502, "lhs_distinct_ratio": 0.525103, "rhs_distinct_ratio": 0.510396, "redundancy": 73042, "redundancy_wl": 106538, "lhs_unique": false, "lhs_tokens": [["patient", "id"], ["lastbilleddate"], ["code"]], "rhs_tokens": ["service", "date"]},
+  {"lhs": ["LASTBILLEDDATE1", "BIRTHDATE", "CODE"], "rhs": "SERVICE DATE", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 80704, "distinct_rhs": 78502, "lhs_distinct_ratio": 0.524713, "rhs_distinct_ratio": 0.510396, "redundancy": 73102, "redundancy_wl": 106606, "lhs_unique": false, "lhs_tokens": [["lastbilleddate"], ["birthdate"], ["code"]], "rhs_tokens": ["service", "date"]},
+  {"lhs": ["PATIENT ID", "DIAGNOSIS1", "LASTBILLEDDATE1"], "rhs": "SUPERVISING PROVIDER ID", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 80761, "distinct_rhs": 773, "lhs_distinct_ratio": 0.525084, "rhs_distinct_ratio": 0.005026, "redundancy": 73045, "redundancy_wl": 106546, "lhs_unique": false, "lhs_tokens": [["patient", "id"], ["diagnosis"], ["lastbilleddate"]], "rhs_tokens": ["supervising", "provider", "id"]},
+  {"lhs": ["PATIENT ID", "DIAGNOSIS1", "STATUS1"], "rhs": "OUTSTANDING1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 22279, "distinct_rhs": 15, "lhs_distinct_ratio": 0.144851, "rhs_distinct_ratio": 9.8e-05, "redundancy": 131527, "redundancy_wl": 143862, "lhs_unique": false, "lhs_tokens": [["patient", "id"], ["diagnosis"], ["status"]], "rhs_tokens": ["outstanding"]},
+  {"lhs": ["PATIENT ID", "DIAGNOSIS1", "STATUSP"], "rhs": "OUTSTANDING1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 22279, "distinct_rhs": 15, "lhs_distinct_ratio": 0.144851, "rhs_distinct_ratio": 9.8e-05, "redundancy": 131527, "redundancy_wl": 143862, "lhs_unique": false, "lhs_tokens": [["patient", "id"], ["diagnosis"], ["statusp"]], "rhs_tokens": ["outstanding"]},
+  {"lhs": ["PATIENT ID", "STATUS1", "ENCOUNTERCLASS"], "rhs": "OUTSTANDING1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 6185, "distinct_rhs": 15, "lhs_distinct_ratio": 0.040213, "rhs_distinct_ratio": 9.8e-05, "redundancy": 147621, "redundancy_wl": 152581, "lhs_unique": false, "lhs_tokens": [["patient", "id"], ["status"], ["encounterclass"]], "rhs_tokens": ["outstanding"]},
+  {"lhs": ["PATIENT ID", "STATUSP", "ENCOUNTERCLASS"], "rhs": "OUTSTANDING1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 6185, "distinct_rhs": 15, "lhs_distinct_ratio": 0.040213, "rhs_distinct_ratio": 9.8e-05, "redundancy": 147621, "redundancy_wl": 152581, "lhs_unique": false, "lhs_tokens": [["patient", "id"], ["statusp"], ["encounterclass"]], "rhs_tokens": ["outstanding"]},
+  {"lhs": ["PATIENT ID", "STATUS1", "CODE"], "rhs": "OUTSTANDING1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 10475, "distinct_rhs": 15, "lhs_distinct_ratio": 0.068105, "rhs_distinct_ratio": 9.8e-05, "redundancy": 143331, "redundancy_wl": 151178, "lhs_unique": false, "lhs_tokens": [["patient", "id"], ["status"], ["code"]], "rhs_tokens": ["outstanding"]},
+  {"lhs": ["PATIENT ID", "STATUSP", "CODE"], "rhs": "OUTSTANDING1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 10475, "distinct_rhs": 15, "lhs_distinct_ratio": 0.068105, "rhs_distinct_ratio": 9.8e-05, "redundancy": 143331, "redundancy_wl": 151178, "lhs_unique": false, "lhs_tokens": [["patient", "id"], ["statusp"], ["code"]], "rhs_tokens": ["outstanding"]},
+  {"lhs": ["PATIENT ID", "DIAGNOSIS1", "STATUS1"], "rhs": "OUTSTANDINGP", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 22279, "distinct_rhs": 14, "lhs_distinct_ratio": 0.144851, "rhs_distinct_ratio": 9.1e-05, "redundancy": 131527, "redundancy_wl": 143862, "lhs_unique": false, "lhs_tokens": [["patient", "id"], ["diagnosis"], ["status"]], "rhs_tokens": ["outstandingp"]},
+  {"lhs": ["PATIENT ID", "DIAGNOSIS1", "STATUSP"], "rhs": "OUTSTANDINGP", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 22279, "distinct_rhs": 14, "lhs_distinct_ratio": 0.144851, "rhs_distinct_ratio": 9.1e-05, "redundancy": 131527, "redundancy_wl": 143862, "lhs_unique": false, "lhs_tokens": [["patient", "id"], ["diagnosis"], ["statusp"]], "rhs_tokens": ["outstandingp"]},
+  {"lhs": ["PATIENT ID", "STATUS1", "ENCOUNTERCLASS"], "rhs": "OUTSTANDINGP", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 6185, "distinct_rhs": 14, "lhs_distinct_ratio": 0.040213, "rhs_distinct_ratio": 9.1e-05, "redundancy": 147621, "redundancy_wl": 152581, "lhs_unique": false, "lhs_tokens": [["patient", "id"], ["status"], ["encounterclass"]], "rhs_tokens": ["outstandingp"]},
+  {"lhs": ["PATIENT ID", "STATUSP", "ENCOUNTERCLASS"], "rhs": "OUTSTANDINGP", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 6185, "distinct_rhs": 14, "lhs_distinct_ratio": 0.040213, "rhs_distinct_ratio": 9.1e-05, "redundancy": 147621, "redundancy_wl": 152581, "lhs_unique": false, "lhs_tokens": [["patient", "id"], ["statusp"], ["encounterclass"]], "rhs_tokens": ["outstandingp"]},
+  {"lhs": ["PATIENT ID", "STATUS1", "CODE"], "rhs": "OUTSTANDINGP", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 10475, "distinct_rhs": 14, "lhs_distinct_ratio": 0.068105, "rhs_distinct_ratio": 9.1e-05, "redundancy": 143331, "redundancy_wl": 151178, "lhs_unique": false, "lhs_tokens": [["patient", "id"], ["status"], ["code"]], "rhs_tokens": ["outstandingp"]},
+  {"lhs": ["PATIENT ID", "STATUSP", "CODE"], "rhs": "OUTSTANDINGP", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 10475, "distinct_rhs": 14, "lhs_distinct_ratio": 0.068105, "rhs_distinct_ratio": 9.1e-05, "redundancy": 143331, "redundancy_wl": 151178, "lhs_unique": false, "lhs_tokens": [["patient", "id"], ["statusp"], ["code"]], "rhs_tokens": ["outstandingp"]},
+  {"lhs": ["PATIENT ID", "DIAGNOSIS1", "LASTBILLEDDATE1"], "rhs": "HEALTHCARECLAIMTYPEID1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 80761, "distinct_rhs": 2, "lhs_distinct_ratio": 0.525084, "rhs_distinct_ratio": 1.3e-05, "redundancy": 73045, "redundancy_wl": 106546, "lhs_unique": false, "lhs_tokens": [["patient", "id"], ["diagnosis"], ["lastbilleddate"]], "rhs_tokens": ["healthcareclaimtypeid"]},
+  {"lhs": ["PATIENT ID", "LASTBILLEDDATE1", "ENCOUNTERCLASS"], "rhs": "HEALTHCARECLAIMTYPEID1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 80710, "distinct_rhs": 2, "lhs_distinct_ratio": 0.524752, "rhs_distinct_ratio": 1.3e-05, "redundancy": 73096, "redundancy_wl": 106603, "lhs_unique": false, "lhs_tokens": [["patient", "id"], ["lastbilleddate"], ["encounterclass"]], "rhs_tokens": ["healthcareclaimtypeid"]},
+  {"lhs": ["PATIENT ID", "LASTBILLEDDATE1", "CODE"], "rhs": "HEALTHCARECLAIMTYPEID1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 80764, "distinct_rhs": 2, "lhs_distinct_ratio": 0.525103, "rhs_distinct_ratio": 1.3e-05, "redundancy": 73042, "redundancy_wl": 106538, "lhs_unique": false, "lhs_tokens": [["patient", "id"], ["lastbilleddate"], ["code"]], "rhs_tokens": ["healthcareclaimtypeid"]},
+  {"lhs": ["PROVIDER ID", "PRIMARY PATIENT INSURANCE ID", "BIRTHDATE"], "rhs": "GENDER", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 6175, "distinct_rhs": 2, "lhs_distinct_ratio": 0.040148, "rhs_distinct_ratio": 1.3e-05, "redundancy": 147631, "redundancy_wl": 152688, "lhs_unique": false, "lhs_tokens": [["provider", "id"], ["primary", "patient", "insurance", "id"], ["birthdate"]], "rhs_tokens": ["gender"]},
+  {"lhs": ["PRIMARY PATIENT INSURANCE ID", "SUPERVISING PROVIDER ID", "BIRTHDATE"], "rhs": "GENDER", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 6175, "distinct_rhs": 2, "lhs_distinct_ratio": 0.040148, "rhs_distinct_ratio": 1.3e-05, "redundancy": 147631, "redundancy_wl": 152688, "lhs_unique": false, "lhs_tokens": [["primary", "patient", "insurance", "id"], ["supervising", "provider", "id"], ["birthdate"]], "rhs_tokens": ["gender"]},
+  {"lhs": ["PRIMARY PATIENT INSURANCE ID", "BIRTHDATE", "ORGANIZATION"], "rhs": "GENDER", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 6175, "distinct_rhs": 2, "lhs_distinct_ratio": 0.040148, "rhs_distinct_ratio": 1.3e-05, "redundancy": 147631, "redundancy_wl": 152688, "lhs_unique": false, "lhs_tokens": [["primary", "patient", "insurance", "id"], ["birthdate"], ["organization"]], "rhs_tokens": ["gender"]},
+  {"lhs": ["PROVIDER ID", "BIRTHDATE", "NAME"], "rhs": "GENDER", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 6175, "distinct_rhs": 2, "lhs_distinct_ratio": 0.040148, "rhs_distinct_ratio": 1.3e-05, "redundancy": 147631, "redundancy_wl": 152688, "lhs_unique": false, "lhs_tokens": [["provider", "id"], ["birthdate"], ["name"]], "rhs_tokens": ["gender"]},
+  {"lhs": ["SUPERVISING PROVIDER ID", "BIRTHDATE", "NAME"], "rhs": "GENDER", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 6175, "distinct_rhs": 2, "lhs_distinct_ratio": 0.040148, "rhs_distinct_ratio": 1.3e-05, "redundancy": 147631, "redundancy_wl": 152688, "lhs_unique": false, "lhs_tokens": [["supervising", "provider", "id"], ["birthdate"], ["name"]], "rhs_tokens": ["gender"]},
+  {"lhs": ["BIRTHDATE", "ORGANIZATION", "NAME"], "rhs": "GENDER", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 6175, "distinct_rhs": 2, "lhs_distinct_ratio": 0.040148, "rhs_distinct_ratio": 1.3e-05, "redundancy": 147631, "redundancy_wl": 152688, "lhs_unique": false, "lhs_tokens": [["birthdate"], ["organization"], ["name"]], "rhs_tokens": ["gender"]},
+  {"lhs": ["PATIENT ID", "DIAGNOSIS1", "LASTBILLEDDATE1"], "rhs": "ORGANIZATION", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 80761, "distinct_rhs": 773, "lhs_distinct_ratio": 0.525084, "rhs_distinct_ratio": 0.005026, "redundancy": 73045, "redundancy_wl": 106546, "lhs_unique": false, "lhs_tokens": [["patient", "id"], ["diagnosis"], ["lastbilleddate"]], "rhs_tokens": ["organization"]},
+  {"lhs": ["PATIENT ID", "LASTBILLEDDATE1", "CODE"], "rhs": "ENCOUNTERCLASS", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 80764, "distinct_rhs": 10, "lhs_distinct_ratio": 0.525103, "rhs_distinct_ratio": 6.5e-05, "redundancy": 73042, "redundancy_wl": 106538, "lhs_unique": false, "lhs_tokens": [["patient", "id"], ["lastbilleddate"], ["code"]], "rhs_tokens": ["encounterclass"]},
+  {"lhs": ["PATIENT ID", "DIAGNOSIS1", "SERVICE DATE", "ENCOUNTERCLASS"], "rhs": "PROVIDER ID", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 80761, "distinct_rhs": 773, "lhs_distinct_ratio": 0.525084, "rhs_distinct_ratio": 0.005026, "redundancy": 73045, "redundancy_wl": 106546, "lhs_unique": false, "lhs_tokens": [["patient", "id"], ["diagnosis"], ["service", "date"], ["encounterclass"]], "rhs_tokens": ["provider", "id"]},
+  {"lhs": ["PATIENT ID", "DIAGNOSIS1", "SERVICE DATE", "CODE"], "rhs": "PROVIDER ID", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 80769, "distinct_rhs": 773, "lhs_distinct_ratio": 0.525136, "rhs_distinct_ratio": 0.005026, "redundancy": 73037, "redundancy_wl": 106531, "lhs_unique": false, "lhs_tokens": [["patient", "id"], ["diagnosis"], ["service", "date"], ["code"]], "rhs_tokens": ["provider", "id"]},
+  {"lhs": ["PATIENT ID", "DIAGNOSIS1", "SERVICE DATE", "ENCOUNTERCLASS"], "rhs": "SUPERVISING PROVIDER ID", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 80761, "distinct_rhs": 773, "lhs_distinct_ratio": 0.525084, "rhs_distinct_ratio": 0.005026, "redundancy": 73045, "redundancy_wl": 106546, "lhs_unique": false, "lhs_tokens": [["patient", "id"], ["diagnosis"], ["service", "date"], ["encounterclass"]], "rhs_tokens": ["supervising", "provider", "id"]},
+  {"lhs": ["PATIENT ID", "DIAGNOSIS1", "SERVICE DATE", "CODE"], "rhs": "SUPERVISING PROVIDER ID", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 80769, "distinct_rhs": 773, "lhs_distinct_ratio": 0.525136, "rhs_distinct_ratio": 0.005026, "redundancy": 73037, "redundancy_wl": 106531, "lhs_unique": false, "lhs_tokens": [["patient", "id"], ["diagnosis"], ["service", "date"], ["code"]], "rhs_tokens": ["supervising", "provider", "id"]},
+  {"lhs": ["PRIMARY PATIENT INSURANCE ID", "SECONDARY PATIENT INSURANCE ID", "SERVICE DATE", "ENCOUNTERCLASS"], "rhs": "STATUS1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 79832, "distinct_rhs": 2, "lhs_distinct_ratio": 0.519043, "rhs_distinct_ratio": 1.3e-05, "redundancy": 73974, "redundancy_wl": 107767, "lhs_unique": false, "lhs_tokens": [["primary", "patient", "insurance", "id"], ["secondary", "patient", "insurance", "id"], ["service", "date"], ["encounterclass"]], "rhs_tokens": ["status"]},
+  {"lhs": ["SECONDARY PATIENT INSURANCE ID", "SERVICE DATE", "NAME", "ENCOUNTERCLASS"], "rhs": "STATUS1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 79832, "distinct_rhs": 2, "lhs_distinct_ratio": 0.519043, "rhs_distinct_ratio": 1.3e-05, "redundancy": 73974, "redundancy_wl": 107767, "lhs_unique": false, "lhs_tokens": [["secondary", "patient", "insurance", "id"], ["service", "date"], ["name"], ["encounterclass"]], "rhs_tokens": ["status"]},
+  {"lhs": ["PRIMARY PATIENT INSURANCE ID", "SECONDARY PATIENT INSURANCE ID", "SERVICE DATE", "ENCOUNTERCLASS"], "rhs": "STATUSP", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 79832, "distinct_rhs": 2, "lhs_distinct_ratio": 0.519043, "rhs_distinct_ratio": 1.3e-05, "redundancy": 73974, "redundancy_wl": 107767, "lhs_unique": false, "lhs_tokens": [["primary", "patient", "insurance", "id"], ["secondary", "patient", "insurance", "id"], ["service", "date"], ["encounterclass"]], "rhs_tokens": ["statusp"]},
+  {"lhs": ["SECONDARY PATIENT INSURANCE ID", "SERVICE DATE", "NAME", "ENCOUNTERCLASS"], "rhs": "STATUSP", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 79832, "distinct_rhs": 2, "lhs_distinct_ratio": 0.519043, "rhs_distinct_ratio": 1.3e-05, "redundancy": 73974, "redundancy_wl": 107767, "lhs_unique": false, "lhs_tokens": [["secondary", "patient", "insurance", "id"], ["service", "date"], ["name"], ["encounterclass"]], "rhs_tokens": ["statusp"]},
+  {"lhs": ["PRIMARY PATIENT INSURANCE ID", "SECONDARY PATIENT INSURANCE ID", "SERVICE DATE", "ENCOUNTERCLASS"], "rhs": "OUTSTANDING1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 79832, "distinct_rhs": 15, "lhs_distinct_ratio": 0.519043, "rhs_distinct_ratio": 9.8e-05, "redundancy": 73974, "redundancy_wl": 107767, "lhs_unique": false, "lhs_tokens": [["primary", "patient", "insurance", "id"], ["secondary", "patient", "insurance", "id"], ["service", "date"], ["encounterclass"]], "rhs_tokens": ["outstanding"]},
+  {"lhs": ["SECONDARY PATIENT INSURANCE ID", "SERVICE DATE", "NAME", "ENCOUNTERCLASS"], "rhs": "OUTSTANDING1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 79832, "distinct_rhs": 15, "lhs_distinct_ratio": 0.519043, "rhs_distinct_ratio": 9.8e-05, "redundancy": 73974, "redundancy_wl": 107767, "lhs_unique": false, "lhs_tokens": [["secondary", "patient", "insurance", "id"], ["service", "date"], ["name"], ["encounterclass"]], "rhs_tokens": ["outstanding"]},
+  {"lhs": ["PRIMARY PATIENT INSURANCE ID", "SECONDARY PATIENT INSURANCE ID", "SERVICE DATE", "ENCOUNTERCLASS"], "rhs": "OUTSTANDINGP", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 79832, "distinct_rhs": 14, "lhs_distinct_ratio": 0.519043, "rhs_distinct_ratio": 9.1e-05, "redundancy": 73974, "redundancy_wl": 107767, "lhs_unique": false, "lhs_tokens": [["primary", "patient", "insurance", "id"], ["secondary", "patient", "insurance", "id"], ["service", "date"], ["encounterclass"]], "rhs_tokens": ["outstandingp"]},
+  {"lhs": ["SECONDARY PATIENT INSURANCE ID", "SERVICE DATE", "NAME", "ENCOUNTERCLASS"], "rhs": "OUTSTANDINGP", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 79832, "distinct_rhs": 14, "lhs_distinct_ratio": 0.519043, "rhs_distinct_ratio": 9.1e-05, "redundancy": 73974, "redundancy_wl": 107767, "lhs_unique": false, "lhs_tokens": [["secondary", "patient", "insurance", "id"], ["service", "date"], ["name"], ["encounterclass"]], "rhs_tokens": ["outstandingp"]},
+  {"lhs": ["PATIENT ID", "DIAGNOSIS1", "SERVICE DATE", "ENCOUNTERCLASS"], "rhs": "LASTBILLEDDATE1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 80761, "distinct_rhs": 80597, "lhs_distinct_ratio": 0.525084, "rhs_distinct_ratio": 0.524017, "redundancy": 73045, "redundancy_wl": 106546, "lhs_unique": false, "lhs_tokens": [["patient", "id"], ["diagnosis"], ["service", "date"], ["encounterclass"]], "rhs_tokens": ["lastbilleddate"]},
+  {"lhs": ["PATIENT ID", "DIAGNOSIS1", "SERVICE DATE", "CODE"], "rhs": "LASTBILLEDDATE1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 80769, "distinct_rhs": 80597, "lhs_distinct_ratio": 0.525136, "rhs_distinct_ratio": 0.524017, "redundancy": 73037, "redundancy_wl": 106531, "lhs_unique": false, "lhs_tokens": [["patient", "id"], ["diagnosis"], ["service", "date"], ["code"]], "rhs_tokens": ["lastbilleddate"]},
+  {"lhs": ["PATIENT ID", "DIAGNOSIS1", "SERVICE DATE", "ENCOUNTERCLASS"], "rhs": "HEALTHCARECLAIMTYPEID1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 80761, "distinct_rhs": 2, "lhs_distinct_ratio": 0.525084, "rhs_distinct_ratio": 1.3e-05, "redundancy": 73045, "redundancy_wl": 106546, "lhs_unique": false, "lhs_tokens": [["patient", "id"], ["diagnosis"], ["service", "date"], ["encounterclass"]], "rhs_tokens": ["healthcareclaimtypeid"]},
+  {"lhs": ["PATIENT ID", "CURRENT ILLNESS DATE", "SERVICE DATE", "ENCOUNTERCLASS"], "rhs": "HEALTHCARECLAIMTYPEID1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 80683, "distinct_rhs": 2, "lhs_distinct_ratio": 0.524576, "rhs_distinct_ratio": 1.3e-05, "redundancy": 73123, "redundancy_wl": 106664, "lhs_unique": false, "lhs_tokens": [["patient", "id"], ["current", "illness", "date"], ["service", "date"], ["encounterclass"]], "rhs_tokens": ["healthcareclaimtypeid"]},
+  {"lhs": ["PATIENT ID", "DIAGNOSIS1", "CURRENT ILLNESS DATE", "CODE"], "rhs": "HEALTHCARECLAIMTYPEID1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 68589, "distinct_rhs": 2, "lhs_distinct_ratio": 0.445945, "rhs_distinct_ratio": 1.3e-05, "redundancy": 85217, "redundancy_wl": 114632, "lhs_unique": false, "lhs_tokens": [["patient", "id"], ["diagnosis"], ["current", "illness", "date"], ["code"]], "rhs_tokens": ["healthcareclaimtypeid"]},
+  {"lhs": ["PATIENT ID", "DIAGNOSIS1", "SERVICE DATE", "CODE"], "rhs": "HEALTHCARECLAIMTYPEID1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 80769, "distinct_rhs": 2, "lhs_distinct_ratio": 0.525136, "rhs_distinct_ratio": 1.3e-05, "redundancy": 73037, "redundancy_wl": 106531, "lhs_unique": false, "lhs_tokens": [["patient", "id"], ["diagnosis"], ["service", "date"], ["code"]], "rhs_tokens": ["healthcareclaimtypeid"]},
+  {"lhs": ["PATIENT ID", "CURRENT ILLNESS DATE", "ENCOUNTERCLASS", "CODE"], "rhs": "HEALTHCARECLAIMTYPEID1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 68686, "distinct_rhs": 2, "lhs_distinct_ratio": 0.446576, "rhs_distinct_ratio": 1.3e-05, "redundancy": 85120, "redundancy_wl": 114571, "lhs_unique": false, "lhs_tokens": [["patient", "id"], ["current", "illness", "date"], ["encounterclass"], ["code"]], "rhs_tokens": ["healthcareclaimtypeid"]},
+  {"lhs": ["PATIENT ID", "SERVICE DATE", "ENCOUNTERCLASS", "CODE"], "rhs": "HEALTHCARECLAIMTYPEID1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 80762, "distinct_rhs": 2, "lhs_distinct_ratio": 0.52509, "rhs_distinct_ratio": 1.3e-05, "redundancy": 73044, "redundancy_wl": 106542, "lhs_unique": false, "lhs_tokens": [["patient", "id"], ["service", "date"], ["encounterclass"], ["code"]], "rhs_tokens": ["healthcareclaimtypeid"]},
+  {"lhs": ["PATIENT ID", "DIAGNOSIS1", "SERVICE DATE", "ENCOUNTERCLASS"], "rhs": "ORGANIZATION", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 80761, "distinct_rhs": 773, "lhs_distinct_ratio": 0.525084, "rhs_distinct_ratio": 0.005026, "redundancy": 73045, "redundancy_wl": 106546, "lhs_unique": false, "lhs_tokens": [["patient", "id"], ["diagnosis"], ["service", "date"], ["encounterclass"]], "rhs_tokens": ["organization"]},
+  {"lhs": ["PATIENT ID", "DIAGNOSIS1", "SERVICE DATE", "CODE"], "rhs": "ORGANIZATION", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 80769, "distinct_rhs": 773, "lhs_distinct_ratio": 0.525136, "rhs_distinct_ratio": 0.005026, "redundancy": 73037, "redundancy_wl": 106531, "lhs_unique": false, "lhs_tokens": [["patient", "id"], ["diagnosis"], ["service", "date"], ["code"]], "rhs_tokens": ["organization"]},
+  {"lhs": ["PATIENT ID", "DIAGNOSIS1", "SERVICE DATE", "CODE"], "rhs": "ENCOUNTERCLASS", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 80769, "distinct_rhs": 10, "lhs_distinct_ratio": 0.525136, "rhs_distinct_ratio": 6.5e-05, "redundancy": 73037, "redundancy_wl": 106531, "lhs_unique": false, "lhs_tokens": [["patient", "id"], ["diagnosis"], ["service", "date"], ["code"]], "rhs_tokens": ["encounterclass"]},
+  {"lhs": ["PROVIDER ID", "PRIMARY PATIENT INSURANCE ID", "SECONDARY PATIENT INSURANCE ID", "CURRENT ILLNESS DATE", "SERVICE DATE"], "rhs": "STATUS1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 80220, "distinct_rhs": 2, "lhs_distinct_ratio": 0.521566, "rhs_distinct_ratio": 1.3e-05, "redundancy": 73586, "redundancy_wl": 107229, "lhs_unique": false, "lhs_tokens": [["provider", "id"], ["primary", "patient", "insurance", "id"], ["secondary", "patient", "insurance", "id"], ["current", "illness", "date"], ["service", "date"]], "rhs_tokens": ["status"]},
+  {"lhs": ["PRIMARY PATIENT INSURANCE ID", "SECONDARY PATIENT INSURANCE ID", "CURRENT ILLNESS DATE", "SERVICE DATE", "SUPERVISING PROVIDER ID"], "rhs": "STATUS1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 80220, "distinct_rhs": 2, "lhs_distinct_ratio": 0.521566, "rhs_distinct_ratio": 1.3e-05, "redundancy": 73586, "redundancy_wl": 107229, "lhs_unique": false, "lhs_tokens": [["primary", "patient", "insurance", "id"], ["secondary", "patient", "insurance", "id"], ["current", "illness", "date"], ["service", "date"], ["supervising", "provider", "id"]], "rhs_tokens": ["status"]},
+  {"lhs": ["PRIMARY PATIENT INSURANCE ID", "SECONDARY PATIENT INSURANCE ID", "CURRENT ILLNESS DATE", "SERVICE DATE", "ORGANIZATION"], "rhs": "STATUS1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 80220, "distinct_rhs": 2, "lhs_distinct_ratio": 0.521566, "rhs_distinct_ratio": 1.3e-05, "redundancy": 73586, "redundancy_wl": 107229, "lhs_unique": false, "lhs_tokens": [["primary", "patient", "insurance", "id"], ["secondary", "patient", "insurance", "id"], ["current", "illness", "date"], ["service", "date"], ["organization"]], "rhs_tokens": ["status"]},
+  {"lhs": ["PROVIDER ID", "SECONDARY PATIENT INSURANCE ID", "CURRENT ILLNESS DATE", "SERVICE DATE", "NAME"], "rhs": "STATUS1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 80220, "distinct_rhs": 2, "lhs_distinct_ratio": 0.521566, "rhs_distinct_ratio": 1.3e-05, "redundancy": 73586, "redundancy_wl": 107229, "lhs_unique": false, "lhs_tokens": [["provider", "id"], ["secondary", "patient", "insurance", "id"], ["current", "illness", "date"], ["service", "date"], ["name"]], "rhs_tokens": ["status"]},
+  {"lhs": ["SECONDARY PATIENT INSURANCE ID", "CURRENT ILLNESS DATE", "SERVICE DATE", "SUPERVISING PROVIDER ID", "NAME"], "rhs": "STATUS1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 80220, "distinct_rhs": 2, "lhs_distinct_ratio": 0.521566, "rhs_distinct_ratio": 1.3e-05, "redundancy": 73586, "redundancy_wl": 107229, "lhs_unique": false, "lhs_tokens": [["secondary", "patient", "insurance", "id"], ["current", "illness", "date"], ["service", "date"], ["supervising", "provider", "id"], ["name"]], "rhs_tokens": ["status"]},
+  {"lhs": ["SECONDARY PATIENT INSURANCE ID", "CURRENT ILLNESS DATE", "SERVICE DATE", "ORGANIZATION", "NAME"], "rhs": "STATUS1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 80220, "distinct_rhs": 2, "lhs_distinct_ratio": 0.521566, "rhs_distinct_ratio": 1.3e-05, "redundancy": 73586, "redundancy_wl": 107229, "lhs_unique": false, "lhs_tokens": [["secondary", "patient", "insurance", "id"], ["current", "illness", "date"], ["service", "date"], ["organization"], ["name"]], "rhs_tokens": ["status"]},
+  {"lhs": ["PROVIDER ID", "PRIMARY PATIENT INSURANCE ID", "SECONDARY PATIENT INSURANCE ID", "CURRENT ILLNESS DATE", "SERVICE DATE"], "rhs": "STATUSP", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 80220, "distinct_rhs": 2, "lhs_distinct_ratio": 0.521566, "rhs_distinct_ratio": 1.3e-05, "redundancy": 73586, "redundancy_wl": 107229, "lhs_unique": false, "lhs_tokens": [["provider", "id"], ["primary", "patient", "insurance", "id"], ["secondary", "patient", "insurance", "id"], ["current", "illness", "date"], ["service", "date"]], "rhs_tokens": ["statusp"]},
+  {"lhs": ["PRIMARY PATIENT INSURANCE ID", "SECONDARY PATIENT INSURANCE ID", "CURRENT ILLNESS DATE", "SERVICE DATE", "SUPERVISING PROVIDER ID"], "rhs": "STATUSP", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 80220, "distinct_rhs": 2, "lhs_distinct_ratio": 0.521566, "rhs_distinct_ratio": 1.3e-05, "redundancy": 73586, "redundancy_wl": 107229, "lhs_unique": false, "lhs_tokens": [["primary", "patient", "insurance", "id"], ["secondary", "patient", "insurance", "id"], ["current", "illness", "date"], ["service", "date"], ["supervising", "provider", "id"]], "rhs_tokens": ["statusp"]},
+  {"lhs": ["PRIMARY PATIENT INSURANCE ID", "SECONDARY PATIENT INSURANCE ID", "CURRENT ILLNESS DATE", "SERVICE DATE", "ORGANIZATION"], "rhs": "STATUSP", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 80220, "distinct_rhs": 2, "lhs_distinct_ratio": 0.521566, "rhs_distinct_ratio": 1.3e-05, "redundancy": 73586, "redundancy_wl": 107229, "lhs_unique": false, "lhs_tokens": [["primary", "patient", "insurance", "id"], ["secondary", "patient", "insurance", "id"], ["current", "illness", "date"], ["service", "date"], ["organization"]], "rhs_tokens": ["statusp"]},
+  {"lhs": ["PROVIDER ID", "SECONDARY PATIENT INSURANCE ID", "CURRENT ILLNESS DATE", "SERVICE DATE", "NAME"], "rhs": "STATUSP", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 80220, "distinct_rhs": 2, "lhs_distinct_ratio": 0.521566, "rhs_distinct_ratio": 1.3e-05, "redundancy": 73586, "redundancy_wl": 107229, "lhs_unique": false, "lhs_tokens": [["provider", "id"], ["secondary", "patient", "insurance", "id"], ["current", "illness", "date"], ["service", "date"], ["name"]], "rhs_tokens": ["statusp"]},
+  {"lhs": ["SECONDARY PATIENT INSURANCE ID", "CURRENT ILLNESS DATE", "SERVICE DATE", "SUPERVISING PROVIDER ID", "NAME"], "rhs": "STATUSP", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 80220, "distinct_rhs": 2, "lhs_distinct_ratio": 0.521566, "rhs_distinct_ratio": 1.3e-05, "redundancy": 73586, "redundancy_wl": 107229, "lhs_unique": false, "lhs_tokens": [["secondary", "patient", "insurance", "id"], ["current", "illness", "date"], ["service", "date"], ["supervising", "provider", "id"], ["name"]], "rhs_tokens": ["statusp"]},
+  {"lhs": ["SECONDARY PATIENT INSURANCE ID", "CURRENT ILLNESS DATE", "SERVICE DATE", "ORGANIZATION", "NAME"], "rhs": "STATUSP", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 80220, "distinct_rhs": 2, "lhs_distinct_ratio": 0.521566, "rhs_distinct_ratio": 1.3e-05, "redundancy": 73586, "redundancy_wl": 107229, "lhs_unique": false, "lhs_tokens": [["secondary", "patient", "insurance", "id"], ["current", "illness", "date"], ["service", "date"], ["organization"], ["name"]], "rhs_tokens": ["statusp"]},
+  {"lhs": ["PROVIDER ID", "PRIMARY PATIENT INSURANCE ID", "SECONDARY PATIENT INSURANCE ID", "CURRENT ILLNESS DATE", "SERVICE DATE"], "rhs": "OUTSTANDING1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 80220, "distinct_rhs": 15, "lhs_distinct_ratio": 0.521566, "rhs_distinct_ratio": 9.8e-05, "redundancy": 73586, "redundancy_wl": 107229, "lhs_unique": false, "lhs_tokens": [["provider", "id"], ["primary", "patient", "insurance", "id"], ["secondary", "patient", "insurance", "id"], ["current", "illness", "date"], ["service", "date"]], "rhs_tokens": ["outstanding"]},
+  {"lhs": ["PRIMARY PATIENT INSURANCE ID", "SECONDARY PATIENT INSURANCE ID", "CURRENT ILLNESS DATE", "SERVICE DATE", "SUPERVISING PROVIDER ID"], "rhs": "OUTSTANDING1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 80220, "distinct_rhs": 15, "lhs_distinct_ratio": 0.521566, "rhs_distinct_ratio": 9.8e-05, "redundancy": 73586, "redundancy_wl": 107229, "lhs_unique": false, "lhs_tokens": [["primary", "patient", "insurance", "id"], ["secondary", "patient", "insurance", "id"], ["current", "illness", "date"], ["service", "date"], ["supervising", "provider", "id"]], "rhs_tokens": ["outstanding"]},
+  {"lhs": ["PRIMARY PATIENT INSURANCE ID", "SECONDARY PATIENT INSURANCE ID", "CURRENT ILLNESS DATE", "SERVICE DATE", "ORGANIZATION"], "rhs": "OUTSTANDING1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 80220, "distinct_rhs": 15, "lhs_distinct_ratio": 0.521566, "rhs_distinct_ratio": 9.8e-05, "redundancy": 73586, "redundancy_wl": 107229, "lhs_unique": false, "lhs_tokens": [["primary", "patient", "insurance", "id"], ["secondary", "patient", "insurance", "id"], ["current", "illness", "date"], ["service", "date"], ["organization"]], "rhs_tokens": ["outstanding"]},
+  {"lhs": ["PROVIDER ID", "SECONDARY PATIENT INSURANCE ID", "CURRENT ILLNESS DATE", "SERVICE DATE", "NAME"], "rhs": "OUTSTANDING1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 80220, "distinct_rhs": 15, "lhs_distinct_ratio": 0.521566, "rhs_distinct_ratio": 9.8e-05, "redundancy": 73586, "redundancy_wl": 107229, "lhs_unique": false, "lhs_tokens": [["provider", "id"], ["secondary", "patient", "insurance", "id"], ["current", "illness", "date"], ["service", "date"], ["name"]], "rhs_tokens": ["outstanding"]},
+  {"lhs": ["SECONDARY PATIENT INSURANCE ID", "CURRENT ILLNESS DATE", "SERVICE DATE", "SUPERVISING PROVIDER ID", "NAME"], "rhs": "OUTSTANDING1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 80220, "distinct_rhs": 15, "lhs_distinct_ratio": 0.521566, "rhs_distinct_ratio": 9.8e-05, "redundancy": 73586, "redundancy_wl": 107229, "lhs_unique": false, "lhs_tokens": [["secondary", "patient", "insurance", "id"], ["current", "illness", "date"], ["service", "date"], ["supervising", "provider", "id"], ["name"]], "rhs_tokens": ["outstanding"]},
+  {"lhs": ["SECONDARY PATIENT INSURANCE ID", "CURRENT ILLNESS DATE", "SERVICE DATE", "ORGANIZATION", "NAME"], "rhs": "OUTSTANDING1", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 80220, "distinct_rhs": 15, "lhs_distinct_ratio": 0.521566, "rhs_distinct_ratio": 9.8e-05, "redundancy": 73586, "redundancy_wl": 107229, "lhs_unique": false, "lhs_tokens": [["secondary", "patient", "insurance", "id"], ["current", "illness", "date"], ["service", "date"], ["organization"], ["name"]], "rhs_tokens": ["outstanding"]},
+  {"lhs": ["PROVIDER ID", "PRIMARY PATIENT INSURANCE ID", "SECONDARY PATIENT INSURANCE ID", "CURRENT ILLNESS DATE", "SERVICE DATE"], "rhs": "OUTSTANDINGP", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 80220, "distinct_rhs": 14, "lhs_distinct_ratio": 0.521566, "rhs_distinct_ratio": 9.1e-05, "redundancy": 73586, "redundancy_wl": 107229, "lhs_unique": false, "lhs_tokens": [["provider", "id"], ["primary", "patient", "insurance", "id"], ["secondary", "patient", "insurance", "id"], ["current", "illness", "date"], ["service", "date"]], "rhs_tokens": ["outstandingp"]},
+  {"lhs": ["PRIMARY PATIENT INSURANCE ID", "SECONDARY PATIENT INSURANCE ID", "CURRENT ILLNESS DATE", "SERVICE DATE", "SUPERVISING PROVIDER ID"], "rhs": "OUTSTANDINGP", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 80220, "distinct_rhs": 14, "lhs_distinct_ratio": 0.521566, "rhs_distinct_ratio": 9.1e-05, "redundancy": 73586, "redundancy_wl": 107229, "lhs_unique": false, "lhs_tokens": [["primary", "patient", "insurance", "id"], ["secondary", "patient", "insurance", "id"], ["current", "illness", "date"], ["service", "date"], ["supervising", "provider", "id"]], "rhs_tokens": ["outstandingp"]},
+  {"lhs": ["PRIMARY PATIENT INSURANCE ID", "SECONDARY PATIENT INSURANCE ID", "CURRENT ILLNESS DATE", "SERVICE DATE", "ORGANIZATION"], "rhs": "OUTSTANDINGP", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 80220, "distinct_rhs": 14, "lhs_distinct_ratio": 0.521566, "rhs_distinct_ratio": 9.1e-05, "redundancy": 73586, "redundancy_wl": 107229, "lhs_unique": false, "lhs_tokens": [["primary", "patient", "insurance", "id"], ["secondary", "patient", "insurance", "id"], ["current", "illness", "date"], ["service", "date"], ["organization"]], "rhs_tokens": ["outstandingp"]},
+  {"lhs": ["PROVIDER ID", "SECONDARY PATIENT INSURANCE ID", "CURRENT ILLNESS DATE", "SERVICE DATE", "NAME"], "rhs": "OUTSTANDINGP", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 80220, "distinct_rhs": 14, "lhs_distinct_ratio": 0.521566, "rhs_distinct_ratio": 9.1e-05, "redundancy": 73586, "redundancy_wl": 107229, "lhs_unique": false, "lhs_tokens": [["provider", "id"], ["secondary", "patient", "insurance", "id"], ["current", "illness", "date"], ["service", "date"], ["name"]], "rhs_tokens": ["outstandingp"]},
+  {"lhs": ["SECONDARY PATIENT INSURANCE ID", "CURRENT ILLNESS DATE", "SERVICE DATE", "SUPERVISING PROVIDER ID", "NAME"], "rhs": "OUTSTANDINGP", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 80220, "distinct_rhs": 14, "lhs_distinct_ratio": 0.521566, "rhs_distinct_ratio": 9.1e-05, "redundancy": 73586, "redundancy_wl": 107229, "lhs_unique": false, "lhs_tokens": [["secondary", "patient", "insurance", "id"], ["current", "illness", "date"], ["service", "date"], ["supervising", "provider", "id"], ["name"]], "rhs_tokens": ["outstandingp"]},
+  {"lhs": ["SECONDARY PATIENT INSURANCE ID", "CURRENT ILLNESS DATE", "SERVICE DATE", "ORGANIZATION", "NAME"], "rhs": "OUTSTANDINGP", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 80220, "distinct_rhs": 14, "lhs_distinct_ratio": 0.521566, "rhs_distinct_ratio": 9.1e-05, "redundancy": 73586, "redundancy_wl": 107229, "lhs_unique": false, "lhs_tokens": [["secondary", "patient", "insurance", "id"], ["current", "illness", "date"], ["service", "date"], ["organization"], ["name"]], "rhs_tokens": ["outstandingp"]},
+  {"lhs": ["PROVIDER ID", "SECONDARY PATIENT INSURANCE ID", "DIAGNOSIS1", "BIRTHDATE", "OWNERSHIP"], "rhs": "GENDER", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 25247, "distinct_rhs": 2, "lhs_distinct_ratio": 0.164148, "rhs_distinct_ratio": 1.3e-05, "redundancy": 128559, "redundancy_wl": 142511, "lhs_unique": false, "lhs_tokens": [["provider", "id"], ["secondary", "patient", "insurance", "id"], ["diagnosis"], ["birthdate"], ["ownership"]], "rhs_tokens": ["gender"]},
+  {"lhs": ["SECONDARY PATIENT INSURANCE ID", "DIAGNOSIS1", "SUPERVISING PROVIDER ID", "BIRTHDATE", "OWNERSHIP"], "rhs": "GENDER", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 25247, "distinct_rhs": 2, "lhs_distinct_ratio": 0.164148, "rhs_distinct_ratio": 1.3e-05, "redundancy": 128559, "redundancy_wl": 142511, "lhs_unique": false, "lhs_tokens": [["secondary", "patient", "insurance", "id"], ["diagnosis"], ["supervising", "provider", "id"], ["birthdate"], ["ownership"]], "rhs_tokens": ["gender"]},
+  {"lhs": ["SECONDARY PATIENT INSURANCE ID", "DIAGNOSIS1", "BIRTHDATE", "ORGANIZATION", "OWNERSHIP"], "rhs": "GENDER", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 25247, "distinct_rhs": 2, "lhs_distinct_ratio": 0.164148, "rhs_distinct_ratio": 1.3e-05, "redundancy": 128559, "redundancy_wl": 142511, "lhs_unique": false, "lhs_tokens": [["secondary", "patient", "insurance", "id"], ["diagnosis"], ["birthdate"], ["organization"], ["ownership"]], "rhs_tokens": ["gender"]},
+  {"lhs": ["PROVIDER ID", "SECONDARY PATIENT INSURANCE ID", "BIRTHDATE", "OWNERSHIP", "ENCOUNTERCLASS"], "rhs": "GENDER", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 7766, "distinct_rhs": 2, "lhs_distinct_ratio": 0.050492, "rhs_distinct_ratio": 1.3e-05, "redundancy": 146040, "redundancy_wl": 152086, "lhs_unique": false, "lhs_tokens": [["provider", "id"], ["secondary", "patient", "insurance", "id"], ["birthdate"], ["ownership"], ["encounterclass"]], "rhs_tokens": ["gender"]},
+  {"lhs": ["SECONDARY PATIENT INSURANCE ID", "SUPERVISING PROVIDER ID", "BIRTHDATE", "OWNERSHIP", "ENCOUNTERCLASS"], "rhs": "GENDER", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 7766, "distinct_rhs": 2, "lhs_distinct_ratio": 0.050492, "rhs_distinct_ratio": 1.3e-05, "redundancy": 146040, "redundancy_wl": 152086, "lhs_unique": false, "lhs_tokens": [["secondary", "patient", "insurance", "id"], ["supervising", "provider", "id"], ["birthdate"], ["ownership"], ["encounterclass"]], "rhs_tokens": ["gender"]},
+  {"lhs": ["SECONDARY PATIENT INSURANCE ID", "BIRTHDATE", "ORGANIZATION", "OWNERSHIP", "ENCOUNTERCLASS"], "rhs": "GENDER", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 5, "distinct_lhs": 7766, "distinct_rhs": 2, "lhs_distinct_ratio": 0.050492, "rhs_distinct_ratio": 1.3e-05, "redundancy": 146040, "redundancy_wl": 152086, "lhs_unique": false, "lhs_tokens": [["secondary", "patient", "insurance", "id"], ["birthdate"], ["organization"], ["ownership"], ["encounterclass"]], "rhs_tokens": ["gender"]}
+ ]
+}

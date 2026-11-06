@@ -1,0 +1,1 @@
+{"dataset": "fresh3_stackexchange_posts", "truth": "sure", "oracle": "gold", "attributes": 25, "counterexample": "min", "data_fds": 1077, "finished": 0, "visited": 2228224, "yes": 2, "no": 2203819, "unit": 22030248, "unit_yes": 11, "basis": 2, "counterexamples": 2203819, "equivalent": 0, "secs": 7443.2, "wall": 7444.4}

@@ -1,0 +1,1 @@
+{"dataset": "fresh3_gleif", "truth": "sure", "oracle": "gold", "attributes": 25, "counterexample": "min", "data_fds": 4032, "finished": 0, "visited": 2818048, "yes": 0, "no": 2017498, "unit": 3942020, "unit_yes": 0, "basis": 0, "counterexamples": 2017498, "equivalent": 0, "secs": 7349.9, "wall": 7351.3}

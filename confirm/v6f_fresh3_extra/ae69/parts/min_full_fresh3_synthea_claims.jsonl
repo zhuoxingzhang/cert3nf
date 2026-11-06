@@ -1,0 +1,1 @@
+{"dataset": "fresh3_synthea_claims", "truth": "full", "oracle": "gold", "attributes": 23, "counterexample": "min", "data_fds": 223, "finished": 1, "visited": 768005, "yes": 4, "no": 764497, "unit": 4408199, "unit_yes": 7, "basis": 4, "counterexamples": 764497, "equivalent": 1, "secs": 457.9, "wall": 458.0}

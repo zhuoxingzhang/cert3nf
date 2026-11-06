@@ -1,0 +1,1 @@
+{"dataset": "fresh3_fec_linkage", "truth": "full", "oracle": "gold", "attributes": 24, "counterexample": "min", "data_fds": 680, "finished": 1, "visited": 2105861, "yes": 2, "no": 1795847, "unit": 3906657, "unit_yes": 20, "basis": 2, "counterexamples": 1795847, "equivalent": 1, "secs": 5793.5, "wall": 5798.1}

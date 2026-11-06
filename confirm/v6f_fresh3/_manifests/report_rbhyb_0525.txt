@@ -1,0 +1,138 @@
+== truth full: 23 relations (7 class A); main 23, price 46
+  -- all: 23 relations, main form on 23
+    V1 over v5, n 23: median 0.889, Q3 1.000, max 1.21, wins 15, losses 5; total 1774 vs 2322 -> holds
+       losses: [('fresh3_fec_candidate', 35, 34), ('fresh3_stackexchange_postlinks', 56, 51), ('fresh3_synthea_claims', 39, 35), ('fresh3_synthea_claims_transactions', 39, 34), ('fresh3_synthea_encounters', 51, 42)]
+    V2 runs 23, certified 23; problems none; not good on pre-listed relations ['fresh3_hgnc', 'fresh3_onspd', 'fresh3_ourairports_airports', 'fresh3_ourairports_frequencies', 'fresh3_tpcc_order_line'] -> holds
+    V3 no ec2full rows
+    V3 over ec2full0 (median of three seeds), n 23: median 0.700, Q3 0.986, max 1.06, wins 18, losses 1; without three seeds none
+    V3 -> undetermined
+    V4 questions/price, n 23: median 1.367, Q3 1.591, max 3.66; total 1774 over price 877; below m* none -> holds
+    V5 certified 23 >= v5n 22; bound holds on 23/23, fails on none
+    V5 good on gold at the end of budget 100, n 23: main 18, rbhyb 16; rbhyb wrong posterior certificates 0/13
+    V5 -> holds
+  -- class A: 7 relations, main form on 7
+    V1 over v5, n 7: median 0.804, Q3 1.147, max 1.21, wins 4, losses 3; total 340 vs 413 -> holds
+       losses: [('fresh3_synthea_claims', 39, 35), ('fresh3_synthea_claims_transactions', 39, 34), ('fresh3_synthea_encounters', 51, 42)]
+    V2 runs 7, certified 7; problems none; not good on pre-listed relations ['fresh3_tpcc_order_line'] -> holds
+    V3 no ec2full rows
+    V3 over ec2full0 (median of three seeds), n 7: median 0.700, Q3 0.750, max 0.91, wins 7, losses 0; without three seeds none
+    V3 -> undetermined
+    V4 questions/price, n 7: median 1.455, Q3 1.560, max 1.59; total 340 over price 232; below m* none -> holds
+    V5 certified 7 >= v5n 7; bound holds on 7/7, fails on none
+    V5 good on gold at the end of budget 100, n 7: main 6, rbhyb 6; rbhyb wrong posterior certificates 0/6
+    V5 -> holds
+  -- class B: 16 relations, main form on 16
+    V1 over v5, n 16: median 0.894, Q3 1.000, max 1.10, wins 11, losses 2; total 1434 vs 1909 -> holds
+       losses: [('fresh3_fec_candidate', 35, 34), ('fresh3_stackexchange_postlinks', 56, 51)]
+    V2 runs 16, certified 16; problems none; not good on pre-listed relations ['fresh3_hgnc', 'fresh3_onspd', 'fresh3_ourairports_airports', 'fresh3_ourairports_frequencies'] -> holds
+    V3 no ec2full rows
+    V3 over ec2full0 (median of three seeds), n 16: median 0.705, Q3 1.000, max 1.06, wins 11, losses 1; without three seeds none
+    V3 -> undetermined
+    V4 questions/price, n 16: median 1.301, Q3 2.034, max 3.66; total 1434 over price 645; below m* none -> FAILS
+    V5 certified 16 >= v5n 15; bound holds on 16/16, fails on none
+    V5 good on gold at the end of budget 100, n 16: main 12, rbhyb 10; rbhyb wrong posterior certificates 0/7
+    V5 -> holds
+  report only
+    budget 100, main: certified 19, good on gold 18 of 23; frozen v5 at 1000 within 100: 18
+    v6s                      n 23 total  2253 certified 22 good 18
+    v6s|lc+hone+kf+rl        n 23 total  1774 certified 23 good 18
+    v6|lc+hone+kf+rl         n 23 total  1786 certified 23 good 18
+    v5                       n 23 total  2322 certified 23 good 18
+    v5n                      n 23 total  3141 certified 22 good 18
+    v5s                      n 23 total  2364 certified 23 good 18
+    per relation: class, candidates, price, m*, main, v5, v5s, v5n, ec2full, ec2full0, attributes per question (median), good
+     fresh3_companieshouse                    B    994   22   22    22    22    22    22      -     22  3.0 1
+     fresh3_fec_candidate                     B    718   22   11    35    34    35    66      -     33    3 1
+     fresh3_fec_committee                     B    868   20   12    23    36    28    62      -     32    3 1
+     fresh3_fec_linkage                       B    657   30   10    41    50    51    87      -     65    2 1
+     fresh3_gleif                             B   4008   24   24    24    24    24    24      -     24  3.0 1
+     fresh3_hgnc                              B    761  227   16   691   908   924  1000      -   1000    7 0
+     fresh3_nppes_npidata                     B    327    8    8     8     9     8     8      -      8  3.0 1
+     fresh3_onspd                             B    311   53   14   194   267   291   569      -    356  5.0 0
+     fresh3_openpayments_general              B    741   26   16    36    40    39    60      -     74  3.0 1
+     fresh3_openpayments_profile              B    122   18   15    20    21    21    30      -     29  3.0 1
+     fresh3_ourairports_airports              B    557   33   19    72   137   138   130      -     73  4.0 0
+     fresh3_ourairports_frequencies           B   1574   46   19   124   183   169   200      -    133  5.0 0
+     fresh3_ourairports_navaids               B   5271   30   24    39    75    76    72      -     63    4 1
+     fresh3_stackexchange_postlinks           B   1237   43   24    56    51    73   115      -     98  3.0 1
+     fresh3_stackexchange_posts               B   1053   35   24    41    44    46   100      -     83    3 1
+     fresh3_stackexchange_users               B     18    8    8     8     8     8     8      -      8  3.0 1
+     fresh3_synthea_claims                    A    201   25   18    39    35    32    53      -     60    3 1
+     fresh3_synthea_claims_transactions       A    244   27   22    39    34    33    57      -     52    3 1
+     fresh3_synthea_encounters                A    635   32   21    51    42    53   105      -     71    3 1
+     fresh3_tpcc_customer                     A    272   32   20    41    79    67    54      -     69    3 1
+     fresh3_tpcc_order_line                   A  12130   77   49   115   143   165   252      -    261    4 0
+     fresh3_tpcc_stock                        A    238   33   17    48    71    53    59      -     53  2.0 1
+     fresh3_twitter_tweets                    A     10    6    4     7     9     8     8      -     10    3 1
+== truth sure: 23 relations (7 class A); main 23, price 46
+  -- all: 23 relations, main form on 23
+    V1 over v5, n 23: median 0.853, Q3 1.000, max 1.18, wins 16, losses 2; total 851 vs 1198 -> holds
+       losses: [('fresh3_synthea_claims', 37, 34), ('fresh3_synthea_claims_transactions', 40, 34)]
+    V2 runs 23, certified 23; problems none; not good on pre-listed relations none -> holds
+    V3 no ec2full rows
+    V3 over ec2full0 (median of three seeds), n 23: median 0.651, Q3 0.845, max 1.00, wins 19, losses 0; without three seeds none
+    V3 -> undetermined
+    V4 questions/price, n 23: median 1.256, Q3 1.480, max 2.07; total 851 over price 629; below m* none -> holds
+    V5 certified 23 >= v5n 23; bound holds on 23/23, fails on none
+    V5 good on gold at the end of budget 100, n 23: main 23, rbhyb 19; rbhyb wrong posterior certificates 0/22
+    V5 -> holds
+  -- class A: 7 relations, main form on 7
+    V1 over v5, n 7: median 0.875, Q3 1.088, max 1.18, wins 4, losses 2; total 327 vs 384 -> holds
+       losses: [('fresh3_synthea_claims', 37, 34), ('fresh3_synthea_claims_transactions', 40, 34)]
+    V2 runs 7, certified 7; problems none; not good on pre-listed relations none -> holds
+    V3 no ec2full rows
+    V3 over ec2full0 (median of three seeds), n 7: median 0.649, Q3 0.700, max 0.74, wins 7, losses 0; without three seeds none
+    V3 -> undetermined
+    V4 questions/price, n 7: median 1.480, Q3 1.500, max 1.71; total 327 over price 225; below m* none -> holds
+    V5 certified 7 >= v5n 7; bound holds on 7/7, fails on none
+    V5 good on gold at the end of budget 100, n 7: main 7, rbhyb 6; rbhyb wrong posterior certificates 0/8
+    V5 -> holds
+  -- class B: 16 relations, main form on 16
+    V1 over v5, n 16: median 0.820, Q3 0.988, max 1.00, wins 12, losses 0; total 524 vs 814 -> holds
+       losses: []
+    V2 runs 16, certified 16; problems none; not good on pre-listed relations none -> holds
+    V3 no ec2full rows
+    V3 over ec2full0 (median of three seeds), n 16: median 0.676, Q3 0.972, max 1.00, wins 12, losses 0; without three seeds none
+    V3 -> undetermined
+    V4 questions/price, n 16: median 1.164, Q3 1.308, max 2.07; total 524 over price 404; below m* none -> holds
+    V5 certified 16 >= v5n 16; bound holds on 16/16, fails on none
+    V5 good on gold at the end of budget 100, n 16: main 16, rbhyb 13; rbhyb wrong posterior certificates 0/14
+    V5 -> holds
+  report only
+    budget 100, main: certified 22, good on gold 23 of 23; frozen v5 at 1000 within 100: 20
+    v6s                      n 23 total   929 certified 23 good 23
+    v6s|lc+hone+kf+rl        n 23 total   851 certified 23 good 23
+    v6|lc+hone+kf+rl         n 23 total   811 certified 23 good 23
+    v5                       n 23 total  1198 certified 23 good 23
+    v5n                      n 23 total  1552 certified 23 good 23
+    v5s                      n 23 total  1243 certified 23 good 23
+    per relation: class, candidates, price, m*, main, v5, v5s, v5n, ec2full, ec2full0, attributes per question (median), good
+     fresh3_companieshouse                    B    994   22   22    22    22    22    22      -     22  3.0 1
+     fresh3_fec_candidate                     B    718   22   11    29    34    35    66      -     47    3 1
+     fresh3_fec_committee                     B    868   20   12    22    36    28    62      -     39  3.0 1
+     fresh3_fec_linkage                       B    657   29   11    37    47    48    88      -     54    2 1
+     fresh3_gleif                             B   4008   24   24    24    24    24    24      -     24  3.0 1
+     fresh3_hgnc                              B    761   23   22    25    89    88    27      -     43    4 1
+     fresh3_nppes_npidata                     B    327    8    8     8     8     8     8      -      8  3.0 1
+     fresh3_onspd                             B    311   27   14    56    61    49   125      -    101  2.0 1
+     fresh3_openpayments_general              B    741   25   16    34    37    37    56      -     64  2.5 1
+     fresh3_openpayments_profile              B    122   18   15    20    21    21    30      -     30  3.0 1
+     fresh3_ourairports_airports              B    557   31   19    61   111   115   115      -     61    3 1
+     fresh3_ourairports_frequencies           B   1574   39   19    49   121    96   130      -     58    3 1
+     fresh3_ourairports_navaids               B   5271   30   24    38    72    76    72      -     49  4.0 1
+     fresh3_stackexchange_postlinks           B   1237   43   24    51    68    73   115      -    102    3 1
+     fresh3_stackexchange_posts               B   1053   35   24    40    55    46   100      -     77  3.0 1
+     fresh3_stackexchange_users               B     18    8    8     8     8     8     8      -      9  3.0 1
+     fresh3_synthea_claims                    A    201   25   18    37    34    32    53      -     57    3 1
+     fresh3_synthea_claims_transactions       A    244   27   22    40    34    33    57      -     54  3.0 1
+     fresh3_synthea_encounters                A    635   32   21    48    58    53   105      -     87  3.0 1
+     fresh3_tpcc_customer                     A    272   32   20    41    59    62    54      -     63    3 1
+     fresh3_tpcc_order_line                   A  12130   70   49   120   120   228   168      -    189  3.0 1
+     fresh3_tpcc_stock                        A    238   33   17    34    71    53    59      -     63  2.0 1
+     fresh3_twitter_tweets                    A     10    6    4     7     8     8     8      -     10    3 1
+== verdicts: all (class A / class B)
+  V1: full holds (holds / holds); sure holds (holds / holds)
+  V2: full holds (holds / holds); sure holds (holds / holds)
+  V3: full undetermined (undetermined / undetermined); sure undetermined (undetermined / undetermined)
+  V4: full holds (holds / FAILS); sure holds (holds / holds)
+  V5: full holds (holds / holds); sure holds (holds / holds)

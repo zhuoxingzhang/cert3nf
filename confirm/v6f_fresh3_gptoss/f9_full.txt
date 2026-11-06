@@ -1,0 +1,25 @@
+  fresh3_tpcc_order_line full: both wrong 1225, q35 only 1855, gptoss only 332, both right 8665
+  fresh3_tpcc_stock full: both wrong 3, q35 only 21, gptoss only 12, both right 202
+  fresh3_tpcc_customer full: both wrong 28, q35 only 52, gptoss only 8, both right 184
+  fresh3_twitter_tweets full: both wrong 2, q35 only 1, gptoss only 0, both right 7
+  fresh3_synthea_encounters full: both wrong 54, q35 only 64, gptoss only 50, both right 467
+  fresh3_synthea_claims full: both wrong 24, q35 only 11, gptoss only 35, both right 131
+  fresh3_synthea_claims_transactions full: both wrong 75, q35 only 42, gptoss only 37, both right 88
+  fresh3_hgnc full: both wrong 295, q35 only 112, gptoss only 146, both right 207
+  fresh3_gleif full: both wrong 696, q35 only 841, gptoss only 556, both right 1904
+  fresh3_onspd full: both wrong 174, q35 only 42, gptoss only 28, both right 66
+  fresh3_fec_candidate full: both wrong 233, q35 only 185, gptoss only 125, both right 170
+  fresh3_fec_committee full: both wrong 180, q35 only 236, gptoss only 123, both right 320
+  fresh3_fec_linkage full: both wrong 195, q35 only 196, gptoss only 92, both right 171
+  fresh3_ourairports_airports full: both wrong 308, q35 only 129, gptoss only 20, both right 98
+  fresh3_ourairports_navaids full: both wrong 2238, q35 only 1659, gptoss only 320, both right 1050
+  fresh3_ourairports_frequencies full: both wrong 971, q35 only 306, gptoss only 73, both right 222
+  fresh3_nppes_npidata full: both wrong 91, q35 only 85, gptoss only 33, both right 118
+  fresh3_companieshouse full: both wrong 81, q35 only 167, gptoss only 87, both right 658
+  fresh3_openpayments_general full: both wrong 320, q35 only 145, gptoss only 30, both right 246
+  fresh3_openpayments_profile full: both wrong 28, q35 only 23, gptoss only 2, both right 69
+  fresh3_stackexchange_posts full: both wrong 7, q35 only 18, gptoss only 6, both right 1019
+  fresh3_stackexchange_users full: both wrong 1, q35 only 1, gptoss only 0, both right 16
+  fresh3_stackexchange_postlinks full: both wrong 20, q35 only 48, gptoss only 104, both right 1063
+truth full (q35 vs gptoss): 23 strata, 32848 candidates answered by both; both wrong 7249, first only 6239, second only 2219, both right 17141; error rates 0.411 vs 0.288
+  Mantel-Haenszel odds ratio 5.43, 95% interval [5.11, 5.77]; pooled 8.98

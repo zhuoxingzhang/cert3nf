@@ -1,0 +1,1312 @@
+{
+ "dataset": "fresh3_onspd",
+ "family": "fresh3",
+ "truth_kind": "documented (confirmatory, batch 3)",
+ "source": "the relations of the third confirmatory batch, specified from publisher documentation (e3/truth/docs/fresh3/) by three subagents that never saw data, mined FDs or model answers; parts A (TPC-C, Epinions, Twitter, Synthea), B (HGNC, GLEIF, ONSPD, FEC, OurAirports), C (NPPES, Companies House, Open Payments, Stack Exchange)",
+ "rule": "part A: part A: Sigma* is the set of FDs that the publisher documentation implies among the attributes of each relation, projected and closed over the dropped columns, each with a verbatim quote; sure when the quoted text states it (a declared primary key, unique constraint or foreign key to a declared key in the pinned DDL, a ':key:' row or a 'Foreign key to' row of the Synthea data dictionary), unsure when it needs an inference the text does not spell out. For the three BenchBase benchmarks the DDL at the pinned commit is the specification of the generated data (scale factor 1, loaded and never executed); a dependency that the TPC-C specification or the OLTP-Bench paper states and the DDL neither declares nor contradicts is recorded with sure: false, quoting both; the TPC-C population rules (clause 4.3.3.1) make the warehouse ids and several other columns constant at one warehouse, and these constants are dropped as rule 1 asks, the declared keys being projected onto the kept columns with both quotes (a projected key stays sure, since a key minus a documented constant is a key, and key is null because the declared key is not wholly among the attributes); a root without a declared key keeps key null and only the foreign-key dependencies. For Synthea the CSV File Data Dictionary is the specification. Dependencies the documentation hints at but does not state (code -> description, random strings that happen to be unique, accidental equalities of generated data, counts and conditional constants) are listed under undocumented_regularities and are not part of Sigma*. Written from the documentation alone, before any data file was opened. part B: Sigma* is the set of FDs that the publisher documentation implies among the attributes of each relation, projected and closed over the dropped columns, each with a verbatim quote (file name and section or page) and a one-sentence justification; sure when the quoted text states it (a declared key or unique identifier of the root such as 'list each LEI only once', 'one record for each candidate', 'Unique link ID' or 'the actual internal OurAirports primary key is id', a foreign key or look-up reference to a table with a declared key, an allocation 'via lookup' from one geography to another, a stated derivation of one column from another, a stated containment such as 'each consists of a grouping of OAs'); unsure when it needs an inference the text does not spell out (a country read off a per-country code range, a nesting stated in the past tense or for another vintage, a copy of a master's value in a linkage file), when the text is ambiguous, or when the left-hand side can be empty or unresolved (an optional ISO 3166-2 region, a reserved ELF code, a dangling look-up) so that the dependency holds among non-empty values only. Plausible, common-knowledge or value-level implications (ISSUED implies ACTIVE, a ZIP code implies a state) and documented non-dependencies (a pseudo code shared by every district of a country, a gps_code 'not guaranteed to be globally unique', 'the same frequency may appear multiple times for an airport') are listed under undocumented_regularities and are not part of Sigma*. Columns are named exactly as the documentation spells them (GLEIF: the Golden Copy CSV element paths of the Data Dictionary; ONSPD: the field names of Annex A of the August 2026 user guide; FEC: the header files; OurAirports and HGNC: the dictionary / archive page); where two tables share a name the looked-up column is prefixed (CN_, CM_, airport_, region_, country_). Many-to-one joins only, along keys the documentation declares; one relation per documented root table, named fresh3_<source>_<root> where a source has several; the GLEIF code lists were not written because their CSV headers are undocumented and the ELF code is not a row key of the ELF list. Written from the documentation alone, before any data file was opened. part C: Sigma* is the set of FDs that the publisher documentation implies among the attributes of each relation, projected and closed over the dropped columns, each with a verbatim quote naming the file and the section or page; sure when the quoted text states it (a declared key or unique identifier of the root, a declared unique identifier of an entity determining that entity's other documented attributes, a foreign key or link to a table with a declared key; a table that the schema documentation marks as the parent table of foreign keys that reference it by its Id counts as having Id declared), unsure when it needs an inference the text does not spell out (the justification says which); both directions of an identifier pair get the same standard. Plausible or common-knowledge dependencies (postal geography, company law, one profile per NPI, one badge class per badge name), documented conditional-emptiness statements and documented non-dependencies are listed under undocumented_regularities and are not part of Sigma*. A relation whose documentation declares no key of the root gets key null (the NPPES reference files, whose rows are 'associated with an NPI record' without a declared key of their own; Stack Exchange Comments, Votes, Badges, PostHistory, whose Id FD is kept with sure false), so that item 61 (b) 2 can exclude it by rule. Relations have at most 25 attributes, many-to-one joins only along keys the documentation declares (a file in two roles is two tables), columns named exactly as the documentation spells them, and no person name, street address, telephone, e-mail or licence number. Written from the documentation alone, before any data file was opened.",
+ "instance": {
+  "generator": "public data fixed before download for the third confirmatory evaluation, converted by unpack_fresh3.py and joined by fresh.py",
+  "rows": 998456,
+  "construction": "Root: the Data file of ONSPD_AUG_2026.zip (ONSPD_AUG_2026_UK.csv, August 2026 edition, field names of Annex A of the August 2026 user guide), 22 of its 56 fields, left-joined to three names-and-codes files of the zip's Documents folder (country, region, local authority district; their headers are not printed in the guide, see undocumented_regularities) for the area names; dropped: PCD8, PCDS (the same postcode in other fixed formats), EAST1M, NORTH1M, LAT, LONG, GRIDIND (coordinates), CED25CD, HLTH19CD, NHSER24CD, SSR95CD, EER20CD, EDUC23CD, PCO19CD, WDSTL05CD, OA01CD, WDCAS03CD, NPARK16CD, LSOA01CD, MSOA01CD, RUC01IND, OAC01IND, WZ11CD, BUA24CD, LEP21CD1, LEP21CD2, CAL26CD, OA21CD, LSOA21CD, MSOA21CD, RUC21IND, OAC21IND, IMD25IND (further geographies and the 2001/2021 Census sets).",
+  "cleaning": {
+   "records": 2729090,
+   "records_after_deduplication": 2729090,
+   "sampled_from": 2729090,
+   "kept": 998456,
+   "repaired_for": "the sure FDs of Sigma*",
+   "removed_per_fd": {
+    "OA11CD->ICB26CD": 1475,
+    "OA11CD->SICBL26CD": 51,
+    "LSOA11CD->SICBL26CD": 18
+   },
+   "missing_values": "empty and missing references become '?', kept as a value (null = null)"
+  }
+ },
+ "attributes": [
+  "PCD7",
+  "DOINTR",
+  "DOTERM",
+  "USRTYPIND",
+  "CTY26CD",
+  "LAD26CD",
+  "WD26CD",
+  "PARNCP26CD",
+  "CTRY26CD",
+  "RGN26CD",
+  "PCON24CD",
+  "TTWA15CD",
+  "ITL25CD",
+  "OA11CD",
+  "LSOA11CD",
+  "MSOA11CD",
+  "RUC11IND",
+  "OAC11IND",
+  "IMD20IND",
+  "PFA23CD",
+  "SICBL26CD",
+  "ICB26CD",
+  "CTRY25NM",
+  "RGN25NM",
+  "LAD25NM"
+ ],
+ "dropped_constant_columns": [],
+ "distinct_values": {
+  "PCD7": 998456,
+  "DOINTR": 569,
+  "DOTERM": 448,
+  "USRTYPIND": 2,
+  "CTY26CD": 28,
+  "LAD26CD": 364,
+  "WD26CD": 8414,
+  "PARNCP26CD": 11296,
+  "CTRY26CD": 6,
+  "RGN26CD": 15,
+  "PCON24CD": 653,
+  "TTWA15CD": 231,
+  "ITL25CD": 365,
+  "OA11CD": 208454,
+  "LSOA11CD": 42605,
+  "MSOA11CD": 8484,
+  "RUC11IND": 20,
+  "OAC11IND": 78,
+  "IMD20IND": 32824,
+  "PFA23CD": 48,
+  "SICBL26CD": 155,
+  "ICB26CD": 42,
+  "CTRY25NM": 5,
+  "RGN25NM": 10,
+  "LAD25NM": 362
+ },
+ "truth": [
+  {
+   "lhs": [
+    "PCD7"
+   ],
+   "rhs": [
+    "DOINTR",
+    "DOTERM",
+    "USRTYPIND",
+    "CTY26CD",
+    "LAD26CD",
+    "WD26CD",
+    "PARNCP26CD",
+    "CTRY26CD",
+    "RGN26CD",
+    "PCON24CD",
+    "TTWA15CD",
+    "ITL25CD",
+    "OA11CD",
+    "LSOA11CD",
+    "MSOA11CD",
+    "RUC11IND",
+    "OAC11IND",
+    "IMD20IND",
+    "PFA23CD",
+    "SICBL26CD",
+    "ICB26CD",
+    "CTRY25NM",
+    "RGN25NM",
+    "LAD25NM"
+   ],
+   "sure": true,
+   "clause": "onspd_user_guide/ONSPD User Guide Aug 2026.pdf, p. 31, Annex A 'ONSPD Record Specification', field PCD7: \"Unit postcode - 7 character version\", \"All current ('live') postcodes within the United Kingdom, the Channel Islands and the Isle of Man, received monthly from Royal Mail. Also, all terminated ('closed') postcodes that have not been subsequently re-used by Royal Mail within the United Kingdom and by the postal administrations in the Channel Islands and the Isle of Man.\"; onspd_user_guide/ONSPD User Guide Aug 2026.pdf, p. 9, section 12 'Terminated Postcodes': \"If, and when, a postcode is subsequently re-used by Royal Mail the old grid reference and termination date are removed, thus deleting all reference to the former existence of the postcode from the ONSPD.\"; onspd_user_guide/ONSPD User Guide Aug 2026.pdf, p. 6, section 6: \"Postcodes are always assigned to single administrative and electoral areas based upon a single grid reference\"",
+   "justification": "The directory holds one record per unit postcode (a re-used postcode replaces its former record rather than adding one) and each postcode is assigned to single areas, so the postcode determines every field of its record and the names looked up from them.",
+   "audit": {
+    "verdicts": {
+     "DOINTR": "TRUE",
+     "DOTERM": "TRUE",
+     "USRTYPIND": "TRUE",
+     "CTY26CD": "TRUE",
+     "LAD26CD": "TRUE",
+     "WD26CD": "TRUE",
+     "PARNCP26CD": "TRUE",
+     "CTRY26CD": "TRUE",
+     "RGN26CD": "TRUE",
+     "PCON24CD": "TRUE",
+     "TTWA15CD": "TRUE",
+     "ITL25CD": "TRUE",
+     "OA11CD": "TRUE",
+     "LSOA11CD": "TRUE",
+     "MSOA11CD": "TRUE",
+     "RUC11IND": "TRUE",
+     "OAC11IND": "TRUE",
+     "IMD20IND": "TRUE",
+     "PFA23CD": "TRUE",
+     "SICBL26CD": "TRUE",
+     "ICB26CD": "TRUE",
+     "CTRY25NM": "TRUE",
+     "RGN25NM": "TRUE",
+     "LAD25NM": "TRUE"
+    },
+    "quote": "Unit postcode – 7 character version ‖ All current (‘live’) postcodes within the United Kingdom, the Channel Islands and the Isle of Man, received monthly from Royal Mail. Also, all terminated (‘closed’) postcodes that have not been subsequently re-used by Royal Mail within the United Kingdom and by the postal administrations in the Channel Islands and the Isle of Man. ‖ The most recent occurrence of the postcode’s date of introduction. ‖ If, and when, a postcode is subsequently re-used by Royal Mail the old grid reference and termination date are removed, thus deleting all reference to the former existence of the postcode from the ONSPD. ‖ Postcodes are always assigned to single administrative and electoral areas based upon a single grid reference (which is the mean of all the addresses in the postcode, snapped to the address closest to the mean). ‖ Lookup files linking these codes to statutory area names are included with the ONSPD, in the 'Documents' folder. ‖ The names of all administrative and health areas are the standard names adopted for use throughout National Statistics. The names are those used in Acts of Parliament and Statutory Instruments to publish changes to the administrative and health geographies.",
+    "source": "onspd_user_guide/ONSPD User Guide Aug 2026.pdf, Annex A 'ONSPD Record Specification', p. 31, field PCD7 ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, Annex A, p. 31, field DOINTR ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, section 12 'Terminated Postcodes', p. 9 ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, section 6 'Frequently Asked Questions (FAQ)', p. 6 ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, section 1 'Introduction', p. 5 ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, section 47 'Names and Codes', p. 22"
+   }
+  },
+  {
+   "lhs": [
+    "OA11CD"
+   ],
+   "rhs": [
+    "LSOA11CD",
+    "MSOA11CD",
+    "RUC11IND",
+    "OAC11IND",
+    "IMD20IND",
+    "TTWA15CD",
+    "SICBL26CD",
+    "ICB26CD"
+   ],
+   "sure": true,
+   "clause": "onspd_user_guide/ONSPD User Guide Aug 2026.pdf, p. 43, Annex A, field OA11CD: \"The 2011 Census OAs in GB and SAs in Northern Ireland were based on 2001 Census OAs, and they form the building bricks for defining higher level geographies.\"; onspd_user_guide/ONSPD User Guide Aug 2026.pdf, p. 17, section 33: \"The Lower Layer SOAs (LSOA) were designed with a mean population figure of 1,500 and each consists of a grouping of OAs, typically five.\" and \"DZs are groups of OAs which have populations of between 500 and 1,000 household residents.\"; onspd_user_guide/ONSPD User Guide Aug 2026.pdf, p. 18, section 38: \"Postcodes have been assigned to the urban or rural category of the OA into which each one falls.\"; onspd_user_guide/ONSPD User Guide Aug 2026.pdf, p. 45, Annex A, field OAC11IND: \"The 2011 Census OAC code for each postcode in the UK.\" with p. 16, section 32: \"The 2011 Census OAC is used to group together geographic areas according to key characteristics common to the population in that grouping.\"; onspd_user_guide/ONSPD User Guide Aug 2026.pdf, p. 53, Annex E 'Geography Allocation Diagram': \"This diagram shows the data supplied to ONS through the Gridlink process from Royal Mail and Ordnance Surevy (OS), and the methodology for adding each geography to the ONSPD - either via lookup or via a digital point in polygon (PIP) process.\", Lookup column: \"SOA (from OA)\", \"Rural/urban indicator (from OA)\", \"Output Area Classification (from OA)\", \"Rural Urban Classification (from OA)\", \"IMD (from OA)\"",
+   "justification": "The 2011 OA is the building brick of the higher geographies: LSOAs/DZs are groupings of OAs, the rural-urban class and the OAC are properties of the OA, and Annex E allocates SOA, rural/urban indicator, OAC and IMD by lookup from the OA, so the OA determines them; MSOA, TTWA, SICBL and ICB follow through the LSOA (next entries).",
+   "audit": {
+    "verdicts": {
+     "LSOA11CD": "TRUE",
+     "MSOA11CD": "TRUE",
+     "RUC11IND": "TRUE",
+     "OAC11IND": "TRUE",
+     "IMD20IND": "TRUE",
+     "TTWA15CD": "TRUE",
+     "SICBL26CD": "TRUE",
+     "ICB26CD": "TRUE"
+    },
+    "quote": "This diagram shows the data supplied to ONS through the Gridlink process from Royal Mail and Ordnance Surevy (OS), and the methodology for adding each geography to the ONSPD – either via lookup or via a digital point in polygon (PIP) process. ‖ Lookup: SOA (from OA) ‖ Rural/urban indicator (from OA) ‖ Country (from LAD) ‖ SSR (from LAD) ‖ CAS ward (from OA) ‖ Output Area Classification (from OA) ‖ NI Primary Care area (from ward) ‖ ITL (from OA) ‖ Rural Urban Classification (from OA) ‖ SICBL (from LSOA) ‖ TTWA (from LSOA) ‖ PFA (from LAD) ‖ IMD (from OA) ‖ Cancer Alliance (from SICBL) ‖ ICB (from SICBL) ‖ The 2011 Census OAs in GB and SAs in Northern Ireland were based on 2001 Census OAs, and they form the building bricks for defining higher level geographies. ‖ The Lower Layer SOAs (LSOA) were designed with a mean population figure of 1,500 and each consists of a grouping of OAs, typically five. ‖ DZs are groups of OAs which have populations of between 500 and 1,000 household residents. ‖ Postcodes have been assigned to the urban or rural category of the OA into which each one falls. ‖ OAs have been assigned to the urban or rural category on an individual basis, based upon data received from GROS. ‖ The 2011 Census OAC code for each postcode in the UK. ‖ The 2011 Census OAC is used to group together geographic areas according to key characteristics common to the population in that grouping. These groupings are called clusters and are derived using 2011 population census data. ‖ The IMD rank for the 2011 LSOA (or OA or DZ) of each postcode, where 1 is the most deprived. A zero is included for Channel Islands and Isle of Man, also for postcodes with no grid reference. ‖ The 228 current TTWAs were defined in 2015 using 2011 Census information on home and work addresses and are built from 2011 Census LSOAs in England and Wales, data zones in Scotland, and SOAs in Northern Ireland (see Section 34). ‖ They came into effect on 1 April 2013 and were built from 2011 LSOAs. In July 2022 they were renamed to Sub ICB (Integrated Care Board) Locations as part of the STP/ICB changes (see also Section 44). ‖ The ICB code for each postcode. Pseudo codes are included for Wales, Scotland, Northern Ireland, Channel Islands and Isle of Man. The field will otherwise be blank for postcodes with no grid reference.",
+    "source": "onspd_user_guide/ONSPD User Guide Aug 2026.pdf, Annex E 'Geography Allocation Diagram', p. 53 ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, Annex E, p. 53, column under the diagram box 'Lookup' ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, Annex A, p. 43, field OA11CD ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, section 33 '2011 Census Super Output Areas (SOA) and Scottish Data and Intermediate Zones (DZ & IZ)', p. 17 ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, section 33, p. 17 ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, section 38 '2011 Census Rural-Urban Classification', p. 18 ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, section 38, p. 19 ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, Annex A, p. 45, field OAC11IND ('2011 Census Output Area classification (OAC)') ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, section 32 '2011 Census Output Area Classification (OAC)', p. 16 ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, Annex A, p. 47, field IMD20IND ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, section 28 'Travel to Work Areas (TTWA)', p. 13 ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, section 36 'Sub ICB Locations (SICBL) – formerly Clinical Commissioning Groups (CCG)', p. 18 ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, Annex A, p. 47, field ICB26CD"
+   }
+  },
+  {
+   "lhs": [
+    "LSOA11CD"
+   ],
+   "rhs": [
+    "MSOA11CD",
+    "IMD20IND",
+    "TTWA15CD",
+    "SICBL26CD",
+    "ICB26CD"
+   ],
+   "sure": true,
+   "clause": "onspd_user_guide/ONSPD User Guide Aug 2026.pdf, p. 17, section 33: \"The Middle Layer SOAs (MSOA) have a mean population figure of 7,200 (minimum 5,000) and consist of a grouping of LSOAs.\" and \"IZs are the geography that sits above DZs\"; onspd_user_guide/ONSPD User Guide Aug 2026.pdf, p. 47, Annex A, field IMD20IND: \"The IMD rank for the 2011 LSOA (or OA or DZ) of each postcode, where 1 is the most deprived.\"; onspd_user_guide/ONSPD User Guide Aug 2026.pdf, p. 13, section 28: \"The 228 current TTWAs were defined in 2015 using 2011 Census information on home and work addresses and are built from 2011 Census LSOAs in England and Wales, data zones in Scotland, and SOAs in Northern Ireland (see Section 34).\"; onspd_user_guide/ONSPD User Guide Aug 2026.pdf, p. 18, section 36: \"They came into effect on 1 April 2013 and were built from 2011 LSOAs. In July 2022 they were renamed to Sub ICB (Integrated Care Board) Locations as part of the STP/ICB changes (see also Section 44).\"; onspd_user_guide/ONSPD User Guide Aug 2026.pdf, p. 53, Annex E 'Geography Allocation Diagram': \"This diagram shows the data supplied to ONS through the Gridlink process from Royal Mail and Ordnance Surevy (OS), and the methodology for adding each geography to the ONSPD - either via lookup or via a digital point in polygon (PIP) process.\", Lookup column: \"SICBL (from LSOA)\", \"TTWA (from LSOA)\", \"ICB (from SICBL)\"",
+   "justification": "MSOAs/IZs are groupings of LSOAs/DZs, the IMD rank is the rank of the postcode's 2011 LSOA (the Northern Ireland ranks are per SOA, the one-layer equivalent held in LSOA11CD), and TTWAs and Sub ICB Locations are built from 2011 LSOAs and allocated by lookup from the LSOA, so the LSOA determines them; ICB follows through SICBL.",
+   "audit": {
+    "verdicts": {
+     "MSOA11CD": "TRUE",
+     "IMD20IND": "TRUE",
+     "TTWA15CD": "TRUE",
+     "SICBL26CD": "TRUE",
+     "ICB26CD": "TRUE"
+    },
+    "quote": "The Middle Layer SOAs (MSOA) have a mean population figure of 7,200 (minimum 5,000) and consist of a grouping of LSOAs. ‖ IZs are the geography that sits above DZs and they have a minimum population of 2,500 - 6,000, which are of a size between the LSOAs and MSOAs in England and Wales. ‖ The 2011 Census MSOA code for England and Wales and IZ zone for Scotland. Pseudo codes are included for Northern Ireland, Channel Islands and Isle of Man. ‖ The IMD rank for the 2011 LSOA (or OA or DZ) of each postcode, where 1 is the most deprived. A zero is included for Channel Islands and Isle of Man, also for postcodes with no grid reference. ‖ The 228 current TTWAs were defined in 2015 using 2011 Census information on home and work addresses and are built from 2011 Census LSOAs in England and Wales, data zones in Scotland, and SOAs in Northern Ireland (see Section 34). ‖ They came into effect on 1 April 2013 and were built from 2011 LSOAs. In July 2022 they were renamed to Sub ICB (Integrated Care Board) Locations as part of the STP/ICB changes (see also Section 44). ‖ This diagram shows the data supplied to ONS through the Gridlink process from Royal Mail and Ordnance Surevy (OS), and the methodology for adding each geography to the ONSPD – either via lookup or via a digital point in polygon (PIP) process. ‖ Lookup: SOA (from OA) ‖ Rural/urban indicator (from OA) ‖ Country (from LAD) ‖ SSR (from LAD) ‖ CAS ward (from OA) ‖ Output Area Classification (from OA) ‖ NI Primary Care area (from ward) ‖ ITL (from OA) ‖ Rural Urban Classification (from OA) ‖ SICBL (from LSOA) ‖ TTWA (from LSOA) ‖ PFA (from LAD) ‖ IMD (from OA) ‖ Cancer Alliance (from SICBL) ‖ ICB (from SICBL)",
+    "source": "onspd_user_guide/ONSPD User Guide Aug 2026.pdf, section 33, p. 17 ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, section 33, p. 17 ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, Annex A, p. 44, field MSOA11CD ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, Annex A, p. 47, field IMD20IND ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, section 28 'Travel to Work Areas (TTWA)', p. 13 ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, section 36 'Sub ICB Locations (SICBL) – formerly Clinical Commissioning Groups (CCG)', p. 18 ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, Annex E 'Geography Allocation Diagram', p. 53 ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, Annex E, p. 53, column under the diagram box 'Lookup'"
+   }
+  },
+  {
+   "lhs": [
+    "SICBL26CD"
+   ],
+   "rhs": [
+    "ICB26CD"
+   ],
+   "sure": true,
+   "clause": "onspd_user_guide/ONSPD User Guide Aug 2026.pdf, p. 53, Annex E 'Geography Allocation Diagram': \"This diagram shows the data supplied to ONS through the Gridlink process from Royal Mail and Ordnance Surevy (OS), and the methodology for adding each geography to the ONSPD - either via lookup or via a digital point in polygon (PIP) process.\", Lookup column: \"Cancer Alliance (from SICBL)\", \"ICB (from SICBL)\"; onspd_user_guide/ONSPD User Guide Aug 2026.pdf, p. 44, Annex A, field SICBL26CD: \"The code for the Sub ICB Locations in England, LHBs in Wales, CHPs in Scotland, LCG in Northern Ireland and PHD in the Isle of Man; there are no equivalent areas in the Channel Islands (for which a pseudo code is included).\"; onspd_user_guide/ONSPD User Guide Aug 2026.pdf, p. 47, field ICB26CD: \"The ICB code for each postcode. Pseudo codes are included for Wales, Scotland, Northern Ireland, Channel Islands and Isle of Man.\"",
+   "justification": "The ICB of a postcode is allocated by lookup from its Sub ICB Location, so the SICBL code determines the ICB code (outside England both carry one pseudo code per country).",
+   "audit": {
+    "verdicts": {
+     "ICB26CD": "TRUE"
+    },
+    "quote": "This diagram shows the data supplied to ONS through the Gridlink process from Royal Mail and Ordnance Surevy (OS), and the methodology for adding each geography to the ONSPD – either via lookup or via a digital point in polygon (PIP) process. ‖ Lookup: SOA (from OA) ‖ Rural/urban indicator (from OA) ‖ Country (from LAD) ‖ SSR (from LAD) ‖ CAS ward (from OA) ‖ Output Area Classification (from OA) ‖ NI Primary Care area (from ward) ‖ ITL (from OA) ‖ Rural Urban Classification (from OA) ‖ SICBL (from LSOA) ‖ TTWA (from LSOA) ‖ PFA (from LAD) ‖ IMD (from OA) ‖ Cancer Alliance (from SICBL) ‖ ICB (from SICBL) ‖ The code for the Sub ICB Locations in England, LHBs in Wales, CHPs in Scotland, LCG in Northern Ireland and PHD in the Isle of Man; there are no equivalent areas in the Channel Islands (for which a pseudo code is included). The field will be blank for postcodes in England or Wales with no grid reference. ‖ The ICB code for each postcode. Pseudo codes are included for Wales, Scotland, Northern Ireland, Channel Islands and Isle of Man. The field will otherwise be blank for postcodes with no grid reference.",
+    "source": "onspd_user_guide/ONSPD User Guide Aug 2026.pdf, Annex E 'Geography Allocation Diagram', p. 53 ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, Annex E, p. 53, column under the diagram box 'Lookup' ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, Annex A, p. 44, field SICBL26CD ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, Annex A, p. 47, field ICB26CD"
+   }
+  },
+  {
+   "lhs": [
+    "LAD26CD"
+   ],
+   "rhs": [
+    "CTRY26CD",
+    "PFA23CD",
+    "CTRY25NM"
+   ],
+   "sure": true,
+   "clause": "onspd_user_guide/ONSPD User Guide Aug 2026.pdf, p. 53, Annex E 'Geography Allocation Diagram': \"This diagram shows the data supplied to ONS through the Gridlink process from Royal Mail and Ordnance Surevy (OS), and the methodology for adding each geography to the ONSPD - either via lookup or via a digital point in polygon (PIP) process.\", Lookup column: \"Country (from LAD)\", \"SSR (from LAD)\", \"PFA (from LAD)\"; onspd_user_guide/ONSPD User Guide Aug 2026.pdf, p. 19, section 40 'Police Force Areas (PFA)': \"They each comprise one or more complete local authority.\"; onspd_user_guide/ONSPD User Guide Aug 2026.pdf, p. 33, Annex A, field LAD26CD: \"The local authority district to which the postcode has been assigned. Pseudo codes are included for Channel Islands and Isle of Man. The field will otherwise be blank for postcodes with no grid reference.\"; onspd_user_guide/ONSPD User Guide Aug 2026.pdf, p. 5, section 1 'Introduction': \"Lookup files linking these codes to statutory area names are included with the ONSPD, in the 'Documents' folder.\"; onspd_user_guide/ONSPD User Guide Aug 2026.pdf, p. 22, section 47 'Names and Codes': \"The names of all administrative and health areas are the standard names adopted for use throughout National Statistics.\" and \"The ONSPD uses the Government Statistical Service (GSS) standard 9-character codes for administrative, electoral and health areas.\"",
+   "justification": "The country and the police force area of a postcode are allocated by lookup from its local authority district (a PFA comprises complete local authorities), so the LAD code determines them, and the country name follows from the country code through the names-and-codes lookup.",
+   "audit": {
+    "verdicts": {
+     "CTRY26CD": "TRUE",
+     "PFA23CD": "TRUE",
+     "CTRY25NM": "TRUE"
+    },
+    "quote": "This diagram shows the data supplied to ONS through the Gridlink process from Royal Mail and Ordnance Surevy (OS), and the methodology for adding each geography to the ONSPD – either via lookup or via a digital point in polygon (PIP) process. ‖ Lookup: SOA (from OA) ‖ Rural/urban indicator (from OA) ‖ Country (from LAD) ‖ SSR (from LAD) ‖ CAS ward (from OA) ‖ Output Area Classification (from OA) ‖ NI Primary Care area (from ward) ‖ ITL (from OA) ‖ Rural Urban Classification (from OA) ‖ SICBL (from LSOA) ‖ TTWA (from LSOA) ‖ PFA (from LAD) ‖ IMD (from OA) ‖ Cancer Alliance (from SICBL) ‖ ICB (from SICBL) ‖ There are currently 43 PFAs in England and Wales (39 in England and 4 in Wales), with one each for Scotland and Northern Ireland. They each comprise one or more complete local authority. ‖ The local authority district to which the postcode has been assigned. Pseudo codes are included for Channel Islands and Isle of Man. The field will otherwise be blank for postcodes with no grid reference. ‖ Lookup files linking these codes to statutory area names are included with the ONSPD, in the 'Documents' folder. ‖ The names of all administrative and health areas are the standard names adopted for use throughout National Statistics. The names are those used in Acts of Parliament and Statutory Instruments to publish changes to the administrative and health geographies. ‖ The ONSPD uses the Government Statistical Service (GSS) standard 9-character codes for administrative, electoral and health areas.",
+    "source": "onspd_user_guide/ONSPD User Guide Aug 2026.pdf, Annex E 'Geography Allocation Diagram', p. 53 ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, Annex E, p. 53, column under the diagram box 'Lookup' ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, section 40 'Police Force Areas (PFA)', p. 19 ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, Annex A, p. 33, field LAD26CD ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, section 1 'Introduction', p. 5 ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, section 47 'Names and Codes', p. 22 ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, section 47 'Names and Codes', p. 22 (also section 1, p. 5)"
+   }
+  },
+  {
+   "lhs": [
+    "CTRY26CD"
+   ],
+   "rhs": [
+    "CTRY25NM"
+   ],
+   "sure": true,
+   "clause": "onspd_user_guide/ONSPD User Guide Aug 2026.pdf, p. 5, section 1 'Introduction': \"Lookup files linking these codes to statutory area names are included with the ONSPD, in the 'Documents' folder.\"; onspd_user_guide/ONSPD User Guide Aug 2026.pdf, p. 22, section 47 'Names and Codes': \"The names of all administrative and health areas are the standard names adopted for use throughout National Statistics.\" and \"The ONSPD uses the Government Statistical Service (GSS) standard 9-character codes for administrative, electoral and health areas.\"; onspd_user_guide/ONSPD User Guide Aug 2026.pdf, p. 36, Annex A, field CTRY26CD: \"The code for the appropriate country (i.e. one of the four constituent countries of the UK or Crown dependencies - the Channel Islands or the Isle of Man) to which each postcode is assigned.\" with the code list \"E92000001 = England; W92000004 = Wales; S92000003 = Scotland; N92000002 = Northern Ireland; L93000001 = Channel Islands; M83000003 = Isle of Man; null = no information available\"",
+   "justification": "The names-and-codes lookup file links each GSS country code to its standard name, so the code determines the name (the join reads the CTRY names and codes file of the Documents folder).",
+   "audit": {
+    "verdicts": {
+     "CTRY25NM": "TRUE"
+    },
+    "quote": "Lookup files linking these codes to statutory area names are included with the ONSPD, in the 'Documents' folder. ‖ The names of all administrative and health areas are the standard names adopted for use throughout National Statistics. The names are those used in Acts of Parliament and Statutory Instruments to publish changes to the administrative and health geographies. ‖ The ONSPD uses the Government Statistical Service (GSS) standard 9-character codes for administrative, electoral and health areas.",
+    "source": "onspd_user_guide/ONSPD User Guide Aug 2026.pdf, section 1 'Introduction', p. 5 ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, section 47 'Names and Codes', p. 22 ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, section 47 'Names and Codes', p. 22 (also section 1, p. 5)"
+   }
+  },
+  {
+   "lhs": [
+    "RGN26CD"
+   ],
+   "rhs": [
+    "RGN25NM"
+   ],
+   "sure": true,
+   "clause": "onspd_user_guide/ONSPD User Guide Aug 2026.pdf, p. 5, section 1 'Introduction': \"Lookup files linking these codes to statutory area names are included with the ONSPD, in the 'Documents' folder.\"; onspd_user_guide/ONSPD User Guide Aug 2026.pdf, p. 22, section 47 'Names and Codes': \"The names of all administrative and health areas are the standard names adopted for use throughout National Statistics.\" and \"The ONSPD uses the Government Statistical Service (GSS) standard 9-character codes for administrative, electoral and health areas.\"; onspd_user_guide/ONSPD User Guide Aug 2026.pdf, p. 36, Annex A, field RGN26CD: \"The region code for each postcode. Pseudo codes are included for Wales, Scotland, Northern Ireland, Channel Island and Isle of Man. The field will be blank for postcodes in England with no grid reference.\"",
+   "justification": "The names-and-codes lookup file links each region code to its standard name, so the code determines the name (pseudo codes outside England are absent from the England-only names file and keep a missing name).",
+   "audit": {
+    "verdicts": {
+     "RGN25NM": "TRUE"
+    },
+    "quote": "Lookup files linking these codes to statutory area names are included with the ONSPD, in the 'Documents' folder. ‖ The names of all administrative and health areas are the standard names adopted for use throughout National Statistics. The names are those used in Acts of Parliament and Statutory Instruments to publish changes to the administrative and health geographies. ‖ The ONSPD uses the Government Statistical Service (GSS) standard 9-character codes for administrative, electoral and health areas.",
+    "source": "onspd_user_guide/ONSPD User Guide Aug 2026.pdf, section 1 'Introduction', p. 5 ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, section 47 'Names and Codes', p. 22 ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, section 47 'Names and Codes', p. 22 (also section 1, p. 5)"
+   }
+  },
+  {
+   "lhs": [
+    "LAD26CD"
+   ],
+   "rhs": [
+    "LAD25NM"
+   ],
+   "sure": true,
+   "clause": "onspd_user_guide/ONSPD User Guide Aug 2026.pdf, p. 5, section 1 'Introduction': \"Lookup files linking these codes to statutory area names are included with the ONSPD, in the 'Documents' folder.\"; onspd_user_guide/ONSPD User Guide Aug 2026.pdf, p. 22, section 47 'Names and Codes': \"The names of all administrative and health areas are the standard names adopted for use throughout National Statistics.\" and \"The ONSPD uses the Government Statistical Service (GSS) standard 9-character codes for administrative, electoral and health areas.\"; onspd_user_guide/ONSPD User Guide Aug 2026.pdf, p. 33, Annex A, field LAD26CD: \"The local authority district to which the postcode has been assigned.\"",
+   "justification": "The names-and-codes lookup file links each local authority district code to its standard name, so the code determines the name.",
+   "audit": {
+    "verdicts": {
+     "LAD25NM": "TRUE"
+    },
+    "quote": "Lookup files linking these codes to statutory area names are included with the ONSPD, in the 'Documents' folder. ‖ The names of all administrative and health areas are the standard names adopted for use throughout National Statistics. The names are those used in Acts of Parliament and Statutory Instruments to publish changes to the administrative and health geographies. ‖ The ONSPD uses the Government Statistical Service (GSS) standard 9-character codes for administrative, electoral and health areas.",
+    "source": "onspd_user_guide/ONSPD User Guide Aug 2026.pdf, section 1 'Introduction', p. 5 ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, section 47 'Names and Codes', p. 22 ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, section 47 'Names and Codes', p. 22 (also section 1, p. 5)"
+   }
+  },
+  {
+   "lhs": [
+    "RGN26CD"
+   ],
+   "rhs": [
+    "CTRY26CD",
+    "CTRY25NM"
+   ],
+   "sure": false,
+   "clause": "onspd_user_guide/ONSPD User Guide Aug 2026.pdf, p. 36, Annex A, field RGN26CD, range of codes: \"E12000001 - E12000009 = England; W99999999 (pseudo) = Wales; S99999999 (pseudo) = Scotland; N99999999 (pseudo) = Northern Ireland; L99999999 (pseudo) = Channel Islands; M99999999 (pseudo) = Isle of Man; null = no information available\"; onspd_user_guide/ONSPD User Guide Aug 2026.pdf, p. 13, section 26: \"The nine GORs were abolished on 1 April 2011 and are now known as 'regions' for statistical purposes. They were the primary statistical subdivisions of England\"",
+   "justification": "Unsure: every region code is a subdivision of England or the pseudo code of one other country, so the code implies the country, but this is read off the code list rather than stated as an allocation rule, and a blank region (no grid reference) can pair with a known country.",
+   "audit": {
+    "verdicts": {
+     "CTRY26CD": "UNDETERMINED",
+     "CTRY25NM": "UNDETERMINED"
+    },
+    "quote": "The region code for each postcode. Pseudo codes are included for Wales, Scotland, Northern Ireland, Channel Island and Isle of Man. The field will be blank for postcodes in England with no grid reference. ‖ E12000001 – E12000009 = England; W99999999 (pseudo) = Wales; S99999999 (pseudo) = Scotland; N99999999 (pseudo) = Northern Ireland; L99999999 (pseudo) = Channel Islands; M99999999 (pseudo) = Isle of Man; null = no information available ‖ P.I.P.: OA ‖ Parliamentary Constituency ‖ EER ‖ LLSC/DCELLS/ER ‖ Region ‖ Statistical ward ‖ National Park ‖ Parish ‖ Workplace Zone ‖ Primary Care area (except NI) ‖ Built-up area ‖ Local Enterprise Partnership ‖ County Electoral Division ‖ The nine GORs were abolished on 1 April 2011 and are now known as 'regions' for statistical purposes. They were the primary statistical subdivisions of England and also the areas in which the Government Offices for the Regions fulfilled their role. Each region covered a number of local authorities. ‖ Why are some postcodes assigned to the wrong administrative and electoral areas? - There are two reasons: 1. Imputation: Some postcodes are assigned to administrative and electoral areas using an imputed grid reference. Imputation is not an exact science and can cause postcodes to be wrongly assigned until more accurate information becomes available. 2. Straddling: As the postal and administrative/electoral geographies do not map directly onto one another, postcodes often other boundaries.",
+    "source": "onspd_user_guide/ONSPD User Guide Aug 2026.pdf, Annex A, p. 36, field RGN26CD ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, Annex E, p. 53, column under the diagram box 'P.I.P.' ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, section 26 'Regions (Former Government Office Regions - GOR)', p. 13 ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, section 6 'Frequently Asked Questions (FAQ)', p. 6"
+   }
+  },
+  {
+   "lhs": [
+    "CTY26CD"
+   ],
+   "rhs": [
+    "CTRY26CD",
+    "CTRY25NM"
+   ],
+   "sure": false,
+   "clause": "onspd_user_guide/ONSPD User Guide Aug 2026.pdf, p. 32, Annex A, field CTY26CD: \"The current county to which the postcode has been assigned. Pseudo codes are included for English UAs, Wales, Scotland, Northern Ireland, Channel Islands and Isle of Man.\" with the range of codes \"E10000003 - E10000034 = England (non-Metropolitan County); E99999999 (pseudo) = England (UA/MD/LB); W99999999 (pseudo) = Wales; S99999999 (pseudo) = Scotland; N99999999 (pseudo) = Northern Ireland; L99999999 (pseudo) = Channel Islands; M99999999 (pseudo) = Isle of Man; null = no information available\"",
+   "justification": "Unsure: each county code or pseudo code belongs to one country in the code list, but the guide does not state the country as allocated from the county, and blank values (no grid reference) can pair with a known country.",
+   "audit": {
+    "verdicts": {
+     "CTRY26CD": "UNDETERMINED",
+     "CTRY25NM": "UNDETERMINED"
+    },
+    "quote": "The current county to which the postcode has been assigned. Pseudo codes are included for English UAs, Wales, Scotland, Northern Ireland, Channel Islands and Isle of Man. The field will otherwise be blank for postcodes with no grid reference. ‖ E10000003 – E10000034 = England (non-Metropolitan County); E99999999 (pseudo) = England (UA/MD/LB); W99999999 (pseudo) = Wales; S99999999 (pseudo) = Scotland; N99999999 (pseudo) = Northern Ireland; L99999999 (pseudo) = Channel Islands; M99999999 (pseudo) = Isle of Man; null = no information available ‖ • UK country codes. • Electoral ward codes. • Administrative local authority district codes. • Administrative unitary authority codes. • Administrative county codes. ‖ Why are some postcodes assigned to the wrong administrative and electoral areas? - There are two reasons: 1. Imputation: Some postcodes are assigned to administrative and electoral areas using an imputed grid reference. Imputation is not an exact science and can cause postcodes to be wrongly assigned until more accurate information becomes available. 2. Straddling: As the postal and administrative/electoral geographies do not map directly onto one another, postcodes often other boundaries.",
+    "source": "onspd_user_guide/ONSPD User Guide Aug 2026.pdf, Annex A, p. 32, field CTY26CD ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, section 8 'Gridlink', p. 7 ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, section 6 'Frequently Asked Questions (FAQ)', p. 6"
+   }
+  },
+  {
+   "lhs": [
+    "PCON24CD"
+   ],
+   "rhs": [
+    "CTRY26CD",
+    "CTRY25NM"
+   ],
+   "sure": false,
+   "clause": "onspd_user_guide/ONSPD User Guide Aug 2026.pdf, p. 37, Annex A, field PCON24CD: \"The Westminster parliamentary constituency code for each postcode. Pseudo codes are included for Channel Islands and Isle of Man.\" with the range of codes \"E14001063 - E14001605 = England; W07000081 - W07000112 = Wales; S14000021 - S14000111 = Scotland; N05000001 - N05000018 = Northern Ireland; L99999999 (pseudo) = Channel Islands; M99999999 (pseudo) = Isle of Man; null = no information available\"",
+   "justification": "Unsure: the constituency code ranges are per country, so a constituency implies its country, but constituencies are allocated by point in polygon (Annex E) independently of the country lookup, and blank values can pair with a known country.",
+   "audit": {
+    "verdicts": {
+     "CTRY26CD": "UNDETERMINED",
+     "CTRY25NM": "UNDETERMINED"
+    },
+    "quote": "The Westminster parliamentary constituency code for each postcode. Pseudo codes are included for Channel Islands and Isle of Man. The field will otherwise be blank for postcodes with no grid reference. ‖ E14001063 – E14001605 = England; W07000081 – W07000112 = Wales; S14000021 – S14000111 = Scotland; N05000001 – N05000018 = Northern Ireland; L99999999 (pseudo) = Channel Islands; M99999999 (pseudo) = Isle of Man; null = no information available ‖ P.I.P.: OA ‖ Parliamentary Constituency ‖ EER ‖ LLSC/DCELLS/ER ‖ Region ‖ Statistical ward ‖ National Park ‖ Parish ‖ Workplace Zone ‖ Primary Care area (except NI) ‖ Built-up area ‖ Local Enterprise Partnership ‖ County Electoral Division ‖ Why are some postcodes assigned to the wrong administrative and electoral areas? - There are two reasons: 1. Imputation: Some postcodes are assigned to administrative and electoral areas using an imputed grid reference. Imputation is not an exact science and can cause postcodes to be wrongly assigned until more accurate information becomes available. 2. Straddling: As the postal and administrative/electoral geographies do not map directly onto one another, postcodes often other boundaries.",
+    "source": "onspd_user_guide/ONSPD User Guide Aug 2026.pdf, Annex A, p. 37, field PCON24CD ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, Annex E, p. 53, column under the diagram box 'P.I.P.' ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, section 6 'Frequently Asked Questions (FAQ)', p. 6"
+   }
+  },
+  {
+   "lhs": [
+    "PFA23CD"
+   ],
+   "rhs": [
+    "CTRY26CD",
+    "CTRY25NM"
+   ],
+   "sure": false,
+   "clause": "onspd_user_guide/ONSPD User Guide Aug 2026.pdf, p. 46, Annex A, field PFA23CD: \"The PFA code for each postcode. A single PFA covers each of Scotland and Northern Ireland (not coded).\" with the range of codes \"E23000001 - E23000039 = England; W15000001 - W15000004 = Wales; S23000009 = Scotland; N99999999 (pseudo) = Northern Ireland; L99999999 (pseudo) = Channel Islands; M99999999 (pseudo) = Isle of Man; null = no information available\"",
+   "justification": "Unsure: police force areas comprise complete local authorities within one country and the code ranges are per country, so the PFA implies the country, but the direction PFA -> country is read off the code list, not stated, and blank values can pair with a known country.",
+   "audit": {
+    "verdicts": {
+     "CTRY26CD": "UNDETERMINED",
+     "CTRY25NM": "UNDETERMINED"
+    },
+    "quote": "The PFA code for each postcode. A single PFA covers each of Scotland and Northern Ireland (not coded). Pseudo codes are included for Channel Islands and Isle of Man. The field will otherwise be blank for postcodes with no grid reference. ‖ E23000001 – E23000039 = England; W15000001 – W15000004 = Wales; S23000009 = Scotland; N99999999 (pseudo) = Northern Ireland; L99999999 (pseudo) = Channel Islands; M99999999 (pseudo) = Isle of Man; null = no information available ‖ There are currently 43 PFAs in England and Wales (39 in England and 4 in Wales), with one each for Scotland and Northern Ireland. They each comprise one or more complete local authority. ‖ Lookup: SOA (from OA) ‖ Rural/urban indicator (from OA) ‖ Country (from LAD) ‖ SSR (from LAD) ‖ CAS ward (from OA) ‖ Output Area Classification (from OA) ‖ NI Primary Care area (from ward) ‖ ITL (from OA) ‖ Rural Urban Classification (from OA) ‖ SICBL (from LSOA) ‖ TTWA (from LSOA) ‖ PFA (from LAD) ‖ IMD (from OA) ‖ Cancer Alliance (from SICBL) ‖ ICB (from SICBL) ‖ Why are some postcodes assigned to the wrong administrative and electoral areas? - There are two reasons: 1. Imputation: Some postcodes are assigned to administrative and electoral areas using an imputed grid reference. Imputation is not an exact science and can cause postcodes to be wrongly assigned until more accurate information becomes available. 2. Straddling: As the postal and administrative/electoral geographies do not map directly onto one another, postcodes often other boundaries.",
+    "source": "onspd_user_guide/ONSPD User Guide Aug 2026.pdf, Annex A, p. 46, field PFA23CD ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, section 40 'Police Force Areas (PFA)', p. 19 ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, Annex E, p. 53, column under the diagram box 'Lookup' ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, section 6 'Frequently Asked Questions (FAQ)', p. 6"
+   }
+  },
+  {
+   "lhs": [
+    "OA11CD"
+   ],
+   "rhs": [
+    "CTRY26CD",
+    "CTRY25NM"
+   ],
+   "sure": false,
+   "clause": "onspd_user_guide/ONSPD User Guide Aug 2026.pdf, p. 43, Annex A, field OA11CD, range of codes: \"E00000001 - E00176774 = England; W00000001 - W00010265 = Wales; S00088956 - S00135306 = Scotland; N00000001 - N00004537 = Northern Ireland; L99999999 (pseudo) = Channel Islands; M99999999 (pseudo) = Isle of Man; null = no information available\"; onspd_user_guide/ONSPD User Guide Aug 2026.pdf, p. 11, section 17.1: \"One postcode (TD15 1UY) assigned to a Scottish OA in the Postcode Index (because a part of it falls in Scotland) is assigned to an English OA in the ONSPD (because the part of it falling in England comprises a larger population).\"",
+   "justification": "Unsure: output areas are national and their code ranges are per country, but the country is allocated from the LAD and the OA by point in polygon, and the guide shows that a postcode straddling the border can be assigned by population share, so a cross-border OA/country pair is not excluded.",
+   "audit": {
+    "verdicts": {
+     "CTRY26CD": "UNDETERMINED",
+     "CTRY25NM": "UNDETERMINED"
+    },
+    "quote": "E00000001 – E00176774 = England; W00000001 – W00010265 = Wales; S00088956 – S00135306 = Scotland; N00000001 – N00004537 = Northern Ireland; L99999999 (pseudo) = Channel Islands; M99999999 (pseudo) = Isle of Man; null = no information available ‖ P.I.P.: OA ‖ Parliamentary Constituency ‖ EER ‖ LLSC/DCELLS/ER ‖ Region ‖ Statistical ward ‖ National Park ‖ Parish ‖ Workplace Zone ‖ Primary Care area (except NI) ‖ Built-up area ‖ Local Enterprise Partnership ‖ County Electoral Division ‖ One postcode (TD15 1UY) assigned to a Scottish OA in the Postcode Index (because a part of it falls in Scotland) is assigned to an English OA in the ONSPD (because the part of it falling in England comprises a larger population). ‖ Why are some postcodes assigned to the wrong administrative and electoral areas? - There are two reasons: 1. Imputation: Some postcodes are assigned to administrative and electoral areas using an imputed grid reference. Imputation is not an exact science and can cause postcodes to be wrongly assigned until more accurate information becomes available. 2. Straddling: As the postal and administrative/electoral geographies do not map directly onto one another, postcodes often other boundaries.",
+    "source": "onspd_user_guide/ONSPD User Guide Aug 2026.pdf, Annex A, p. 43, field OA11CD, range of codes ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, Annex E, p. 53, column under the diagram box 'P.I.P.' ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, section 17.1, p. 11 ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, section 6 'Frequently Asked Questions (FAQ)', p. 6"
+   }
+  },
+  {
+   "lhs": [
+    "LSOA11CD"
+   ],
+   "rhs": [
+    "CTRY26CD",
+    "CTRY25NM"
+   ],
+   "sure": false,
+   "clause": "onspd_user_guide/ONSPD User Guide Aug 2026.pdf, p. 43, Annex A, field LSOA11CD: \"The 2011 Census LSOA (England and Wales), SOA (Northern Ireland) and DZ (Scotland) code.\" with the range of codes \"E01000001 - E01033768 = England; W01000001 - W01001958 = Wales; S01006506 - S01013481 = Scotland; 95AA01S1- 95ZZ16S2 = Northern Ireland; L99999999 (pseudo) = Channel Islands; M99999999 (pseudo) = Isle of Man; null = no information available\"",
+   "justification": "Unsure: LSOAs, SOAs and DZs are national geographies with per-country code ranges, so the LSOA implies the country, but as for the OA the two fields are allocated by different methods and the guide does not state the dependency.",
+   "audit": {
+    "verdicts": {
+     "CTRY26CD": "UNDETERMINED",
+     "CTRY25NM": "UNDETERMINED"
+    },
+    "quote": "E01000001 – E01033768 = England; W01000001 – W01001958 = Wales; S01006506 – S01013481 = Scotland; 95AA01S1 – 95ZZ16S2 = Northern Ireland; L99999999 (pseudo) = Channel Islands; M99999999 (pseudo) = Isle of Man; null = no information available ‖ The 2011 Census LSOA (England and Wales), SOA (Northern Ireland) and DZ (Scotland) code. Pseudo codes are included for Channel Islands and Isle of Man. The field will otherwise be blank for postcodes with no grid reference. N.B. NI SOAs remain unchanged from 2001. ‖ Lookup: SOA (from OA) ‖ Rural/urban indicator (from OA) ‖ Country (from LAD) ‖ SSR (from LAD) ‖ CAS ward (from OA) ‖ Output Area Classification (from OA) ‖ NI Primary Care area (from ward) ‖ ITL (from OA) ‖ Rural Urban Classification (from OA) ‖ SICBL (from LSOA) ‖ TTWA (from LSOA) ‖ PFA (from LAD) ‖ IMD (from OA) ‖ Cancer Alliance (from SICBL) ‖ ICB (from SICBL) ‖ Why are some postcodes assigned to the wrong administrative and electoral areas? - There are two reasons: 1. Imputation: Some postcodes are assigned to administrative and electoral areas using an imputed grid reference. Imputation is not an exact science and can cause postcodes to be wrongly assigned until more accurate information becomes available. 2. Straddling: As the postal and administrative/electoral geographies do not map directly onto one another, postcodes often other boundaries.",
+    "source": "onspd_user_guide/ONSPD User Guide Aug 2026.pdf, Annex A, p. 43, field LSOA11CD, range of codes ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, Annex A, p. 43, field LSOA11CD ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, Annex E, p. 53, column under the diagram box 'Lookup' ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, section 6 'Frequently Asked Questions (FAQ)', p. 6"
+   }
+  },
+  {
+   "lhs": [
+    "LAD26CD"
+   ],
+   "rhs": [
+    "RGN26CD",
+    "RGN25NM"
+   ],
+   "sure": false,
+   "clause": "onspd_user_guide/ONSPD User Guide Aug 2026.pdf, p. 13, section 26 'Regions (Former Government Office Regions - GOR)': \"They were the primary statistical subdivisions of England and also the areas in which the Government Offices for the Regions fulfilled their role. Each region covered a number of local authorities.\"; onspd_user_guide/ONSPD User Guide Aug 2026.pdf, p. 53, Annex E 'Geography Allocation Diagram': \"This diagram shows the data supplied to ONS through the Gridlink process from Royal Mail and Ordnance Surevy (OS), and the methodology for adding each geography to the ONSPD - either via lookup or via a digital point in polygon (PIP) process.\", P.I.P. column: \"Region\"",
+   "justification": "Unsure: 'each region covered a number of local authorities' describes the former GORs and suggests that a local authority lies in one region, but the region of a postcode is allocated by point in polygon, not by lookup from the LAD, and the sentence is in the past tense.",
+   "audit": {
+    "verdicts": {
+     "RGN26CD": "UNDETERMINED",
+     "RGN25NM": "UNDETERMINED"
+    },
+    "quote": "The nine GORs were abolished on 1 April 2011 and are now known as 'regions' for statistical purposes. They were the primary statistical subdivisions of England and also the areas in which the Government Offices for the Regions fulfilled their role. Each region covered a number of local authorities. ‖ P.I.P.: OA ‖ Parliamentary Constituency ‖ EER ‖ LLSC/DCELLS/ER ‖ Region ‖ Statistical ward ‖ National Park ‖ Parish ‖ Workplace Zone ‖ Primary Care area (except NI) ‖ Built-up area ‖ Local Enterprise Partnership ‖ County Electoral Division ‖ The region code for each postcode. Pseudo codes are included for Wales, Scotland, Northern Ireland, Channel Island and Isle of Man. The field will be blank for postcodes in England with no grid reference. ‖ E12000001 – E12000009 = England; W99999999 (pseudo) = Wales; S99999999 (pseudo) = Scotland; N99999999 (pseudo) = Northern Ireland; L99999999 (pseudo) = Channel Islands; M99999999 (pseudo) = Isle of Man; null = no information available",
+    "source": "onspd_user_guide/ONSPD User Guide Aug 2026.pdf, section 26 'Regions (Former Government Office Regions - GOR)', p. 13 ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, Annex E, p. 53, column under the diagram box 'P.I.P.' ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, Annex A, p. 36, field RGN26CD"
+   }
+  },
+  {
+   "lhs": [
+    "LAD26CD"
+   ],
+   "rhs": [
+    "ITL25CD"
+   ],
+   "sure": false,
+   "clause": "onspd_user_guide/ONSPD User Guide Aug 2026.pdf, p. 13, section 24: \"The ONSPD contains the LAU1 code (9-character LAD/UA code for England, Wales and Northern Ireland and 'S30' code for Scotland).\"; onspd_user_guide/ONSPD User Guide Aug 2026.pdf, p. 39, Annex A, field ITL25CD: \"The national LAU1-equivalent code for each postcode.\" with the range of codes \"E06000001 - E06000066 = England (UA); E07000008 - E07000245 = England (NMD); E08000001 - E08000037 = England (MD); E09000001 - E09000033 = England (LB); W06000001 - W06000024 = Wales; S30000003 - S30000056 = Scotland; N09000001 - N09000011 = Northern Ireland\"; onspd_user_guide/ONSPD User Guide Aug 2026.pdf, p. 53, Annex E 'Geography Allocation Diagram': \"This diagram shows the data supplied to ONS through the Gridlink process from Royal Mail and Ordnance Surevy (OS), and the methodology for adding each geography to the ONSPD - either via lookup or via a digital point in polygon (PIP) process.\", Lookup column: \"ITL (from OA)\"",
+   "justification": "Unsure: outside Scotland the LAU1 code is the LAD/UA code itself, so the LAD would determine it, but in Scotland the S30 areas are allocated from the OA, and the ITL vintage (2025) differs from the LAD vintage (2026), so the guide does not state the dependency for every row.",
+   "audit": {
+    "verdicts": {
+     "ITL25CD": "UNDETERMINED"
+    },
+    "quote": "The ONSPD contains the LAU1 code (9-character LAD/UA code for England, Wales and Northern Ireland and 'S30' code for Scotland). A comprehensive lookup of LAU and ITL codes is included with the accompanying metadata. ‖ The national LAU1-equivalent code for each postcode. Pseudo codes are included for Channel Islands and Isle of Man. The field will otherwise be blank for postcodes with no grid reference. ‖ E06000001 – E06000066 = England (UA); E07000008 – E07000245 = England (NMD); E08000001 – E08000037 = England (MD); E09000001 – E09000033 = England (LB); W06000001 – W06000024 = Wales; S30000003 – S30000056 = Scotland; N09000001 – N09000011 = Northern Ireland; L99999999 (pseudo) = Channel Islands; M99999999 (pseudo) = Isle of Man; null = no information available ‖ Lookup: SOA (from OA) ‖ Rural/urban indicator (from OA) ‖ Country (from LAD) ‖ SSR (from LAD) ‖ CAS ward (from OA) ‖ Output Area Classification (from OA) ‖ NI Primary Care area (from ward) ‖ ITL (from OA) ‖ Rural Urban Classification (from OA) ‖ SICBL (from LSOA) ‖ TTWA (from LSOA) ‖ PFA (from LAD) ‖ IMD (from OA) ‖ Cancer Alliance (from SICBL) ‖ ICB (from SICBL)",
+    "source": "onspd_user_guide/ONSPD User Guide Aug 2026.pdf, section 24 'International Territorial Levels (ITL)', p. 13 ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, Annex A, p. 39, field ITL25CD ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, Annex E, p. 53, column under the diagram box 'Lookup'"
+   }
+  },
+  {
+   "lhs": [
+    "OA11CD"
+   ],
+   "rhs": [
+    "ITL25CD"
+   ],
+   "sure": false,
+   "clause": "onspd_user_guide/ONSPD User Guide Aug 2026.pdf, p. 53, Annex E 'Geography Allocation Diagram': \"This diagram shows the data supplied to ONS through the Gridlink process from Royal Mail and Ordnance Surevy (OS), and the methodology for adding each geography to the ONSPD - either via lookup or via a digital point in polygon (PIP) process.\", Lookup column: \"ITL (from OA)\"; onspd_user_guide/ONSPD User Guide Aug 2026.pdf, p. 39, Annex A, field ITL25CD: \"The national LAU1-equivalent code for each postcode. Pseudo codes are included for Channel Islands and Isle of Man. The field will otherwise be blank for postcodes with no grid reference.\"",
+   "justification": "Unsure: Annex E allocates the ITL by lookup from the OA, but does not say which Census OA (2001, 2011 or 2021) is the lookup key, so the dependency on the 2011 OA is an assumption.",
+   "audit": {
+    "verdicts": {
+     "ITL25CD": "UNDETERMINED"
+    },
+    "quote": "Lookup: SOA (from OA) ‖ Rural/urban indicator (from OA) ‖ Country (from LAD) ‖ SSR (from LAD) ‖ CAS ward (from OA) ‖ Output Area Classification (from OA) ‖ NI Primary Care area (from ward) ‖ ITL (from OA) ‖ Rural Urban Classification (from OA) ‖ SICBL (from LSOA) ‖ TTWA (from LSOA) ‖ PFA (from LAD) ‖ IMD (from OA) ‖ Cancer Alliance (from SICBL) ‖ ICB (from SICBL) ‖ The national LAU1-equivalent code for each postcode. Pseudo codes are included for Channel Islands and Isle of Man. The field will otherwise be blank for postcodes with no grid reference. ‖ E06000001 – E06000066 = England (UA); E07000008 – E07000245 = England (NMD); E08000001 – E08000037 = England (MD); E09000001 – E09000033 = England (LB); W06000001 – W06000024 = Wales; S30000003 – S30000056 = Scotland; N09000001 – N09000011 = Northern Ireland; L99999999 (pseudo) = Channel Islands; M99999999 (pseudo) = Isle of Man; null = no information available ‖ The ONSPD contains the LAU1 code (9-character LAD/UA code for England, Wales and Northern Ireland and 'S30' code for Scotland). A comprehensive lookup of LAU and ITL codes is included with the accompanying metadata.",
+    "source": "onspd_user_guide/ONSPD User Guide Aug 2026.pdf, Annex E, p. 53, column under the diagram box 'Lookup' ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, Annex A, p. 39, field ITL25CD ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, section 24 'International Territorial Levels (ITL)', p. 13"
+   }
+  },
+  {
+   "lhs": [
+    "CTRY26CD",
+    "IMD20IND"
+   ],
+   "rhs": [
+    "LSOA11CD"
+   ],
+   "sure": false,
+   "clause": "onspd_user_guide/ONSPD User Guide Aug 2026.pdf, p. 20, section 41 'Index of Multiple Deprivation (IMD)': \"The 2019 IMD ranks each English LSOA from 1 (most deprived) to 32,844 (least deprived).\" and \"N.B. Each IMD is unique ONLY within each country, and therefore should not be used in isolation.\"; onspd_user_guide/ONSPD User Guide Aug 2026.pdf, p. 47, Annex A, field IMD20IND: \"A zero is included for Channel Islands and Isle of Man, also for postcodes with no grid reference.\"",
+   "justification": "Unsure: within one country the rank identifies one LSOA (DZ, SOA), so country and rank together determine the LSOA, but the value 0 stands for 'no information' and for the Crown dependencies and is shared by many LSOAs of a country when grid references are missing.",
+   "audit": {
+    "verdicts": {
+     "LSOA11CD": "UNDETERMINED"
+    },
+    "quote": "N.B. Each IMD is unique ONLY within each country, and therefore should not be used in isolation. ‖ The 2019 IMD ranks each English LSOA from 1 (most deprived) to 32,844 (least deprived). ‖ The IMD rank for the 2011 LSOA (or OA or DZ) of each postcode, where 1 is the most deprived. A zero is included for Channel Islands and Isle of Man, also for postcodes with no grid reference. ‖ Lookup: SOA (from OA) ‖ Rural/urban indicator (from OA) ‖ Country (from LAD) ‖ SSR (from LAD) ‖ CAS ward (from OA) ‖ Output Area Classification (from OA) ‖ NI Primary Care area (from ward) ‖ ITL (from OA) ‖ Rural Urban Classification (from OA) ‖ SICBL (from LSOA) ‖ TTWA (from LSOA) ‖ PFA (from LAD) ‖ IMD (from OA) ‖ Cancer Alliance (from SICBL) ‖ ICB (from SICBL)",
+    "source": "onspd_user_guide/ONSPD User Guide Aug 2026.pdf, section 41 'Index of Multiple Deprivation (IMD)', p. 20 ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, section 41, p. 19 ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, Annex A, p. 47, field IMD20IND ‖ onspd_user_guide/ONSPD User Guide Aug 2026.pdf, Annex E, p. 53, column under the diagram box 'Lookup'"
+   }
+  }
+ ],
+ "truth_counts": {
+  "fds": 18,
+  "single_rhs": 61,
+  "sure_single_rhs": 44
+ },
+ "random_columns": null,
+ "truth_fds_violated_by_data": [
+  {
+   "fd": "LAD26CD -> ITL25CD",
+   "sure": false,
+   "g3": 0.000109
+  },
+  {
+   "fd": "OA11CD -> ITL25CD",
+   "sure": false,
+   "g3": 0.0001
+  },
+  {
+   "fd": "CTRY26CD,IMD20IND -> LSOA11CD",
+   "sure": false,
+   "g3": 0.000331
+  }
+ ],
+ "gold_design": null,
+ "gold_design_note": "No normalized design is published; the 3NF designs of Sigma* are synthesized.",
+ "truth_design": {
+  "keys": [
+   [
+    "PCD7"
+   ]
+  ],
+  "atomic_closure": 90,
+  "synthesis": [
+   [
+    "CTRY25NM",
+    "CTRY26CD"
+   ],
+   [
+    "CTRY26CD",
+    "CTY26CD"
+   ],
+   [
+    "CTRY26CD",
+    "IMD20IND",
+    "LSOA11CD"
+   ],
+   [
+    "CTRY26CD",
+    "IMD20IND",
+    "MSOA11CD"
+   ],
+   [
+    "CTRY26CD",
+    "IMD20IND",
+    "SICBL26CD"
+   ],
+   [
+    "CTRY26CD",
+    "IMD20IND",
+    "TTWA15CD"
+   ],
+   [
+    "CTRY26CD",
+    "PCON24CD"
+   ],
+   [
+    "CTRY26CD",
+    "PFA23CD"
+   ],
+   [
+    "CTRY26CD",
+    "RGN26CD"
+   ],
+   [
+    "CTY26CD",
+    "PCD7"
+   ],
+   [
+    "DOINTR",
+    "PCD7"
+   ],
+   [
+    "DOTERM",
+    "PCD7"
+   ],
+   [
+    "ICB26CD",
+    "SICBL26CD"
+   ],
+   [
+    "ITL25CD",
+    "LAD26CD"
+   ],
+   [
+    "ITL25CD",
+    "OA11CD"
+   ],
+   [
+    "LAD25NM",
+    "LAD26CD"
+   ],
+   [
+    "LAD26CD",
+    "PCD7"
+   ],
+   [
+    "LAD26CD",
+    "PFA23CD"
+   ],
+   [
+    "LAD26CD",
+    "RGN26CD"
+   ],
+   [
+    "LSOA11CD",
+    "OA11CD"
+   ],
+   [
+    "OA11CD",
+    "OAC11IND"
+   ],
+   [
+    "OA11CD",
+    "PCD7"
+   ],
+   [
+    "OA11CD",
+    "RUC11IND"
+   ],
+   [
+    "PARNCP26CD",
+    "PCD7"
+   ],
+   [
+    "PCD7",
+    "PCON24CD"
+   ],
+   [
+    "PCD7",
+    "USRTYPIND"
+   ],
+   [
+    "PCD7",
+    "WD26CD"
+   ],
+   [
+    "RGN25NM",
+    "RGN26CD"
+   ]
+  ],
+  "iconf": [
+   [
+    "CTRY25NM",
+    "CTRY26CD"
+   ],
+   [
+    "CTRY26CD",
+    "CTY26CD"
+   ],
+   [
+    "CTRY26CD",
+    "IMD20IND",
+    "LSOA11CD"
+   ],
+   [
+    "CTRY26CD",
+    "IMD20IND",
+    "MSOA11CD"
+   ],
+   [
+    "CTRY26CD",
+    "IMD20IND",
+    "SICBL26CD"
+   ],
+   [
+    "CTRY26CD",
+    "IMD20IND",
+    "TTWA15CD"
+   ],
+   [
+    "CTRY26CD",
+    "PCON24CD"
+   ],
+   [
+    "CTRY26CD",
+    "PFA23CD"
+   ],
+   [
+    "CTRY26CD",
+    "RGN26CD"
+   ],
+   [
+    "CTY26CD",
+    "PCD7"
+   ],
+   [
+    "DOINTR",
+    "PCD7"
+   ],
+   [
+    "DOTERM",
+    "PCD7"
+   ],
+   [
+    "ICB26CD",
+    "SICBL26CD"
+   ],
+   [
+    "ITL25CD",
+    "LAD26CD"
+   ],
+   [
+    "ITL25CD",
+    "OA11CD"
+   ],
+   [
+    "LAD25NM",
+    "LAD26CD"
+   ],
+   [
+    "LAD26CD",
+    "PCD7"
+   ],
+   [
+    "LAD26CD",
+    "PFA23CD"
+   ],
+   [
+    "LAD26CD",
+    "RGN26CD"
+   ],
+   [
+    "LSOA11CD",
+    "OA11CD"
+   ],
+   [
+    "OA11CD",
+    "OAC11IND"
+   ],
+   [
+    "OA11CD",
+    "PCD7"
+   ],
+   [
+    "OA11CD",
+    "RUC11IND"
+   ],
+   [
+    "PARNCP26CD",
+    "PCD7"
+   ],
+   [
+    "PCD7",
+    "PCON24CD"
+   ],
+   [
+    "PCD7",
+    "USRTYPIND"
+   ],
+   [
+    "PCD7",
+    "WD26CD"
+   ],
+   [
+    "RGN25NM",
+    "RGN26CD"
+   ]
+  ]
+ },
+ "mined": {
+  "algorithm": "fdmine.py: exact discovery of all minimal FDs in the style of HyFD (no HyFD binary was available); the complete set of minimal FDs is unique, so it equals HyFD's output",
+  "file": "mined/fresh3_onspd-fds.txt",
+  "seconds": 27.8,
+  "count": 335,
+  "implied_by_truth": 107,
+  "accidental": 228,
+  "implied_by_sure_truth": 44
+ },
+ "truth_design_sure_only": {
+  "keys": [
+   [
+    "PCD7"
+   ]
+  ],
+  "atomic_closure": 44,
+  "synthesis": [
+   [
+    "CTRY25NM",
+    "CTRY26CD"
+   ],
+   [
+    "CTRY26CD",
+    "LAD26CD"
+   ],
+   [
+    "CTY26CD",
+    "PCD7"
+   ],
+   [
+    "DOINTR",
+    "PCD7"
+   ],
+   [
+    "DOTERM",
+    "PCD7"
+   ],
+   [
+    "ICB26CD",
+    "SICBL26CD"
+   ],
+   [
+    "IMD20IND",
+    "LSOA11CD"
+   ],
+   [
+    "ITL25CD",
+    "PCD7"
+   ],
+   [
+    "LAD25NM",
+    "LAD26CD"
+   ],
+   [
+    "LAD26CD",
+    "PCD7"
+   ],
+   [
+    "LAD26CD",
+    "PFA23CD"
+   ],
+   [
+    "LSOA11CD",
+    "MSOA11CD"
+   ],
+   [
+    "LSOA11CD",
+    "OA11CD"
+   ],
+   [
+    "LSOA11CD",
+    "SICBL26CD"
+   ],
+   [
+    "LSOA11CD",
+    "TTWA15CD"
+   ],
+   [
+    "OA11CD",
+    "OAC11IND"
+   ],
+   [
+    "OA11CD",
+    "PCD7"
+   ],
+   [
+    "OA11CD",
+    "RUC11IND"
+   ],
+   [
+    "PARNCP26CD",
+    "PCD7"
+   ],
+   [
+    "PCD7",
+    "PCON24CD"
+   ],
+   [
+    "PCD7",
+    "RGN26CD"
+   ],
+   [
+    "PCD7",
+    "USRTYPIND"
+   ],
+   [
+    "PCD7",
+    "WD26CD"
+   ],
+   [
+    "RGN25NM",
+    "RGN26CD"
+   ]
+  ],
+  "iconf": [
+   [
+    "CTRY25NM",
+    "CTRY26CD"
+   ],
+   [
+    "CTRY26CD",
+    "LAD26CD"
+   ],
+   [
+    "CTY26CD",
+    "PCD7"
+   ],
+   [
+    "DOINTR",
+    "PCD7"
+   ],
+   [
+    "DOTERM",
+    "PCD7"
+   ],
+   [
+    "ICB26CD",
+    "SICBL26CD"
+   ],
+   [
+    "IMD20IND",
+    "LSOA11CD"
+   ],
+   [
+    "ITL25CD",
+    "PCD7"
+   ],
+   [
+    "LAD25NM",
+    "LAD26CD"
+   ],
+   [
+    "LAD26CD",
+    "PCD7"
+   ],
+   [
+    "LAD26CD",
+    "PFA23CD"
+   ],
+   [
+    "LSOA11CD",
+    "MSOA11CD"
+   ],
+   [
+    "LSOA11CD",
+    "OA11CD"
+   ],
+   [
+    "LSOA11CD",
+    "SICBL26CD"
+   ],
+   [
+    "LSOA11CD",
+    "TTWA15CD"
+   ],
+   [
+    "OA11CD",
+    "OAC11IND"
+   ],
+   [
+    "OA11CD",
+    "PCD7"
+   ],
+   [
+    "OA11CD",
+    "RUC11IND"
+   ],
+   [
+    "PARNCP26CD",
+    "PCD7"
+   ],
+   [
+    "PCD7",
+    "PCON24CD"
+   ],
+   [
+    "PCD7",
+    "RGN26CD"
+   ],
+   [
+    "PCD7",
+    "USRTYPIND"
+   ],
+   [
+    "PCD7",
+    "WD26CD"
+   ],
+   [
+    "RGN25NM",
+    "RGN26CD"
+   ]
+  ]
+ },
+ "fds": [
+  {"lhs": ["PCD7"], "rhs": "DOINTR", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 998456, "distinct_rhs": 569, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.00057, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["pcd"]], "rhs_tokens": ["dointr"]},
+  {"lhs": ["PCD7"], "rhs": "DOTERM", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 998456, "distinct_rhs": 448, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.000449, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["pcd"]], "rhs_tokens": ["doterm"]},
+  {"lhs": ["PCD7"], "rhs": "USRTYPIND", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 998456, "distinct_rhs": 2, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 2e-06, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["pcd"]], "rhs_tokens": ["usrtypind"]},
+  {"lhs": ["PCD7"], "rhs": "CTY26CD", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 998456, "distinct_rhs": 28, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 2.8e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["pcd"]], "rhs_tokens": ["cty", "cd"]},
+  {"lhs": ["LAD26CD"], "rhs": "CTY26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 364, "distinct_rhs": 28, "lhs_distinct_ratio": 0.000365, "rhs_distinct_ratio": 2.8e-05, "redundancy": 998092, "redundancy_wl": 998456, "lhs_unique": false, "lhs_tokens": [["lad", "cd"]], "rhs_tokens": ["cty", "cd"]},
+  {"lhs": ["WD26CD"], "rhs": "CTY26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 8414, "distinct_rhs": 28, "lhs_distinct_ratio": 0.008427, "rhs_distinct_ratio": 2.8e-05, "redundancy": 990042, "redundancy_wl": 998455, "lhs_unique": false, "lhs_tokens": [["wd", "cd"]], "rhs_tokens": ["cty", "cd"]},
+  {"lhs": ["PARNCP26CD"], "rhs": "CTY26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 11296, "distinct_rhs": 28, "lhs_distinct_ratio": 0.011313, "rhs_distinct_ratio": 2.8e-05, "redundancy": 987160, "redundancy_wl": 997988, "lhs_unique": false, "lhs_tokens": [["parncp", "cd"]], "rhs_tokens": ["cty", "cd"]},
+  {"lhs": ["ITL25CD"], "rhs": "CTY26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 365, "distinct_rhs": 28, "lhs_distinct_ratio": 0.000366, "rhs_distinct_ratio": 2.8e-05, "redundancy": 998091, "redundancy_wl": 998456, "lhs_unique": false, "lhs_tokens": [["itl", "cd"]], "rhs_tokens": ["cty", "cd"]},
+  {"lhs": ["PCD7"], "rhs": "LAD26CD", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 998456, "distinct_rhs": 364, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.000365, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["pcd"]], "rhs_tokens": ["lad", "cd"]},
+  {"lhs": ["WD26CD"], "rhs": "LAD26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 8414, "distinct_rhs": 364, "lhs_distinct_ratio": 0.008427, "rhs_distinct_ratio": 0.000365, "redundancy": 990042, "redundancy_wl": 998455, "lhs_unique": false, "lhs_tokens": [["wd", "cd"]], "rhs_tokens": ["lad", "cd"]},
+  {"lhs": ["ITL25CD"], "rhs": "LAD26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 365, "distinct_rhs": 364, "lhs_distinct_ratio": 0.000366, "rhs_distinct_ratio": 0.000365, "redundancy": 998091, "redundancy_wl": 998456, "lhs_unique": false, "lhs_tokens": [["itl", "cd"]], "rhs_tokens": ["lad", "cd"]},
+  {"lhs": ["PCD7"], "rhs": "WD26CD", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 998456, "distinct_rhs": 8414, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.008427, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["pcd"]], "rhs_tokens": ["wd", "cd"]},
+  {"lhs": ["PCD7"], "rhs": "PARNCP26CD", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 998456, "distinct_rhs": 11296, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.011313, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["pcd"]], "rhs_tokens": ["parncp", "cd"]},
+  {"lhs": ["PCD7"], "rhs": "CTRY26CD", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 998456, "distinct_rhs": 6, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 6e-06, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["pcd"]], "rhs_tokens": ["ctry", "cd"]},
+  {"lhs": ["CTY26CD"], "rhs": "CTRY26CD", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 28, "distinct_rhs": 6, "lhs_distinct_ratio": 2.8e-05, "rhs_distinct_ratio": 6e-06, "redundancy": 998428, "redundancy_wl": 998456, "lhs_unique": false, "lhs_tokens": [["cty", "cd"]], "rhs_tokens": ["ctry", "cd"]},
+  {"lhs": ["LAD26CD"], "rhs": "CTRY26CD", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 364, "distinct_rhs": 6, "lhs_distinct_ratio": 0.000365, "rhs_distinct_ratio": 6e-06, "redundancy": 998092, "redundancy_wl": 998456, "lhs_unique": false, "lhs_tokens": [["lad", "cd"]], "rhs_tokens": ["ctry", "cd"]},
+  {"lhs": ["WD26CD"], "rhs": "CTRY26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 8414, "distinct_rhs": 6, "lhs_distinct_ratio": 0.008427, "rhs_distinct_ratio": 6e-06, "redundancy": 990042, "redundancy_wl": 998455, "lhs_unique": false, "lhs_tokens": [["wd", "cd"]], "rhs_tokens": ["ctry", "cd"]},
+  {"lhs": ["PARNCP26CD"], "rhs": "CTRY26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 11296, "distinct_rhs": 6, "lhs_distinct_ratio": 0.011313, "rhs_distinct_ratio": 6e-06, "redundancy": 987160, "redundancy_wl": 997988, "lhs_unique": false, "lhs_tokens": [["parncp", "cd"]], "rhs_tokens": ["ctry", "cd"]},
+  {"lhs": ["RGN26CD"], "rhs": "CTRY26CD", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 15, "distinct_rhs": 6, "lhs_distinct_ratio": 1.5e-05, "rhs_distinct_ratio": 6e-06, "redundancy": 998441, "redundancy_wl": 998456, "lhs_unique": false, "lhs_tokens": [["rgn", "cd"]], "rhs_tokens": ["ctry", "cd"]},
+  {"lhs": ["PCON24CD"], "rhs": "CTRY26CD", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 653, "distinct_rhs": 6, "lhs_distinct_ratio": 0.000654, "rhs_distinct_ratio": 6e-06, "redundancy": 997803, "redundancy_wl": 998456, "lhs_unique": false, "lhs_tokens": [["pcon", "cd"]], "rhs_tokens": ["ctry", "cd"]},
+  {"lhs": ["ITL25CD"], "rhs": "CTRY26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 365, "distinct_rhs": 6, "lhs_distinct_ratio": 0.000366, "rhs_distinct_ratio": 6e-06, "redundancy": 998091, "redundancy_wl": 998456, "lhs_unique": false, "lhs_tokens": [["itl", "cd"]], "rhs_tokens": ["ctry", "cd"]},
+  {"lhs": ["OA11CD"], "rhs": "CTRY26CD", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 208454, "distinct_rhs": 6, "lhs_distinct_ratio": 0.208776, "rhs_distinct_ratio": 6e-06, "redundancy": 790002, "redundancy_wl": 954920, "lhs_unique": false, "lhs_tokens": [["oa", "cd"]], "rhs_tokens": ["ctry", "cd"]},
+  {"lhs": ["LSOA11CD"], "rhs": "CTRY26CD", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 42605, "distinct_rhs": 6, "lhs_distinct_ratio": 0.042671, "rhs_distinct_ratio": 6e-06, "redundancy": 955851, "redundancy_wl": 998357, "lhs_unique": false, "lhs_tokens": [["lsoa", "cd"]], "rhs_tokens": ["ctry", "cd"]},
+  {"lhs": ["MSOA11CD"], "rhs": "CTRY26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 8484, "distinct_rhs": 6, "lhs_distinct_ratio": 0.008497, "rhs_distinct_ratio": 6e-06, "redundancy": 989972, "redundancy_wl": 998456, "lhs_unique": false, "lhs_tokens": [["msoa", "cd"]], "rhs_tokens": ["ctry", "cd"]},
+  {"lhs": ["PFA23CD"], "rhs": "CTRY26CD", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 48, "distinct_rhs": 6, "lhs_distinct_ratio": 4.8e-05, "rhs_distinct_ratio": 6e-06, "redundancy": 998408, "redundancy_wl": 998456, "lhs_unique": false, "lhs_tokens": [["pfa", "cd"]], "rhs_tokens": ["ctry", "cd"]},
+  {"lhs": ["SICBL26CD"], "rhs": "CTRY26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 155, "distinct_rhs": 6, "lhs_distinct_ratio": 0.000155, "rhs_distinct_ratio": 6e-06, "redundancy": 998301, "redundancy_wl": 998456, "lhs_unique": false, "lhs_tokens": [["sicbl", "cd"]], "rhs_tokens": ["ctry", "cd"]},
+  {"lhs": ["ICB26CD"], "rhs": "CTRY26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 42, "distinct_rhs": 6, "lhs_distinct_ratio": 4.2e-05, "rhs_distinct_ratio": 6e-06, "redundancy": 998414, "redundancy_wl": 998456, "lhs_unique": false, "lhs_tokens": [["icb", "cd"]], "rhs_tokens": ["ctry", "cd"]},
+  {"lhs": ["PCD7"], "rhs": "RGN26CD", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 998456, "distinct_rhs": 15, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1.5e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["pcd"]], "rhs_tokens": ["rgn", "cd"]},
+  {"lhs": ["LAD26CD"], "rhs": "RGN26CD", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 364, "distinct_rhs": 15, "lhs_distinct_ratio": 0.000365, "rhs_distinct_ratio": 1.5e-05, "redundancy": 998092, "redundancy_wl": 998456, "lhs_unique": false, "lhs_tokens": [["lad", "cd"]], "rhs_tokens": ["rgn", "cd"]},
+  {"lhs": ["WD26CD"], "rhs": "RGN26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 8414, "distinct_rhs": 15, "lhs_distinct_ratio": 0.008427, "rhs_distinct_ratio": 1.5e-05, "redundancy": 990042, "redundancy_wl": 998455, "lhs_unique": false, "lhs_tokens": [["wd", "cd"]], "rhs_tokens": ["rgn", "cd"]},
+  {"lhs": ["PARNCP26CD"], "rhs": "RGN26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 11296, "distinct_rhs": 15, "lhs_distinct_ratio": 0.011313, "rhs_distinct_ratio": 1.5e-05, "redundancy": 987160, "redundancy_wl": 997988, "lhs_unique": false, "lhs_tokens": [["parncp", "cd"]], "rhs_tokens": ["rgn", "cd"]},
+  {"lhs": ["PCON24CD"], "rhs": "RGN26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 653, "distinct_rhs": 15, "lhs_distinct_ratio": 0.000654, "rhs_distinct_ratio": 1.5e-05, "redundancy": 997803, "redundancy_wl": 998456, "lhs_unique": false, "lhs_tokens": [["pcon", "cd"]], "rhs_tokens": ["rgn", "cd"]},
+  {"lhs": ["ITL25CD"], "rhs": "RGN26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 365, "distinct_rhs": 15, "lhs_distinct_ratio": 0.000366, "rhs_distinct_ratio": 1.5e-05, "redundancy": 998091, "redundancy_wl": 998456, "lhs_unique": false, "lhs_tokens": [["itl", "cd"]], "rhs_tokens": ["rgn", "cd"]},
+  {"lhs": ["PFA23CD"], "rhs": "RGN26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 48, "distinct_rhs": 15, "lhs_distinct_ratio": 4.8e-05, "rhs_distinct_ratio": 1.5e-05, "redundancy": 998408, "redundancy_wl": 998456, "lhs_unique": false, "lhs_tokens": [["pfa", "cd"]], "rhs_tokens": ["rgn", "cd"]},
+  {"lhs": ["PCD7"], "rhs": "PCON24CD", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 998456, "distinct_rhs": 653, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.000654, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["pcd"]], "rhs_tokens": ["pcon", "cd"]},
+  {"lhs": ["PCD7"], "rhs": "TTWA15CD", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 998456, "distinct_rhs": 231, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.000231, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["pcd"]], "rhs_tokens": ["ttwa", "cd"]},
+  {"lhs": ["OA11CD"], "rhs": "TTWA15CD", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 208454, "distinct_rhs": 231, "lhs_distinct_ratio": 0.208776, "rhs_distinct_ratio": 0.000231, "redundancy": 790002, "redundancy_wl": 954920, "lhs_unique": false, "lhs_tokens": [["oa", "cd"]], "rhs_tokens": ["ttwa", "cd"]},
+  {"lhs": ["LSOA11CD"], "rhs": "TTWA15CD", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 42605, "distinct_rhs": 231, "lhs_distinct_ratio": 0.042671, "rhs_distinct_ratio": 0.000231, "redundancy": 955851, "redundancy_wl": 998357, "lhs_unique": false, "lhs_tokens": [["lsoa", "cd"]], "rhs_tokens": ["ttwa", "cd"]},
+  {"lhs": ["PCD7"], "rhs": "ITL25CD", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 998456, "distinct_rhs": 365, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.000366, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["pcd"]], "rhs_tokens": ["itl", "cd"]},
+  {"lhs": ["PCD7"], "rhs": "OA11CD", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 998456, "distinct_rhs": 208454, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.208776, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["pcd"]], "rhs_tokens": ["oa", "cd"]},
+  {"lhs": ["PCD7"], "rhs": "LSOA11CD", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 998456, "distinct_rhs": 42605, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.042671, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["pcd"]], "rhs_tokens": ["lsoa", "cd"]},
+  {"lhs": ["OA11CD"], "rhs": "LSOA11CD", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 208454, "distinct_rhs": 42605, "lhs_distinct_ratio": 0.208776, "rhs_distinct_ratio": 0.042671, "redundancy": 790002, "redundancy_wl": 954920, "lhs_unique": false, "lhs_tokens": [["oa", "cd"]], "rhs_tokens": ["lsoa", "cd"]},
+  {"lhs": ["PCD7"], "rhs": "MSOA11CD", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 998456, "distinct_rhs": 8484, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.008497, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["pcd"]], "rhs_tokens": ["msoa", "cd"]},
+  {"lhs": ["OA11CD"], "rhs": "MSOA11CD", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 208454, "distinct_rhs": 8484, "lhs_distinct_ratio": 0.208776, "rhs_distinct_ratio": 0.008497, "redundancy": 790002, "redundancy_wl": 954920, "lhs_unique": false, "lhs_tokens": [["oa", "cd"]], "rhs_tokens": ["msoa", "cd"]},
+  {"lhs": ["LSOA11CD"], "rhs": "MSOA11CD", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 42605, "distinct_rhs": 8484, "lhs_distinct_ratio": 0.042671, "rhs_distinct_ratio": 0.008497, "redundancy": 955851, "redundancy_wl": 998357, "lhs_unique": false, "lhs_tokens": [["lsoa", "cd"]], "rhs_tokens": ["msoa", "cd"]},
+  {"lhs": ["PCD7"], "rhs": "RUC11IND", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 998456, "distinct_rhs": 20, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 2e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["pcd"]], "rhs_tokens": ["ruc", "ind"]},
+  {"lhs": ["OA11CD"], "rhs": "RUC11IND", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 208454, "distinct_rhs": 20, "lhs_distinct_ratio": 0.208776, "rhs_distinct_ratio": 2e-05, "redundancy": 790002, "redundancy_wl": 954920, "lhs_unique": false, "lhs_tokens": [["oa", "cd"]], "rhs_tokens": ["ruc", "ind"]},
+  {"lhs": ["PCD7"], "rhs": "OAC11IND", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 998456, "distinct_rhs": 78, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 7.8e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["pcd"]], "rhs_tokens": ["oac", "ind"]},
+  {"lhs": ["OA11CD"], "rhs": "OAC11IND", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 208454, "distinct_rhs": 78, "lhs_distinct_ratio": 0.208776, "rhs_distinct_ratio": 7.8e-05, "redundancy": 790002, "redundancy_wl": 954920, "lhs_unique": false, "lhs_tokens": [["oa", "cd"]], "rhs_tokens": ["oac", "ind"]},
+  {"lhs": ["PCD7"], "rhs": "IMD20IND", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 998456, "distinct_rhs": 32824, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.032875, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["pcd"]], "rhs_tokens": ["imd", "ind"]},
+  {"lhs": ["OA11CD"], "rhs": "IMD20IND", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 208454, "distinct_rhs": 32824, "lhs_distinct_ratio": 0.208776, "rhs_distinct_ratio": 0.032875, "redundancy": 790002, "redundancy_wl": 954920, "lhs_unique": false, "lhs_tokens": [["oa", "cd"]], "rhs_tokens": ["imd", "ind"]},
+  {"lhs": ["LSOA11CD"], "rhs": "IMD20IND", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 42605, "distinct_rhs": 32824, "lhs_distinct_ratio": 0.042671, "rhs_distinct_ratio": 0.032875, "redundancy": 955851, "redundancy_wl": 998357, "lhs_unique": false, "lhs_tokens": [["lsoa", "cd"]], "rhs_tokens": ["imd", "ind"]},
+  {"lhs": ["PCD7"], "rhs": "PFA23CD", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 998456, "distinct_rhs": 48, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 4.8e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["pcd"]], "rhs_tokens": ["pfa", "cd"]},
+  {"lhs": ["LAD26CD"], "rhs": "PFA23CD", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 364, "distinct_rhs": 48, "lhs_distinct_ratio": 0.000365, "rhs_distinct_ratio": 4.8e-05, "redundancy": 998092, "redundancy_wl": 998456, "lhs_unique": false, "lhs_tokens": [["lad", "cd"]], "rhs_tokens": ["pfa", "cd"]},
+  {"lhs": ["WD26CD"], "rhs": "PFA23CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 8414, "distinct_rhs": 48, "lhs_distinct_ratio": 0.008427, "rhs_distinct_ratio": 4.8e-05, "redundancy": 990042, "redundancy_wl": 998455, "lhs_unique": false, "lhs_tokens": [["wd", "cd"]], "rhs_tokens": ["pfa", "cd"]},
+  {"lhs": ["PARNCP26CD"], "rhs": "PFA23CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 11296, "distinct_rhs": 48, "lhs_distinct_ratio": 0.011313, "rhs_distinct_ratio": 4.8e-05, "redundancy": 987160, "redundancy_wl": 997988, "lhs_unique": false, "lhs_tokens": [["parncp", "cd"]], "rhs_tokens": ["pfa", "cd"]},
+  {"lhs": ["ITL25CD"], "rhs": "PFA23CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 365, "distinct_rhs": 48, "lhs_distinct_ratio": 0.000366, "rhs_distinct_ratio": 4.8e-05, "redundancy": 998091, "redundancy_wl": 998456, "lhs_unique": false, "lhs_tokens": [["itl", "cd"]], "rhs_tokens": ["pfa", "cd"]},
+  {"lhs": ["PCD7"], "rhs": "SICBL26CD", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 998456, "distinct_rhs": 155, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.000155, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["pcd"]], "rhs_tokens": ["sicbl", "cd"]},
+  {"lhs": ["OA11CD"], "rhs": "SICBL26CD", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 208454, "distinct_rhs": 155, "lhs_distinct_ratio": 0.208776, "rhs_distinct_ratio": 0.000155, "redundancy": 790002, "redundancy_wl": 954920, "lhs_unique": false, "lhs_tokens": [["oa", "cd"]], "rhs_tokens": ["sicbl", "cd"]},
+  {"lhs": ["LSOA11CD"], "rhs": "SICBL26CD", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 42605, "distinct_rhs": 155, "lhs_distinct_ratio": 0.042671, "rhs_distinct_ratio": 0.000155, "redundancy": 955851, "redundancy_wl": 998357, "lhs_unique": false, "lhs_tokens": [["lsoa", "cd"]], "rhs_tokens": ["sicbl", "cd"]},
+  {"lhs": ["PCD7"], "rhs": "ICB26CD", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 998456, "distinct_rhs": 42, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 4.2e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["pcd"]], "rhs_tokens": ["icb", "cd"]},
+  {"lhs": ["OA11CD"], "rhs": "ICB26CD", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 208454, "distinct_rhs": 42, "lhs_distinct_ratio": 0.208776, "rhs_distinct_ratio": 4.2e-05, "redundancy": 790002, "redundancy_wl": 954920, "lhs_unique": false, "lhs_tokens": [["oa", "cd"]], "rhs_tokens": ["icb", "cd"]},
+  {"lhs": ["LSOA11CD"], "rhs": "ICB26CD", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 42605, "distinct_rhs": 42, "lhs_distinct_ratio": 0.042671, "rhs_distinct_ratio": 4.2e-05, "redundancy": 955851, "redundancy_wl": 998357, "lhs_unique": false, "lhs_tokens": [["lsoa", "cd"]], "rhs_tokens": ["icb", "cd"]},
+  {"lhs": ["SICBL26CD"], "rhs": "ICB26CD", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 155, "distinct_rhs": 42, "lhs_distinct_ratio": 0.000155, "rhs_distinct_ratio": 4.2e-05, "redundancy": 998301, "redundancy_wl": 998456, "lhs_unique": false, "lhs_tokens": [["sicbl", "cd"]], "rhs_tokens": ["icb", "cd"]},
+  {"lhs": ["PCD7"], "rhs": "CTRY25NM", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 998456, "distinct_rhs": 5, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 5e-06, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["pcd"]], "rhs_tokens": ["ctry", "nm"]},
+  {"lhs": ["CTY26CD"], "rhs": "CTRY25NM", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 28, "distinct_rhs": 5, "lhs_distinct_ratio": 2.8e-05, "rhs_distinct_ratio": 5e-06, "redundancy": 998428, "redundancy_wl": 998456, "lhs_unique": false, "lhs_tokens": [["cty", "cd"]], "rhs_tokens": ["ctry", "nm"]},
+  {"lhs": ["LAD26CD"], "rhs": "CTRY25NM", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 364, "distinct_rhs": 5, "lhs_distinct_ratio": 0.000365, "rhs_distinct_ratio": 5e-06, "redundancy": 998092, "redundancy_wl": 998456, "lhs_unique": false, "lhs_tokens": [["lad", "cd"]], "rhs_tokens": ["ctry", "nm"]},
+  {"lhs": ["WD26CD"], "rhs": "CTRY25NM", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 8414, "distinct_rhs": 5, "lhs_distinct_ratio": 0.008427, "rhs_distinct_ratio": 5e-06, "redundancy": 990042, "redundancy_wl": 998455, "lhs_unique": false, "lhs_tokens": [["wd", "cd"]], "rhs_tokens": ["ctry", "nm"]},
+  {"lhs": ["PARNCP26CD"], "rhs": "CTRY25NM", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 11296, "distinct_rhs": 5, "lhs_distinct_ratio": 0.011313, "rhs_distinct_ratio": 5e-06, "redundancy": 987160, "redundancy_wl": 997988, "lhs_unique": false, "lhs_tokens": [["parncp", "cd"]], "rhs_tokens": ["ctry", "nm"]},
+  {"lhs": ["CTRY26CD"], "rhs": "CTRY25NM", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 6, "distinct_rhs": 5, "lhs_distinct_ratio": 6e-06, "rhs_distinct_ratio": 5e-06, "redundancy": 998450, "redundancy_wl": 998456, "lhs_unique": false, "lhs_tokens": [["ctry", "cd"]], "rhs_tokens": ["ctry", "nm"]},
+  {"lhs": ["RGN26CD"], "rhs": "CTRY25NM", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 15, "distinct_rhs": 5, "lhs_distinct_ratio": 1.5e-05, "rhs_distinct_ratio": 5e-06, "redundancy": 998441, "redundancy_wl": 998456, "lhs_unique": false, "lhs_tokens": [["rgn", "cd"]], "rhs_tokens": ["ctry", "nm"]},
+  {"lhs": ["PCON24CD"], "rhs": "CTRY25NM", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 653, "distinct_rhs": 5, "lhs_distinct_ratio": 0.000654, "rhs_distinct_ratio": 5e-06, "redundancy": 997803, "redundancy_wl": 998456, "lhs_unique": false, "lhs_tokens": [["pcon", "cd"]], "rhs_tokens": ["ctry", "nm"]},
+  {"lhs": ["ITL25CD"], "rhs": "CTRY25NM", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 365, "distinct_rhs": 5, "lhs_distinct_ratio": 0.000366, "rhs_distinct_ratio": 5e-06, "redundancy": 998091, "redundancy_wl": 998456, "lhs_unique": false, "lhs_tokens": [["itl", "cd"]], "rhs_tokens": ["ctry", "nm"]},
+  {"lhs": ["OA11CD"], "rhs": "CTRY25NM", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 208454, "distinct_rhs": 5, "lhs_distinct_ratio": 0.208776, "rhs_distinct_ratio": 5e-06, "redundancy": 790002, "redundancy_wl": 954920, "lhs_unique": false, "lhs_tokens": [["oa", "cd"]], "rhs_tokens": ["ctry", "nm"]},
+  {"lhs": ["LSOA11CD"], "rhs": "CTRY25NM", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 42605, "distinct_rhs": 5, "lhs_distinct_ratio": 0.042671, "rhs_distinct_ratio": 5e-06, "redundancy": 955851, "redundancy_wl": 998357, "lhs_unique": false, "lhs_tokens": [["lsoa", "cd"]], "rhs_tokens": ["ctry", "nm"]},
+  {"lhs": ["MSOA11CD"], "rhs": "CTRY25NM", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 8484, "distinct_rhs": 5, "lhs_distinct_ratio": 0.008497, "rhs_distinct_ratio": 5e-06, "redundancy": 989972, "redundancy_wl": 998456, "lhs_unique": false, "lhs_tokens": [["msoa", "cd"]], "rhs_tokens": ["ctry", "nm"]},
+  {"lhs": ["PFA23CD"], "rhs": "CTRY25NM", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 48, "distinct_rhs": 5, "lhs_distinct_ratio": 4.8e-05, "rhs_distinct_ratio": 5e-06, "redundancy": 998408, "redundancy_wl": 998456, "lhs_unique": false, "lhs_tokens": [["pfa", "cd"]], "rhs_tokens": ["ctry", "nm"]},
+  {"lhs": ["SICBL26CD"], "rhs": "CTRY25NM", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 155, "distinct_rhs": 5, "lhs_distinct_ratio": 0.000155, "rhs_distinct_ratio": 5e-06, "redundancy": 998301, "redundancy_wl": 998456, "lhs_unique": false, "lhs_tokens": [["sicbl", "cd"]], "rhs_tokens": ["ctry", "nm"]},
+  {"lhs": ["ICB26CD"], "rhs": "CTRY25NM", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 42, "distinct_rhs": 5, "lhs_distinct_ratio": 4.2e-05, "rhs_distinct_ratio": 5e-06, "redundancy": 998414, "redundancy_wl": 998456, "lhs_unique": false, "lhs_tokens": [["icb", "cd"]], "rhs_tokens": ["ctry", "nm"]},
+  {"lhs": ["PCD7"], "rhs": "RGN25NM", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 998456, "distinct_rhs": 10, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 1e-05, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["pcd"]], "rhs_tokens": ["rgn", "nm"]},
+  {"lhs": ["LAD26CD"], "rhs": "RGN25NM", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 364, "distinct_rhs": 10, "lhs_distinct_ratio": 0.000365, "rhs_distinct_ratio": 1e-05, "redundancy": 998092, "redundancy_wl": 998456, "lhs_unique": false, "lhs_tokens": [["lad", "cd"]], "rhs_tokens": ["rgn", "nm"]},
+  {"lhs": ["WD26CD"], "rhs": "RGN25NM", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 8414, "distinct_rhs": 10, "lhs_distinct_ratio": 0.008427, "rhs_distinct_ratio": 1e-05, "redundancy": 990042, "redundancy_wl": 998455, "lhs_unique": false, "lhs_tokens": [["wd", "cd"]], "rhs_tokens": ["rgn", "nm"]},
+  {"lhs": ["PARNCP26CD"], "rhs": "RGN25NM", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 11296, "distinct_rhs": 10, "lhs_distinct_ratio": 0.011313, "rhs_distinct_ratio": 1e-05, "redundancy": 987160, "redundancy_wl": 997988, "lhs_unique": false, "lhs_tokens": [["parncp", "cd"]], "rhs_tokens": ["rgn", "nm"]},
+  {"lhs": ["RGN26CD"], "rhs": "RGN25NM", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 15, "distinct_rhs": 10, "lhs_distinct_ratio": 1.5e-05, "rhs_distinct_ratio": 1e-05, "redundancy": 998441, "redundancy_wl": 998456, "lhs_unique": false, "lhs_tokens": [["rgn", "cd"]], "rhs_tokens": ["rgn", "nm"]},
+  {"lhs": ["PCON24CD"], "rhs": "RGN25NM", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 653, "distinct_rhs": 10, "lhs_distinct_ratio": 0.000654, "rhs_distinct_ratio": 1e-05, "redundancy": 997803, "redundancy_wl": 998456, "lhs_unique": false, "lhs_tokens": [["pcon", "cd"]], "rhs_tokens": ["rgn", "nm"]},
+  {"lhs": ["ITL25CD"], "rhs": "RGN25NM", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 365, "distinct_rhs": 10, "lhs_distinct_ratio": 0.000366, "rhs_distinct_ratio": 1e-05, "redundancy": 998091, "redundancy_wl": 998456, "lhs_unique": false, "lhs_tokens": [["itl", "cd"]], "rhs_tokens": ["rgn", "nm"]},
+  {"lhs": ["PFA23CD"], "rhs": "RGN25NM", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 48, "distinct_rhs": 10, "lhs_distinct_ratio": 4.8e-05, "rhs_distinct_ratio": 1e-05, "redundancy": 998408, "redundancy_wl": 998456, "lhs_unique": false, "lhs_tokens": [["pfa", "cd"]], "rhs_tokens": ["rgn", "nm"]},
+  {"lhs": ["LAD25NM"], "rhs": "RGN25NM", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 362, "distinct_rhs": 10, "lhs_distinct_ratio": 0.000363, "rhs_distinct_ratio": 1e-05, "redundancy": 998094, "redundancy_wl": 998456, "lhs_unique": false, "lhs_tokens": [["lad", "nm"]], "rhs_tokens": ["rgn", "nm"]},
+  {"lhs": ["PCD7"], "rhs": "LAD25NM", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 998456, "distinct_rhs": 362, "lhs_distinct_ratio": 1.0, "rhs_distinct_ratio": 0.000363, "redundancy": 0, "redundancy_wl": 0, "lhs_unique": true, "lhs_tokens": [["pcd"]], "rhs_tokens": ["lad", "nm"]},
+  {"lhs": ["LAD26CD"], "rhs": "LAD25NM", "implied_by_truth": true, "implied_by_sure_truth": true, "lhs_size": 1, "distinct_lhs": 364, "distinct_rhs": 362, "lhs_distinct_ratio": 0.000365, "rhs_distinct_ratio": 0.000363, "redundancy": 998092, "redundancy_wl": 998456, "lhs_unique": false, "lhs_tokens": [["lad", "cd"]], "rhs_tokens": ["lad", "nm"]},
+  {"lhs": ["WD26CD"], "rhs": "LAD25NM", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 8414, "distinct_rhs": 362, "lhs_distinct_ratio": 0.008427, "rhs_distinct_ratio": 0.000363, "redundancy": 990042, "redundancy_wl": 998455, "lhs_unique": false, "lhs_tokens": [["wd", "cd"]], "rhs_tokens": ["lad", "nm"]},
+  {"lhs": ["ITL25CD"], "rhs": "LAD25NM", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 1, "distinct_lhs": 365, "distinct_rhs": 362, "lhs_distinct_ratio": 0.000366, "rhs_distinct_ratio": 0.000363, "redundancy": 998091, "redundancy_wl": 998456, "lhs_unique": false, "lhs_tokens": [["itl", "cd"]], "rhs_tokens": ["lad", "nm"]},
+  {"lhs": ["PCON24CD", "OA11CD"], "rhs": "CTY26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 209679, "distinct_rhs": 28, "lhs_distinct_ratio": 0.210003, "rhs_distinct_ratio": 2.8e-05, "redundancy": 788777, "redundancy_wl": 954099, "lhs_unique": false, "lhs_tokens": [["pcon", "cd"], ["oa", "cd"]], "rhs_tokens": ["cty", "cd"]},
+  {"lhs": ["PCON24CD", "LSOA11CD"], "rhs": "CTY26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 44112, "distinct_rhs": 28, "lhs_distinct_ratio": 0.04418, "rhs_distinct_ratio": 2.8e-05, "redundancy": 954344, "redundancy_wl": 997970, "lhs_unique": false, "lhs_tokens": [["pcon", "cd"], ["lsoa", "cd"]], "rhs_tokens": ["cty", "cd"]},
+  {"lhs": ["PCON24CD", "MSOA11CD"], "rhs": "CTY26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 9960, "distinct_rhs": 28, "lhs_distinct_ratio": 0.009975, "rhs_distinct_ratio": 2.8e-05, "redundancy": 988496, "redundancy_wl": 998309, "lhs_unique": false, "lhs_tokens": [["pcon", "cd"], ["msoa", "cd"]], "rhs_tokens": ["cty", "cd"]},
+  {"lhs": ["PCON24CD", "IMD20IND"], "rhs": "CTY26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 44112, "distinct_rhs": 28, "lhs_distinct_ratio": 0.04418, "rhs_distinct_ratio": 2.8e-05, "redundancy": 954344, "redundancy_wl": 997970, "lhs_unique": false, "lhs_tokens": [["pcon", "cd"], ["imd", "ind"]], "rhs_tokens": ["cty", "cd"]},
+  {"lhs": ["CTRY26CD", "LAD25NM"], "rhs": "CTY26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 364, "distinct_rhs": 28, "lhs_distinct_ratio": 0.000365, "rhs_distinct_ratio": 2.8e-05, "redundancy": 998092, "redundancy_wl": 998456, "lhs_unique": false, "lhs_tokens": [["ctry", "cd"], ["lad", "nm"]], "rhs_tokens": ["cty", "cd"]},
+  {"lhs": ["RGN26CD", "LAD25NM"], "rhs": "CTY26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 364, "distinct_rhs": 28, "lhs_distinct_ratio": 0.000365, "rhs_distinct_ratio": 2.8e-05, "redundancy": 998092, "redundancy_wl": 998456, "lhs_unique": false, "lhs_tokens": [["rgn", "cd"], ["lad", "nm"]], "rhs_tokens": ["cty", "cd"]},
+  {"lhs": ["PCON24CD", "LAD25NM"], "rhs": "CTY26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 954, "distinct_rhs": 28, "lhs_distinct_ratio": 0.000955, "rhs_distinct_ratio": 2.8e-05, "redundancy": 997502, "redundancy_wl": 998454, "lhs_unique": false, "lhs_tokens": [["pcon", "cd"], ["lad", "nm"]], "rhs_tokens": ["cty", "cd"]},
+  {"lhs": ["TTWA15CD", "LAD25NM"], "rhs": "CTY26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 730, "distinct_rhs": 28, "lhs_distinct_ratio": 0.000731, "rhs_distinct_ratio": 2.8e-05, "redundancy": 997726, "redundancy_wl": 998454, "lhs_unique": false, "lhs_tokens": [["ttwa", "cd"], ["lad", "nm"]], "rhs_tokens": ["cty", "cd"]},
+  {"lhs": ["OA11CD", "LAD25NM"], "rhs": "CTY26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 208510, "distinct_rhs": 28, "lhs_distinct_ratio": 0.208832, "rhs_distinct_ratio": 2.8e-05, "redundancy": 789946, "redundancy_wl": 954877, "lhs_unique": false, "lhs_tokens": [["oa", "cd"], ["lad", "nm"]], "rhs_tokens": ["cty", "cd"]},
+  {"lhs": ["LSOA11CD", "LAD25NM"], "rhs": "CTY26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 42660, "distinct_rhs": 28, "lhs_distinct_ratio": 0.042726, "rhs_distinct_ratio": 2.8e-05, "redundancy": 955796, "redundancy_wl": 998322, "lhs_unique": false, "lhs_tokens": [["lsoa", "cd"], ["lad", "nm"]], "rhs_tokens": ["cty", "cd"]},
+  {"lhs": ["MSOA11CD", "LAD25NM"], "rhs": "CTY26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 8533, "distinct_rhs": 28, "lhs_distinct_ratio": 0.008546, "rhs_distinct_ratio": 2.8e-05, "redundancy": 989923, "redundancy_wl": 998424, "lhs_unique": false, "lhs_tokens": [["msoa", "cd"], ["lad", "nm"]], "rhs_tokens": ["cty", "cd"]},
+  {"lhs": ["PFA23CD", "LAD25NM"], "rhs": "CTY26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 364, "distinct_rhs": 28, "lhs_distinct_ratio": 0.000365, "rhs_distinct_ratio": 2.8e-05, "redundancy": 998092, "redundancy_wl": 998456, "lhs_unique": false, "lhs_tokens": [["pfa", "cd"], ["lad", "nm"]], "rhs_tokens": ["cty", "cd"]},
+  {"lhs": ["SICBL26CD", "LAD25NM"], "rhs": "CTY26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 411, "distinct_rhs": 28, "lhs_distinct_ratio": 0.000412, "rhs_distinct_ratio": 2.8e-05, "redundancy": 998045, "redundancy_wl": 998446, "lhs_unique": false, "lhs_tokens": [["sicbl", "cd"], ["lad", "nm"]], "rhs_tokens": ["cty", "cd"]},
+  {"lhs": ["ICB26CD", "LAD25NM"], "rhs": "CTY26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 373, "distinct_rhs": 28, "lhs_distinct_ratio": 0.000374, "rhs_distinct_ratio": 2.8e-05, "redundancy": 998083, "redundancy_wl": 998453, "lhs_unique": false, "lhs_tokens": [["icb", "cd"], ["lad", "nm"]], "rhs_tokens": ["cty", "cd"]},
+  {"lhs": ["CTY26CD", "LAD25NM"], "rhs": "LAD26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 364, "distinct_rhs": 364, "lhs_distinct_ratio": 0.000365, "rhs_distinct_ratio": 0.000365, "redundancy": 998092, "redundancy_wl": 998456, "lhs_unique": false, "lhs_tokens": [["cty", "cd"], ["lad", "nm"]], "rhs_tokens": ["lad", "cd"]},
+  {"lhs": ["PARNCP26CD", "LAD25NM"], "rhs": "LAD26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 11337, "distinct_rhs": 364, "lhs_distinct_ratio": 0.011355, "rhs_distinct_ratio": 0.000365, "redundancy": 987119, "redundancy_wl": 997988, "lhs_unique": false, "lhs_tokens": [["parncp", "cd"], ["lad", "nm"]], "rhs_tokens": ["lad", "cd"]},
+  {"lhs": ["CTRY26CD", "LAD25NM"], "rhs": "LAD26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 364, "distinct_rhs": 364, "lhs_distinct_ratio": 0.000365, "rhs_distinct_ratio": 0.000365, "redundancy": 998092, "redundancy_wl": 998456, "lhs_unique": false, "lhs_tokens": [["ctry", "cd"], ["lad", "nm"]], "rhs_tokens": ["lad", "cd"]},
+  {"lhs": ["RGN26CD", "LAD25NM"], "rhs": "LAD26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 364, "distinct_rhs": 364, "lhs_distinct_ratio": 0.000365, "rhs_distinct_ratio": 0.000365, "redundancy": 998092, "redundancy_wl": 998456, "lhs_unique": false, "lhs_tokens": [["rgn", "cd"], ["lad", "nm"]], "rhs_tokens": ["lad", "cd"]},
+  {"lhs": ["PCON24CD", "LAD25NM"], "rhs": "LAD26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 954, "distinct_rhs": 364, "lhs_distinct_ratio": 0.000955, "rhs_distinct_ratio": 0.000365, "redundancy": 997502, "redundancy_wl": 998454, "lhs_unique": false, "lhs_tokens": [["pcon", "cd"], ["lad", "nm"]], "rhs_tokens": ["lad", "cd"]},
+  {"lhs": ["TTWA15CD", "LAD25NM"], "rhs": "LAD26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 730, "distinct_rhs": 364, "lhs_distinct_ratio": 0.000731, "rhs_distinct_ratio": 0.000365, "redundancy": 997726, "redundancy_wl": 998454, "lhs_unique": false, "lhs_tokens": [["ttwa", "cd"], ["lad", "nm"]], "rhs_tokens": ["lad", "cd"]},
+  {"lhs": ["OA11CD", "LAD25NM"], "rhs": "LAD26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 208510, "distinct_rhs": 364, "lhs_distinct_ratio": 0.208832, "rhs_distinct_ratio": 0.000365, "redundancy": 789946, "redundancy_wl": 954877, "lhs_unique": false, "lhs_tokens": [["oa", "cd"], ["lad", "nm"]], "rhs_tokens": ["lad", "cd"]},
+  {"lhs": ["LSOA11CD", "LAD25NM"], "rhs": "LAD26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 42660, "distinct_rhs": 364, "lhs_distinct_ratio": 0.042726, "rhs_distinct_ratio": 0.000365, "redundancy": 955796, "redundancy_wl": 998322, "lhs_unique": false, "lhs_tokens": [["lsoa", "cd"], ["lad", "nm"]], "rhs_tokens": ["lad", "cd"]},
+  {"lhs": ["MSOA11CD", "LAD25NM"], "rhs": "LAD26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 8533, "distinct_rhs": 364, "lhs_distinct_ratio": 0.008546, "rhs_distinct_ratio": 0.000365, "redundancy": 989923, "redundancy_wl": 998424, "lhs_unique": false, "lhs_tokens": [["msoa", "cd"], ["lad", "nm"]], "rhs_tokens": ["lad", "cd"]},
+  {"lhs": ["PFA23CD", "LAD25NM"], "rhs": "LAD26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 364, "distinct_rhs": 364, "lhs_distinct_ratio": 0.000365, "rhs_distinct_ratio": 0.000365, "redundancy": 998092, "redundancy_wl": 998456, "lhs_unique": false, "lhs_tokens": [["pfa", "cd"], ["lad", "nm"]], "rhs_tokens": ["lad", "cd"]},
+  {"lhs": ["SICBL26CD", "LAD25NM"], "rhs": "LAD26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 411, "distinct_rhs": 364, "lhs_distinct_ratio": 0.000412, "rhs_distinct_ratio": 0.000365, "redundancy": 998045, "redundancy_wl": 998446, "lhs_unique": false, "lhs_tokens": [["sicbl", "cd"], ["lad", "nm"]], "rhs_tokens": ["lad", "cd"]},
+  {"lhs": ["ICB26CD", "LAD25NM"], "rhs": "LAD26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 373, "distinct_rhs": 364, "lhs_distinct_ratio": 0.000374, "rhs_distinct_ratio": 0.000365, "redundancy": 998083, "redundancy_wl": 998453, "lhs_unique": false, "lhs_tokens": [["icb", "cd"], ["lad", "nm"]], "rhs_tokens": ["lad", "cd"]},
+  {"lhs": ["TTWA15CD", "CTRY25NM"], "rhs": "CTRY26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 237, "distinct_rhs": 6, "lhs_distinct_ratio": 0.000237, "rhs_distinct_ratio": 6e-06, "redundancy": 998219, "redundancy_wl": 998456, "lhs_unique": false, "lhs_tokens": [["ttwa", "cd"], ["ctry", "nm"]], "rhs_tokens": ["ctry", "cd"]},
+  {"lhs": ["TTWA15CD", "RGN25NM"], "rhs": "CTRY26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 268, "distinct_rhs": 6, "lhs_distinct_ratio": 0.000268, "rhs_distinct_ratio": 6e-06, "redundancy": 998188, "redundancy_wl": 998456, "lhs_unique": false, "lhs_tokens": [["ttwa", "cd"], ["rgn", "nm"]], "rhs_tokens": ["ctry", "cd"]},
+  {"lhs": ["TTWA15CD", "LAD25NM"], "rhs": "CTRY26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 730, "distinct_rhs": 6, "lhs_distinct_ratio": 0.000731, "rhs_distinct_ratio": 6e-06, "redundancy": 997726, "redundancy_wl": 998454, "lhs_unique": false, "lhs_tokens": [["ttwa", "cd"], ["lad", "nm"]], "rhs_tokens": ["ctry", "cd"]},
+  {"lhs": ["CTY26CD", "OA11CD"], "rhs": "RGN26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 208459, "distinct_rhs": 15, "lhs_distinct_ratio": 0.208781, "rhs_distinct_ratio": 1.5e-05, "redundancy": 789997, "redundancy_wl": 954916, "lhs_unique": false, "lhs_tokens": [["cty", "cd"], ["oa", "cd"]], "rhs_tokens": ["rgn", "cd"]},
+  {"lhs": ["CTY26CD", "LSOA11CD"], "rhs": "RGN26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 42610, "distinct_rhs": 15, "lhs_distinct_ratio": 0.042676, "rhs_distinct_ratio": 1.5e-05, "redundancy": 955846, "redundancy_wl": 998353, "lhs_unique": false, "lhs_tokens": [["cty", "cd"], ["lsoa", "cd"]], "rhs_tokens": ["rgn", "cd"]},
+  {"lhs": ["CTY26CD", "MSOA11CD"], "rhs": "RGN26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 8489, "distinct_rhs": 15, "lhs_distinct_ratio": 0.008502, "rhs_distinct_ratio": 1.5e-05, "redundancy": 989967, "redundancy_wl": 998452, "lhs_unique": false, "lhs_tokens": [["cty", "cd"], ["msoa", "cd"]], "rhs_tokens": ["rgn", "cd"]},
+  {"lhs": ["CTY26CD", "RGN25NM"], "rhs": "RGN26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 36, "distinct_rhs": 15, "lhs_distinct_ratio": 3.6e-05, "rhs_distinct_ratio": 1.5e-05, "redundancy": 998420, "redundancy_wl": 998456, "lhs_unique": false, "lhs_tokens": [["cty", "cd"], ["rgn", "nm"]], "rhs_tokens": ["rgn", "cd"]},
+  {"lhs": ["CTRY26CD", "RGN25NM"], "rhs": "RGN26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 15, "distinct_rhs": 15, "lhs_distinct_ratio": 1.5e-05, "rhs_distinct_ratio": 1.5e-05, "redundancy": 998441, "redundancy_wl": 998456, "lhs_unique": false, "lhs_tokens": [["ctry", "cd"], ["rgn", "nm"]], "rhs_tokens": ["rgn", "cd"]},
+  {"lhs": ["TTWA15CD", "RGN25NM"], "rhs": "RGN26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 268, "distinct_rhs": 15, "lhs_distinct_ratio": 0.000268, "rhs_distinct_ratio": 1.5e-05, "redundancy": 998188, "redundancy_wl": 998456, "lhs_unique": false, "lhs_tokens": [["ttwa", "cd"], ["rgn", "nm"]], "rhs_tokens": ["rgn", "cd"]},
+  {"lhs": ["OA11CD", "RGN25NM"], "rhs": "RGN26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 208457, "distinct_rhs": 15, "lhs_distinct_ratio": 0.208779, "rhs_distinct_ratio": 1.5e-05, "redundancy": 789999, "redundancy_wl": 954918, "lhs_unique": false, "lhs_tokens": [["oa", "cd"], ["rgn", "nm"]], "rhs_tokens": ["rgn", "cd"]},
+  {"lhs": ["LSOA11CD", "RGN25NM"], "rhs": "RGN26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 42608, "distinct_rhs": 15, "lhs_distinct_ratio": 0.042674, "rhs_distinct_ratio": 1.5e-05, "redundancy": 955848, "redundancy_wl": 998355, "lhs_unique": false, "lhs_tokens": [["lsoa", "cd"], ["rgn", "nm"]], "rhs_tokens": ["rgn", "cd"]},
+  {"lhs": ["MSOA11CD", "RGN25NM"], "rhs": "RGN26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 8487, "distinct_rhs": 15, "lhs_distinct_ratio": 0.0085, "rhs_distinct_ratio": 1.5e-05, "redundancy": 989969, "redundancy_wl": 998454, "lhs_unique": false, "lhs_tokens": [["msoa", "cd"], ["rgn", "nm"]], "rhs_tokens": ["rgn", "cd"]},
+  {"lhs": ["SICBL26CD", "RGN25NM"], "rhs": "RGN26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 161, "distinct_rhs": 15, "lhs_distinct_ratio": 0.000161, "rhs_distinct_ratio": 1.5e-05, "redundancy": 998295, "redundancy_wl": 998454, "lhs_unique": false, "lhs_tokens": [["sicbl", "cd"], ["rgn", "nm"]], "rhs_tokens": ["rgn", "cd"]},
+  {"lhs": ["ICB26CD", "RGN25NM"], "rhs": "RGN26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 48, "distinct_rhs": 15, "lhs_distinct_ratio": 4.8e-05, "rhs_distinct_ratio": 1.5e-05, "redundancy": 998408, "redundancy_wl": 998454, "lhs_unique": false, "lhs_tokens": [["icb", "cd"], ["rgn", "nm"]], "rhs_tokens": ["rgn", "cd"]},
+  {"lhs": ["CTY26CD", "LAD25NM"], "rhs": "RGN26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 364, "distinct_rhs": 15, "lhs_distinct_ratio": 0.000365, "rhs_distinct_ratio": 1.5e-05, "redundancy": 998092, "redundancy_wl": 998456, "lhs_unique": false, "lhs_tokens": [["cty", "cd"], ["lad", "nm"]], "rhs_tokens": ["rgn", "cd"]},
+  {"lhs": ["CTRY26CD", "LAD25NM"], "rhs": "RGN26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 364, "distinct_rhs": 15, "lhs_distinct_ratio": 0.000365, "rhs_distinct_ratio": 1.5e-05, "redundancy": 998092, "redundancy_wl": 998456, "lhs_unique": false, "lhs_tokens": [["ctry", "cd"], ["lad", "nm"]], "rhs_tokens": ["rgn", "cd"]},
+  {"lhs": ["TTWA15CD", "LAD25NM"], "rhs": "RGN26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 730, "distinct_rhs": 15, "lhs_distinct_ratio": 0.000731, "rhs_distinct_ratio": 1.5e-05, "redundancy": 997726, "redundancy_wl": 998454, "lhs_unique": false, "lhs_tokens": [["ttwa", "cd"], ["lad", "nm"]], "rhs_tokens": ["rgn", "cd"]},
+  {"lhs": ["OA11CD", "LAD25NM"], "rhs": "RGN26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 208510, "distinct_rhs": 15, "lhs_distinct_ratio": 0.208832, "rhs_distinct_ratio": 1.5e-05, "redundancy": 789946, "redundancy_wl": 954877, "lhs_unique": false, "lhs_tokens": [["oa", "cd"], ["lad", "nm"]], "rhs_tokens": ["rgn", "cd"]},
+  {"lhs": ["LSOA11CD", "LAD25NM"], "rhs": "RGN26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 42660, "distinct_rhs": 15, "lhs_distinct_ratio": 0.042726, "rhs_distinct_ratio": 1.5e-05, "redundancy": 955796, "redundancy_wl": 998322, "lhs_unique": false, "lhs_tokens": [["lsoa", "cd"], ["lad", "nm"]], "rhs_tokens": ["rgn", "cd"]},
+  {"lhs": ["MSOA11CD", "LAD25NM"], "rhs": "RGN26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 8533, "distinct_rhs": 15, "lhs_distinct_ratio": 0.008546, "rhs_distinct_ratio": 1.5e-05, "redundancy": 989923, "redundancy_wl": 998424, "lhs_unique": false, "lhs_tokens": [["msoa", "cd"], ["lad", "nm"]], "rhs_tokens": ["rgn", "cd"]},
+  {"lhs": ["SICBL26CD", "LAD25NM"], "rhs": "RGN26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 411, "distinct_rhs": 15, "lhs_distinct_ratio": 0.000412, "rhs_distinct_ratio": 1.5e-05, "redundancy": 998045, "redundancy_wl": 998446, "lhs_unique": false, "lhs_tokens": [["sicbl", "cd"], ["lad", "nm"]], "rhs_tokens": ["rgn", "cd"]},
+  {"lhs": ["ICB26CD", "LAD25NM"], "rhs": "RGN26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 373, "distinct_rhs": 15, "lhs_distinct_ratio": 0.000374, "rhs_distinct_ratio": 1.5e-05, "redundancy": 998083, "redundancy_wl": 998453, "lhs_unique": false, "lhs_tokens": [["icb", "cd"], ["lad", "nm"]], "rhs_tokens": ["rgn", "cd"]},
+  {"lhs": ["LAD26CD", "IMD20IND"], "rhs": "TTWA15CD", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 42660, "distinct_rhs": 231, "lhs_distinct_ratio": 0.042726, "rhs_distinct_ratio": 0.000231, "redundancy": 955796, "redundancy_wl": 998322, "lhs_unique": false, "lhs_tokens": [["lad", "cd"], ["imd", "ind"]], "rhs_tokens": ["ttwa", "cd"]},
+  {"lhs": ["WD26CD", "IMD20IND"], "rhs": "TTWA15CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 53940, "distinct_rhs": 231, "lhs_distinct_ratio": 0.054023, "rhs_distinct_ratio": 0.000231, "redundancy": 944516, "redundancy_wl": 995921, "lhs_unique": false, "lhs_tokens": [["wd", "cd"], ["imd", "ind"]], "rhs_tokens": ["ttwa", "cd"]},
+  {"lhs": ["PARNCP26CD", "IMD20IND"], "rhs": "TTWA15CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 50552, "distinct_rhs": 231, "lhs_distinct_ratio": 0.05063, "rhs_distinct_ratio": 0.000231, "redundancy": 947904, "redundancy_wl": 997454, "lhs_unique": false, "lhs_tokens": [["parncp", "cd"], ["imd", "ind"]], "rhs_tokens": ["ttwa", "cd"]},
+  {"lhs": ["PCON24CD", "IMD20IND"], "rhs": "TTWA15CD", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 44112, "distinct_rhs": 231, "lhs_distinct_ratio": 0.04418, "rhs_distinct_ratio": 0.000231, "redundancy": 954344, "redundancy_wl": 997970, "lhs_unique": false, "lhs_tokens": [["pcon", "cd"], ["imd", "ind"]], "rhs_tokens": ["ttwa", "cd"]},
+  {"lhs": ["ITL25CD", "IMD20IND"], "rhs": "TTWA15CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 42661, "distinct_rhs": 231, "lhs_distinct_ratio": 0.042727, "rhs_distinct_ratio": 0.000231, "redundancy": 955795, "redundancy_wl": 998321, "lhs_unique": false, "lhs_tokens": [["itl", "cd"], ["imd", "ind"]], "rhs_tokens": ["ttwa", "cd"]},
+  {"lhs": ["MSOA11CD", "IMD20IND"], "rhs": "TTWA15CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 42605, "distinct_rhs": 231, "lhs_distinct_ratio": 0.042671, "rhs_distinct_ratio": 0.000231, "redundancy": 955851, "redundancy_wl": 998357, "lhs_unique": false, "lhs_tokens": [["msoa", "cd"], ["imd", "ind"]], "rhs_tokens": ["ttwa", "cd"]},
+  {"lhs": ["IMD20IND", "PFA23CD"], "rhs": "TTWA15CD", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 42608, "distinct_rhs": 231, "lhs_distinct_ratio": 0.042674, "rhs_distinct_ratio": 0.000231, "redundancy": 955848, "redundancy_wl": 998354, "lhs_unique": false, "lhs_tokens": [["imd", "ind"], ["pfa", "cd"]], "rhs_tokens": ["ttwa", "cd"]},
+  {"lhs": ["IMD20IND", "SICBL26CD"], "rhs": "TTWA15CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 42605, "distinct_rhs": 231, "lhs_distinct_ratio": 0.042671, "rhs_distinct_ratio": 0.000231, "redundancy": 955851, "redundancy_wl": 998357, "lhs_unique": false, "lhs_tokens": [["imd", "ind"], ["sicbl", "cd"]], "rhs_tokens": ["ttwa", "cd"]},
+  {"lhs": ["IMD20IND", "ICB26CD"], "rhs": "TTWA15CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 42605, "distinct_rhs": 231, "lhs_distinct_ratio": 0.042671, "rhs_distinct_ratio": 0.000231, "redundancy": 955851, "redundancy_wl": 998357, "lhs_unique": false, "lhs_tokens": [["imd", "ind"], ["icb", "cd"]], "rhs_tokens": ["ttwa", "cd"]},
+  {"lhs": ["WD26CD", "OA11CD"], "rhs": "ITL25CD", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 218108, "distinct_rhs": 365, "lhs_distinct_ratio": 0.218445, "rhs_distinct_ratio": 0.000366, "redundancy": 780348, "redundancy_wl": 948343, "lhs_unique": false, "lhs_tokens": [["wd", "cd"], ["oa", "cd"]], "rhs_tokens": ["itl", "cd"]},
+  {"lhs": ["WD26CD", "LSOA11CD"], "rhs": "ITL25CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 53940, "distinct_rhs": 365, "lhs_distinct_ratio": 0.054023, "rhs_distinct_ratio": 0.000366, "redundancy": 944516, "redundancy_wl": 995921, "lhs_unique": false, "lhs_tokens": [["wd", "cd"], ["lsoa", "cd"]], "rhs_tokens": ["itl", "cd"]},
+  {"lhs": ["WD26CD", "RUC11IND"], "rhs": "ITL25CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 14106, "distinct_rhs": 365, "lhs_distinct_ratio": 0.014128, "rhs_distinct_ratio": 0.000366, "redundancy": 984350, "redundancy_wl": 998232, "lhs_unique": false, "lhs_tokens": [["wd", "cd"], ["ruc", "ind"]], "rhs_tokens": ["itl", "cd"]},
+  {"lhs": ["WD26CD", "IMD20IND"], "rhs": "ITL25CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 53940, "distinct_rhs": 365, "lhs_distinct_ratio": 0.054023, "rhs_distinct_ratio": 0.000366, "redundancy": 944516, "redundancy_wl": 995921, "lhs_unique": false, "lhs_tokens": [["wd", "cd"], ["imd", "ind"]], "rhs_tokens": ["itl", "cd"]},
+  {"lhs": ["LAD26CD", "IMD20IND"], "rhs": "LSOA11CD", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 42660, "distinct_rhs": 42605, "lhs_distinct_ratio": 0.042726, "rhs_distinct_ratio": 0.042671, "redundancy": 955796, "redundancy_wl": 998322, "lhs_unique": false, "lhs_tokens": [["lad", "cd"], ["imd", "ind"]], "rhs_tokens": ["lsoa", "cd"]},
+  {"lhs": ["WD26CD", "IMD20IND"], "rhs": "LSOA11CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 53940, "distinct_rhs": 42605, "lhs_distinct_ratio": 0.054023, "rhs_distinct_ratio": 0.042671, "redundancy": 944516, "redundancy_wl": 995921, "lhs_unique": false, "lhs_tokens": [["wd", "cd"], ["imd", "ind"]], "rhs_tokens": ["lsoa", "cd"]},
+  {"lhs": ["PARNCP26CD", "IMD20IND"], "rhs": "LSOA11CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 50552, "distinct_rhs": 42605, "lhs_distinct_ratio": 0.05063, "rhs_distinct_ratio": 0.042671, "redundancy": 947904, "redundancy_wl": 997454, "lhs_unique": false, "lhs_tokens": [["parncp", "cd"], ["imd", "ind"]], "rhs_tokens": ["lsoa", "cd"]},
+  {"lhs": ["PCON24CD", "IMD20IND"], "rhs": "LSOA11CD", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 44112, "distinct_rhs": 42605, "lhs_distinct_ratio": 0.04418, "rhs_distinct_ratio": 0.042671, "redundancy": 954344, "redundancy_wl": 997970, "lhs_unique": false, "lhs_tokens": [["pcon", "cd"], ["imd", "ind"]], "rhs_tokens": ["lsoa", "cd"]},
+  {"lhs": ["ITL25CD", "IMD20IND"], "rhs": "LSOA11CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 42661, "distinct_rhs": 42605, "lhs_distinct_ratio": 0.042727, "rhs_distinct_ratio": 0.042671, "redundancy": 955795, "redundancy_wl": 998321, "lhs_unique": false, "lhs_tokens": [["itl", "cd"], ["imd", "ind"]], "rhs_tokens": ["lsoa", "cd"]},
+  {"lhs": ["MSOA11CD", "IMD20IND"], "rhs": "LSOA11CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 42605, "distinct_rhs": 42605, "lhs_distinct_ratio": 0.042671, "rhs_distinct_ratio": 0.042671, "redundancy": 955851, "redundancy_wl": 998357, "lhs_unique": false, "lhs_tokens": [["msoa", "cd"], ["imd", "ind"]], "rhs_tokens": ["lsoa", "cd"]},
+  {"lhs": ["IMD20IND", "SICBL26CD"], "rhs": "LSOA11CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 42605, "distinct_rhs": 42605, "lhs_distinct_ratio": 0.042671, "rhs_distinct_ratio": 0.042671, "redundancy": 955851, "redundancy_wl": 998357, "lhs_unique": false, "lhs_tokens": [["imd", "ind"], ["sicbl", "cd"]], "rhs_tokens": ["lsoa", "cd"]},
+  {"lhs": ["IMD20IND", "ICB26CD"], "rhs": "LSOA11CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 42605, "distinct_rhs": 42605, "lhs_distinct_ratio": 0.042671, "rhs_distinct_ratio": 0.042671, "redundancy": 955851, "redundancy_wl": 998357, "lhs_unique": false, "lhs_tokens": [["imd", "ind"], ["icb", "cd"]], "rhs_tokens": ["lsoa", "cd"]},
+  {"lhs": ["LAD26CD", "IMD20IND"], "rhs": "MSOA11CD", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 42660, "distinct_rhs": 8484, "lhs_distinct_ratio": 0.042726, "rhs_distinct_ratio": 0.008497, "redundancy": 955796, "redundancy_wl": 998322, "lhs_unique": false, "lhs_tokens": [["lad", "cd"], ["imd", "ind"]], "rhs_tokens": ["msoa", "cd"]},
+  {"lhs": ["WD26CD", "IMD20IND"], "rhs": "MSOA11CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 53940, "distinct_rhs": 8484, "lhs_distinct_ratio": 0.054023, "rhs_distinct_ratio": 0.008497, "redundancy": 944516, "redundancy_wl": 995921, "lhs_unique": false, "lhs_tokens": [["wd", "cd"], ["imd", "ind"]], "rhs_tokens": ["msoa", "cd"]},
+  {"lhs": ["PARNCP26CD", "IMD20IND"], "rhs": "MSOA11CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 50552, "distinct_rhs": 8484, "lhs_distinct_ratio": 0.05063, "rhs_distinct_ratio": 0.008497, "redundancy": 947904, "redundancy_wl": 997454, "lhs_unique": false, "lhs_tokens": [["parncp", "cd"], ["imd", "ind"]], "rhs_tokens": ["msoa", "cd"]},
+  {"lhs": ["PCON24CD", "IMD20IND"], "rhs": "MSOA11CD", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 44112, "distinct_rhs": 8484, "lhs_distinct_ratio": 0.04418, "rhs_distinct_ratio": 0.008497, "redundancy": 954344, "redundancy_wl": 997970, "lhs_unique": false, "lhs_tokens": [["pcon", "cd"], ["imd", "ind"]], "rhs_tokens": ["msoa", "cd"]},
+  {"lhs": ["ITL25CD", "IMD20IND"], "rhs": "MSOA11CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 42661, "distinct_rhs": 8484, "lhs_distinct_ratio": 0.042727, "rhs_distinct_ratio": 0.008497, "redundancy": 955795, "redundancy_wl": 998321, "lhs_unique": false, "lhs_tokens": [["itl", "cd"], ["imd", "ind"]], "rhs_tokens": ["msoa", "cd"]},
+  {"lhs": ["IMD20IND", "SICBL26CD"], "rhs": "MSOA11CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 42605, "distinct_rhs": 8484, "lhs_distinct_ratio": 0.042671, "rhs_distinct_ratio": 0.008497, "redundancy": 955851, "redundancy_wl": 998357, "lhs_unique": false, "lhs_tokens": [["imd", "ind"], ["sicbl", "cd"]], "rhs_tokens": ["msoa", "cd"]},
+  {"lhs": ["IMD20IND", "ICB26CD"], "rhs": "MSOA11CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 42605, "distinct_rhs": 8484, "lhs_distinct_ratio": 0.042671, "rhs_distinct_ratio": 0.008497, "redundancy": 955851, "redundancy_wl": 998357, "lhs_unique": false, "lhs_tokens": [["imd", "ind"], ["icb", "cd"]], "rhs_tokens": ["msoa", "cd"]},
+  {"lhs": ["CTY26CD", "OA11CD"], "rhs": "PFA23CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 208459, "distinct_rhs": 48, "lhs_distinct_ratio": 0.208781, "rhs_distinct_ratio": 4.8e-05, "redundancy": 789997, "redundancy_wl": 954916, "lhs_unique": false, "lhs_tokens": [["cty", "cd"], ["oa", "cd"]], "rhs_tokens": ["pfa", "cd"]},
+  {"lhs": ["PCON24CD", "OA11CD"], "rhs": "PFA23CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 209679, "distinct_rhs": 48, "lhs_distinct_ratio": 0.210003, "rhs_distinct_ratio": 4.8e-05, "redundancy": 788777, "redundancy_wl": 954099, "lhs_unique": false, "lhs_tokens": [["pcon", "cd"], ["oa", "cd"]], "rhs_tokens": ["pfa", "cd"]},
+  {"lhs": ["CTY26CD", "LSOA11CD"], "rhs": "PFA23CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 42610, "distinct_rhs": 48, "lhs_distinct_ratio": 0.042676, "rhs_distinct_ratio": 4.8e-05, "redundancy": 955846, "redundancy_wl": 998353, "lhs_unique": false, "lhs_tokens": [["cty", "cd"], ["lsoa", "cd"]], "rhs_tokens": ["pfa", "cd"]},
+  {"lhs": ["PCON24CD", "LSOA11CD"], "rhs": "PFA23CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 44112, "distinct_rhs": 48, "lhs_distinct_ratio": 0.04418, "rhs_distinct_ratio": 4.8e-05, "redundancy": 954344, "redundancy_wl": 997970, "lhs_unique": false, "lhs_tokens": [["pcon", "cd"], ["lsoa", "cd"]], "rhs_tokens": ["pfa", "cd"]},
+  {"lhs": ["CTY26CD", "MSOA11CD"], "rhs": "PFA23CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 8489, "distinct_rhs": 48, "lhs_distinct_ratio": 0.008502, "rhs_distinct_ratio": 4.8e-05, "redundancy": 989967, "redundancy_wl": 998452, "lhs_unique": false, "lhs_tokens": [["cty", "cd"], ["msoa", "cd"]], "rhs_tokens": ["pfa", "cd"]},
+  {"lhs": ["PCON24CD", "MSOA11CD"], "rhs": "PFA23CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 9960, "distinct_rhs": 48, "lhs_distinct_ratio": 0.009975, "rhs_distinct_ratio": 4.8e-05, "redundancy": 988496, "redundancy_wl": 998309, "lhs_unique": false, "lhs_tokens": [["pcon", "cd"], ["msoa", "cd"]], "rhs_tokens": ["pfa", "cd"]},
+  {"lhs": ["PCON24CD", "IMD20IND"], "rhs": "PFA23CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 44112, "distinct_rhs": 48, "lhs_distinct_ratio": 0.04418, "rhs_distinct_ratio": 4.8e-05, "redundancy": 954344, "redundancy_wl": 997970, "lhs_unique": false, "lhs_tokens": [["pcon", "cd"], ["imd", "ind"]], "rhs_tokens": ["pfa", "cd"]},
+  {"lhs": ["CTY26CD", "LAD25NM"], "rhs": "PFA23CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 364, "distinct_rhs": 48, "lhs_distinct_ratio": 0.000365, "rhs_distinct_ratio": 4.8e-05, "redundancy": 998092, "redundancy_wl": 998456, "lhs_unique": false, "lhs_tokens": [["cty", "cd"], ["lad", "nm"]], "rhs_tokens": ["pfa", "cd"]},
+  {"lhs": ["CTRY26CD", "LAD25NM"], "rhs": "PFA23CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 364, "distinct_rhs": 48, "lhs_distinct_ratio": 0.000365, "rhs_distinct_ratio": 4.8e-05, "redundancy": 998092, "redundancy_wl": 998456, "lhs_unique": false, "lhs_tokens": [["ctry", "cd"], ["lad", "nm"]], "rhs_tokens": ["pfa", "cd"]},
+  {"lhs": ["RGN26CD", "LAD25NM"], "rhs": "PFA23CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 364, "distinct_rhs": 48, "lhs_distinct_ratio": 0.000365, "rhs_distinct_ratio": 4.8e-05, "redundancy": 998092, "redundancy_wl": 998456, "lhs_unique": false, "lhs_tokens": [["rgn", "cd"], ["lad", "nm"]], "rhs_tokens": ["pfa", "cd"]},
+  {"lhs": ["PCON24CD", "LAD25NM"], "rhs": "PFA23CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 954, "distinct_rhs": 48, "lhs_distinct_ratio": 0.000955, "rhs_distinct_ratio": 4.8e-05, "redundancy": 997502, "redundancy_wl": 998454, "lhs_unique": false, "lhs_tokens": [["pcon", "cd"], ["lad", "nm"]], "rhs_tokens": ["pfa", "cd"]},
+  {"lhs": ["TTWA15CD", "LAD25NM"], "rhs": "PFA23CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 730, "distinct_rhs": 48, "lhs_distinct_ratio": 0.000731, "rhs_distinct_ratio": 4.8e-05, "redundancy": 997726, "redundancy_wl": 998454, "lhs_unique": false, "lhs_tokens": [["ttwa", "cd"], ["lad", "nm"]], "rhs_tokens": ["pfa", "cd"]},
+  {"lhs": ["OA11CD", "LAD25NM"], "rhs": "PFA23CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 208510, "distinct_rhs": 48, "lhs_distinct_ratio": 0.208832, "rhs_distinct_ratio": 4.8e-05, "redundancy": 789946, "redundancy_wl": 954877, "lhs_unique": false, "lhs_tokens": [["oa", "cd"], ["lad", "nm"]], "rhs_tokens": ["pfa", "cd"]},
+  {"lhs": ["LSOA11CD", "LAD25NM"], "rhs": "PFA23CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 42660, "distinct_rhs": 48, "lhs_distinct_ratio": 0.042726, "rhs_distinct_ratio": 4.8e-05, "redundancy": 955796, "redundancy_wl": 998322, "lhs_unique": false, "lhs_tokens": [["lsoa", "cd"], ["lad", "nm"]], "rhs_tokens": ["pfa", "cd"]},
+  {"lhs": ["MSOA11CD", "LAD25NM"], "rhs": "PFA23CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 8533, "distinct_rhs": 48, "lhs_distinct_ratio": 0.008546, "rhs_distinct_ratio": 4.8e-05, "redundancy": 989923, "redundancy_wl": 998424, "lhs_unique": false, "lhs_tokens": [["msoa", "cd"], ["lad", "nm"]], "rhs_tokens": ["pfa", "cd"]},
+  {"lhs": ["SICBL26CD", "LAD25NM"], "rhs": "PFA23CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 411, "distinct_rhs": 48, "lhs_distinct_ratio": 0.000412, "rhs_distinct_ratio": 4.8e-05, "redundancy": 998045, "redundancy_wl": 998446, "lhs_unique": false, "lhs_tokens": [["sicbl", "cd"], ["lad", "nm"]], "rhs_tokens": ["pfa", "cd"]},
+  {"lhs": ["ICB26CD", "LAD25NM"], "rhs": "PFA23CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 373, "distinct_rhs": 48, "lhs_distinct_ratio": 0.000374, "rhs_distinct_ratio": 4.8e-05, "redundancy": 998083, "redundancy_wl": 998453, "lhs_unique": false, "lhs_tokens": [["icb", "cd"], ["lad", "nm"]], "rhs_tokens": ["pfa", "cd"]},
+  {"lhs": ["LAD26CD", "IMD20IND"], "rhs": "SICBL26CD", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 42660, "distinct_rhs": 155, "lhs_distinct_ratio": 0.042726, "rhs_distinct_ratio": 0.000155, "redundancy": 955796, "redundancy_wl": 998322, "lhs_unique": false, "lhs_tokens": [["lad", "cd"], ["imd", "ind"]], "rhs_tokens": ["sicbl", "cd"]},
+  {"lhs": ["WD26CD", "IMD20IND"], "rhs": "SICBL26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 53940, "distinct_rhs": 155, "lhs_distinct_ratio": 0.054023, "rhs_distinct_ratio": 0.000155, "redundancy": 944516, "redundancy_wl": 995921, "lhs_unique": false, "lhs_tokens": [["wd", "cd"], ["imd", "ind"]], "rhs_tokens": ["sicbl", "cd"]},
+  {"lhs": ["PARNCP26CD", "IMD20IND"], "rhs": "SICBL26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 50552, "distinct_rhs": 155, "lhs_distinct_ratio": 0.05063, "rhs_distinct_ratio": 0.000155, "redundancy": 947904, "redundancy_wl": 997454, "lhs_unique": false, "lhs_tokens": [["parncp", "cd"], ["imd", "ind"]], "rhs_tokens": ["sicbl", "cd"]},
+  {"lhs": ["PCON24CD", "IMD20IND"], "rhs": "SICBL26CD", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 44112, "distinct_rhs": 155, "lhs_distinct_ratio": 0.04418, "rhs_distinct_ratio": 0.000155, "redundancy": 954344, "redundancy_wl": 997970, "lhs_unique": false, "lhs_tokens": [["pcon", "cd"], ["imd", "ind"]], "rhs_tokens": ["sicbl", "cd"]},
+  {"lhs": ["ITL25CD", "IMD20IND"], "rhs": "SICBL26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 42661, "distinct_rhs": 155, "lhs_distinct_ratio": 0.042727, "rhs_distinct_ratio": 0.000155, "redundancy": 955795, "redundancy_wl": 998321, "lhs_unique": false, "lhs_tokens": [["itl", "cd"], ["imd", "ind"]], "rhs_tokens": ["sicbl", "cd"]},
+  {"lhs": ["MSOA11CD", "IMD20IND"], "rhs": "SICBL26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 42605, "distinct_rhs": 155, "lhs_distinct_ratio": 0.042671, "rhs_distinct_ratio": 0.000155, "redundancy": 955851, "redundancy_wl": 998357, "lhs_unique": false, "lhs_tokens": [["msoa", "cd"], ["imd", "ind"]], "rhs_tokens": ["sicbl", "cd"]},
+  {"lhs": ["IMD20IND", "ICB26CD"], "rhs": "SICBL26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 42605, "distinct_rhs": 155, "lhs_distinct_ratio": 0.042671, "rhs_distinct_ratio": 0.000155, "redundancy": 955851, "redundancy_wl": 998357, "lhs_unique": false, "lhs_tokens": [["imd", "ind"], ["icb", "cd"]], "rhs_tokens": ["sicbl", "cd"]},
+  {"lhs": ["LAD26CD", "IMD20IND"], "rhs": "ICB26CD", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 42660, "distinct_rhs": 42, "lhs_distinct_ratio": 0.042726, "rhs_distinct_ratio": 4.2e-05, "redundancy": 955796, "redundancy_wl": 998322, "lhs_unique": false, "lhs_tokens": [["lad", "cd"], ["imd", "ind"]], "rhs_tokens": ["icb", "cd"]},
+  {"lhs": ["WD26CD", "IMD20IND"], "rhs": "ICB26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 53940, "distinct_rhs": 42, "lhs_distinct_ratio": 0.054023, "rhs_distinct_ratio": 4.2e-05, "redundancy": 944516, "redundancy_wl": 995921, "lhs_unique": false, "lhs_tokens": [["wd", "cd"], ["imd", "ind"]], "rhs_tokens": ["icb", "cd"]},
+  {"lhs": ["PARNCP26CD", "IMD20IND"], "rhs": "ICB26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 50552, "distinct_rhs": 42, "lhs_distinct_ratio": 0.05063, "rhs_distinct_ratio": 4.2e-05, "redundancy": 947904, "redundancy_wl": 997454, "lhs_unique": false, "lhs_tokens": [["parncp", "cd"], ["imd", "ind"]], "rhs_tokens": ["icb", "cd"]},
+  {"lhs": ["PCON24CD", "IMD20IND"], "rhs": "ICB26CD", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 44112, "distinct_rhs": 42, "lhs_distinct_ratio": 0.04418, "rhs_distinct_ratio": 4.2e-05, "redundancy": 954344, "redundancy_wl": 997970, "lhs_unique": false, "lhs_tokens": [["pcon", "cd"], ["imd", "ind"]], "rhs_tokens": ["icb", "cd"]},
+  {"lhs": ["ITL25CD", "IMD20IND"], "rhs": "ICB26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 42661, "distinct_rhs": 42, "lhs_distinct_ratio": 0.042727, "rhs_distinct_ratio": 4.2e-05, "redundancy": 955795, "redundancy_wl": 998321, "lhs_unique": false, "lhs_tokens": [["itl", "cd"], ["imd", "ind"]], "rhs_tokens": ["icb", "cd"]},
+  {"lhs": ["MSOA11CD", "IMD20IND"], "rhs": "ICB26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 42605, "distinct_rhs": 42, "lhs_distinct_ratio": 0.042671, "rhs_distinct_ratio": 4.2e-05, "redundancy": 955851, "redundancy_wl": 998357, "lhs_unique": false, "lhs_tokens": [["msoa", "cd"], ["imd", "ind"]], "rhs_tokens": ["icb", "cd"]},
+  {"lhs": ["TTWA15CD", "RGN25NM"], "rhs": "CTRY25NM", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 268, "distinct_rhs": 5, "lhs_distinct_ratio": 0.000268, "rhs_distinct_ratio": 5e-06, "redundancy": 998188, "redundancy_wl": 998456, "lhs_unique": false, "lhs_tokens": [["ttwa", "cd"], ["rgn", "nm"]], "rhs_tokens": ["ctry", "nm"]},
+  {"lhs": ["TTWA15CD", "LAD25NM"], "rhs": "CTRY25NM", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 730, "distinct_rhs": 5, "lhs_distinct_ratio": 0.000731, "rhs_distinct_ratio": 5e-06, "redundancy": 997726, "redundancy_wl": 998454, "lhs_unique": false, "lhs_tokens": [["ttwa", "cd"], ["lad", "nm"]], "rhs_tokens": ["ctry", "nm"]},
+  {"lhs": ["RUC11IND", "LAD25NM"], "rhs": "CTRY25NM", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 1345, "distinct_rhs": 5, "lhs_distinct_ratio": 0.001347, "rhs_distinct_ratio": 5e-06, "redundancy": 997111, "redundancy_wl": 998451, "lhs_unique": false, "lhs_tokens": [["ruc", "ind"], ["lad", "nm"]], "rhs_tokens": ["ctry", "nm"]},
+  {"lhs": ["OAC11IND", "LAD25NM"], "rhs": "CTRY25NM", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 14183, "distinct_rhs": 5, "lhs_distinct_ratio": 0.014205, "rhs_distinct_ratio": 5e-06, "redundancy": 984273, "redundancy_wl": 998039, "lhs_unique": false, "lhs_tokens": [["oac", "ind"], ["lad", "nm"]], "rhs_tokens": ["ctry", "nm"]},
+  {"lhs": ["CTY26CD", "OA11CD"], "rhs": "RGN25NM", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 208459, "distinct_rhs": 10, "lhs_distinct_ratio": 0.208781, "rhs_distinct_ratio": 1e-05, "redundancy": 789997, "redundancy_wl": 954916, "lhs_unique": false, "lhs_tokens": [["cty", "cd"], ["oa", "cd"]], "rhs_tokens": ["rgn", "nm"]},
+  {"lhs": ["CTY26CD", "LSOA11CD"], "rhs": "RGN25NM", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 42610, "distinct_rhs": 10, "lhs_distinct_ratio": 0.042676, "rhs_distinct_ratio": 1e-05, "redundancy": 955846, "redundancy_wl": 998353, "lhs_unique": false, "lhs_tokens": [["cty", "cd"], ["lsoa", "cd"]], "rhs_tokens": ["rgn", "nm"]},
+  {"lhs": ["CTY26CD", "MSOA11CD"], "rhs": "RGN25NM", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 2, "distinct_lhs": 8489, "distinct_rhs": 10, "lhs_distinct_ratio": 0.008502, "rhs_distinct_ratio": 1e-05, "redundancy": 989967, "redundancy_wl": 998452, "lhs_unique": false, "lhs_tokens": [["cty", "cd"], ["msoa", "cd"]], "rhs_tokens": ["rgn", "nm"]},
+  {"lhs": ["DOINTR", "RGN26CD", "OA11CD"], "rhs": "CTY26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 534932, "distinct_rhs": 28, "lhs_distinct_ratio": 0.535759, "rhs_distinct_ratio": 2.8e-05, "redundancy": 463524, "redundancy_wl": 653246, "lhs_unique": false, "lhs_tokens": [["dointr"], ["rgn", "cd"], ["oa", "cd"]], "rhs_tokens": ["cty", "cd"]},
+  {"lhs": ["DOINTR", "RGN26CD", "LSOA11CD"], "rhs": "CTY26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 357524, "distinct_rhs": 28, "lhs_distinct_ratio": 0.358077, "rhs_distinct_ratio": 2.8e-05, "redundancy": 640932, "redundancy_wl": 743632, "lhs_unique": false, "lhs_tokens": [["dointr"], ["rgn", "cd"], ["lsoa", "cd"]], "rhs_tokens": ["cty", "cd"]},
+  {"lhs": ["DOINTR", "RGN26CD", "MSOA11CD"], "rhs": "CTY26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 277436, "distinct_rhs": 28, "lhs_distinct_ratio": 0.277865, "rhs_distinct_ratio": 2.8e-05, "redundancy": 721020, "redundancy_wl": 800838, "lhs_unique": false, "lhs_tokens": [["dointr"], ["rgn", "cd"], ["msoa", "cd"]], "rhs_tokens": ["cty", "cd"]},
+  {"lhs": ["DOINTR", "OA11CD", "PFA23CD"], "rhs": "CTY26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 534932, "distinct_rhs": 28, "lhs_distinct_ratio": 0.535759, "rhs_distinct_ratio": 2.8e-05, "redundancy": 463524, "redundancy_wl": 653246, "lhs_unique": false, "lhs_tokens": [["dointr"], ["oa", "cd"], ["pfa", "cd"]], "rhs_tokens": ["cty", "cd"]},
+  {"lhs": ["DOINTR", "LSOA11CD", "PFA23CD"], "rhs": "CTY26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 357524, "distinct_rhs": 28, "lhs_distinct_ratio": 0.358077, "rhs_distinct_ratio": 2.8e-05, "redundancy": 640932, "redundancy_wl": 743632, "lhs_unique": false, "lhs_tokens": [["dointr"], ["lsoa", "cd"], ["pfa", "cd"]], "rhs_tokens": ["cty", "cd"]},
+  {"lhs": ["DOINTR", "MSOA11CD", "PFA23CD"], "rhs": "CTY26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 277436, "distinct_rhs": 28, "lhs_distinct_ratio": 0.277865, "rhs_distinct_ratio": 2.8e-05, "redundancy": 721020, "redundancy_wl": 800838, "lhs_unique": false, "lhs_tokens": [["dointr"], ["msoa", "cd"], ["pfa", "cd"]], "rhs_tokens": ["cty", "cd"]},
+  {"lhs": ["DOINTR", "IMD20IND", "PFA23CD"], "rhs": "CTY26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 357522, "distinct_rhs": 28, "lhs_distinct_ratio": 0.358075, "rhs_distinct_ratio": 2.8e-05, "redundancy": 640934, "redundancy_wl": 743634, "lhs_unique": false, "lhs_tokens": [["dointr"], ["imd", "ind"], ["pfa", "cd"]], "rhs_tokens": ["cty", "cd"]},
+  {"lhs": ["DOINTR", "OA11CD", "RGN25NM"], "rhs": "CTY26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 534932, "distinct_rhs": 28, "lhs_distinct_ratio": 0.535759, "rhs_distinct_ratio": 2.8e-05, "redundancy": 463524, "redundancy_wl": 653246, "lhs_unique": false, "lhs_tokens": [["dointr"], ["oa", "cd"], ["rgn", "nm"]], "rhs_tokens": ["cty", "cd"]},
+  {"lhs": ["DOINTR", "LSOA11CD", "RGN25NM"], "rhs": "CTY26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 357524, "distinct_rhs": 28, "lhs_distinct_ratio": 0.358077, "rhs_distinct_ratio": 2.8e-05, "redundancy": 640932, "redundancy_wl": 743632, "lhs_unique": false, "lhs_tokens": [["dointr"], ["lsoa", "cd"], ["rgn", "nm"]], "rhs_tokens": ["cty", "cd"]},
+  {"lhs": ["DOINTR", "MSOA11CD", "RGN25NM"], "rhs": "CTY26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 277436, "distinct_rhs": 28, "lhs_distinct_ratio": 0.277865, "rhs_distinct_ratio": 2.8e-05, "redundancy": 721020, "redundancy_wl": 800838, "lhs_unique": false, "lhs_tokens": [["dointr"], ["msoa", "cd"], ["rgn", "nm"]], "rhs_tokens": ["cty", "cd"]},
+  {"lhs": ["TTWA15CD", "OAC11IND", "IMD20IND"], "rhs": "CTRY26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 148000, "distinct_rhs": 6, "lhs_distinct_ratio": 0.148229, "rhs_distinct_ratio": 6e-06, "redundancy": 850456, "redundancy_wl": 976433, "lhs_unique": false, "lhs_tokens": [["ttwa", "cd"], ["oac", "ind"], ["imd", "ind"]], "rhs_tokens": ["ctry", "cd"]},
+  {"lhs": ["CTY26CD", "TTWA15CD", "IMD20IND"], "rhs": "RGN26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 42609, "distinct_rhs": 15, "lhs_distinct_ratio": 0.042675, "rhs_distinct_ratio": 1.5e-05, "redundancy": 955847, "redundancy_wl": 998353, "lhs_unique": false, "lhs_tokens": [["cty", "cd"], ["ttwa", "cd"], ["imd", "ind"]], "rhs_tokens": ["rgn", "cd"]},
+  {"lhs": ["CTY26CD", "OAC11IND", "IMD20IND"], "rhs": "RGN26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 148005, "distinct_rhs": 15, "lhs_distinct_ratio": 0.148234, "rhs_distinct_ratio": 1.5e-05, "redundancy": 850451, "redundancy_wl": 976429, "lhs_unique": false, "lhs_tokens": [["cty", "cd"], ["oac", "ind"], ["imd", "ind"]], "rhs_tokens": ["rgn", "cd"]},
+  {"lhs": ["CTY26CD", "IMD20IND", "SICBL26CD"], "rhs": "RGN26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 42610, "distinct_rhs": 15, "lhs_distinct_ratio": 0.042676, "rhs_distinct_ratio": 1.5e-05, "redundancy": 955846, "redundancy_wl": 998353, "lhs_unique": false, "lhs_tokens": [["cty", "cd"], ["imd", "ind"], ["sicbl", "cd"]], "rhs_tokens": ["rgn", "cd"]},
+  {"lhs": ["CTY26CD", "IMD20IND", "ICB26CD"], "rhs": "RGN26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 42610, "distinct_rhs": 15, "lhs_distinct_ratio": 0.042676, "rhs_distinct_ratio": 1.5e-05, "redundancy": 955846, "redundancy_wl": 998353, "lhs_unique": false, "lhs_tokens": [["cty", "cd"], ["imd", "ind"], ["icb", "cd"]], "rhs_tokens": ["rgn", "cd"]},
+  {"lhs": ["CTY26CD", "RGN26CD", "IMD20IND"], "rhs": "TTWA15CD", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 42609, "distinct_rhs": 231, "lhs_distinct_ratio": 0.042675, "rhs_distinct_ratio": 0.000231, "redundancy": 955847, "redundancy_wl": 998353, "lhs_unique": false, "lhs_tokens": [["cty", "cd"], ["rgn", "cd"], ["imd", "ind"]], "rhs_tokens": ["ttwa", "cd"]},
+  {"lhs": ["CTY26CD", "OAC11IND", "IMD20IND"], "rhs": "TTWA15CD", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 148005, "distinct_rhs": 231, "lhs_distinct_ratio": 0.148234, "rhs_distinct_ratio": 0.000231, "redundancy": 850451, "redundancy_wl": 976429, "lhs_unique": false, "lhs_tokens": [["cty", "cd"], ["oac", "ind"], ["imd", "ind"]], "rhs_tokens": ["ttwa", "cd"]},
+  {"lhs": ["CTY26CD", "IMD20IND", "RGN25NM"], "rhs": "TTWA15CD", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 42609, "distinct_rhs": 231, "lhs_distinct_ratio": 0.042675, "rhs_distinct_ratio": 0.000231, "redundancy": 955847, "redundancy_wl": 998353, "lhs_unique": false, "lhs_tokens": [["cty", "cd"], ["imd", "ind"], ["rgn", "nm"]], "rhs_tokens": ["ttwa", "cd"]},
+  {"lhs": ["CTY26CD", "IMD20IND", "LAD25NM"], "rhs": "TTWA15CD", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 42660, "distinct_rhs": 231, "lhs_distinct_ratio": 0.042726, "rhs_distinct_ratio": 0.000231, "redundancy": 955796, "redundancy_wl": 998322, "lhs_unique": false, "lhs_tokens": [["cty", "cd"], ["imd", "ind"], ["lad", "nm"]], "rhs_tokens": ["ttwa", "cd"]},
+  {"lhs": ["CTRY26CD", "IMD20IND", "LAD25NM"], "rhs": "TTWA15CD", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 42660, "distinct_rhs": 231, "lhs_distinct_ratio": 0.042726, "rhs_distinct_ratio": 0.000231, "redundancy": 955796, "redundancy_wl": 998322, "lhs_unique": false, "lhs_tokens": [["ctry", "cd"], ["imd", "ind"], ["lad", "nm"]], "rhs_tokens": ["ttwa", "cd"]},
+  {"lhs": ["RGN26CD", "IMD20IND", "LAD25NM"], "rhs": "TTWA15CD", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 42660, "distinct_rhs": 231, "lhs_distinct_ratio": 0.042726, "rhs_distinct_ratio": 0.000231, "redundancy": 955796, "redundancy_wl": 998322, "lhs_unique": false, "lhs_tokens": [["rgn", "cd"], ["imd", "ind"], ["lad", "nm"]], "rhs_tokens": ["ttwa", "cd"]},
+  {"lhs": ["DOINTR", "LAD26CD", "OA11CD"], "rhs": "ITL25CD", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 534970, "distinct_rhs": 365, "lhs_distinct_ratio": 0.535797, "rhs_distinct_ratio": 0.000366, "redundancy": 463486, "redundancy_wl": 653215, "lhs_unique": false, "lhs_tokens": [["dointr"], ["lad", "cd"], ["oa", "cd"]], "rhs_tokens": ["itl", "cd"]},
+  {"lhs": ["DOTERM", "LAD26CD", "OA11CD"], "rhs": "ITL25CD", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 420123, "distinct_rhs": 365, "lhs_distinct_ratio": 0.420773, "rhs_distinct_ratio": 0.000366, "redundancy": 578333, "redundancy_wl": 780143, "lhs_unique": false, "lhs_tokens": [["doterm"], ["lad", "cd"], ["oa", "cd"]], "rhs_tokens": ["itl", "cd"]},
+  {"lhs": ["LAD26CD", "PCON24CD", "OA11CD"], "rhs": "ITL25CD", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 209700, "distinct_rhs": 365, "lhs_distinct_ratio": 0.210024, "rhs_distinct_ratio": 0.000366, "redundancy": 788756, "redundancy_wl": 954086, "lhs_unique": false, "lhs_tokens": [["lad", "cd"], ["pcon", "cd"], ["oa", "cd"]], "rhs_tokens": ["itl", "cd"]},
+  {"lhs": ["DOINTR", "LAD26CD", "LSOA11CD"], "rhs": "ITL25CD", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 357570, "distinct_rhs": 365, "lhs_distinct_ratio": 0.358123, "rhs_distinct_ratio": 0.000366, "redundancy": 640886, "redundancy_wl": 743597, "lhs_unique": false, "lhs_tokens": [["dointr"], ["lad", "cd"], ["lsoa", "cd"]], "rhs_tokens": ["itl", "cd"]},
+  {"lhs": ["DOTERM", "LAD26CD", "LSOA11CD"], "rhs": "ITL25CD", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 233056, "distinct_rhs": 365, "lhs_distinct_ratio": 0.233416, "rhs_distinct_ratio": 0.000366, "redundancy": 765400, "redundancy_wl": 851216, "lhs_unique": false, "lhs_tokens": [["doterm"], ["lad", "cd"], ["lsoa", "cd"]], "rhs_tokens": ["itl", "cd"]},
+  {"lhs": ["LAD26CD", "PCON24CD", "LSOA11CD"], "rhs": "ITL25CD", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 44133, "distinct_rhs": 365, "lhs_distinct_ratio": 0.044201, "rhs_distinct_ratio": 0.000366, "redundancy": 954323, "redundancy_wl": 997961, "lhs_unique": false, "lhs_tokens": [["lad", "cd"], ["pcon", "cd"], ["lsoa", "cd"]], "rhs_tokens": ["itl", "cd"]},
+  {"lhs": ["DOINTR", "LAD26CD", "RUC11IND"], "rhs": "ITL25CD", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 128825, "distinct_rhs": 365, "lhs_distinct_ratio": 0.129024, "rhs_distinct_ratio": 0.000366, "redundancy": 869631, "redundancy_wl": 935424, "lhs_unique": false, "lhs_tokens": [["dointr"], ["lad", "cd"], ["ruc", "ind"]], "rhs_tokens": ["itl", "cd"]},
+  {"lhs": ["DOTERM", "LAD26CD", "RUC11IND"], "rhs": "ITL25CD", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 87563, "distinct_rhs": 365, "lhs_distinct_ratio": 0.087698, "rhs_distinct_ratio": 0.000366, "redundancy": 910893, "redundancy_wl": 955099, "lhs_unique": false, "lhs_tokens": [["doterm"], ["lad", "cd"], ["ruc", "ind"]], "rhs_tokens": ["itl", "cd"]},
+  {"lhs": ["LAD26CD", "PCON24CD", "RUC11IND"], "rhs": "ITL25CD", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 2837, "distinct_rhs": 365, "lhs_distinct_ratio": 0.002841, "rhs_distinct_ratio": 0.000366, "redundancy": 995619, "redundancy_wl": 998432, "lhs_unique": false, "lhs_tokens": [["lad", "cd"], ["pcon", "cd"], ["ruc", "ind"]], "rhs_tokens": ["itl", "cd"]},
+  {"lhs": ["DOINTR", "LAD26CD", "IMD20IND"], "rhs": "ITL25CD", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 357570, "distinct_rhs": 365, "lhs_distinct_ratio": 0.358123, "rhs_distinct_ratio": 0.000366, "redundancy": 640886, "redundancy_wl": 743597, "lhs_unique": false, "lhs_tokens": [["dointr"], ["lad", "cd"], ["imd", "ind"]], "rhs_tokens": ["itl", "cd"]},
+  {"lhs": ["DOTERM", "LAD26CD", "IMD20IND"], "rhs": "ITL25CD", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 233056, "distinct_rhs": 365, "lhs_distinct_ratio": 0.233416, "rhs_distinct_ratio": 0.000366, "redundancy": 765400, "redundancy_wl": 851216, "lhs_unique": false, "lhs_tokens": [["doterm"], ["lad", "cd"], ["imd", "ind"]], "rhs_tokens": ["itl", "cd"]},
+  {"lhs": ["LAD26CD", "PCON24CD", "IMD20IND"], "rhs": "ITL25CD", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 44133, "distinct_rhs": 365, "lhs_distinct_ratio": 0.044201, "rhs_distinct_ratio": 0.000366, "redundancy": 954323, "redundancy_wl": 997961, "lhs_unique": false, "lhs_tokens": [["lad", "cd"], ["pcon", "cd"], ["imd", "ind"]], "rhs_tokens": ["itl", "cd"]},
+  {"lhs": ["DOINTR", "OA11CD", "LAD25NM"], "rhs": "ITL25CD", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 534970, "distinct_rhs": 365, "lhs_distinct_ratio": 0.535797, "rhs_distinct_ratio": 0.000366, "redundancy": 463486, "redundancy_wl": 653215, "lhs_unique": false, "lhs_tokens": [["dointr"], ["oa", "cd"], ["lad", "nm"]], "rhs_tokens": ["itl", "cd"]},
+  {"lhs": ["DOTERM", "OA11CD", "LAD25NM"], "rhs": "ITL25CD", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 420123, "distinct_rhs": 365, "lhs_distinct_ratio": 0.420773, "rhs_distinct_ratio": 0.000366, "redundancy": 578333, "redundancy_wl": 780143, "lhs_unique": false, "lhs_tokens": [["doterm"], ["oa", "cd"], ["lad", "nm"]], "rhs_tokens": ["itl", "cd"]},
+  {"lhs": ["PCON24CD", "OA11CD", "LAD25NM"], "rhs": "ITL25CD", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 209700, "distinct_rhs": 365, "lhs_distinct_ratio": 0.210024, "rhs_distinct_ratio": 0.000366, "redundancy": 788756, "redundancy_wl": 954086, "lhs_unique": false, "lhs_tokens": [["pcon", "cd"], ["oa", "cd"], ["lad", "nm"]], "rhs_tokens": ["itl", "cd"]},
+  {"lhs": ["DOINTR", "LSOA11CD", "LAD25NM"], "rhs": "ITL25CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 357570, "distinct_rhs": 365, "lhs_distinct_ratio": 0.358123, "rhs_distinct_ratio": 0.000366, "redundancy": 640886, "redundancy_wl": 743597, "lhs_unique": false, "lhs_tokens": [["dointr"], ["lsoa", "cd"], ["lad", "nm"]], "rhs_tokens": ["itl", "cd"]},
+  {"lhs": ["DOTERM", "LSOA11CD", "LAD25NM"], "rhs": "ITL25CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 233056, "distinct_rhs": 365, "lhs_distinct_ratio": 0.233416, "rhs_distinct_ratio": 0.000366, "redundancy": 765400, "redundancy_wl": 851216, "lhs_unique": false, "lhs_tokens": [["doterm"], ["lsoa", "cd"], ["lad", "nm"]], "rhs_tokens": ["itl", "cd"]},
+  {"lhs": ["PCON24CD", "LSOA11CD", "LAD25NM"], "rhs": "ITL25CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 44133, "distinct_rhs": 365, "lhs_distinct_ratio": 0.044201, "rhs_distinct_ratio": 0.000366, "redundancy": 954323, "redundancy_wl": 997961, "lhs_unique": false, "lhs_tokens": [["pcon", "cd"], ["lsoa", "cd"], ["lad", "nm"]], "rhs_tokens": ["itl", "cd"]},
+  {"lhs": ["PCON24CD", "RUC11IND", "LAD25NM"], "rhs": "ITL25CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 2837, "distinct_rhs": 365, "lhs_distinct_ratio": 0.002841, "rhs_distinct_ratio": 0.000366, "redundancy": 995619, "redundancy_wl": 998432, "lhs_unique": false, "lhs_tokens": [["pcon", "cd"], ["ruc", "ind"], ["lad", "nm"]], "rhs_tokens": ["itl", "cd"]},
+  {"lhs": ["PCON24CD", "IMD20IND", "LAD25NM"], "rhs": "ITL25CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 44133, "distinct_rhs": 365, "lhs_distinct_ratio": 0.044201, "rhs_distinct_ratio": 0.000366, "redundancy": 954323, "redundancy_wl": 997961, "lhs_unique": false, "lhs_tokens": [["pcon", "cd"], ["imd", "ind"], ["lad", "nm"]], "rhs_tokens": ["itl", "cd"]},
+  {"lhs": ["CTY26CD", "IMD20IND", "LAD25NM"], "rhs": "LSOA11CD", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 42660, "distinct_rhs": 42605, "lhs_distinct_ratio": 0.042726, "rhs_distinct_ratio": 0.042671, "redundancy": 955796, "redundancy_wl": 998322, "lhs_unique": false, "lhs_tokens": [["cty", "cd"], ["imd", "ind"], ["lad", "nm"]], "rhs_tokens": ["lsoa", "cd"]},
+  {"lhs": ["CTRY26CD", "IMD20IND", "LAD25NM"], "rhs": "LSOA11CD", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 42660, "distinct_rhs": 42605, "lhs_distinct_ratio": 0.042726, "rhs_distinct_ratio": 0.042671, "redundancy": 955796, "redundancy_wl": 998322, "lhs_unique": false, "lhs_tokens": [["ctry", "cd"], ["imd", "ind"], ["lad", "nm"]], "rhs_tokens": ["lsoa", "cd"]},
+  {"lhs": ["RGN26CD", "IMD20IND", "LAD25NM"], "rhs": "LSOA11CD", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 42660, "distinct_rhs": 42605, "lhs_distinct_ratio": 0.042726, "rhs_distinct_ratio": 0.042671, "redundancy": 955796, "redundancy_wl": 998322, "lhs_unique": false, "lhs_tokens": [["rgn", "cd"], ["imd", "ind"], ["lad", "nm"]], "rhs_tokens": ["lsoa", "cd"]},
+  {"lhs": ["TTWA15CD", "IMD20IND", "LAD25NM"], "rhs": "LSOA11CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 42660, "distinct_rhs": 42605, "lhs_distinct_ratio": 0.042726, "rhs_distinct_ratio": 0.042671, "redundancy": 955796, "redundancy_wl": 998322, "lhs_unique": false, "lhs_tokens": [["ttwa", "cd"], ["imd", "ind"], ["lad", "nm"]], "rhs_tokens": ["lsoa", "cd"]},
+  {"lhs": ["IMD20IND", "PFA23CD", "LAD25NM"], "rhs": "LSOA11CD", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 42660, "distinct_rhs": 42605, "lhs_distinct_ratio": 0.042726, "rhs_distinct_ratio": 0.042671, "redundancy": 955796, "redundancy_wl": 998322, "lhs_unique": false, "lhs_tokens": [["imd", "ind"], ["pfa", "cd"], ["lad", "nm"]], "rhs_tokens": ["lsoa", "cd"]},
+  {"lhs": ["CTY26CD", "IMD20IND", "LAD25NM"], "rhs": "MSOA11CD", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 42660, "distinct_rhs": 8484, "lhs_distinct_ratio": 0.042726, "rhs_distinct_ratio": 0.008497, "redundancy": 955796, "redundancy_wl": 998322, "lhs_unique": false, "lhs_tokens": [["cty", "cd"], ["imd", "ind"], ["lad", "nm"]], "rhs_tokens": ["msoa", "cd"]},
+  {"lhs": ["CTRY26CD", "IMD20IND", "LAD25NM"], "rhs": "MSOA11CD", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 42660, "distinct_rhs": 8484, "lhs_distinct_ratio": 0.042726, "rhs_distinct_ratio": 0.008497, "redundancy": 955796, "redundancy_wl": 998322, "lhs_unique": false, "lhs_tokens": [["ctry", "cd"], ["imd", "ind"], ["lad", "nm"]], "rhs_tokens": ["msoa", "cd"]},
+  {"lhs": ["RGN26CD", "IMD20IND", "LAD25NM"], "rhs": "MSOA11CD", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 42660, "distinct_rhs": 8484, "lhs_distinct_ratio": 0.042726, "rhs_distinct_ratio": 0.008497, "redundancy": 955796, "redundancy_wl": 998322, "lhs_unique": false, "lhs_tokens": [["rgn", "cd"], ["imd", "ind"], ["lad", "nm"]], "rhs_tokens": ["msoa", "cd"]},
+  {"lhs": ["TTWA15CD", "IMD20IND", "LAD25NM"], "rhs": "MSOA11CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 42660, "distinct_rhs": 8484, "lhs_distinct_ratio": 0.042726, "rhs_distinct_ratio": 0.008497, "redundancy": 955796, "redundancy_wl": 998322, "lhs_unique": false, "lhs_tokens": [["ttwa", "cd"], ["imd", "ind"], ["lad", "nm"]], "rhs_tokens": ["msoa", "cd"]},
+  {"lhs": ["IMD20IND", "PFA23CD", "LAD25NM"], "rhs": "MSOA11CD", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 42660, "distinct_rhs": 8484, "lhs_distinct_ratio": 0.042726, "rhs_distinct_ratio": 0.008497, "redundancy": 955796, "redundancy_wl": 998322, "lhs_unique": false, "lhs_tokens": [["imd", "ind"], ["pfa", "cd"], ["lad", "nm"]], "rhs_tokens": ["msoa", "cd"]},
+  {"lhs": ["DOINTR", "RGN26CD", "OA11CD"], "rhs": "PFA23CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 534932, "distinct_rhs": 48, "lhs_distinct_ratio": 0.535759, "rhs_distinct_ratio": 4.8e-05, "redundancy": 463524, "redundancy_wl": 653246, "lhs_unique": false, "lhs_tokens": [["dointr"], ["rgn", "cd"], ["oa", "cd"]], "rhs_tokens": ["pfa", "cd"]},
+  {"lhs": ["DOINTR", "RGN26CD", "LSOA11CD"], "rhs": "PFA23CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 357524, "distinct_rhs": 48, "lhs_distinct_ratio": 0.358077, "rhs_distinct_ratio": 4.8e-05, "redundancy": 640932, "redundancy_wl": 743632, "lhs_unique": false, "lhs_tokens": [["dointr"], ["rgn", "cd"], ["lsoa", "cd"]], "rhs_tokens": ["pfa", "cd"]},
+  {"lhs": ["DOINTR", "RGN26CD", "MSOA11CD"], "rhs": "PFA23CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 277436, "distinct_rhs": 48, "lhs_distinct_ratio": 0.277865, "rhs_distinct_ratio": 4.8e-05, "redundancy": 721020, "redundancy_wl": 800838, "lhs_unique": false, "lhs_tokens": [["dointr"], ["rgn", "cd"], ["msoa", "cd"]], "rhs_tokens": ["pfa", "cd"]},
+  {"lhs": ["CTY26CD", "RGN26CD", "IMD20IND"], "rhs": "PFA23CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 42609, "distinct_rhs": 48, "lhs_distinct_ratio": 0.042675, "rhs_distinct_ratio": 4.8e-05, "redundancy": 955847, "redundancy_wl": 998353, "lhs_unique": false, "lhs_tokens": [["cty", "cd"], ["rgn", "cd"], ["imd", "ind"]], "rhs_tokens": ["pfa", "cd"]},
+  {"lhs": ["CTY26CD", "TTWA15CD", "IMD20IND"], "rhs": "PFA23CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 42609, "distinct_rhs": 48, "lhs_distinct_ratio": 0.042675, "rhs_distinct_ratio": 4.8e-05, "redundancy": 955847, "redundancy_wl": 998353, "lhs_unique": false, "lhs_tokens": [["cty", "cd"], ["ttwa", "cd"], ["imd", "ind"]], "rhs_tokens": ["pfa", "cd"]},
+  {"lhs": ["CTY26CD", "OAC11IND", "IMD20IND"], "rhs": "PFA23CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 148005, "distinct_rhs": 48, "lhs_distinct_ratio": 0.148234, "rhs_distinct_ratio": 4.8e-05, "redundancy": 850451, "redundancy_wl": 976429, "lhs_unique": false, "lhs_tokens": [["cty", "cd"], ["oac", "ind"], ["imd", "ind"]], "rhs_tokens": ["pfa", "cd"]},
+  {"lhs": ["CTY26CD", "IMD20IND", "SICBL26CD"], "rhs": "PFA23CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 42610, "distinct_rhs": 48, "lhs_distinct_ratio": 0.042676, "rhs_distinct_ratio": 4.8e-05, "redundancy": 955846, "redundancy_wl": 998353, "lhs_unique": false, "lhs_tokens": [["cty", "cd"], ["imd", "ind"], ["sicbl", "cd"]], "rhs_tokens": ["pfa", "cd"]},
+  {"lhs": ["CTY26CD", "IMD20IND", "ICB26CD"], "rhs": "PFA23CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 42610, "distinct_rhs": 48, "lhs_distinct_ratio": 0.042676, "rhs_distinct_ratio": 4.8e-05, "redundancy": 955846, "redundancy_wl": 998353, "lhs_unique": false, "lhs_tokens": [["cty", "cd"], ["imd", "ind"], ["icb", "cd"]], "rhs_tokens": ["pfa", "cd"]},
+  {"lhs": ["DOINTR", "OA11CD", "RGN25NM"], "rhs": "PFA23CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 534932, "distinct_rhs": 48, "lhs_distinct_ratio": 0.535759, "rhs_distinct_ratio": 4.8e-05, "redundancy": 463524, "redundancy_wl": 653246, "lhs_unique": false, "lhs_tokens": [["dointr"], ["oa", "cd"], ["rgn", "nm"]], "rhs_tokens": ["pfa", "cd"]},
+  {"lhs": ["DOINTR", "LSOA11CD", "RGN25NM"], "rhs": "PFA23CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 357524, "distinct_rhs": 48, "lhs_distinct_ratio": 0.358077, "rhs_distinct_ratio": 4.8e-05, "redundancy": 640932, "redundancy_wl": 743632, "lhs_unique": false, "lhs_tokens": [["dointr"], ["lsoa", "cd"], ["rgn", "nm"]], "rhs_tokens": ["pfa", "cd"]},
+  {"lhs": ["DOINTR", "MSOA11CD", "RGN25NM"], "rhs": "PFA23CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 277436, "distinct_rhs": 48, "lhs_distinct_ratio": 0.277865, "rhs_distinct_ratio": 4.8e-05, "redundancy": 721020, "redundancy_wl": 800838, "lhs_unique": false, "lhs_tokens": [["dointr"], ["msoa", "cd"], ["rgn", "nm"]], "rhs_tokens": ["pfa", "cd"]},
+  {"lhs": ["CTY26CD", "IMD20IND", "RGN25NM"], "rhs": "PFA23CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 42609, "distinct_rhs": 48, "lhs_distinct_ratio": 0.042675, "rhs_distinct_ratio": 4.8e-05, "redundancy": 955847, "redundancy_wl": 998353, "lhs_unique": false, "lhs_tokens": [["cty", "cd"], ["imd", "ind"], ["rgn", "nm"]], "rhs_tokens": ["pfa", "cd"]},
+  {"lhs": ["CTY26CD", "IMD20IND", "LAD25NM"], "rhs": "SICBL26CD", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 42660, "distinct_rhs": 155, "lhs_distinct_ratio": 0.042726, "rhs_distinct_ratio": 0.000155, "redundancy": 955796, "redundancy_wl": 998322, "lhs_unique": false, "lhs_tokens": [["cty", "cd"], ["imd", "ind"], ["lad", "nm"]], "rhs_tokens": ["sicbl", "cd"]},
+  {"lhs": ["CTRY26CD", "IMD20IND", "LAD25NM"], "rhs": "SICBL26CD", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 42660, "distinct_rhs": 155, "lhs_distinct_ratio": 0.042726, "rhs_distinct_ratio": 0.000155, "redundancy": 955796, "redundancy_wl": 998322, "lhs_unique": false, "lhs_tokens": [["ctry", "cd"], ["imd", "ind"], ["lad", "nm"]], "rhs_tokens": ["sicbl", "cd"]},
+  {"lhs": ["RGN26CD", "IMD20IND", "LAD25NM"], "rhs": "SICBL26CD", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 42660, "distinct_rhs": 155, "lhs_distinct_ratio": 0.042726, "rhs_distinct_ratio": 0.000155, "redundancy": 955796, "redundancy_wl": 998322, "lhs_unique": false, "lhs_tokens": [["rgn", "cd"], ["imd", "ind"], ["lad", "nm"]], "rhs_tokens": ["sicbl", "cd"]},
+  {"lhs": ["TTWA15CD", "IMD20IND", "LAD25NM"], "rhs": "SICBL26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 42660, "distinct_rhs": 155, "lhs_distinct_ratio": 0.042726, "rhs_distinct_ratio": 0.000155, "redundancy": 955796, "redundancy_wl": 998322, "lhs_unique": false, "lhs_tokens": [["ttwa", "cd"], ["imd", "ind"], ["lad", "nm"]], "rhs_tokens": ["sicbl", "cd"]},
+  {"lhs": ["IMD20IND", "PFA23CD", "LAD25NM"], "rhs": "SICBL26CD", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 42660, "distinct_rhs": 155, "lhs_distinct_ratio": 0.042726, "rhs_distinct_ratio": 0.000155, "redundancy": 955796, "redundancy_wl": 998322, "lhs_unique": false, "lhs_tokens": [["imd", "ind"], ["pfa", "cd"], ["lad", "nm"]], "rhs_tokens": ["sicbl", "cd"]},
+  {"lhs": ["CTY26CD", "IMD20IND", "LAD25NM"], "rhs": "ICB26CD", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 42660, "distinct_rhs": 42, "lhs_distinct_ratio": 0.042726, "rhs_distinct_ratio": 4.2e-05, "redundancy": 955796, "redundancy_wl": 998322, "lhs_unique": false, "lhs_tokens": [["cty", "cd"], ["imd", "ind"], ["lad", "nm"]], "rhs_tokens": ["icb", "cd"]},
+  {"lhs": ["CTRY26CD", "IMD20IND", "LAD25NM"], "rhs": "ICB26CD", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 42660, "distinct_rhs": 42, "lhs_distinct_ratio": 0.042726, "rhs_distinct_ratio": 4.2e-05, "redundancy": 955796, "redundancy_wl": 998322, "lhs_unique": false, "lhs_tokens": [["ctry", "cd"], ["imd", "ind"], ["lad", "nm"]], "rhs_tokens": ["icb", "cd"]},
+  {"lhs": ["RGN26CD", "IMD20IND", "LAD25NM"], "rhs": "ICB26CD", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 42660, "distinct_rhs": 42, "lhs_distinct_ratio": 0.042726, "rhs_distinct_ratio": 4.2e-05, "redundancy": 955796, "redundancy_wl": 998322, "lhs_unique": false, "lhs_tokens": [["rgn", "cd"], ["imd", "ind"], ["lad", "nm"]], "rhs_tokens": ["icb", "cd"]},
+  {"lhs": ["TTWA15CD", "IMD20IND", "LAD25NM"], "rhs": "ICB26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 42660, "distinct_rhs": 42, "lhs_distinct_ratio": 0.042726, "rhs_distinct_ratio": 4.2e-05, "redundancy": 955796, "redundancy_wl": 998322, "lhs_unique": false, "lhs_tokens": [["ttwa", "cd"], ["imd", "ind"], ["lad", "nm"]], "rhs_tokens": ["icb", "cd"]},
+  {"lhs": ["IMD20IND", "PFA23CD", "LAD25NM"], "rhs": "ICB26CD", "implied_by_truth": true, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 42660, "distinct_rhs": 42, "lhs_distinct_ratio": 0.042726, "rhs_distinct_ratio": 4.2e-05, "redundancy": 955796, "redundancy_wl": 998322, "lhs_unique": false, "lhs_tokens": [["imd", "ind"], ["pfa", "cd"], ["lad", "nm"]], "rhs_tokens": ["icb", "cd"]},
+  {"lhs": ["TTWA15CD", "OAC11IND", "IMD20IND"], "rhs": "CTRY25NM", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 148000, "distinct_rhs": 5, "lhs_distinct_ratio": 0.148229, "rhs_distinct_ratio": 5e-06, "redundancy": 850456, "redundancy_wl": 976433, "lhs_unique": false, "lhs_tokens": [["ttwa", "cd"], ["oac", "ind"], ["imd", "ind"]], "rhs_tokens": ["ctry", "nm"]},
+  {"lhs": ["RUC11IND", "OAC11IND", "RGN25NM"], "rhs": "CTRY25NM", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 3130, "distinct_rhs": 5, "lhs_distinct_ratio": 0.003135, "rhs_distinct_ratio": 5e-06, "redundancy": 995326, "redundancy_wl": 998379, "lhs_unique": false, "lhs_tokens": [["ruc", "ind"], ["oac", "ind"], ["rgn", "nm"]], "rhs_tokens": ["ctry", "nm"]},
+  {"lhs": ["RUC11IND", "IMD20IND", "RGN25NM"], "rhs": "CTRY25NM", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 49531, "distinct_rhs": 5, "lhs_distinct_ratio": 0.049608, "rhs_distinct_ratio": 5e-06, "redundancy": 948925, "redundancy_wl": 998107, "lhs_unique": false, "lhs_tokens": [["ruc", "ind"], ["imd", "ind"], ["rgn", "nm"]], "rhs_tokens": ["ctry", "nm"]},
+  {"lhs": ["CTY26CD", "TTWA15CD", "IMD20IND"], "rhs": "RGN25NM", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 42609, "distinct_rhs": 10, "lhs_distinct_ratio": 0.042675, "rhs_distinct_ratio": 1e-05, "redundancy": 955847, "redundancy_wl": 998353, "lhs_unique": false, "lhs_tokens": [["cty", "cd"], ["ttwa", "cd"], ["imd", "ind"]], "rhs_tokens": ["rgn", "nm"]},
+  {"lhs": ["CTY26CD", "OAC11IND", "IMD20IND"], "rhs": "RGN25NM", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 148005, "distinct_rhs": 10, "lhs_distinct_ratio": 0.148234, "rhs_distinct_ratio": 1e-05, "redundancy": 850451, "redundancy_wl": 976429, "lhs_unique": false, "lhs_tokens": [["cty", "cd"], ["oac", "ind"], ["imd", "ind"]], "rhs_tokens": ["rgn", "nm"]},
+  {"lhs": ["CTY26CD", "IMD20IND", "SICBL26CD"], "rhs": "RGN25NM", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 42610, "distinct_rhs": 10, "lhs_distinct_ratio": 0.042676, "rhs_distinct_ratio": 1e-05, "redundancy": 955846, "redundancy_wl": 998353, "lhs_unique": false, "lhs_tokens": [["cty", "cd"], ["imd", "ind"], ["sicbl", "cd"]], "rhs_tokens": ["rgn", "nm"]},
+  {"lhs": ["CTY26CD", "IMD20IND", "ICB26CD"], "rhs": "RGN25NM", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 3, "distinct_lhs": 42610, "distinct_rhs": 10, "lhs_distinct_ratio": 0.042676, "rhs_distinct_ratio": 1e-05, "redundancy": 955846, "redundancy_wl": 998353, "lhs_unique": false, "lhs_tokens": [["cty", "cd"], ["imd", "ind"], ["icb", "cd"]], "rhs_tokens": ["rgn", "nm"]},
+  {"lhs": ["DOINTR", "RGN26CD", "TTWA15CD", "IMD20IND"], "rhs": "CTY26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 357522, "distinct_rhs": 28, "lhs_distinct_ratio": 0.358075, "rhs_distinct_ratio": 2.8e-05, "redundancy": 640934, "redundancy_wl": 743634, "lhs_unique": false, "lhs_tokens": [["dointr"], ["rgn", "cd"], ["ttwa", "cd"], ["imd", "ind"]], "rhs_tokens": ["cty", "cd"]},
+  {"lhs": ["DOINTR", "RGN26CD", "IMD20IND", "SICBL26CD"], "rhs": "CTY26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 357524, "distinct_rhs": 28, "lhs_distinct_ratio": 0.358077, "rhs_distinct_ratio": 2.8e-05, "redundancy": 640932, "redundancy_wl": 743632, "lhs_unique": false, "lhs_tokens": [["dointr"], ["rgn", "cd"], ["imd", "ind"], ["sicbl", "cd"]], "rhs_tokens": ["cty", "cd"]},
+  {"lhs": ["DOINTR", "RGN26CD", "IMD20IND", "ICB26CD"], "rhs": "CTY26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 357524, "distinct_rhs": 28, "lhs_distinct_ratio": 0.358077, "rhs_distinct_ratio": 2.8e-05, "redundancy": 640932, "redundancy_wl": 743632, "lhs_unique": false, "lhs_tokens": [["dointr"], ["rgn", "cd"], ["imd", "ind"], ["icb", "cd"]], "rhs_tokens": ["cty", "cd"]},
+  {"lhs": ["DOINTR", "TTWA15CD", "IMD20IND", "RGN25NM"], "rhs": "CTY26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 357522, "distinct_rhs": 28, "lhs_distinct_ratio": 0.358075, "rhs_distinct_ratio": 2.8e-05, "redundancy": 640934, "redundancy_wl": 743634, "lhs_unique": false, "lhs_tokens": [["dointr"], ["ttwa", "cd"], ["imd", "ind"], ["rgn", "nm"]], "rhs_tokens": ["cty", "cd"]},
+  {"lhs": ["DOINTR", "IMD20IND", "SICBL26CD", "RGN25NM"], "rhs": "CTY26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 357524, "distinct_rhs": 28, "lhs_distinct_ratio": 0.358077, "rhs_distinct_ratio": 2.8e-05, "redundancy": 640932, "redundancy_wl": 743632, "lhs_unique": false, "lhs_tokens": [["dointr"], ["imd", "ind"], ["sicbl", "cd"], ["rgn", "nm"]], "rhs_tokens": ["cty", "cd"]},
+  {"lhs": ["DOINTR", "IMD20IND", "ICB26CD", "RGN25NM"], "rhs": "CTY26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 357524, "distinct_rhs": 28, "lhs_distinct_ratio": 0.358077, "rhs_distinct_ratio": 2.8e-05, "redundancy": 640932, "redundancy_wl": 743632, "lhs_unique": false, "lhs_tokens": [["dointr"], ["imd", "ind"], ["icb", "cd"], ["rgn", "nm"]], "rhs_tokens": ["cty", "cd"]},
+  {"lhs": ["DOINTR", "CTY26CD", "RUC11IND", "LAD25NM"], "rhs": "ITL25CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 128825, "distinct_rhs": 365, "lhs_distinct_ratio": 0.129024, "rhs_distinct_ratio": 0.000366, "redundancy": 869631, "redundancy_wl": 935424, "lhs_unique": false, "lhs_tokens": [["dointr"], ["cty", "cd"], ["ruc", "ind"], ["lad", "nm"]], "rhs_tokens": ["itl", "cd"]},
+  {"lhs": ["DOTERM", "CTY26CD", "RUC11IND", "LAD25NM"], "rhs": "ITL25CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 87563, "distinct_rhs": 365, "lhs_distinct_ratio": 0.087698, "rhs_distinct_ratio": 0.000366, "redundancy": 910893, "redundancy_wl": 955099, "lhs_unique": false, "lhs_tokens": [["doterm"], ["cty", "cd"], ["ruc", "ind"], ["lad", "nm"]], "rhs_tokens": ["itl", "cd"]},
+  {"lhs": ["DOINTR", "PARNCP26CD", "RUC11IND", "LAD25NM"], "rhs": "ITL25CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 197881, "distinct_rhs": 365, "lhs_distinct_ratio": 0.198187, "rhs_distinct_ratio": 0.000366, "redundancy": 800575, "redundancy_wl": 878807, "lhs_unique": false, "lhs_tokens": [["dointr"], ["parncp", "cd"], ["ruc", "ind"], ["lad", "nm"]], "rhs_tokens": ["itl", "cd"]},
+  {"lhs": ["DOTERM", "PARNCP26CD", "RUC11IND", "LAD25NM"], "rhs": "ITL25CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 128211, "distinct_rhs": 365, "lhs_distinct_ratio": 0.128409, "rhs_distinct_ratio": 0.000366, "redundancy": 870245, "redundancy_wl": 927824, "lhs_unique": false, "lhs_tokens": [["doterm"], ["parncp", "cd"], ["ruc", "ind"], ["lad", "nm"]], "rhs_tokens": ["itl", "cd"]},
+  {"lhs": ["DOINTR", "CTRY26CD", "RUC11IND", "LAD25NM"], "rhs": "ITL25CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 128825, "distinct_rhs": 365, "lhs_distinct_ratio": 0.129024, "rhs_distinct_ratio": 0.000366, "redundancy": 869631, "redundancy_wl": 935424, "lhs_unique": false, "lhs_tokens": [["dointr"], ["ctry", "cd"], ["ruc", "ind"], ["lad", "nm"]], "rhs_tokens": ["itl", "cd"]},
+  {"lhs": ["DOTERM", "CTRY26CD", "RUC11IND", "LAD25NM"], "rhs": "ITL25CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 87563, "distinct_rhs": 365, "lhs_distinct_ratio": 0.087698, "rhs_distinct_ratio": 0.000366, "redundancy": 910893, "redundancy_wl": 955099, "lhs_unique": false, "lhs_tokens": [["doterm"], ["ctry", "cd"], ["ruc", "ind"], ["lad", "nm"]], "rhs_tokens": ["itl", "cd"]},
+  {"lhs": ["DOINTR", "RGN26CD", "RUC11IND", "LAD25NM"], "rhs": "ITL25CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 128825, "distinct_rhs": 365, "lhs_distinct_ratio": 0.129024, "rhs_distinct_ratio": 0.000366, "redundancy": 869631, "redundancy_wl": 935424, "lhs_unique": false, "lhs_tokens": [["dointr"], ["rgn", "cd"], ["ruc", "ind"], ["lad", "nm"]], "rhs_tokens": ["itl", "cd"]},
+  {"lhs": ["DOTERM", "RGN26CD", "RUC11IND", "LAD25NM"], "rhs": "ITL25CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 87563, "distinct_rhs": 365, "lhs_distinct_ratio": 0.087698, "rhs_distinct_ratio": 0.000366, "redundancy": 910893, "redundancy_wl": 955099, "lhs_unique": false, "lhs_tokens": [["doterm"], ["rgn", "cd"], ["ruc", "ind"], ["lad", "nm"]], "rhs_tokens": ["itl", "cd"]},
+  {"lhs": ["DOINTR", "TTWA15CD", "RUC11IND", "LAD25NM"], "rhs": "ITL25CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 147054, "distinct_rhs": 365, "lhs_distinct_ratio": 0.147281, "rhs_distinct_ratio": 0.000366, "redundancy": 851402, "redundancy_wl": 918940, "lhs_unique": false, "lhs_tokens": [["dointr"], ["ttwa", "cd"], ["ruc", "ind"], ["lad", "nm"]], "rhs_tokens": ["itl", "cd"]},
+  {"lhs": ["DOTERM", "TTWA15CD", "RUC11IND", "LAD25NM"], "rhs": "ITL25CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 97454, "distinct_rhs": 365, "lhs_distinct_ratio": 0.097605, "rhs_distinct_ratio": 0.000366, "redundancy": 901002, "redundancy_wl": 946163, "lhs_unique": false, "lhs_tokens": [["doterm"], ["ttwa", "cd"], ["ruc", "ind"], ["lad", "nm"]], "rhs_tokens": ["itl", "cd"]},
+  {"lhs": ["DOINTR", "MSOA11CD", "RUC11IND", "LAD25NM"], "rhs": "ITL25CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 289942, "distinct_rhs": 365, "lhs_distinct_ratio": 0.29039, "rhs_distinct_ratio": 0.000366, "redundancy": 708514, "redundancy_wl": 791256, "lhs_unique": false, "lhs_tokens": [["dointr"], ["msoa", "cd"], ["ruc", "ind"], ["lad", "nm"]], "rhs_tokens": ["itl", "cd"]},
+  {"lhs": ["DOTERM", "MSOA11CD", "RUC11IND", "LAD25NM"], "rhs": "ITL25CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 183717, "distinct_rhs": 365, "lhs_distinct_ratio": 0.184001, "rhs_distinct_ratio": 0.000366, "redundancy": 814739, "redundancy_wl": 872952, "lhs_unique": false, "lhs_tokens": [["doterm"], ["msoa", "cd"], ["ruc", "ind"], ["lad", "nm"]], "rhs_tokens": ["itl", "cd"]},
+  {"lhs": ["DOINTR", "CTY26CD", "IMD20IND", "LAD25NM"], "rhs": "ITL25CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 357570, "distinct_rhs": 365, "lhs_distinct_ratio": 0.358123, "rhs_distinct_ratio": 0.000366, "redundancy": 640886, "redundancy_wl": 743597, "lhs_unique": false, "lhs_tokens": [["dointr"], ["cty", "cd"], ["imd", "ind"], ["lad", "nm"]], "rhs_tokens": ["itl", "cd"]},
+  {"lhs": ["DOTERM", "CTY26CD", "IMD20IND", "LAD25NM"], "rhs": "ITL25CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 233056, "distinct_rhs": 365, "lhs_distinct_ratio": 0.233416, "rhs_distinct_ratio": 0.000366, "redundancy": 765400, "redundancy_wl": 851216, "lhs_unique": false, "lhs_tokens": [["doterm"], ["cty", "cd"], ["imd", "ind"], ["lad", "nm"]], "rhs_tokens": ["itl", "cd"]},
+  {"lhs": ["DOINTR", "PARNCP26CD", "IMD20IND", "LAD25NM"], "rhs": "ITL25CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 366482, "distinct_rhs": 365, "lhs_distinct_ratio": 0.367049, "rhs_distinct_ratio": 0.000366, "redundancy": 631974, "redundancy_wl": 740916, "lhs_unique": false, "lhs_tokens": [["dointr"], ["parncp", "cd"], ["imd", "ind"], ["lad", "nm"]], "rhs_tokens": ["itl", "cd"]},
+  {"lhs": ["DOTERM", "PARNCP26CD", "IMD20IND", "LAD25NM"], "rhs": "ITL25CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 241923, "distinct_rhs": 365, "lhs_distinct_ratio": 0.242297, "rhs_distinct_ratio": 0.000366, "redundancy": 756533, "redundancy_wl": 849543, "lhs_unique": false, "lhs_tokens": [["doterm"], ["parncp", "cd"], ["imd", "ind"], ["lad", "nm"]], "rhs_tokens": ["itl", "cd"]},
+  {"lhs": ["DOINTR", "CTRY26CD", "IMD20IND", "LAD25NM"], "rhs": "ITL25CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 357570, "distinct_rhs": 365, "lhs_distinct_ratio": 0.358123, "rhs_distinct_ratio": 0.000366, "redundancy": 640886, "redundancy_wl": 743597, "lhs_unique": false, "lhs_tokens": [["dointr"], ["ctry", "cd"], ["imd", "ind"], ["lad", "nm"]], "rhs_tokens": ["itl", "cd"]},
+  {"lhs": ["DOTERM", "CTRY26CD", "IMD20IND", "LAD25NM"], "rhs": "ITL25CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 233056, "distinct_rhs": 365, "lhs_distinct_ratio": 0.233416, "rhs_distinct_ratio": 0.000366, "redundancy": 765400, "redundancy_wl": 851216, "lhs_unique": false, "lhs_tokens": [["doterm"], ["ctry", "cd"], ["imd", "ind"], ["lad", "nm"]], "rhs_tokens": ["itl", "cd"]},
+  {"lhs": ["DOINTR", "RGN26CD", "IMD20IND", "LAD25NM"], "rhs": "ITL25CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 357570, "distinct_rhs": 365, "lhs_distinct_ratio": 0.358123, "rhs_distinct_ratio": 0.000366, "redundancy": 640886, "redundancy_wl": 743597, "lhs_unique": false, "lhs_tokens": [["dointr"], ["rgn", "cd"], ["imd", "ind"], ["lad", "nm"]], "rhs_tokens": ["itl", "cd"]},
+  {"lhs": ["DOTERM", "RGN26CD", "IMD20IND", "LAD25NM"], "rhs": "ITL25CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 233056, "distinct_rhs": 365, "lhs_distinct_ratio": 0.233416, "rhs_distinct_ratio": 0.000366, "redundancy": 765400, "redundancy_wl": 851216, "lhs_unique": false, "lhs_tokens": [["doterm"], ["rgn", "cd"], ["imd", "ind"], ["lad", "nm"]], "rhs_tokens": ["itl", "cd"]},
+  {"lhs": ["DOINTR", "TTWA15CD", "IMD20IND", "LAD25NM"], "rhs": "ITL25CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 357570, "distinct_rhs": 365, "lhs_distinct_ratio": 0.358123, "rhs_distinct_ratio": 0.000366, "redundancy": 640886, "redundancy_wl": 743597, "lhs_unique": false, "lhs_tokens": [["dointr"], ["ttwa", "cd"], ["imd", "ind"], ["lad", "nm"]], "rhs_tokens": ["itl", "cd"]},
+  {"lhs": ["DOTERM", "TTWA15CD", "IMD20IND", "LAD25NM"], "rhs": "ITL25CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 233056, "distinct_rhs": 365, "lhs_distinct_ratio": 0.233416, "rhs_distinct_ratio": 0.000366, "redundancy": 765400, "redundancy_wl": 851216, "lhs_unique": false, "lhs_tokens": [["doterm"], ["ttwa", "cd"], ["imd", "ind"], ["lad", "nm"]], "rhs_tokens": ["itl", "cd"]},
+  {"lhs": ["DOINTR", "MSOA11CD", "IMD20IND", "LAD25NM"], "rhs": "ITL25CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 357570, "distinct_rhs": 365, "lhs_distinct_ratio": 0.358123, "rhs_distinct_ratio": 0.000366, "redundancy": 640886, "redundancy_wl": 743597, "lhs_unique": false, "lhs_tokens": [["dointr"], ["msoa", "cd"], ["imd", "ind"], ["lad", "nm"]], "rhs_tokens": ["itl", "cd"]},
+  {"lhs": ["DOTERM", "MSOA11CD", "IMD20IND", "LAD25NM"], "rhs": "ITL25CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 233056, "distinct_rhs": 365, "lhs_distinct_ratio": 0.233416, "rhs_distinct_ratio": 0.000366, "redundancy": 765400, "redundancy_wl": 851216, "lhs_unique": false, "lhs_tokens": [["doterm"], ["msoa", "cd"], ["imd", "ind"], ["lad", "nm"]], "rhs_tokens": ["itl", "cd"]},
+  {"lhs": ["DOINTR", "RUC11IND", "PFA23CD", "LAD25NM"], "rhs": "ITL25CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 128825, "distinct_rhs": 365, "lhs_distinct_ratio": 0.129024, "rhs_distinct_ratio": 0.000366, "redundancy": 869631, "redundancy_wl": 935424, "lhs_unique": false, "lhs_tokens": [["dointr"], ["ruc", "ind"], ["pfa", "cd"], ["lad", "nm"]], "rhs_tokens": ["itl", "cd"]},
+  {"lhs": ["DOTERM", "RUC11IND", "PFA23CD", "LAD25NM"], "rhs": "ITL25CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 87563, "distinct_rhs": 365, "lhs_distinct_ratio": 0.087698, "rhs_distinct_ratio": 0.000366, "redundancy": 910893, "redundancy_wl": 955099, "lhs_unique": false, "lhs_tokens": [["doterm"], ["ruc", "ind"], ["pfa", "cd"], ["lad", "nm"]], "rhs_tokens": ["itl", "cd"]},
+  {"lhs": ["DOINTR", "IMD20IND", "PFA23CD", "LAD25NM"], "rhs": "ITL25CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 357570, "distinct_rhs": 365, "lhs_distinct_ratio": 0.358123, "rhs_distinct_ratio": 0.000366, "redundancy": 640886, "redundancy_wl": 743597, "lhs_unique": false, "lhs_tokens": [["dointr"], ["imd", "ind"], ["pfa", "cd"], ["lad", "nm"]], "rhs_tokens": ["itl", "cd"]},
+  {"lhs": ["DOTERM", "IMD20IND", "PFA23CD", "LAD25NM"], "rhs": "ITL25CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 233056, "distinct_rhs": 365, "lhs_distinct_ratio": 0.233416, "rhs_distinct_ratio": 0.000366, "redundancy": 765400, "redundancy_wl": 851216, "lhs_unique": false, "lhs_tokens": [["doterm"], ["imd", "ind"], ["pfa", "cd"], ["lad", "nm"]], "rhs_tokens": ["itl", "cd"]},
+  {"lhs": ["DOINTR", "RUC11IND", "SICBL26CD", "LAD25NM"], "rhs": "ITL25CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 130997, "distinct_rhs": 365, "lhs_distinct_ratio": 0.1312, "rhs_distinct_ratio": 0.000366, "redundancy": 867459, "redundancy_wl": 933396, "lhs_unique": false, "lhs_tokens": [["dointr"], ["ruc", "ind"], ["sicbl", "cd"], ["lad", "nm"]], "rhs_tokens": ["itl", "cd"]},
+  {"lhs": ["DOTERM", "RUC11IND", "SICBL26CD", "LAD25NM"], "rhs": "ITL25CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 88499, "distinct_rhs": 365, "lhs_distinct_ratio": 0.088636, "rhs_distinct_ratio": 0.000366, "redundancy": 909957, "redundancy_wl": 954210, "lhs_unique": false, "lhs_tokens": [["doterm"], ["ruc", "ind"], ["sicbl", "cd"], ["lad", "nm"]], "rhs_tokens": ["itl", "cd"]},
+  {"lhs": ["DOINTR", "IMD20IND", "SICBL26CD", "LAD25NM"], "rhs": "ITL25CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 357570, "distinct_rhs": 365, "lhs_distinct_ratio": 0.358123, "rhs_distinct_ratio": 0.000366, "redundancy": 640886, "redundancy_wl": 743597, "lhs_unique": false, "lhs_tokens": [["dointr"], ["imd", "ind"], ["sicbl", "cd"], ["lad", "nm"]], "rhs_tokens": ["itl", "cd"]},
+  {"lhs": ["DOTERM", "IMD20IND", "SICBL26CD", "LAD25NM"], "rhs": "ITL25CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 233056, "distinct_rhs": 365, "lhs_distinct_ratio": 0.233416, "rhs_distinct_ratio": 0.000366, "redundancy": 765400, "redundancy_wl": 851216, "lhs_unique": false, "lhs_tokens": [["doterm"], ["imd", "ind"], ["sicbl", "cd"], ["lad", "nm"]], "rhs_tokens": ["itl", "cd"]},
+  {"lhs": ["DOINTR", "RUC11IND", "ICB26CD", "LAD25NM"], "rhs": "ITL25CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 129210, "distinct_rhs": 365, "lhs_distinct_ratio": 0.12941, "rhs_distinct_ratio": 0.000366, "redundancy": 869246, "redundancy_wl": 935049, "lhs_unique": false, "lhs_tokens": [["dointr"], ["ruc", "ind"], ["icb", "cd"], ["lad", "nm"]], "rhs_tokens": ["itl", "cd"]},
+  {"lhs": ["DOTERM", "RUC11IND", "ICB26CD", "LAD25NM"], "rhs": "ITL25CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 87754, "distinct_rhs": 365, "lhs_distinct_ratio": 0.08789, "rhs_distinct_ratio": 0.000366, "redundancy": 910702, "redundancy_wl": 954912, "lhs_unique": false, "lhs_tokens": [["doterm"], ["ruc", "ind"], ["icb", "cd"], ["lad", "nm"]], "rhs_tokens": ["itl", "cd"]},
+  {"lhs": ["DOINTR", "IMD20IND", "ICB26CD", "LAD25NM"], "rhs": "ITL25CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 357570, "distinct_rhs": 365, "lhs_distinct_ratio": 0.358123, "rhs_distinct_ratio": 0.000366, "redundancy": 640886, "redundancy_wl": 743597, "lhs_unique": false, "lhs_tokens": [["dointr"], ["imd", "ind"], ["icb", "cd"], ["lad", "nm"]], "rhs_tokens": ["itl", "cd"]},
+  {"lhs": ["DOTERM", "IMD20IND", "ICB26CD", "LAD25NM"], "rhs": "ITL25CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 233056, "distinct_rhs": 365, "lhs_distinct_ratio": 0.233416, "rhs_distinct_ratio": 0.000366, "redundancy": 765400, "redundancy_wl": 851216, "lhs_unique": false, "lhs_tokens": [["doterm"], ["imd", "ind"], ["icb", "cd"], ["lad", "nm"]], "rhs_tokens": ["itl", "cd"]},
+  {"lhs": ["DOINTR", "RGN26CD", "TTWA15CD", "IMD20IND"], "rhs": "PFA23CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 357522, "distinct_rhs": 48, "lhs_distinct_ratio": 0.358075, "rhs_distinct_ratio": 4.8e-05, "redundancy": 640934, "redundancy_wl": 743634, "lhs_unique": false, "lhs_tokens": [["dointr"], ["rgn", "cd"], ["ttwa", "cd"], ["imd", "ind"]], "rhs_tokens": ["pfa", "cd"]},
+  {"lhs": ["CTY26CD", "PCON24CD", "TTWA15CD", "SICBL26CD"], "rhs": "PFA23CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 1271, "distinct_rhs": 48, "lhs_distinct_ratio": 0.001273, "rhs_distinct_ratio": 4.8e-05, "redundancy": 997185, "redundancy_wl": 998438, "lhs_unique": false, "lhs_tokens": [["cty", "cd"], ["pcon", "cd"], ["ttwa", "cd"], ["sicbl", "cd"]], "rhs_tokens": ["pfa", "cd"]},
+  {"lhs": ["DOINTR", "RGN26CD", "IMD20IND", "SICBL26CD"], "rhs": "PFA23CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 357524, "distinct_rhs": 48, "lhs_distinct_ratio": 0.358077, "rhs_distinct_ratio": 4.8e-05, "redundancy": 640932, "redundancy_wl": 743632, "lhs_unique": false, "lhs_tokens": [["dointr"], ["rgn", "cd"], ["imd", "ind"], ["sicbl", "cd"]], "rhs_tokens": ["pfa", "cd"]},
+  {"lhs": ["DOINTR", "RGN26CD", "IMD20IND", "ICB26CD"], "rhs": "PFA23CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 357524, "distinct_rhs": 48, "lhs_distinct_ratio": 0.358077, "rhs_distinct_ratio": 4.8e-05, "redundancy": 640932, "redundancy_wl": 743632, "lhs_unique": false, "lhs_tokens": [["dointr"], ["rgn", "cd"], ["imd", "ind"], ["icb", "cd"]], "rhs_tokens": ["pfa", "cd"]},
+  {"lhs": ["DOINTR", "TTWA15CD", "IMD20IND", "RGN25NM"], "rhs": "PFA23CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 357522, "distinct_rhs": 48, "lhs_distinct_ratio": 0.358075, "rhs_distinct_ratio": 4.8e-05, "redundancy": 640934, "redundancy_wl": 743634, "lhs_unique": false, "lhs_tokens": [["dointr"], ["ttwa", "cd"], ["imd", "ind"], ["rgn", "nm"]], "rhs_tokens": ["pfa", "cd"]},
+  {"lhs": ["DOINTR", "IMD20IND", "SICBL26CD", "RGN25NM"], "rhs": "PFA23CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 357524, "distinct_rhs": 48, "lhs_distinct_ratio": 0.358077, "rhs_distinct_ratio": 4.8e-05, "redundancy": 640932, "redundancy_wl": 743632, "lhs_unique": false, "lhs_tokens": [["dointr"], ["imd", "ind"], ["sicbl", "cd"], ["rgn", "nm"]], "rhs_tokens": ["pfa", "cd"]},
+  {"lhs": ["DOINTR", "IMD20IND", "ICB26CD", "RGN25NM"], "rhs": "PFA23CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 357524, "distinct_rhs": 48, "lhs_distinct_ratio": 0.358077, "rhs_distinct_ratio": 4.8e-05, "redundancy": 640932, "redundancy_wl": 743632, "lhs_unique": false, "lhs_tokens": [["dointr"], ["imd", "ind"], ["icb", "cd"], ["rgn", "nm"]], "rhs_tokens": ["pfa", "cd"]},
+  {"lhs": ["PARNCP26CD", "MSOA11CD", "RUC11IND", "OAC11IND"], "rhs": "ICB26CD", "implied_by_truth": false, "implied_by_sure_truth": false, "lhs_size": 4, "distinct_lhs": 104052, "distinct_rhs": 42, "lhs_distinct_ratio": 0.104213, "rhs_distinct_ratio": 4.2e-05, "redundancy": 894404, "redundancy_wl": 986650, "lhs_unique": false, "lhs_tokens": [["parncp", "cd"], ["msoa", "cd"], ["ruc", "ind"], ["oac", "ind"]], "rhs_tokens": ["icb", "cd"]}
+ ]
+}

@@ -1,0 +1,1 @@
+{"dataset": "fresh3_onspd", "truth": "full", "oracle": "gold", "attributes": 25, "counterexample": "min", "data_fds": 335, "finished": 1, "visited": 221480, "yes": 31, "no": 197935, "unit": 888977, "unit_yes": 54, "basis": 31, "counterexamples": 197935, "equivalent": 0, "secs": 16.4, "wall": 16.4}

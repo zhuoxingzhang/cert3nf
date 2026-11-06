@@ -1,0 +1,1 @@
+{"dataset": "fresh3_fec_candidate", "truth": "full", "oracle": "gold", "attributes": 20, "counterexample": "max", "data_fds": 737, "finished": 1, "visited": 262274, "yes": 1, "no": 11, "unit": 183, "unit_yes": 20, "basis": 1, "counterexamples": 11, "equivalent": 1, "secs": 0.1, "wall": 0.1}

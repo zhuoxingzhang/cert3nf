@@ -1,0 +1,1 @@
+{"dataset": "fresh3_fec_committee", "truth": "sure", "oracle": "gold", "attributes": 20, "counterexample": "min", "data_fds": 887, "finished": 1, "visited": 263170, "yes": 1, "no": 187545, "unit": 718856, "unit_yes": 8, "basis": 1, "counterexamples": 187545, "equivalent": 1, "secs": 18.6, "wall": 18.6}

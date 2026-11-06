@@ -1,0 +1,30 @@
+== truth full
+  fresh3_tpcc_order_line g3 0.01568  OL_O_ID,O_ENTRY_D -> OL_DELIVERY_D
+  fresh3_hgnc          g3 0.11131  agr -> hgnc_id
+  fresh3_hgnc          g3 0.11131  agr -> symbol
+  fresh3_hgnc          g3 0.11131  agr -> name
+  fresh3_hgnc          g3 0.04345  agr -> locus_group
+  fresh3_hgnc          g3 0.04913  agr -> locus_type
+  fresh3_hgnc          g3 0.11038  agr -> location
+  fresh3_hgnc          g3 0.07256  agr -> gene_family
+  fresh3_hgnc          g3 0.07256  agr -> gene_family_id
+  fresh3_hgnc          g3 0.10859  agr -> date_approved_reserved
+  fresh3_hgnc          g3 0.00640  agr -> date_symbol_changed
+  fresh3_hgnc          g3 0.02413  agr -> date_name_changed
+  fresh3_hgnc          g3 0.10371  agr -> date_modified
+  fresh3_hgnc          g3 0.09389  agr -> entrez_id
+  fresh3_hgnc          g3 0.09327  agr -> ensembl_gene_id
+  fresh3_hgnc          g3 0.01625  agr -> vega_id
+  fresh3_hgnc          g3 0.00486  agr -> ucsc_id
+  fresh3_hgnc          g3 0.06392  agr -> refseq_accession
+  fresh3_hgnc          g3 0.00188  agr -> ccds_id
+  fresh3_hgnc          g3 0.00395  agr -> uniprot_ids
+  fresh3_hgnc          g3 0.00181  agr -> omim_id
+  fresh3_hgnc          g3 0.00320  agr -> mgd_id
+  fresh3_hgnc          g3 0.00139  agr -> rgd_id
+  fresh3_onspd         g3 0.00011  LAD26CD -> ITL25CD
+  fresh3_onspd         g3 0.00010  OA11CD -> ITL25CD
+  fresh3_onspd         g3 0.00033  CTRY26CD,IMD20IND -> LSOA11CD
+  fresh3_ourairports_airports g3 0.39260  icao_code -> gps_code
+  fresh3_ourairports_frequencies g3 0.29026  airport_icao_code -> airport_gps_code
+== truth sure

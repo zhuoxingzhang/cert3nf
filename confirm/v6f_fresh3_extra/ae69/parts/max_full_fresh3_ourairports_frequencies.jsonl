@@ -1,0 +1,1 @@
+{"dataset": "fresh3_ourairports_frequencies", "truth": "full", "oracle": "gold", "attributes": 24, "counterexample": "max", "data_fds": 1597, "finished": 1, "visited": 589109, "yes": 12, "no": 19, "unit": 370, "unit_yes": 76, "basis": 12, "counterexamples": 19, "equivalent": 0, "secs": 0.5, "wall": 0.5}

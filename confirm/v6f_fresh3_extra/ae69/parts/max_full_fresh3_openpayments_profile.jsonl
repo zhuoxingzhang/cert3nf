@@ -1,0 +1,1 @@
+{"dataset": "fresh3_openpayments_profile", "truth": "full", "oracle": "gold", "attributes": 25, "counterexample": "max", "data_fds": 146, "finished": 1, "visited": 9437186, "yes": 1, "no": 15, "unit": 329, "unit_yes": 5, "basis": 1, "counterexamples": 15, "equivalent": 1, "secs": 0.7, "wall": 0.7}

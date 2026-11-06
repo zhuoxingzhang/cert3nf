@@ -1,0 +1,1 @@
+{"dataset": "fresh3_twitter_tweets", "truth": "sure", "oracle": "gold", "attributes": 5, "counterexample": "min", "data_fds": 14, "finished": 1, "visited": 12, "yes": 1, "no": 8, "unit": 20, "unit_yes": 2, "basis": 1, "counterexamples": 8, "equivalent": 1, "secs": 0.0, "wall": 0.0}

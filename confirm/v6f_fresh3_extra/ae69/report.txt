@@ -1,0 +1,16 @@
+full max: finished 23/23, implications median 22, range 5-214, implications/price 0.83, unit/price median 10.60, unit/Cert3NF median 7.00, min 0.81, max 21.09
+   not finished: []
+   below Cert3NF: [('hgnc', 560, 691)]
+   equivalent to truth: 18
+full min: finished 15/23, implications median 764501, range 9-2914305, implications/price 28472.81, unit/price median 130221.90, unit/Cert3NF median 95284.32, min 2.86, max 729161.46
+   not finished: ['companieshouse', 'gleif', 'nppes_npidata', 'openpayments_general', 'openpayments_profile', 'ourairports_navaids', 'stackexchange_posts', 'tpcc_order_line']
+   below Cert3NF: []
+   equivalent to truth: 11
+sure max: finished 23/23, implications median 22, range 5-54, implications/price 0.80, unit/price median 11.00, unit/Cert3NF median 8.57, min 1.71, max 21.09
+   not finished: []
+   below Cert3NF: []
+   equivalent to truth: 23
+sure min: finished 14/23, implications median 999221, range 9-2216945, implications/price 30867.74, unit/price median 164250.83, unit/Cert3NF median 112903.42, min 2.86, max 632874.21
+   not finished: ['companieshouse', 'gleif', 'hgnc', 'nppes_npidata', 'openpayments_general', 'openpayments_profile', 'ourairports_navaids', 'stackexchange_posts', 'tpcc_order_line']
+   below Cert3NF: []
+   equivalent to truth: 14

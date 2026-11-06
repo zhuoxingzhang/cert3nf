@@ -1,0 +1,24 @@
+v6|lc+hone+kf+rl fresh3_nppes_npidata         run says certified True ; checker: maximal sets     8 unrefuted     0, candidates open     0 of    327 (yes 0, no 9) -> certified True , premises wrong yes 0 no 0
+v6|lc+hone+kf+rl fresh3_companieshouse        run says certified True ; checker: maximal sets    22 unrefuted     0, candidates open     0 of    994 (yes 0, no 22) -> certified True , premises wrong yes 0 no 0
+v6|lc+hone+kf+rl fresh3_hgnc                  run says certified True ; checker: maximal sets    23 unrefuted     0, candidates open     0 of    761 (yes 2, no 23) -> certified True , premises wrong yes 0 no 0
+v6|lc+hone+kf+rl fresh3_onspd                 run says certified True ; checker: maximal sets    14 unrefuted     0, candidates open     0 of    311 (yes 20, no 39) -> certified True , premises wrong yes 0 no 0
+v6|lc+hone+kf+rl fresh3_openpayments_profile  run says certified True ; checker: maximal sets    15 unrefuted     0, candidates open     0 of    122 (yes 4, no 17) -> certified True , premises wrong yes 0 no 0
+v6|lc+hone+kf+rl fresh3_fec_candidate         run says certified True ; checker: maximal sets    11 unrefuted     0, candidates open     0 of    718 (yes 12, no 16) -> certified True , premises wrong yes 0 no 0
+v6|lc+hone+kf+rl fresh3_fec_committee         run says certified True ; checker: maximal sets    12 unrefuted     0, candidates open     0 of    868 (yes 9, no 13) -> certified True , premises wrong yes 0 no 0
+v6|lc+hone+kf+rl fresh3_fec_linkage           run says certified True ; checker: maximal sets    11 unrefuted     0, candidates open     0 of    657 (yes 19, no 16) -> certified True , premises wrong yes 0 no 0
+v6|lc+hone+kf+rl fresh3_stackexchange_users   run says certified True ; checker: maximal sets     8 unrefuted     0, candidates open     0 of     18 (yes 0, no 8) -> certified True , premises wrong yes 0 no 0
+v6|lc+hone+kf+rl fresh3_openpayments_general  run says certified True ; checker: maximal sets    17 unrefuted     0, candidates open     0 of    741 (yes 10, no 23) -> certified True , premises wrong yes 0 no 0
+v6|lc+hone+kf+rl fresh3_synthea_claims        run says certified True ; checker: maximal sets    18 unrefuted     0, candidates open     0 of    201 (yes 11, no 31) -> certified True , premises wrong yes 0 no 0
+v6|lc+hone+kf+rl fresh3_synthea_claims_transactions run says certified True ; checker: maximal sets    22 unrefuted     0, candidates open     0 of    244 (yes 9, no 30) -> certified True , premises wrong yes 0 no 0
+v6|lc+hone+kf+rl fresh3_ourairports_airports  run says certified True ; checker: maximal sets    25 unrefuted     0, candidates open     0 of    557 (yes 17, no 27) -> certified True , premises wrong yes 0 no 0
+v6|lc+hone+kf+rl fresh3_tpcc_customer         run says certified True ; checker: maximal sets    20 unrefuted     0, candidates open     0 of    272 (yes 13, no 30) -> certified True , premises wrong yes 0 no 0
+v6|lc+hone+kf+rl fresh3_stackexchange_posts   run says certified True ; checker: maximal sets    24 unrefuted     0, candidates open     0 of   1053 (yes 16, no 29) -> certified True , premises wrong yes 0 no 0
+v6|lc+hone+kf+rl fresh3_gleif                 run says certified True ; checker: maximal sets    24 unrefuted     0, candidates open     0 of   4008 (yes 0, no 24) -> certified True , premises wrong yes 0 no 0
+v6|lc+hone+kf+rl fresh3_twitter_tweets        run says certified True ; checker: maximal sets     4 unrefuted     0, candidates open     0 of     10 (yes 3, no 6) -> certified True , premises wrong yes 0 no 0
+v6|lc+hone+kf+rl fresh3_tpcc_stock            run says certified True ; checker: maximal sets    17 unrefuted     0, candidates open     0 of    238 (yes 20, no 17) -> certified True , premises wrong yes 0 no 0
+v6|lc+hone+kf+rl fresh3_synthea_encounters    run says certified True ; checker: maximal sets    21 unrefuted     0, candidates open     0 of    635 (yes 19, no 28) -> certified True , premises wrong yes 0 no 0
+v6|lc+hone+kf+rl fresh3_stackexchange_postlinks run says certified True ; checker: maximal sets    24 unrefuted     0, candidates open     0 of   1237 (yes 20, no 28) -> certified True , premises wrong yes 0 no 0
+v6|lc+hone+kf+rl fresh3_ourairports_frequencies run says certified True ; checker: maximal sets    20 unrefuted     0, candidates open     0 of   1574 (yes 20, no 27) -> certified True , premises wrong yes 0 no 0
+v6|lc+hone+kf+rl fresh3_ourairports_navaids   run says certified True ; checker: maximal sets    25 unrefuted     0, candidates open     0 of   5271 (yes 8, no 29) -> certified True , premises wrong yes 0 no 0
+v6|lc+hone+kf+rl fresh3_tpcc_order_line       run says certified True ; checker: maximal sets    49 unrefuted     0, candidates open     0 of  12130 (yes 31, no 69) -> certified True , premises wrong yes 0 no 0
+disagreements or unsound: 0

@@ -1,0 +1,18 @@
+== truth full, 23 relations, price 877
+  statistics only      certified 23/23, within 50 16, within 100 19, certified good within 100 18, good at budget 100 18, wrong 0, total 1774, above the price 897, ratio median 1.367, LLM queries 0
+  Qwen                 certified 23/23, within 50 18, within 100 19, certified good within 100 18, good at budget 100 -, wrong 0, total 1786, above the price 909, ratio median 1.333, LLM queries 5004
+  gpt-oss              certified 23/23, within 50 18, within 100 19, certified good within 100 18, good at budget 100 18, wrong 0, total 1868, above the price 991, ratio median 1.333, LLM queries 5932
+  two phases, Qwen     certified 23/23, within 50 14, within 100 18, certified good within 100 18, good at budget 100 18, wrong 0, total 2322, above the price 1445, ratio median 1.538, LLM queries 4256
+  two phases, gpt-oss  certified 23/23, within 50 15, within 100 17, certified good within 100 17, good at budget 100 18, wrong 0, total 2331, above the price 1454, ratio median 1.500, LLM queries 4974
+  gpt-oss over statistics only: median 1.000, fewer 9, same 4, more 10
+  Qwen over statistics only: median 1.000, fewer 10, same 6, more 7
+  within 100 differs from statistics only: []
+== truth sure, 23 relations, price 629
+  statistics only      certified 23/23, within 50 19, within 100 22, certified good within 100 22, good at budget 100 23, wrong 0, total 851, above the price 222, ratio median 1.256, LLM queries 0
+  Qwen                 certified 23/23, within 50 20, within 100 23, certified good within 100 23, good at budget 100 -, wrong 0, total 811, above the price 182, ratio median 1.205, LLM queries 3646
+  gpt-oss              certified 23/23, within 50 21, within 100 23, certified good within 100 23, good at budget 100 23, wrong 0, total 824, above the price 195, ratio median 1.233, LLM queries 2924
+  two phases, Qwen     certified 23/23, within 50 12, within 100 20, certified good within 100 20, good at budget 100 22, wrong 0, total 1198, above the price 569, ratio median 1.581, LLM queries 1221
+  two phases, gpt-oss  certified 23/23, within 50 14, within 100 21, certified good within 100 21, good at budget 100 22, wrong 0, total 1251, above the price 622, ratio median 1.520, LLM queries 2301
+  gpt-oss over statistics only: median 1.000, fewer 10, same 5, more 8
+  Qwen over statistics only: median 1.000, fewer 11, same 8, more 4
+  within 100 differs from statistics only: [('tpcc_order_line', 120, 100, 95)]
