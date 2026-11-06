@@ -6,7 +6,7 @@ at the same time.
   /                        the start page (index.html): a participant code and session 1, 2 or 3, or "try it"
   /s/<code>/<n>/           the session's page (ui.html): instructions, two practice questions, the questions, the
                            exit questionnaire; reopening it continues the session where it is
-  /s/<code>/<n>/api/...    meta, question, answer, stop, practice, questionnaire, and result for a try
+  /s/<code>/<n>/api/...    meta, question, answer, break, stop, practice, questionnaire, and result for a try
   /s/<code>/<n>/docs/<f>   the documentation of the relation (conditions E and P only): the files in docs/<relation>/,
                            and links to the official documents listed in docs/<relation>/links.json
   POST /try                a test session of its own for anyone who wants to try (code TP0x-xxxxxx, x the chosen
@@ -422,6 +422,8 @@ class Handler(BaseHTTPRequestHandler):
             if rest == "api/practice":
                 s.practice({"practice": b.get("practice"), "answer": b.get("answer")})
                 return self.send(200, {"ok": True})
+            if rest == "api/break":                              # {"state": "start"} or {"state": "end"}
+                return self.send(200, s.pause() if b.get("state") == "start" else s.go_on())
             if rest == "api/questionnaire":
                 keep = {k: b.get(k) for k in ("familiarity", "fatigue", "confidence")}
                 keep.update({k: str(b.get(k) or "")[:2000] for k in ("stop_reason", "comments")})

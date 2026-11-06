@@ -7,14 +7,14 @@ and one who runs into the time limit.  The answer to a question depends only on 
   python test_session.py            every mode on every relation: the session ends, no two answers to the same
                                     question are closer than GAP shown questions, the block comes first, replay
                                     reproduces the method's output; then resume (the session is cut off after k
-                                    answers and continued from its file) and six sessions at once, each of which must
-                                    equal the same session run alone
+                                    answers and continued from its file), six sessions at once, each of which must
+                                    equal the same session run alone, and breaks, which the clocks must leave out
   python test_session.py --compare  the sessions of every mode in three processes: the kit (method/ and prebuilt/) with
                                     two hash seeds, and the build (STUDY_SOURCE, objects built from all inputs);
                                     the session files must agree line for line, clocks aside
 Session files go to a temporary folder.
 """
-import hashlib, json, os, subprocess, sys, tempfile, threading
+import hashlib, json, os, subprocess, sys, tempfile, threading, time
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import common as K
 import session as S
@@ -22,7 +22,7 @@ import replay as RP
 
 CASES = (("E01", 1), ("E01", 2), ("P02", 2), ("U03", 3))   # R1, R2, R3 and a third session (R2)
 MODES = ("exact", "dk", "err", "stop", "time")
-CLOCK = {"t_elapsed_s", "t_live_s", "rt_ms", "time", "minutes", "live_minutes_used"}
+CLOCK = {"t_elapsed_s", "t_live_s", "rt_ms", "time", "minutes", "live_minutes_used", "break_minutes"}
 
 
 def open_session(part, sno, out, mode):
@@ -60,10 +60,10 @@ def run_case(part, sno, out, mode):
 
 
 def norm(path):
-    """the session file without clocks and resume lines"""
+    """the session file without clocks, resume and break lines"""
     out = []
     for r in S.read(path):
-        if r["event"] == "resume":
+        if r["event"] in ("resume", "break"):
             continue
         r = {k: v for k, v in r.items() if k not in CLOCK}
         if r.get("method"):
@@ -145,6 +145,33 @@ def parallel(tmp):
     print("parallel: six sessions at once equal the same sessions alone")
 
 
+def breaks(tmp):
+    """a break ended by Continue and one left open (the page closed, then the question asked again): one line each,
+    the clocks and the live minutes leave them out, and the session is otherwise the same as without them"""
+    part, sno = CASES[0]
+    whole = norm(os.path.join(tmp, "exact", f"{part}_s{sno}_{K.relation_of(part, sno)}.jsonl"))
+    sess = open_session(part, sno, os.path.join(tmp, "breaks"), "exact")
+    pause = 3.0                                             # longer than the method's own time for the whole session
+    for cut, close in ((10, True), (30, False)):          # in the block, and in the live part
+        assert not drive(sess, "exact", cut)
+        sess.pause()
+        time.sleep(pause)
+        if close:
+            sess.go_on()
+    drive(sess, "exact")
+    sess.questionnaire({"familiarity": 3, "fatigue": 2, "confidence": 4, "stop_reason": "test"})
+    recs = S.read(sess.path)
+    br = [r for r in recs if r["event"] == "break"]
+    end = next(r for r in recs if r["event"] == "end")
+    t = [r["t_elapsed_s"] for r in recs if r["event"] == "answer"]
+    assert len(br) == 2 and all(r["seconds"] >= pause - 0.1 for r in br), br
+    assert end["break_minutes"] >= 2 * (pause - 0.1) / 60, end["break_minutes"]
+    assert max(b - a for a, b in zip(t, t[1:])) < pause - 0.5, "a clock counts a break"
+    assert end["live_minutes_used"] * 60 < pause, ("the live minutes count a break", end["live_minutes_used"])
+    assert norm(sess.path) == whole, "a break changes the session"
+    print(f"breaks: two breaks of {pause} s, one line each, left out of the clocks, the session unchanged")
+
+
 def dump(out):
     for part, sno in CASES:
         for mode in MODES:
@@ -187,6 +214,7 @@ def main():
     tmp = tempfile.mkdtemp(prefix="hs_test_")
     print("session files in", tmp)
     modes(tmp)
+    breaks(tmp)
     resume(tmp)
     parallel(tmp)
 

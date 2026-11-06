@@ -45,7 +45,7 @@
                       background:linear-gradient(90deg, #6b8fbf, #24364b); animation: slide 1.4s ease-in-out infinite; }
   @keyframes slide { 0% { transform:translateX(-100%); } 100% { transform:translateX(290%); } }
   .qrow { display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
-  .stop { margin-left:auto; }
+  .stop { margin-left:auto; display:flex; flex-wrap:wrap; gap:16px 10px; }   /* a break and stop: side by side, else stacked with room for a thumb */
   /* stop: a quiet pill that turns red on hover, as tall as the answer buttons so that the row lines up */
   .stop button { display:inline-flex; align-items:center; gap:7px; border:none; color:#5f6b7a; padding:7px 15px 7px 8px; font-size:15px;
                  font-weight:600; box-shadow: inset 0 0 0 1px #c5ccd6, 0 1px 3px rgba(31,41,55,.08), 0 4px 14px rgba(31,41,55,.13); }
@@ -54,6 +54,7 @@
   .stop button.armed { color:#b42318; background:#fff7f6; box-shadow: inset 0 0 0 1px #ef9a92, 0 3px 6px rgba(196,55,47,.1), 0 8px 22px rgba(196,55,47,.32); }
   .stop button.armed .ico { background:#c4372f; color:#fff; }
   .stop button:active { transform: translateY(1px) scale(.97); }
+  .stop button.pause .ico { background:#e8eef6; color:#3d5a7d; }   /* a break: blue, not red */
   .fb { margin-top:10px; padding:10px 12px; border-radius:8px; background:#f1f6ee; border:1px solid #cfe3c4; display:none; }
   .fb.off { background:#fff7e8; border-color:#f3d39b; }   /* a practice answer that differs */
   label { display:block; margin:10px 0 4px; } select, textarea { font:inherit; padding:6px; width:100%; max-width:520px; }
@@ -147,6 +148,8 @@
     button.main:hover:not([aria-disabled]) { transform: translateY(-2px); filter: brightness(1.15); box-shadow: 0 3px 7px rgba(36,54,75,.26), 0 8px 26px rgba(36,54,75,.5); }
     .stop button:hover { transform: translateY(-2px); color:#b42318; background:#fff7f6; box-shadow: inset 0 0 0 1px #ef9a92, 0 3px 6px rgba(196,55,47,.1), 0 8px 22px rgba(196,55,47,.32); }
     .stop button:hover .ico { background:#c4372f; color:#fff; transform: scale(1.12); }
+    .stop button.pause:hover { color:#24364b; background:#f3f6fa; box-shadow: inset 0 0 0 1px #9fb3c8, 0 3px 6px rgba(36,54,75,.1), 0 8px 22px rgba(36,54,75,.25); }
+    .stop button.pause:hover .ico { background:#3d5a7d; color:#fff; }
     .ans:hover:not([aria-disabled]) { transform: translateY(-2px); filter: brightness(1.05); box-shadow: 0 3px 7px rgba(var(--glow),.26), 0 8px 26px rgba(var(--glow),.5); }
     .ans.dk:hover:not([aria-disabled]) { box-shadow: inset 0 0 0 1px #9aa4b1, 0 3px 6px rgba(31,41,55,.1), 0 8px 22px rgba(31,41,55,.23); }
     .home a:hover { transform: translateY(-2px); color:var(--agree-ink); box-shadow: inset 0 0 0 1px #9db8e0, 0 3px 6px rgba(23,78,166,.1), 0 8px 22px rgba(23,78,166,.28); }
@@ -196,8 +199,8 @@
       <li><b>Don't know</b> if you cannot tell, which leaves the rule undecided.</li>
     </ul>
     <p id="docnote" class="hidden">The documentation of the table: <span id="doclinks"></span><br>You can open it at any time, also with the links above the questions.</p>
-    <p id="studylen">There are at most about 130 questions. If you get tired, take a short break and then go on; your answers
-       are kept. You can stop at any time with the Stop button, without giving a reason.</p>
+    <p id="studylen">There are at most about 130 questions. If you get tired, press Take a break and go on when you are ready;
+       the break does not count as answering time. You can stop at any time with the Stop button, without giving a reason.</p>
     <p class="hidden" id="trylen">Cert3NF asks until your answers certify a design, at most 100 questions. You can stop at
        any time and see the design so far. <span class="keyhint">Keys: <b>Y</b> yes, <b>N</b> no, <b>D</b> don't know.</span></p>
     <p class="muted" id="practnote">Two practice questions follow. They are not part of the study.</p>
@@ -226,8 +229,13 @@
         <button class="ans no" data-a="no" aria-keyshortcuts="N"><span class="ico" data-i="no"></span>No<kbd aria-hidden="true">N</kbd></button>
         <button class="ans dk" data-a="dk" aria-keyshortcuts="D"><span class="ico" data-i="dk"></span>Don't know<kbd aria-hidden="true">D</kbd></button>
       </div>
-      <div class="stop"><button id="stopbtn"><span class="ico" data-i="stop"></span>Stop the session</button></div>
+      <div class="stop"><button id="breakbtn" class="pause hidden"><span class="ico" data-i="pause"></span>Take a break</button><button id="stopbtn"><span class="ico" data-i="stop"></span>Stop the session</button></div>
     </div>
+  </div>
+  <div class="card hidden" id="breakcard">
+    <h2>A break</h2>
+    <p>The question waits for you, and the break does not count as answering time. Press Continue when you are ready.</p>
+    <p><button class="main" id="gobtn">Continue<kbd aria-hidden="true">Enter</kbd></button></p>
   </div>
 </section>
 
@@ -273,7 +281,7 @@
 <script>
 const $ = s => document.querySelector(s);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-let META = null, CUR = null, SHOWN = 0;
+let META = null, CUR = null, SHOWN = 0, PAUSED = 0;   // PAUSED: when the break began, 0 while answering
 const TRY = /^\/s\/(T[EPU]0[1-3]-|UP-)/i.test(location.pathname);   // a try or an upload from the start page: a demo
 const UPLOAD = /^\/s\/UP-/i.test(location.pathname);              // the visitor's own table (upload.py)
 const NAME = {ssb_customer: "Customers", tpcds_core: "Store sales", abs_mb: "Mesh blocks"};   // as on the start page
@@ -285,6 +293,7 @@ const SVG = {yes: svg('<path d="M3.3 8.6l3 3 6.4-6.9"/>'),
              no: svg('<path d="M4.6 4.6l6.8 6.8M11.4 4.6l-6.8 6.8"/>'),
              dk: svg('<path d="M5.7 6a2.3 2.3 0 1 1 3.4 2c-.7.4-1.1.9-1.1 1.6v.4"/><circle cx="8" cy="12.9" r="1.05" fill="currentColor" stroke="none"/>', 1.9),
              stop: svg('<rect x="2.6" y="2.6" width="10.8" height="10.8" rx="2" fill="currentColor" stroke="none"/>'),
+             pause: svg('<path d="M5.6 3.4v9.2M10.4 3.4v9.2"/>', 2.6),
              again: svg('<path d="M12.9 8.6A5 5 0 1 1 11.4 4.2"/><path d="M12 1.8v2.9H9.1"/>', 2),
              part: svg('<circle cx="8" cy="8" r="5.6"/><path d="M8 2.4a5.6 5.6 0 0 1 0 11.2z" fill="currentColor" stroke="none"/>', 1.8),
              none: svg('<circle cx="8" cy="8" r="5.6"/>', 1.8),
@@ -400,7 +409,7 @@ function next(q) {
   if (TRY && card.bottom > window.innerHeight) window.scrollTo({top: card.bottom - window.innerHeight + 16});
 }
 document.querySelectorAll("[data-a]").forEach(b => b.onclick = async () => {
-  if (!CUR) return;
+  if (!CUR || PAUSED) return;
   document.querySelectorAll("[data-a]").forEach(x => x.setAttribute("aria-disabled", "true"));
   b.classList.add("picked");
   const q = CUR; CUR = null;
@@ -418,6 +427,21 @@ $("#stopbtn").onclick = async () => {
   clearTimeout(ARMED); ARMED = null;
   await api("api/stop", {}); finish();
 };
+// a break: the question waits, and neither its rt_ms nor the server's clocks count the break
+$("#breakbtn").onclick = () => {
+  if (!CUR || PAUSED) return;
+  PAUSED = performance.now();
+  $("#qcard").classList.add("hidden"); $("#breakcard").classList.remove("hidden");
+  $("#say").textContent = "A break. Press Continue when you are ready."; $("#gobtn").focus({preventScroll: true});
+  api("api/break", {state: "start"});
+};
+$("#gobtn").onclick = async () => {
+  if (!PAUSED) return;
+  SHOWN += performance.now() - PAUSED; PAUSED = 0;
+  $("#breakcard").classList.add("hidden"); $("#qcard").classList.remove("hidden");
+  $("#say").textContent = `Question ${CUR.i}. ${$("#qtext").textContent}`;
+  await api("api/break", {state: "end"});
+};
 // ---------- keys: Y, N, D answer the question (or the practice question) on the screen, Enter goes on ----------
 document.addEventListener("keydown", e => {
   if (e.repeat || e.ctrlKey || e.metaKey || e.altKey || /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) return;
@@ -428,6 +452,8 @@ document.addEventListener("keydown", e => {
     if (b) { e.preventDefault(); b.click(); }
   } else if (e.key === "Enter" && go && !$("#intro").classList.contains("hidden") && !e.target.closest("a, button, summary")) {
     e.preventDefault(); go.click();
+  } else if (e.key === "Enter" && PAUSED && !e.target.closest("a, button, summary")) {
+    e.preventDefault(); $("#gobtn").click();
   }
 });
 
@@ -546,6 +572,8 @@ if (TRY) {                                                  // a try from the st
     text: "Must any two records that agree on all attributes except <b>Date</b> and <b class='rhs'>City</b> also agree on <b class='rhs'>City</b>?",
     why: "The answer is yes: two such records have the same order, whatever their dates, and an order belongs to one customer with one city."};
   $("#byetext").innerHTML = 'This try is finished. <a href="/">Back to the start page</a>.';
+} else {
+  $("#breakbtn").classList.remove("hidden");               // the study: a tired participant takes a break
 }
 const title = () => { const rel = META.relation.replace(/^fresh_/, ""); return META.title || NAME[rel] || rel; };
 (async () => {

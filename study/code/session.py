@@ -13,6 +13,11 @@ logged live answers again, must ask the same questions (asserted), and goes on w
 fillers and both clocks continue where the file ends.  A file with an end line is only completed by the
 questionnaire.  Usage: through server.py, or test_session.py.
 
+A break (the Take a break button, pause() and go_on()) does not count as answering time: when it ends, both clocks
+move on by its length, so t_elapsed_s, t_live_s, the end line's minutes and an optional time limit leave it out, and
+a line "event": "break" records it; the page leaves it out of the answer's rt_ms as well.  A break also ends when the
+page asks for the question again (the participant closed the page and came back).
+
 A demo session (a try from the start page, now that the study has ended) skips the block, runs the method in the
 trusting mode (every premise asked once, so no fillers are needed) and ends with result() instead of the
 questionnaire: the method's output, the design of the confirmed FDs, and the answers that differ from the documented
@@ -104,6 +109,7 @@ class Session:
         self.on_write = on_write or (lambda path: None)
         self.live_minutes = live_minutes
         self.t0, self.live_t0 = time.time(), None
+        self.break_t, self.break_ms = None, 0                  # the start of an open break, and all breaks so far
         self.i, self.recent, self.cur, self.pending = 0, deque(maxlen=GAP), None, None
         self.qin, self.qout, self.preload = queue.Queue(), queue.Queue(), deque()
         self.thread, self.done, self.closed = None, False, False
@@ -127,6 +133,7 @@ class Session:
         changed = [k for k in ("v6fstudy.py", "v6f.py", "prebuilt") if start["code"].get(k) != self.code[k]]
         assert not changed, ("the method changed since the session began", changed)
         ans = [r for r in recs if r["event"] == "answer"]
+        self.break_ms = sum(round(1000 * r["seconds"]) for r in recs if r["event"] == "break")
         self.done = any(r["event"] == "end" for r in recs)
         self.closed = any(r["event"] == "questionnaire" for r in recs)
         self.fh = None if self.closed else open(self.path, "a", encoding="utf-8")
@@ -200,8 +207,30 @@ class Session:
         """state for the page: open / ended / closed, and the number of answers so far"""
         return {"state": "closed" if self.closed else "ended" if self.done else "open", "answered": self.i}
 
+    def pause(self):
+        """the participant takes a break: the clocks stand still until go_on()"""
+        with self.lock:
+            if not self.done and self.break_t is None:
+                self.break_t = time.time()
+            return {"ok": True}
+
+    def go_on(self):
+        """the end of a break: the clocks move on by its length, and one line records it"""
+        with self.lock:
+            if self.break_t is not None:
+                s, self.break_t = time.time() - self.break_t, None
+                self.t0 += s
+                if self.live_t0 is not None:
+                    self.live_t0 += s
+                self.break_ms += round(1000 * s)
+                if not self.closed:
+                    self.write({"event": "break", "question_i": self.i, "seconds": round(s, 1),
+                                "time": time.strftime("%Y-%m-%d %H:%M:%S")})
+            return {"ok": True}
+
     def question(self):
         with self.lock:
+            self.go_on()
             if self.done:
                 return {"done": True}
             if self.cur is None:
@@ -259,6 +288,7 @@ class Session:
     def stop(self, reason="voluntary"):
         """the participant stops (or the experimenter ends the session)"""
         with self.lock:
+            self.go_on()
             if self.done:
                 return {"done": True}
             self.cur = None
@@ -283,7 +313,7 @@ class Session:
         out = msg[1] if msg[0] == "end" else None
         rec = {"event": "end", "stop_reason": reason, "minutes": round((time.time() - self.t0) / 60, 2),
                "live_minutes_used": None if self.live_t0 is None else round((time.time() - self.live_t0) / 60, 2),
-               "shown": self.i, "fillers": self.nfill, "method": out}
+               "break_minutes": round(self.break_ms / 60000, 2), "shown": self.i, "fillers": self.nfill, "method": out}
         if msg[0] == "error":
             rec["error"] = msg[1]
         self.write(rec)
