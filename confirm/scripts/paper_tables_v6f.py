@@ -101,9 +101,9 @@ def cell3(rs, T):
     return s if q <= 100 else f"({s})"
 
 
-def rank_marks(cells, cols, best=min):
-    """bold the best of the cells at cols and underline the second best, ties sharing a mark; -- and wrong certificates are
-    not ranked; best=min for answers, best=max for the counts of the last rows"""
+def rank_marks(cells, cols, best=max):
+    """the last rows of Tab. cert and Tab. cert-dev: underline the most relations among the cells at cols and wave-underline
+    the second most (ulem), ties sharing a mark; empty cells, -- and wrong certificates are not ranked"""
     def val(c):
         if c in ("", "--") or CROSS in c:
             return None
@@ -113,9 +113,9 @@ def rank_marks(cells, cols, best=min):
     for i in cols:
         x = val(cells[i])
         if x is not None and x == ranked[0]:
-            out[i] = rf"\textbf{{{cells[i]}}}"
+            out[i] = rf"\uline{{{cells[i]}}}"
         elif x is not None and len(ranked) > 1 and x == ranked[1]:
-            out[i] = rf"\underline{{{cells[i]}}}"
+            out[i] = rf"\uwave{{{cells[i]}}}"
     return out
 
 
@@ -229,10 +229,9 @@ for d in B3:
         m, v = D[T]["main3"], D[T]["v53"]
         th = {r["dataset"]: r for r in D[T]["theta"] if r.get("theta") == 0.1 and r["variant"] == MAIN}
         th.update({r["dataset"]: r for r in D[T]["raw"] if r.get("theta") == 0.1 and r["variant"] == MAIN})
-        # the methods are ranked; theta = 0.1 runs on other data and is not
-        cells += rank_marks([str(m[MAIN][d]["true"]), str(price(T, d)), cell(m[MAIN][d], T), cell(m[LLM][d], T), cell(v["v5n"][d], T),
-                             cell3(seeded(D[T]["ec2"], "ec2full0").get(d, []), T), cell3(seeded(D[T]["rb"], "rbhyb").get(d, []), T),
-                             cell3(seeded(D[T]["ec2hyb"], "ec2hyb").get(d, []), T), cell(th.get(d), T)], range(2, 8))
+        cells += [str(m[MAIN][d]["true"]), str(price(T, d)), cell(m[MAIN][d], T), cell(m[LLM][d], T), cell(v["v5n"][d], T),
+                  cell3(seeded(D[T]["ec2"], "ec2full0").get(d, []), T), cell3(seeded(D[T]["rb"], "rbhyb").get(d, []), T),
+                  cell3(seeded(D[T]["ec2hyb"], "ec2hyb").get(d, []), T), cell(th.get(d), T)]
     print(f"{name(d)}{' (A)' if d in CLASS_A else ''} & {D['full']['main3'][MAIN][d]['candidates']:,} & " + " & ".join(cells) + r"\\")
 
 # ---- Tab. cert-dev: development relations, as in the v5 paper, posterior from paper_src ----
@@ -248,7 +247,7 @@ for d in DEV + B2:
     cells = []
     for T in TRUTHS:
         m1 = D[T]["main1"]
-        cells += rank_marks([str(m1[MAIN][d]["true"]), str(price(T, d)), cell(m1[MAIN][d], T), cell(m1[LLM][d], T), cell(m1["v5n"][d], T), cell3(RB1[T][d], T)], range(2, 6))
+        cells += [str(m1[MAIN][d]["true"]), str(price(T, d)), cell(m1[MAIN][d], T), cell(m1[LLM][d], T), cell(m1["v5n"][d], T), cell3(RB1[T][d], T)]
     print(f"{name(d)} & {D['full']['main1'][MAIN][d]['candidates']:,} & " + " & ".join(cells) + r"\\")
 
 # ---- Tab. tol ----
