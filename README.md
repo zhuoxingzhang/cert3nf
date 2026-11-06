@@ -22,8 +22,8 @@ Raw data, the publishers' documents behind the ground truth and the LLM answers 
 | `e2/` | accidental FDs of TPC-H (Table 2) |
 | `e3/` | the relations (Table 8): downloads (`e3/download/`), mined candidates (`e3/data/`), ground truth (`e3/truth/`) |
 | `confirm/v6f.py` | Cert3NF, its parts, its careful mode and its tolerance θ (Tables 3, 4, 6 and 9, Fig. 2); the live demo runs it |
-| `confirm/v5.py` | the two phases and Cert3NF without an advisor (rule V1, Tables 3 and 9) |
-| `confirm/ec2full.py` | the EC² order: Cert3NF with the order of questions of EC² (rule V3, Table 3, Fig. 2) |
+| `confirm/v5.py` | the two phases and Cert3NF without an advisor (rule V1, Tables 4 and 9) |
+| `confirm/ec2full.py` | the EC² order: Cert3NF with the order of questions of EC² (rule V3, Tables 3 and 4, Fig. 2) |
 | `confirm/ec2hyb.py` | EC², which asks about candidates alone (Tables 3 and 4) |
 | `confirm/auto_confirm.py`, `confirm/auto_mars.py` | automatic methods, the normalizer and the posterior certificate (Tables 3 and 4) |
 | `confirm/v6f_designer.py` | the careful mode under a designer whose errors repeat or correlate (Sec. 6.5) |
@@ -72,8 +72,8 @@ Experiments on the confirmatory relations, in `confirm/`, with `CONFIRM_BATCH=3`
 
 ```bash
 DS=$(python -c "import auto_common as AC; print(','.join(AC.FRESH))"); A=llm_fresh3_full_q35; M='v6s|lc+hone+kf+rl'
-python v6f.py --answers $A --datasets $DS --variants "$M,v6s,v6|lc+hone+kf+rl" --budget 1000 --out v6f_fresh3/main_full.jsonl   # Table 3, Fig. 2
-python v6f.py --answers $A --datasets $DS --variants "$M" --budget 100 --out v6f_fresh3/b100_full.jsonl                          # Table 4
+python v6f.py --answers $A --datasets $DS --variants "$M,v6s,v6|lc+hone+kf+rl" --budget 1000 --out v6f_fresh3/main_full.jsonl   # Table 4, Fig. 2
+python v6f.py --answers $A --datasets $DS --variants "$M" --budget 100 --out v6f_fresh3/b100_full.jsonl                          # Table 3
 python v6f.py --answers $A --datasets $DS --budget 1000 --out v6f_fresh3/abl_full.jsonl \
     --variants 'v6s|lc,v6s|hone,v6s|kf,v6s|rl,v6s|hone+kf+rl,v6s|lc+kf+rl,v6s|lc+hone+rl,v6s|lc+hone+kf'                      # its parts (Sec. 6.4)
 python v6f.py --answers $A --datasets $DS --variants "$M" --careful --budget 1000 --out v6f_fresh3/err_full.jsonl             # careful mode, Fig. 2
@@ -82,7 +82,7 @@ python v5.py --answers $A --datasets $DS --variants v5,v5s,v5n --budget 1000 --o
 python ec2full.py --answers $A --datasets $DS --variants ec2full,ec2full0 --budget 1000 --seeds 3 --out v6f_fresh3/ec2_full.jsonl   # EC2 order
 python auto_confirm.py run --answers $A --models q35 --datasets $DS --variants rbhyb,rbhyb0 --out v6f_fresh3/rbhyb_full.jsonl       # posterior certificate
 python ec2hyb.py run --answers $A --models q35 --datasets $DS --variants ec2hyb,ec2hyb0 --out v6f_fresh3_extra/ec2hyb_full.jsonl   # EC2
-python auto_confirm.py run --answers $A --models q35 --datasets $DS --variants ours,trust,clf,L1,A5,A9,upper,hyfd --out v6f_fresh3/auto_full.jsonl   # Table 4
+python auto_confirm.py run --answers $A --models q35 --datasets $DS --variants ours,trust,clf,L1,A5,A9,upper,hyfd --out v6f_fresh3/auto_full.jsonl   # Table 3
 python auto_confirm.py run --answers $A --models q35 --datasets $DS --variants L3 --out v6f_fresh3/L3_full.jsonl              # normalizer
 python check_cert.py --results v6f_fresh3/main_full.jsonl --truth > v6f_fresh3/check_main_full.txt
 python scripts/price_exact.py v6f_fresh3/price_gold.json <dir for the covers>                                              # the price of Thm. 4.4
@@ -92,7 +92,7 @@ python scripts/v6f_fresh3_report.py > v6f_fresh3/report.txt                     
 The tolerance θ runs on the codes of the data that `python ../e3/dump_codes.py <dir> $DS` writes, before the repair with `FRESH_NO_REPAIR=1` set for `build.py` and `dump_codes.py`, and `scripts/witness_fresh3.py` lists the documented FDs that the data violate:
 
 ```bash
-CODES_DIR=<dir> python v6f.py --answers $A --datasets $DS --variants "$M" --theta 0.1 --budget 1000 --out v6f_fresh3_extra/theta_rep_full.jsonl   # Table 3, also 0.01 and 0.001
+CODES_DIR=<dir> python v6f.py --answers $A --datasets $DS --variants "$M" --theta 0.1 --budget 1000 --out v6f_fresh3_extra/theta_rep_full.jsonl   # Table 4, also 0.01 and 0.001
 ```
 
 A designer whose errors repeat or correlate, attribute exploration and the second model (gpt-oss-20b, answers with `--model gptoss`, results in `v6f_fresh3_gptoss/`):
