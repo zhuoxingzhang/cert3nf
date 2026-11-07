@@ -1,0 +1,8 @@
+truth full
+  V3 Cert3NF / EC2 order    : median 0.700, 95% bootstrap [0.619, 0.906] over relations, [0.635, 0.919] over publishers; wins 18, ties 4, losses 1; Wilcoxon p 1.1e-05, sign test p 7.6e-05; sums 1774 / 2677
+  V1 Cert3NF / two phases   : median 0.889, 95% bootstrap [0.761, 1.000] over relations, [0.702, 1.000] over publishers; wins 15, ties 3, losses 5; Wilcoxon p 0.0027, sign test p 0.041; sums 1774 / 2322
+  LLM with / without        : median 1.000, 95% bootstrap [0.944, 1.000] over relations, [0.957, 1.023] over publishers; wins 10, ties 6, losses 7; Wilcoxon p 0.61, sign test p 0.63; sums 1786 / 1774
+truth sure
+  V3 Cert3NF / EC2 order    : median 0.651, 95% bootstrap [0.564, 0.741] over relations, [0.599, 0.810] over publishers; wins 19, ties 4, losses 0; Wilcoxon p 3.8e-06, sign test p 3.8e-06; sums 851 / 1311
+  V1 Cert3NF / two phases   : median 0.853, 95% bootstrap [0.727, 0.952] over relations, [0.622, 0.976] over publishers; wins 16, ties 5, losses 2; Wilcoxon p 0.00025, sign test p 0.0013; sums 851 / 1198
+  LLM with / without        : median 1.000, 95% bootstrap [0.971, 1.000] over relations, [0.971, 1.000] over publishers; wins 11, ties 8, losses 4; Wilcoxon p 0.25, sign test p 0.12; sums 811 / 851
