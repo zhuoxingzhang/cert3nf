@@ -1,0 +1,14 @@
+truth full
+  (a) Normalize: good 5/23, lossless 10/23, preserving 10/23, 3NF 10/23, more tables than synthesis 0; splits median 2
+      lossy: tpcc-orderline, tpcc-customer, syn-encounters, syn-claims, syn-trans, companies, gleif, pay-general, air-airports, air-freq, air-navaids, se-postlinks, se-posts
+  (b) Normalize order: within 50 17, within 100 19 (Cert3NF 16, 19); certified 23/23, wrong 0
+      answers 1755 (Cert3NF 1774), above the price 878 (Cert3NF 897), ratio to the price median 1.308, Q3 1.688
+      Cert3NF over it: median 0.972, 95% bootstrap [0.951, 1.059] over relations, [0.951, 1.085] over publishers, wins 13, ties 1, losses 9, Wilcoxon p 0.94
+      good at budget 100: 18/23 (Cert3NF 18/23)
+truth sure
+  (a) Normalize: good 4/23, lossless 8/23, preserving 8/23, 3NF 10/23, more tables than synthesis 0; splits median 2
+      lossy: tpcc-orderline, tpcc-customer, syn-encounters, syn-claims, syn-trans, companies, fec-link, gleif, hgnc, pay-general, air-airports, air-freq, air-navaids, se-postlinks, se-posts
+  (b) Normalize order: within 50 20, within 100 23 (Cert3NF 19, 22); certified 23/23, wrong 0
+      answers 834 (Cert3NF 851), above the price 205 (Cert3NF 222), ratio to the price median 1.200, Q3 1.519
+      Cert3NF over it: median 0.957, 95% bootstrap [0.889, 1.020] over relations, [0.889, 1.028] over publishers, wins 13, ties 2, losses 8, Wilcoxon p 0.19
+      good at budget 100: 23/23 (Cert3NF 23/23)
