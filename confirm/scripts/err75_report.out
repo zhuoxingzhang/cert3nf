@@ -1,0 +1,29 @@
+% dev full: 276 rows, 0 duplicate keys, missing 0, extra 0
+% dev sure: 276 rows, 0 duplicate keys, missing 0, extra 0
+% b2 full: 144 rows, 0 duplicate keys, missing 0, extra 0
+% b2 sure: 144 rows, 0 duplicate keys, missing 0, extra 0
+% b3 full: 276 rows, 0 duplicate keys, missing 0, extra 0
+% b3 sure: 276 rows, 0 duplicate keys, missing 0, extra 0
+%% (a) rows of Tab. tol: development (dev + b2) full, sure; confirmatory full, sure; within 100 answers
+0.10 & trusting & 36 & 30 & 36 & 32 & 18 & 14 & 20 & 16\\  % dev full 105 runs, budget 1000 87 cert 81 wrong; dev sure 105 runs, budget 1000 88 cert 84 wrong; b3 full 69 runs, budget 1000 55 cert 51 wrong; b3 sure 69 runs, budget 1000 56 cert 52 wrong
+0.10 & careful & 15 & 6 & 15 & 2 & 10 & 1 & 9 & 1\\  % dev full 105 runs, budget 1000 59 cert 47 wrong; dev sure 105 runs, budget 1000 54 cert 38 wrong; b3 full 69 runs, budget 1000 34 cert 25 wrong; b3 sure 69 runs, budget 1000 38 cert 28 wrong
+0.15 & trusting & 22 & 19 & 20 & 16 & 15 & 11 & 16 & 12\\  % dev full 105 runs, budget 1000 71 cert 68 wrong; dev sure 105 runs, budget 1000 68 cert 64 wrong; b3 full 69 runs, budget 1000 41 cert 37 wrong; b3 sure 69 runs, budget 1000 48 cert 44 wrong
+0.15 & careful & 13 & 11 & 11 & 8 & 6 & 1 & 7 & 2\\  % dev full 105 runs, budget 1000 41 cert 39 wrong; dev sure 105 runs, budget 1000 36 cert 33 wrong; b3 full 69 runs, budget 1000 24 cert 19 wrong; b3 sure 69 runs, budget 1000 30 cert 24 wrong
+%% (b) pooled over the 58 relations, both truths, three seeds: runs, within 100: certificates, wrong (share), correct; budget 1000: certificates, wrong (share)
+% eps 0.02 trusting: 348 runs; within 100: 251 cert, 107 wrong (0.426), 144 correct; budget 1000: 344 cert, 200 wrong (0.581), 144 correct
+% eps 0.02 careful : 348 runs; within 100: 174 cert, 2 wrong (0.011), 172 correct; budget 1000: 337 cert, 24 wrong (0.071), 313 correct
+% eps 0.05 trusting: 348 runs; within 100: 183 cert, 130 wrong (0.710), 53 correct; budget 1000: 331 cert, 278 wrong (0.840), 53 correct
+% eps 0.05 careful : 348 runs; within 100: 87 cert, 4 wrong (0.046), 83 correct; budget 1000: 294 cert, 123 wrong (0.418), 171 correct
+% eps 0.10 trusting: 348 runs; within 100: 110 cert, 92 wrong (0.836), 18 correct; budget 1000: 286 cert, 268 wrong (0.937), 18 correct
+% eps 0.10 careful : 348 runs; within 100: 49 cert, 10 wrong (0.204), 39 correct; budget 1000: 185 cert, 138 wrong (0.746), 47 correct
+% eps 0.15 trusting: 348 runs; within 100: 73 cert, 58 wrong (0.795), 15 correct; budget 1000: 228 cert, 213 wrong (0.934), 15 correct
+% eps 0.15 careful : 348 runs; within 100: 37 cert, 22 wrong (0.595), 15 correct; budget 1000: 131 cert, 115 wrong (0.878), 16 correct
+%% (c) the three relations of the study, careful mode, within 100 answers, nine runs per truth (practitioners: P 6 of 9 certified, 1 wrong; U 4 of 9, 1 wrong)
+% eps 0.10 full: 9 runs, certified within 100 1, wrong 1, per relation {'fec-cand': 1, 'syn-claims': 0, 'tpcc-customer': 0}; budget 1000 6 cert, 6 wrong
+% eps 0.10 sure: 9 runs, certified within 100 1, wrong 1, per relation {'fec-cand': 1, 'syn-claims': 0, 'tpcc-customer': 0}; budget 1000 6 cert, 5 wrong
+%   trusting full: 9 runs, certified within 100 3, wrong 3
+%   trusting sure: 9 runs, certified within 100 4, wrong 4
+% eps 0.15 full: 9 runs, certified within 100 0, wrong 0, per relation {'fec-cand': 0, 'syn-claims': 0, 'tpcc-customer': 0}; budget 1000 3 cert, 3 wrong
+% eps 0.15 sure: 9 runs, certified within 100 1, wrong 1, per relation {'fec-cand': 0, 'syn-claims': 0, 'tpcc-customer': 1}; budget 1000 3 cert, 3 wrong
+%   trusting full: 9 runs, certified within 100 2, wrong 2
+%   trusting sure: 9 runs, certified within 100 1, wrong 1
