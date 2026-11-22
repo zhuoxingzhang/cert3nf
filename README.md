@@ -27,6 +27,8 @@ Raw data, the publishers' documents behind the ground truth and the LLM answers 
 | `confirm/ec2hyb.py` | EC², which asks about candidates alone (Tables 3 and 4) |
 | `confirm/auto_confirm.py`, `confirm/auto_mars.py` | automatic methods, the normalizer and the posterior certificate (Tables 3 and 4) |
 | `confirm/v6f_designer.py` | the careful mode under a designer whose errors repeat or correlate (Sec. 6.5) |
+| `confirm/v6f_wrong.py` | Cert3NF with an advisor that is wrong on purpose (Sec. 6.4) |
+| `confirm/ec2find.py` | the EC² order with the search of Cert3NF (Sec. 6.3) |
 | `confirm/aexp.c`, `confirm/aexp.py` | attribute exploration |
 | `e3/scale.py`, `confirm/v6f_scale.py`, `confirm/scale_run.py` | synthetic relations with up to a million candidates (Table 5, rules S1-S3) |
 | `confirm/check_cert.py` | independent check of every certificate |
@@ -100,6 +102,13 @@ A designer whose errors repeat or correlate, attribute exploration and the secon
 ```bash
 python v6f_designer.py --answers $A --datasets $DS --variants "$M" --budget 1000 --eps 0.05 --seeds 3 --careful --repeated --out v6f_fresh3_extra/designer69/b3/designer_rep_full.jsonl   # also --rho 0.25 and 0.5
 gcc -O2 -o aexp aexp.c && python aexp.py [--max] --datasets <relation> --out v6f_fresh3_extra/ae69/parts/max_full_<relation>.jsonl
+```
+
+An advisor that is wrong on purpose, the EC² order with the search of Cert3NF, and a designer with the error rates and correlations of the practitioners (results in `v6f_fresh3_extra/item82/`, counted in `scripts/item82_report.out`):
+
+```bash
+STAGE=wrong SETS="b3 dev b2" WORKERS=4 bash scripts/run_item82.sh   # also STAGE=find and STAGE=designer; every stage runs its controls first
+python scripts/item82_report.py > scripts/item82_report.out
 ```
 
 On the development relations, the same commands run with `CONFIRM_BATCH` unset and the answers `llm_fresh_full_q35_ms` on the 23 relations of the first pools, and with `CONFIRM_BATCH=2` and `llm_fresh2_full_q35` on the second twelve; the results are `v6f_runs/<stem>_e2a6af907596_{dev,b2}_<truth>.jsonl`, with the variants `"$M,v6s|lc+hone+kf,v6s,v5s,v5n,v6|lc+hone+kf+rl"` for `main`.

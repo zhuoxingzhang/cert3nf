@@ -1,0 +1,110 @@
+%% ==== (a) Cert3NF with a wrong advisor: exact designer, budget 1000 ====
+% full dev: 115 rows, duplicate keys 0, missing 0, extra 0; code ['e2a6af907596'], budget [1000], oracle ['gold'], prior kinds ['all', 'inverted', 'permuted0', 'permuted1', 'permuted2']
+% full b2: 60 rows, duplicate keys 0, missing 0, extra 0; code ['e2a6af907596'], budget [1000], oracle ['gold'], prior kinds ['all', 'inverted', 'permuted0', 'permuted1', 'permuted2']
+% full b3: 115 rows, duplicate keys 0, missing 0, extra 0; code ['e2a6af907596'], budget [1000], oracle ['gold'], prior kinds ['all', 'inverted', 'permuted0', 'permuted1', 'permuted2']
+% truth full, confirmatory 23: price 877, smallest covers 460, held sets 417
+%   Cert3NF     : runs 23, certified runs 23, relations certified 23/23, within 50 16, within 100 19; answers 1774, above the price 897, ratio median 1.367, Q3 1.591, max 3.66; certified and not good on gold: dagger 5, other 0; d 1051, wrong_cert 0, no to believed FDs: max 10, sum 122; no to maximal sets above m_r: runs 0 (dagger 0); guesses 120, hits 62, QuickXplain 473
+%   w/o advisor : runs 23, certified runs 22, relations certified 22/23, within 50 6, within 100 16; answers 3141, above the price 2264, ratio median 2.354, Q3 3.143, max 10.74; certified and not good on gold: dagger 4, other 0; d 2576, no to believed FDs: max 0, sum 0; no to maximal sets above m_r: runs 0 (dagger 0); guesses 0, hits 0, QuickXplain 2278
+%   inverted    : runs 23, certified runs 23, relations certified 23/23, within 50 10, within 100 18; answers 2334, above the price 1457, ratio median 2.000, Q3 2.308, max 4.70; certified and not good on gold: dagger 5, other 0; d 1348, wrong_cert 0, no to believed FDs: max 10, sum 162; no to maximal sets above m_r: runs 0 (dagger 0); guesses 276, hits 90, QuickXplain 729
+%   permuted    : runs 69, certified runs 69, relations certified 23/23, within 50 9, within 100 18; answers 2231, above the price 1354, ratio median 1.900, Q3 2.269, max 4.26; certified and not good on gold: dagger 15, other 0; d 1307, wrong_cert 0, no to believed FDs: max 10, sum 148; no to maximal sets above m_r: runs 0 (dagger 0); guesses 222, hits 75, QuickXplain 671
+%   all         : runs 23, certified runs 23, relations certified 23/23, within 50 14, within 100 19; answers 2103, above the price 1226, ratio median 1.594, Q3 1.731, max 4.00; certified and not good on gold: dagger 5, other 0; d 1206, wrong_cert 0, no to believed FDs: max 10, sum 175; no to maximal sets above m_r: runs 0 (dagger 0); guesses 195, hits 94, QuickXplain 590
+%   inverted  over Cert3NF    : sums 2334 / 1774 = 1.316, median ratio 1.350, fewer 1, equal 0, more 22, Wilcoxon p 1.3e-05
+%   inverted  over w/o advisor: sums 2334 / 3141 = 0.743, median ratio 0.856, fewer 16, equal 2, more 5, Wilcoxon p 0.0048
+%   permuted  over Cert3NF    : sums 2231 / 1774 = 1.258, median ratio 1.266, fewer 0, equal 4, more 19, Wilcoxon p 3.8e-06
+%   permuted  over w/o advisor: sums 2231 / 3141 = 0.710, median ratio 0.800, fewer 17, equal 4, more 2, Wilcoxon p 7.2e-05
+%   all       over Cert3NF    : sums 2103 / 1774 = 1.185, median ratio 1.179, fewer 3, equal 0, more 20, Wilcoxon p 0.00025
+%   all       over w/o advisor: sums 2103 / 3141 = 0.670, median ratio 0.740, fewer 18, equal 0, more 5, Wilcoxon p 0.0011
+% truth full, all 58: price 2502, smallest covers 1332, held sets 1170
+%   Cert3NF     : runs 58, certified runs 58, relations certified 58/58, within 50 34, within 100 50; answers 4037, above the price 1535, ratio median 1.364, Q3 1.582, max 3.66; certified and not good on gold: dagger 13, other 0; d 2189, wrong_cert 0, no to believed FDs: max 10, sum 348; no to maximal sets above m_r: runs 0 (dagger 0); guesses 259, hits 154, QuickXplain 581
+%   w/o advisor : runs 58, certified runs 56, relations certified 56/58, within 50 9, within 100 29; answers 9251, above the price 6749, ratio median 2.879, Q3 3.894, max 12.48; certified and not good on gold: dagger 11, other 0; d 7638, no to believed FDs: max 0, sum 0; no to maximal sets above m_r: runs 0 (dagger 0); guesses 0, hits 0, QuickXplain 6604
+%   inverted    : runs 58, certified runs 58, relations certified 58/58, within 50 19, within 100 41; answers 5660, above the price 3158, ratio median 2.051, Q3 2.343, max 4.70; certified and not good on gold: dagger 13, other 0; d 3072, wrong_cert 0, no to believed FDs: max 10, sum 448; no to maximal sets above m_r: runs 0 (dagger 0); guesses 784, hits 306, QuickXplain 1122
+%   permuted    : runs 174, certified runs 174, relations certified 58/58, within 50 20, within 100 45; answers 5284, above the price 2782, ratio median 1.863, Q3 2.241, max 4.26; certified and not good on gold: dagger 39, other 0; d 2877, wrong_cert 0, no to believed FDs: max 10, sum 437; no to maximal sets above m_r: runs 0 (dagger 0); guesses 589, hits 254, QuickXplain 1040
+%   all         : runs 58, certified runs 58, relations certified 58/58, within 50 25, within 100 47; answers 4919, above the price 2417, ratio median 1.638, Q3 1.977, max 4.00; certified and not good on gold: dagger 13, other 0; d 2730, wrong_cert 0, no to believed FDs: max 10, sum 485; no to maximal sets above m_r: runs 0 (dagger 0); guesses 491, hits 323, QuickXplain 738
+%   inverted  over Cert3NF    : sums 5660 / 4037 = 1.402, median ratio 1.358, fewer 1, equal 1, more 56, Wilcoxon p 1.1e-14
+%   inverted  over w/o advisor: sums 5660 / 9251 = 0.612, median ratio 0.685, fewer 46, equal 3, more 9, Wilcoxon p 3.4e-10
+%   permuted  over Cert3NF    : sums 5284 / 4037 = 1.309, median ratio 1.294, fewer 0, equal 5, more 53, Wilcoxon p 2.2e-16
+%   permuted  over w/o advisor: sums 5284 / 9251 = 0.571, median ratio 0.692, fewer 49, equal 4, more 5, Wilcoxon p 2.6e-13
+%   all       over Cert3NF    : sums 4919 / 4037 = 1.218, median ratio 1.200, fewer 4, equal 2, more 52, Wilcoxon p 1.6e-12
+%   all       over w/o advisor: sums 4919 / 9251 = 0.532, median ratio 0.597, fewer 51, equal 1, more 6, Wilcoxon p 4.3e-13
+% check_cert dev full: 115 rows, 0 disagreements, last line: disagreements or unsound: 0
+% check_cert b2 full: 60 rows, 0 disagreements, last line: disagreements or unsound: 0
+% check_cert b3 full: 115 rows, 0 disagreements, last line: disagreements or unsound: 0
+% sure dev: 115 rows, duplicate keys 0, missing 0, extra 0; code ['e2a6af907596'], budget [1000], oracle ['gold'], prior kinds ['all', 'inverted', 'permuted0', 'permuted1', 'permuted2']
+% sure b2: 60 rows, duplicate keys 0, missing 0, extra 0; code ['e2a6af907596'], budget [1000], oracle ['gold'], prior kinds ['all', 'inverted', 'permuted0', 'permuted1', 'permuted2']
+% sure b3: 115 rows, duplicate keys 0, missing 0, extra 0; code ['e2a6af907596'], budget [1000], oracle ['gold'], prior kinds ['all', 'inverted', 'permuted0', 'permuted1', 'permuted2']
+% truth sure, confirmatory 23: price 629, smallest covers 205, held sets 424
+%   Cert3NF     : runs 23, certified runs 23, relations certified 23/23, within 50 19, within 100 22; answers 851, above the price 222, ratio median 1.256, Q3 1.480, max 2.07; certified and not good on gold: dagger 0, other 0; d 292, wrong_cert 0, no to believed FDs: max 10, sum 87; no to maximal sets above m_r: runs 0 (dagger 0); guesses 67, hits 48, QuickXplain 24
+%   w/o advisor : runs 23, certified runs 23, relations certified 23/23, within 50 7, within 100 17; answers 1552, above the price 923, ratio median 2.240, Q3 3.034, max 4.63; certified and not good on gold: dagger 0, other 0; d 1026, no to believed FDs: max 0, sum 0; no to maximal sets above m_r: runs 0 (dagger 0); guesses 0, hits 0, QuickXplain 895
+%   inverted    : runs 23, certified runs 23, relations certified 23/23, within 50 11, within 100 21; answers 1270, above the price 641, ratio median 1.884, Q3 2.200, max 3.48; certified and not good on gold: dagger 0, other 0; d 428, wrong_cert 0, no to believed FDs: max 10, sum 157; no to maximal sets above m_r: runs 0 (dagger 0); guesses 198, hits 57, QuickXplain 194
+%   permuted    : runs 69, certified runs 69, relations certified 23/23, within 50 11, within 100 22; answers 1178, above the price 549, ratio median 1.800, Q3 2.200, max 2.74; certified and not good on gold: dagger 0, other 0; d 396, wrong_cert 0, no to believed FDs: max 10, sum 140; no to maximal sets above m_r: runs 0 (dagger 0); guesses 156, hits 54, QuickXplain 161
+%   all         : runs 23, certified runs 23, relations certified 23/23, within 50 17, within 100 22; answers 990, above the price 361, ratio median 1.545, Q3 1.680, max 2.37; certified and not good on gold: dagger 0, other 0; d 337, wrong_cert 0, no to believed FDs: max 10, sum 169; no to maximal sets above m_r: runs 0 (dagger 0); guesses 98, hits 80, QuickXplain 17
+%   inverted  over Cert3NF    : sums 1270 / 851 = 1.492, median ratio 1.475, fewer 0, equal 0, more 23, Wilcoxon p 2.4e-07
+%   inverted  over w/o advisor: sums 1270 / 1552 = 0.818, median ratio 0.900, fewer 14, equal 1, more 8, Wilcoxon p 0.045
+%   permuted  over Cert3NF    : sums 1178 / 851 = 1.384, median ratio 1.325, fewer 0, equal 4, more 19, Wilcoxon p 3.8e-06
+%   permuted  over w/o advisor: sums 1178 / 1552 = 0.759, median ratio 0.814, fewer 16, equal 4, more 3, Wilcoxon p 0.00027
+%   all       over Cert3NF    : sums 990 / 851 = 1.163, median ratio 1.200, fewer 1, equal 0, more 22, Wilcoxon p 4e-05
+%   all       over w/o advisor: sums 990 / 1552 = 0.638, median ratio 0.726, fewer 17, equal 1, more 5, Wilcoxon p 0.00079
+% truth sure, all 58: price 1867, smallest covers 638, held sets 1229
+%   Cert3NF     : runs 58, certified runs 58, relations certified 58/58, within 50 39, within 100 56; answers 2587, above the price 720, ratio median 1.279, Q3 1.483, max 3.00; certified and not good on gold: dagger 0, other 0; d 912, wrong_cert 0, no to believed FDs: max 10, sum 285; no to maximal sets above m_r: runs 0 (dagger 0); guesses 188, hits 119, QuickXplain 145
+%   w/o advisor : runs 58, certified runs 58, relations certified 58/58, within 50 13, within 100 35; answers 5229, above the price 3362, ratio median 2.667, Q3 3.335, max 5.78; certified and not good on gold: dagger 0, other 0; d 3620, no to believed FDs: max 0, sum 0; no to maximal sets above m_r: runs 0 (dagger 0); guesses 0, hits 0, QuickXplain 3212
+%   inverted    : runs 58, certified runs 58, relations certified 58/58, within 50 19, within 100 52; answers 3728, above the price 1861, ratio median 2.000, Q3 2.251, max 3.64; certified and not good on gold: dagger 0, other 0; d 1364, wrong_cert 0, no to believed FDs: max 10, sum 442; no to maximal sets above m_r: runs 0 (dagger 0); guesses 620, hits 246, QuickXplain 470
+%   permuted    : runs 174, certified runs 174, relations certified 58/58, within 50 21, within 100 53; answers 3471, above the price 1604, ratio median 1.783, Q3 2.200, max 3.55; certified and not good on gold: dagger 0, other 0; d 1250, wrong_cert 0, no to believed FDs: max 10, sum 429; no to maximal sets above m_r: runs 0 (dagger 0); guesses 480, hits 202, QuickXplain 413
+%   all         : runs 58, certified runs 58, relations certified 58/58, within 50 32, within 100 55; answers 3099, above the price 1232, ratio median 1.597, Q3 1.836, max 3.00; certified and not good on gold: dagger 0, other 0; d 1144, wrong_cert 0, no to believed FDs: max 10, sum 471; no to maximal sets above m_r: runs 0 (dagger 0); guesses 358, hits 274, QuickXplain 125
+%   inverted  over Cert3NF    : sums 3728 / 2587 = 1.441, median ratio 1.444, fewer 2, equal 0, more 56, Wilcoxon p 4.9e-16
+%   inverted  over w/o advisor: sums 3728 / 5229 = 0.713, median ratio 0.751, fewer 45, equal 2, more 11, Wilcoxon p 1.8e-09
+%   permuted  over Cert3NF    : sums 3471 / 2587 = 1.342, median ratio 1.325, fewer 2, equal 4, more 52, Wilcoxon p 8.4e-14
+%   permuted  over w/o advisor: sums 3471 / 5229 = 0.664, median ratio 0.720, fewer 50, equal 4, more 4, Wilcoxon p 2.3e-13
+%   all       over Cert3NF    : sums 3099 / 2587 = 1.198, median ratio 1.182, fewer 4, equal 2, more 52, Wilcoxon p 1.4e-10
+%   all       over w/o advisor: sums 3099 / 5229 = 0.593, median ratio 0.598, fewer 50, equal 2, more 6, Wilcoxon p 2.7e-13
+% check_cert dev sure: 115 rows, 0 disagreements, last line: disagreements or unsound: 0
+% check_cert b2 sure: 60 rows, 0 disagreements, last line: disagreements or unsound: 0
+% check_cert b3 sure: 115 rows, 0 disagreements, last line: disagreements or unsound: 0
+%% ==== (b) EC^2 order with the Find step of Cert3NF (ec2find0), batch 3, three seeds, budget 1000 ====
+% full: 69 rows, duplicate keys 0, missing 0, extra 0; codes [('d34bc9cfc4a6', '6c5fa850ad6a', 'e2a6af907596')], budget [1000], truth ['full']
+%   Cert3NF          : within 50 16, within 100 19, certified runs 23/23, wrong 0; answers 1774, above the price 897, ratio median 1.367, Q3 1.591; median run: total 1774, finding 862 (QuickXplain 473), maximal sets 610, other candidates 302, FDs found through a set 364, secs 214
+%   EC2 order        : within 50 8, within 100 19, certified runs 66/69, wrong 0; answers 2677, above the price 1800, ratio median 2.156, Q3 2.400; median run: total 2677, finding 1295 (QuickXplain 1295, guesses 0 with 0 hits, reuse 0 with 0 hits), maximal sets 728, other candidates 654, FDs found through a set 315, secs 3035
+%   EC2 order + Find : within 50 12, within 100 19, certified runs 69/69, wrong 0; answers 2357, above the price 1480, ratio median 1.692, Q3 1.933; median run: total 2357, finding 787 (QuickXplain 441, guesses 285 with 189 hits, reuse 61 with 60 hits), maximal sets 753, other candidates 817, FDs found through a set 336, secs 4196
+%   Cert3NF over EC2 order + Find: median ratio 0.848, fewer 17, equal 5, more 1, Wilcoxon p 3.8e-05; sums 1774 / 2357
+%   Cert3NF over EC2 order: median ratio 0.700, fewer 18, equal 4, more 1, Wilcoxon p 1.1e-05; sums 1774 / 2677
+%   EC2 order + Find over EC2 order: median ratio 0.885, fewer 14, equal 6, more 3, Wilcoxon p 0.00084; sums 2357 / 2677
+%   share of the gap above the price that the Find step closes: (1800 - 1480) / (1800 - 897) = 0.354; EC2 order + Find spends 1.65x the answers of Cert3NF above the price, EC2 order 2.01x
+% check_cert full: 69 rows, 0 disagreements, last line: disagreements or unsound: 0
+% sure: 69 rows, duplicate keys 0, missing 0, extra 0; codes [('d34bc9cfc4a6', '6c5fa850ad6a', 'e2a6af907596')], budget [1000], truth ['sure']
+%   Cert3NF          : within 50 19, within 100 22, certified runs 23/23, wrong 0; answers 851, above the price 222, ratio median 1.256, Q3 1.480; median run: total 851, finding 117 (QuickXplain 24), maximal sets 476, other candidates 258, FDs found through a set 61, secs 167
+%   EC2 order        : within 50 10, within 100 20, certified runs 69/69, wrong 0; answers 1311, above the price 682, ratio median 1.950, Q3 2.280; median run: total 1311, finding 533 (QuickXplain 533, guesses 0 with 0 hits, reuse 0 with 0 hits), maximal sets 533, other candidates 245, FDs found through a set 109, secs 1158
+%   EC2 order + Find : within 50 15, within 100 22, certified runs 69/69, wrong 0; answers 991, above the price 362, ratio median 1.520, Q3 1.609; median run: total 991, finding 167 (QuickXplain 58, guesses 109 with 90 hits, reuse 0 with 0 hits), maximal sets 523, other candidates 301, FDs found through a set 99, secs 1533
+%   Cert3NF over EC2 order + Find: median ratio 0.850, fewer 17, equal 3, more 3, Wilcoxon p 6.3e-05; sums 851 / 991
+%   Cert3NF over EC2 order: median ratio 0.651, fewer 19, equal 4, more 0, Wilcoxon p 3.8e-06; sums 851 / 1311
+%   EC2 order + Find over EC2 order: median ratio 0.860, fewer 18, equal 5, more 0, Wilcoxon p 7.6e-06; sums 991 / 1311
+%   share of the gap above the price that the Find step closes: (682 - 362) / (682 - 222) = 0.696; EC2 order + Find spends 1.63x the answers of Cert3NF above the price, EC2 order 3.07x
+% check_cert sure: 69 rows, 0 disagreements, last line: disagreements or unsound: 0
+%% ==== (c) careful mode, a designer at the rates of the practitioners: (eps, phi), three seeds, budget 1000 ====
+% (0.10, 0.12) dev full: 69 rows, duplicate keys 0, missing 0, extra 0, rows of another setting 0
+% (0.10, 0.12) dev sure: 69 rows, duplicate keys 0, missing 0, extra 0, rows of another setting 0
+% (0.10, 0.12) b2 full: 36 rows, duplicate keys 0, missing 0, extra 0, rows of another setting 0
+% (0.10, 0.12) b2 sure: 36 rows, duplicate keys 0, missing 0, extra 0, rows of another setting 0
+% (0.10, 0.12) b3 full: 69 rows, duplicate keys 0, missing 0, extra 0, rows of another setting 0
+% (0.10, 0.12) b3 sure: 69 rows, duplicate keys 0, missing 0, extra 0, rows of another setting 0
+0.10, phi 0.12 & careful & 13 & 6 & 15 & 9 & 10 & 6 & 11 & 6\\  % development full, sure; confirmatory full, sure; within 100 answers: certificates & wrong
+%   pooled 348 runs: within 100: 49 certificates, 27 wrong (0.551), 22 correct; budget 1000: 205 certificates, 179 wrong (0.873), 26 correct; first answers wrong 16230/160840 = 0.101, questions asked again with both first answers wrong 933/24828 = 0.0376
+%   study relations full: 9 runs, certified within 100 0, wrong 0, per relation {'fec-cand': '0/3', 'syn-claims': '0/3', 'tpcc-customer': '0/3'}; budget 1000: 7 certificates, 7 wrong; answers median 250
+%   study relations sure: 9 runs, certified within 100 1, wrong 0, per relation {'fec-cand': '1/3', 'syn-claims': '0/3', 'tpcc-customer': '0/3'}; budget 1000: 7 certificates, 6 wrong; answers median 263
+0.10, independent & careful & 15 & 6 & 15 & 2 & 10 & 1 & 9 & 1\\  % development full, sure; confirmatory full, sure; within 100 answers: certificates & wrong
+%   pooled 348 runs: within 100: 49 certificates, 10 wrong (0.204), 39 correct; budget 1000: 185 certificates, 138 wrong (0.746), 47 correct; first answers wrong 16626/165652 = 0.100, questions asked again with both first answers wrong 500/22885 = 0.0218
+%   study relations full: 9 runs, certified within 100 1, wrong 1, per relation {'fec-cand': '1/3', 'syn-claims': '0/3', 'tpcc-customer': '0/3'}; budget 1000: 6 certificates, 6 wrong; answers median 332
+%   study relations sure: 9 runs, certified within 100 1, wrong 1, per relation {'fec-cand': '1/3', 'syn-claims': '0/3', 'tpcc-customer': '0/3'}; budget 1000: 6 certificates, 5 wrong; answers median 217
+% (0.15, 0.18) dev full: 69 rows, duplicate keys 0, missing 0, extra 0, rows of another setting 0
+% (0.15, 0.18) dev sure: 69 rows, duplicate keys 0, missing 0, extra 0, rows of another setting 0
+% (0.15, 0.18) b2 full: 36 rows, duplicate keys 0, missing 0, extra 0, rows of another setting 0
+% (0.15, 0.18) b2 sure: 36 rows, duplicate keys 0, missing 0, extra 0, rows of another setting 0
+% (0.15, 0.18) b3 full: 69 rows, duplicate keys 0, missing 0, extra 0, rows of another setting 0
+% (0.15, 0.18) b3 sure: 69 rows, duplicate keys 0, missing 0, extra 0, rows of another setting 0
+0.15, phi 0.18 & careful & 15 & 11 & 13 & 9 & 6 & 1 & 7 & 2\\  % development full, sure; confirmatory full, sure; within 100 answers: certificates & wrong
+%   pooled 348 runs: within 100: 41 certificates, 23 wrong (0.561), 18 correct; budget 1000: 139 certificates, 121 wrong (0.871), 18 correct; first answers wrong 31918/213211 = 0.150, questions asked again with both first answers wrong 1716/25027 = 0.0686
+%   study relations full: 9 runs, certified within 100 0, wrong 0, per relation {'fec-cand': '0/3', 'syn-claims': '0/3', 'tpcc-customer': '0/3'}; budget 1000: 5 certificates, 5 wrong; answers median 797
+%   study relations sure: 9 runs, certified within 100 0, wrong 0, per relation {'fec-cand': '0/3', 'syn-claims': '0/3', 'tpcc-customer': '0/3'}; budget 1000: 6 certificates, 6 wrong; answers median 369
+0.15, independent & careful & 13 & 11 & 11 & 8 & 6 & 1 & 7 & 2\\  % development full, sure; confirmatory full, sure; within 100 answers: certificates & wrong
+%   pooled 348 runs: within 100: 37 certificates, 22 wrong (0.595), 15 correct; budget 1000: 131 certificates, 115 wrong (0.878), 16 correct; first answers wrong 33547/224171 = 0.150, questions asked again with both first answers wrong 866/21872 = 0.0396
+%   study relations full: 9 runs, certified within 100 0, wrong 0, per relation {'fec-cand': '0/3', 'syn-claims': '0/3', 'tpcc-customer': '0/3'}; budget 1000: 3 certificates, 3 wrong; answers median 1000
+%   study relations sure: 9 runs, certified within 100 1, wrong 1, per relation {'fec-cand': '0/3', 'syn-claims': '0/3', 'tpcc-customer': '1/3'}; budget 1000: 3 certificates, 3 wrong; answers median 1000
+% practitioners of the study (Tab. human): P 6 of 9 certified, 1 wrong; U 4 of 9, 1 wrong
